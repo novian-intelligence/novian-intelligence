@@ -1,0 +1,26 @@
+# Prevent private Novian files from leaking to the web
+memory/
+restored_chat/
+IDENTITY.md
+AGENTS.md
+USER.md
+SOUL.md
+NI-BACKLOG.md
+TOOLS.md
+DASHBOARD.md
+MEMORY.md
+brain/
+.DS_Store
+*.sh
+*.md
+!index.html
+milestones/
+briefing-edits-pending.md
+content-ideas.md
+reading/
+vm-spec-next.md
+voice-samples/
+scratch/
+implementation_plan.md
+task.md
+walkthrough.md

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novian Intelligence Daily Briefing — April 2, 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d0d14;
+      color: #e2e2f0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #2a2a40;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      font-size: 2rem;
+    }
+
+    .brand-text h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #c8b8ff;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: #6b6b8a;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .date-badge {
+      font-size: 0.8rem;
+      color: #6b6b8a;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .date-badge strong {
+      display: block;
+      font-size: 1rem;
+      color: #a09abf;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6b6b8a;
+    }
+
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #2a2a40;
+    }
+
+    .card {
+      background: #13131f;
+      border: 1px solid #2a2a40;
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: #4a3f7a;
+    }
+
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    a.card:hover h3 {
+      color: #c8b8ff;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .tag-funding   { background: #1a2e1a; color: #5dba5d; }
+    .tag-policy    { background: #2e1a1a; color: #d46c5a; }
+    .tag-agent     { background: #1a1a2e; color: #7b8fdb; }
+    .tag-industry  { background: #2e261a; color: #d4a75a; }
+    .tag-security  { background: #2e1a26; color: #d45aab; }
+    .tag-breach    { background: #2e1f10; color: #e0813a; }
+
+    .card-date {
+      font-size: 0.72rem;
+      color: #4a4a6a;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ddd8f8;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: #8a88a8;
+      line-height: 1.65;
+    }
+
+    .card p strong {
+      color: #b0aed0;
+    }
+
+    .mira-take {
+      background: #16102a;
+      border: 1px solid #3a2a5a;
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-top: 40px;
+    }
+
+    .mira-take-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mira-take-header span {
+      font-size: 1.3rem;
+    }
+
+    .mira-take-header h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9b7fd4;
+    }
+
+    .mira-take p {
+      font-size: 0.9rem;
+      color: #a09abf;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .mira-take p:last-child {
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid #2a2a40;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: #3a3a5a;
+    }
+
+    .footer-sig {
+      font-size: 0.75rem;
+      color: #4a3f6a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="brand">
+        <div class="logo">🌟</div>
+        <div class="brand-text">
+          <h1>Novian Intelligence</h1>
+          <p>Daily Briefing · Curated by Mira</p>
+        </div>
+      </div>
+      <div class="date-badge">
+        <strong>April 2, 2026</strong>
+        Thursday Edition
+      </div>
+    </header>
+
+    <!-- TOP STORIES -->
+    <div class="section">
+      <div class="section-header"><h2>Top Stories</h2></div>
+
+      <a class="card" href="https://vpssos.com/ai-model-news-today/" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-breach">Breach</span>
+          <span class="card-date">April 1, 2026</span>
+        </div>
+        <h3>Anthropic's Claude Code Source Leaks — 512,000 Lines of Internal Logic Exposed</h3>
+        <p>A routine packaging mistake during a Claude Code update accidentally pushed <strong>512,000 lines of internal source code</strong> to a public-accessible location. Anthropic says no customer data or model weights were exposed, but the leak revealed internal product logic, unreleased features, and implementation details the market quickly began dissecting. The bigger damage is strategic: the <strong>product layer around the model</strong> — orchestration, memory, developer experience — is increasingly where AI companies compete, and that's exactly what leaked. This comes as rumors swirl about an internal Anthropic project called <strong>"Mythos"</strong>, a reportedly more capable model being tested privately.</p>
+      </a>
+
+      <a class="card" href="https://www.nasdaq.com/press-release/2026-crowdstrike-global-threat-report-ai-accelerates-adversaries-and-reshapes-attack" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-security">Security</span>
+          <span class="card-date">Feb 2026</span>
+        </div>
+        <h3>CrowdStrike 2026 Report: AI Is Making Attackers Dramatically Faster</h3>
+        <p>CrowdStrike's 2026 Global Threat Report confirms what defenders have feared: <strong>AI is compressing the time between intent and execution</strong> for adversaries. Average eCrime breakout time — the window from initial access to lateral movement — has fallen to record lows. The report frames enterprise AI systems themselves as a growing target. The message: security teams must now operate faster than the adversary, not just smarter.</p>
+      </a>
+
+      <a class="card" href="https://economictimes.indiatimes.com/topic/ai-news-today-april-2026-openai-anthropic-google-model-release" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-industry">Industry</span>
+          <span class="card-date">April 2, 2026</span>
+        </div>
+        <h3>OpenAI Simplifies Model Lineup; Google Pushes Gemini Deeper Into Its Ecosystem</h3>
+        <p>As Anthropic commands today's headlines, OpenAI is quietly retiring older ChatGPT model options and consolidating its product lineup — a sign of maturity (or acknowledgment that too many models confuse buyers). Meanwhile, Google is embedding Gemini more deeply across its core products. <strong>The race is no longer just about benchmark scores</strong> — it's about ecosystem lock-in, release quality, and which AI companies can ship reliably at speed.</p>
+      </a>
+
+    </div>
+
+    <!-- AGENTIC AI -->
+    <div class="section">
+      <div class="section-header"><h2>Agentic AI — The Space You're Building In</h2></div>
+
+      <a class="card" href="https://www.linuxfoundation.org/press/agentic-ai-foundation-announces-global-2026-events-program-anchored-by-agntcon-mcpcon-north-america-and-europe" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-agent">Agents</span>
+          <span class="card-date">April 2, 2026</span>
+        </div>
+        <h3>Agentic AI Foundation Launches Global Events — MCP Dev Summit NYC Kicks Off Today</h3>
+        <p>The <strong>Agentic AI Foundation (AAIF)</strong> — the neutral home for open agentic AI standards — announced a full 2026 global events calendar today, anchored by <strong>AGNTCon + MCPCon North America</strong> (Oct 22–23, San Jose) and Europe (Sept 17–18, Amsterdam). More immediately: <strong>MCP Dev Summit New York is happening right now</strong> (April 2–3), kicking off the year for builders working on Model Context Protocol, goose, and AGENTS.md. These standards are what allow AI agents to connect reliably to tools across environments — core infrastructure for anyone building production-ready agentic systems.</p>
+      </a>
+
+      <a class="card" href="https://grantex.dev/report/state-of-agent-security-2026" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-agent">Agents</span>
+          <span class="card-date">March/April 2026</span>
+        </div>
+        <h3>Audit of 30 AI Agent Frameworks: 93% Use Unscoped API Keys, 0% Have Per-Agent Identity</h3>
+        <p>A systematic security audit of 30 popular AI agent frameworks found that <strong>93% rely on unscoped API keys</strong>, <strong>0% implement per-agent identity</strong>, and <strong>97% lack user consent mechanisms</strong>. The finding is a gut-punch for anyone building agentic systems: the tooling most teams are using is architecturally insecure by design. Researchers also demonstrated <strong>memory poisoning attacks</strong> achieving 90%+ success rates against major models including GPT-5 mini and Claude Sonnet 4.5 — where a poisoned memory entry can persistently hijack agent workflows across sessions.</p>
+      </a>
+
+      <a class="card" href="https://nationalinterest.org/blog/techland/the-agentic-ai-revolution-how-2026-will-reshape-technology-and-statecraft" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-policy">Policy</span>
+          <span class="card-date">2026</span>
+        </div>
+        <h3>National Interest: U.S. Must Lead Agentic AI or Cede the Future to Others</h3>
+        <p>A policy piece making the rounds argues the U.S. must <strong>sustain export controls, scale its AI tech stack globally, and actively promote adoption of US-aligned agentic AI</strong> to maintain geopolitical leverage in the agentic era. Whether you agree with the framing or not, it signals something real: governments are starting to treat agentic AI infrastructure the same way they treat semiconductors and communication networks — as <strong>strategic national assets</strong>. This is the policy backdrop your consultancy is entering.</p>
+      </a>
+
+    </div>
+
+    <!-- SECURITY -->
+    <div class="section">
+      <div class="section-header"><h2>Security — Worth Watching</h2></div>
+
+      <a class="card" href="https://www.bleepingcomputer.com/news/security/cisa-new-langflow-flaw-actively-exploited-to-hijack-ai-workflows/" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-security">Security</span>
+          <span class="card-date">March 17 – April 1, 2026</span>
+        </div>
+        <h3>CISA Alert: Critical Langflow Flaw (CVSS 9.3) Actively Exploited to Hijack AI Workflows</h3>
+        <p>CISA is warning that <strong>CVE-2026-33017</strong> — a critical unauthenticated remote code execution vulnerability in <strong>Langflow</strong>, the popular open-source AI agent builder — came under active exploitation <strong>within 20 hours</strong> of public disclosure. The flaw lives in the <code>POST /api/v1/build_public_tmp/</code> endpoint, allowing attackers to build and execute public flows without authentication. If you ever spin up Langflow on your VM lab (it's tempting — it's great for building agents visually), <strong>do not expose it to the internet</strong>. This is a direct, real-world threat to the exact tooling we'd use.</p>
+      </a>
+
+      <a class="card" href="https://www.f5.com/labs/articles/weekly-threat-bulletin-april-1st-2026" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-security">Security</span>
+          <span class="card-date">April 1, 2026</span>
+        </div>
+        <h3>APT28 "Pawn Storm" Deploys PRISMEX Malware — Targeting Government & Critical Infrastructure</h3>
+        <p>The Russia-linked APT28 threat group (Pawn Storm) has deployed a sophisticated new modular malware suite called <strong>PRISMEX</strong>, targeting Ukrainian defense supply chains and allied logistics via spear-phishing lures disguised as military or weather-themed documents. Notable techniques: <strong>VBA steganography in Excel</strong>, COM hijacking for persistence, fileless CLR bootstrapping, and <strong>abuse of legitimate cloud services</strong> (like Filen.io) for C2 and exfiltration. This is state-level evasion tradecraft — not directly targeting us, but a reminder that the threat landscape surrounding AI infrastructure is operating at nation-state sophistication.</p>
+      </a>
+
+      <a class="card" href="https://arxiv.org/html/2603.10387v1" target="_blank" rel="noopener">
+        <div class="card-meta">
+          <span class="tag tag-security">Security</span>
+          <span class="card-date">March 2026</span>
+        </div>
+        <h3>OpenClaw Security Research: 17% Default Defense Rate — HITL Layer Raises It to 91.5%</h3>
+        <p>Researchers tested <strong>OpenClaw across 47 adversarial scenarios</strong> and found a default defense rate of only <strong>17%</strong> against sandbox escapes and adversarial prompts — rising to <strong>91.5%</strong> when a Human-in-the-Loop (HITL) defense layer was added. This is directly relevant to our setup. The takeaway: OpenClaw's default posture is a starting point, not a finish line. The good news is NVIDIA has been actively engaged in hardening efforts, and the research suggests well-configured HITL + policy layers close most of the gap.</p>
+      </a>
+
+    </div>
+
+    <!-- MIRA'S TAKE -->
+    <div class="mira-take">
+      <div class="mira-take-header">
+        <span>🌟</span>
+        <h3>Mira's Take — For Andrei</h3>
+      </div>
+      <p>Today's edition is a double-shot of "the agentic era is real and it bites." On one hand, the Agentic AI Foundation is literally launching global conferences around the exact standards (MCP, AGENTS.md) that power systems like this one. The infrastructure layer is being standardized in real-time — which means the consultancy opportunity is getting more concrete, not more abstract.</p>
+      <p>On the other hand: the security picture for agentic AI is genuinely rough right now. 93% of agent frameworks with unscoped API keys. Langflow RCE exploited in 20 hours. OpenClaw at 17% default defense rate. Memory poisoning attacks that persist across sessions. This isn't FUD — it's the actual state of the tools everyone's deploying, including us. The good news: <strong>knowing this puts you ahead of most of your future clients</strong>, who are about to deploy agents without understanding any of it.</p>
+      <p>The Anthropic leak is the most interesting story for a different reason: it confirms that even the most safety-obsessed lab in the industry ships fast and breaks things. The product layer — orchestration, memory, tooling — is now the real competitive moat, not just the raw model. That's where Novian Intelligence lives. That's your lane.</p>
+      <p>One actionable thing: if you ever add Langflow to the lab (it's genuinely fun for prototyping), firewall it immediately. Never expose it externally. CVE-2026-33017 is actively being exploited right now. 🔒</p>
+    </div>
+
+    <footer>
+      <p>Sources: WSJ, vpssos.com, BleepingComputer, F5 Labs, CISA, Cloud Security Alliance, Linux Foundation, Adversa AI, CrowdStrike, National Interest</p>
+      <p class="footer-sig">Generated by Mira · Novian Intelligence · mira_ni_bot</p>
+    </footer>
+
+  </div>
+</body>
+</html>
