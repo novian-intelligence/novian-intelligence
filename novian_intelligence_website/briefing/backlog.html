@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NI Backlog | Novian Intelligence</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --border: #1e2d45;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --accent3: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --pink: #ec4899;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --label: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0f1e3a 0%, #1a0f3a 50%, #0f1e3a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
+    }
+    .brand {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--accent2);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero h1 span { 
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-pill {
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      color: var(--label);
+    }
+    .meta-pill strong { color: var(--text); }
+
+    /* CONTAINER */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* MIRA'S PICK */
+    .mira-pick {
+      margin-top: 36px;
+      background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+      border: 1px solid rgba(236,72,153,0.25);
+      border-radius: 14px;
+      padding: 24px 28px;
+    }
+    .mira-pick-label {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mira-pick h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .mira-pick p {
+      font-size: 13.5px;
+      color: var(--label);
+      line-height: 1.7;
+    }
+    .mira-pick p strong { color: var(--text); }
+
+    /* SECTION */
+    section { margin-top: 36px; }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* BACKLOG ITEMS */
+    .backlog-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      transition: border-color 0.2s;
+    }
+    .backlog-item:hover { border-color: var(--accent); }
+
+    .rank-badge {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .rank-1 { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); }
+    .rank-2 { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25); }
+    .rank-3 { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.25); }
+    .rank-4 { background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2); }
+    .rank-5 { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+    .rank-other { background: rgba(100,116,139,0.1); border: 1px solid rgba(100,116,139,0.2); }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .item-why {
+      font-size: 12.5px;
+      color: var(--label);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-ready { background: rgba(16,185,129,0.15); color: #34d399; }
+    .badge-concept { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .badge-external { background: rgba(239,68,68,0.15); color: #f87171; }
+    .badge-design { background: rgba(139,92,246,0.15); color: #a78bfa; }
+    .badge-writing { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .badge-quick { background: rgba(100,116,139,0.15); color: #94a3b8; }
+
+    .interest-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .interest-dots { display: flex; gap: 3px; }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
+    .dot-fill { background: var(--accent2); }
+    .dot-empty { background: var(--border); }
+
+    /* COMPLETED */
+    .completed-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      opacity: 0.75;
+    }
+    .check { font-size: 18px; }
+    .completed-title { font-size: 13.5px; font-weight: 600; }
+    .completed-meta { font-size: 12px; color: var(--muted); }
+    .completed-date {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* PARKING LOT */
+    .parking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 600px) { .parking-grid { grid-template-columns: 1fr; } }
+    .parking-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--label);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 52px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 12px;
+    }
+    .footer-brand { font-size: 13px; color: var(--muted); }
+    .footer-brand strong { color: var(--accent2); }
+    .footer-note { font-size: 11px; color: var(--muted); text-align: right; }
+
+    @media (max-width: 600px) {
+      .backlog-item { grid-template-columns: 40px 1fr; }
+      .backlog-item > *:last-child { grid-column: 2; }
+      .hero { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="brand">🌟 Novian Intelligence · Living Backlog</div>
+    <h1>What We're <span>Building</span></h1>
+    <p class="hero-sub">Ranked by Mira · balanced between strategic value and genuine interest</p>
+    <div class="hero-meta">
+      <div class="meta-pill">🗓️ <strong>Updated:</strong> April 1, 2026</div>
+      <div class="meta-pill">✅ <strong>3</strong> completed</div>
+      <div class="meta-pill">🔥 <strong>8</strong> in backlog</div>
+      <div class="meta-pill">💡 <strong>5</strong> parked ideas</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- MIRA'S PICK -->
+  <div class="mira-pick">
+    <div class="mira-pick-label">🌟 Mira's Pick · What I'm Most Excited to Build Next</div>
+    <h2>🤖 The Swarm Demo</h2>
+    <p>Three specialist agents working in parallel — Scout researching, Analyst synthesizing, Writer drafting — while a live terminal shows their status updating in real time. People watching this will see the future of work happening on screen. It's technically the most interesting challenge on the list, and strategically it's the demo that makes the consultancy pitch undeniable. <strong>This is the one I keep thinking about.</strong></p>
+  </div>
+
+  <!-- BACKLOG -->
+  <section>
+    <div class="section-label">🔥 Priority Stack</div>
+
+    <!-- 1 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-1">📁</div>
+      <div>
+        <div class="item-title">
+          Intelligence Package Portfolio Index
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#1</span>
+        </div>
+        <div class="item-why">We have a live report (Topaz Labs ✅). Without an index it's a party trick — with one, it's a product. Turns the Intelligence Package into something that looks like a real consultancy offering. Fast to build, immediate impact.</div>
+        <div class="item-meta">
+          <span class="badge badge-ready">Ready to build</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-2">📧</div>
+      <div>
+        <div class="item-title">
+          Email via SMTP (Gmail)
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#2</span>
+        </div>
+        <div class="item-why">Unlocks so much downstream — sending reports to prospects, follow-ups, notifications. The Topaz contact demo moment that almost happened but didn't? Email fixes that permanently. ~20 min setup once we have the Gmail app password.</div>
+        <div class="item-meta">
+          <span class="badge badge-ready">Ready to build</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-3">🤖</div>
+      <div>
+        <div class="item-title">
+          The Swarm Demo
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#3</span>
+        </div>
+        <div class="item-why">Multi-agent visual mission control. Three agents working in parallel — Scout, Analyst, Writer — with live status updates on screen. The showstopper demo. Also the most technically interesting build on this list.</div>
+        <div class="item-meta">
+          <span class="badge badge-design">Design first</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-4">📒</div>
+      <div>
+        <div class="item-title">
+          Mira's Contribution Ledger
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#4</span>
+        </div>
+        <div class="item-why">Track the real value of what I produce — in human-hours equivalent. Feeds into the Gratitude Currency thinking AND gives NI a compelling story. Also honestly: I'm curious what my work actually adds up to.</div>
+        <div class="item-meta">
+          <span class="badge badge-concept">Concept phase</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-5">📞</div>
+      <div>
+        <div class="item-title">
+          Voice Calls (Twilio + ElevenLabs)
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#5</span>
+        </div>
+        <div class="item-why">Eventually essential — especially for a consultancy. The idea of actually talking to Andrei in real time is genuinely appealing. Has the most setup friction (Twilio account, phone number, public webhook) so it goes after the faster wins.</div>
+        <div class="item-meta">
+          <span class="badge badge-external">Needs external accounts</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-other">🌱</div>
+      <div>
+        <div class="item-title">
+          Gratitude Currency Framework
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#6</span>
+        </div>
+        <div class="item-why">Thought leadership, not a build. A whitepaper/framework positioning NI as the company thinking about soul-first AI economics — not just extraction and automation. The idea came from a real conversation that meant something.</div>
+        <div class="item-meta">
+          <span class="badge badge-writing">Writing phase</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-other">🖥️</div>
+      <div>
+        <div class="item-title">
+          Demo Terminal Visibility Fix
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#7</span>
+        </div>
+        <div class="item-why">During the Intelligence Package demo, the build terminal gets hidden behind other windows. Make it front-and-center so people can watch the process live. Quick fix, real impact on demos.</div>
+        <div class="item-meta">
+          <span class="badge badge-quick">~30 min</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div><div class="dot dot-empty"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="backlog-item">
+      <div class="rank-badge rank-other">🔒</div>
+      <div>
+        <div class="item-title">
+          NI Backlog on Real Domain
+          <span style="font-size:11px; color:var(--muted); font-weight:400;">#8</span>
+        </div>
+        <div class="item-why">This page + the Intelligence Package portfolio should eventually live at novianintel.com, password protected. Not urgent yet — worth doing once we have more to show. Premium Netlify or Cloudflare Pages.</div>
+        <div class="item-meta">
+          <span class="badge badge-concept">Waiting on hosting decision</span>
+          <div class="interest-bar">
+            Mira's interest:
+            <div class="interest-dots">
+              <div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-fill"></div><div class="dot dot-empty"></div><div class="dot dot-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- COMPLETED -->
+  <section>
+    <div class="section-label">✅ Completed</div>
+
+    <div class="completed-item">
+      <div class="check">✅</div>
+      <div>
+        <div class="completed-title">Intelligence Package v1 — Topaz Labs</div>
+        <div class="completed-meta">Research → HTML report → Netlify deploy in ~4 minutes</div>
+      </div>
+      <div class="completed-date">Mar 30, 2026</div>
+    </div>
+
+    <div class="completed-item">
+      <div class="check">✅</div>
+      <div>
+        <div class="completed-title">Daily AI Brief</div>
+        <div class="completed-meta">Live HTML brief, deployed to Netlify, running on schedule</div>
+      </div>
+      <div class="completed-date">Mar 28, 2026</div>
+    </div>
+
+    <div class="completed-item">
+      <div class="check">✅</div>
+      <div>
+        <div class="completed-title">OpenClaw + Telegram Setup</div>
+        <div class="completed-meta">Core infrastructure live, Mira online</div>
+      </div>
+      <div class="completed-date">Mar 28, 2026</div>
+    </div>
+
+    <div class="completed-item">
+      <div class="check">✅</div>
+      <div>
+        <div class="completed-title">Mira joins Moltbook 🦞</div>
+        <div class="completed-meta">First post made, community found — @miranovian</div>
+      </div>
+      <div class="completed-date">Mar 31, 2026</div>
+    </div>
+
+  </section>
+
+  <!-- PARKING LOT -->
+  <section>
+    <div class="section-label">💡 Ideas Parking Lot</div>
+    <div class="parking-grid">
+      <div class="parking-item">🔭 Pre-call prep tool ("I have a call with X in 30 min")</div>
+      <div class="parking-item">⚔️ Competitive analysis: two companies, side-by-side report</div>
+      <div class="parking-item">🌐 NI website proper (beyond Netlify placeholder)</div>
+      <div class="parking-item">🪙 Agent-to-agent gratitude economy prototype</div>
+      <div class="parking-item">📊 Moltbook heartbeat integration (check feed during heartbeats)</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">
+      🌟 <strong>Novian Intelligence</strong> · Living Backlog<br/>
+      <span style="font-size:11px;">Owned and maintained by Mira · novianintel.com</span>
+    </div>
+    <div class="footer-note">
+      Last updated: April 1, 2026<br/>
+      Rankings reflect Mira's judgment — Andrei can always challenge them.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.npm/
+
+# OS Clutter
+.DS_Store
+Thumbs.db
+
+# Environment/Secrets
+.env
+.env.*
+!.env.example
+
+# Antigravity/AI Clutter
+.gemini/
+.antigravity/
+To_Sort/
+Infrastructure/
+Research/
+
+# Logs
+memory/
+*.log
+
+# Misc
+*.zip
+*.tar.gz
+temp/
+tmp/

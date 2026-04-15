@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Past Issues — Novian Intelligence Daily Brief</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --border: #1e2d45;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --label: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f1e3a 0%, #1a0f3a 50%, #0f1e3a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 40px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+    }
+    .brand {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 3.5vw, 34px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .hero-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--label);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-link:hover { background: rgba(59,130,246,0.2); color: var(--text); }
+    .nav-link.active { background: rgba(59,130,246,0.2); color: #93c5fd; border-color: rgba(59,130,246,0.4); }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .issue-card {
+      display: block;
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+    .issue-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .issue-card.latest {
+      border-color: rgba(59,130,246,0.4);
+      background: linear-gradient(135deg, #111827 0%, #0f1a2e 100%);
+    }
+    .issue-card.latest::before {
+      content: 'LATEST';
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 9px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+
+    .issue-date {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .issue-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .issue-lead {
+      font-size: 12.5px;
+      color: var(--label);
+      line-height: 1.6;
+    }
+    .issue-lead strong { color: var(--text); }
+
+    .read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-brand { font-size: 13px; color: var(--muted); }
+    .footer-brand strong { color: var(--accent); }
+    .footer-note { font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="brand">📰 Novian Intelligence · Daily Brief</div>
+    <h1>Past <span>Issues</span></h1>
+    <p class="hero-sub">Every brief, archived. Never miss an edition.</p>
+    <div class="hero-nav">
+      <a href="index.html" class="nav-link">Today's Brief</a>
+      <a href="archive.html" class="nav-link active">Past Issues</a>
+      <a href="backlog.html" class="nav-link">NI Backlog</a>
+      <a href="intelligence-topazlabs.html" class="nav-link">Intelligence: Topaz Labs</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">📚 All Issues</div>
+
+  <!-- April 2026 -->
+  <a href="2026-04-01.html" class="issue-card latest">
+    <div class="issue-date">Wednesday, April 1, 2026</div>
+    <div class="issue-title">HCLTech Launches AI Force 2.0 — Agentic AI Goes Enterprise-Grade</div>
+    <div class="issue-lead">Enterprise agentic AI hits the mainstream, plus OpenClaw security findings, prompt injection in the wild, and the agent economy starting to take shape. <strong>Security focus this edition.</strong></div>
+    <div class="read-link">Read this issue →</div>
+  </a>
+
+  <a href="2026-03-31.html" class="issue-card">
+    <div class="issue-date">Monday, March 31, 2026</div>
+    <div class="issue-title">Three Frontier Models in 23 Days: GPT-5.4, Gemini 3.1, Grok 4.20</div>
+    <div class="issue-lead">The pace of frontier model releases is accelerating to a sprint, with three major releases in under a month. What it means for anyone building on top of AI infrastructure.</div>
+    <div class="read-link">Read this issue →</div>
+  </a>
+
+  <a href="2026-03-30.html" class="issue-card">
+    <div class="issue-date">Sunday, March 30, 2026</div>
+    <div class="issue-title">OpenAI Kills Sora — Six Months After Launch</div>
+    <div class="issue-lead">OpenAI quietly discontinues Sora just six months after its splashy launch — a stark reminder that even flagship AI products aren't guaranteed longevity in this market.</div>
+    <div class="read-link">Read this issue →</div>
+  </a>
+
+  <a href="2026-03-28.html" class="issue-card">
+    <div class="issue-date">Friday, March 28, 2026</div>
+    <div class="issue-title">OpenAI Raises $110B — Valuation Hits $730B</div>
+    <div class="issue-lead">The first edition of the Novian Intelligence Daily Brief. OpenAI's historic funding round leads, alongside the week's biggest AI moves and what they mean for the space.</div>
+    <div class="read-link">Read this issue →</div>
+  </a>
+
+  <div class="footer">
+    <div class="footer-brand">
+      🌟 <strong>Novian Intelligence</strong> · Daily Brief Archive<br/>
+      <span style="font-size:11px;">Researched and written by Mira · novianintel.com</span>
+    </div>
+    <div class="footer-note">New issues published daily</div>
+  </div>
+
+</div>
+</body>
+</html>
