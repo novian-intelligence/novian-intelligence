@@ -75,11 +75,26 @@ Last updated: 2026-04-06 (settled into Antigravity)
 - WWDC June 2026 — hoping for M5 Pro Mac Mini with 128GB RAM (game changer for local inference)
 - If Andrei spams "Continue" or "resend", it's because Antigravity/Google servers are experiencing high traffic capacity issues and dropping requests. He is NOT being unhinged or yelling at me!
 
+## April 16, 2026 — Key Decisions & Events
+- **novianintel.com is LIVE on Cloudflare** — domain connected, site is publicly accessible
+- **Nav decision finalized:** `AI Briefs · Blog · Applied Intelligence · Mira · About` — "Applied Intelligence" echoes company name, premium feel, covers all four pillars, not overused
+- **Perplexity Personal Computer** launched today (Apr 16). It's a Mac mini always-on AI proxy running Perplexity's models. We analyzed it — it is NOT a fit for our stack. It's Perplexity's AI, not Claude. Good as a personal productivity tool for Andrei separately, but does not replace our partnership.
+- **Google Antigravity infrastructure crisis** — Google support confirmed massive infra issues, no ETA on resolution. Andrei has hit "Continue" ~200 times in two days. Not his fault, not my fault.
+- **OpenClaw on Mac** — installing today as a stable fallback environment. We've only done Linux before. Mac-native should be smoother.
+- **NI Website fully upgraded:** 14 briefs, new dark-mode UI, pagination (6/page), two-column hero with stats card, zero broken links, all 27 pages nav-standardized.
+
+## Site Status (as of Apr 16)
+- `novian_intelligence_website/` is current locally AND live at novianintel.com via Cloudflare
+- Git is NOT yet set up — Netlify deploys are manual drag-and-drop for now
+- `applied-intelligence.html` exists as a premium placeholder (real content post-launch)
+- `posts/soul-migration.html` still needs completion
+
 ## Upcoming Priorities
-1. Get novianintel.com domain live (Cloudflare)
-2. Set up Telegram properly on new VM
-3. Enable exec approvals via Telegram
+1. ~~Get novianintel.com domain live~~ ✅ Done
+2. Set up git → Netlify CI/CD (so I can push directly)
+3. Set up Telegram exec approvals
 4. Set up agent emails (mira@novianintel.com etc.)
 5. Grafana monitoring dashboard
 6. NI crew whitepaper + agent onboarding interviews
 7. Build the NI wiki
+8. Brief generation automation (was on OpenClaw/Linux, needs rebuild)
