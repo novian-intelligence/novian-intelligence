@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applied Intelligence | Novian Intelligence</title>
+  <meta name="description" content="Novian Intelligence Applied Intelligence — where human expertise and AI capability combine to transform how organizations think, decide, and operate.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080810; --text: #e2e0f4; --text-muted: #7a7892; --text-dim: #3e3c56;
+      --border: rgba(255,255,255,0.055); --glass: rgba(255,255,255,0.025);
+      --v: #9b7fd4; --i: #6366f1; --c: #40d9c8; --o: #c8956c; --r: #e07090;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .orb { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 700px; height: 700px; top: -200px; left: -150px; background: rgba(155,127,212,0.06); }
+    .orb-2 { width: 500px; height: 500px; bottom: 20%; right: -100px; background: rgba(64,217,200,0.03); }
+    .site { max-width: 1060px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+    header { padding: 28px 0 24px; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 8px; background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: #fff; }
+    .logo-name { font-size: 1rem; font-weight: 700; letter-spacing: 0.03em; color: var(--text); }
+    nav a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; padding: 6px 14px; border-radius: 8px; transition: all 0.18s; }
+    nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    nav a.active { color: var(--v); }
+    .strip { height: 2px; display: grid; grid-template-columns: repeat(5, 1fr); overflow: hidden; opacity: 0.65; }
+    .s1{background:var(--v)} .s2{background:var(--i)} .s3{background:var(--c)} .s4{background:var(--o)} .s5{background:var(--r)}
+
+    .hero { padding: 100px 0 80px; text-align: center; max-width: 760px; margin: 0 auto; }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px; }
+    .hero-title { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.05em; color: #fff; margin-bottom: 24px; }
+    .hero-title span { background: linear-gradient(135deg, var(--v), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.1rem; line-height: 1.75; color: var(--text-muted); margin-bottom: 40px; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .coming-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(155,127,212,0.1); border: 1px solid rgba(155,127,212,0.25); border-radius: 24px; padding: 8px 20px; font-size: 0.78rem; color: var(--v); font-weight: 500; letter-spacing: 0.04em; }
+    .coming-dot { width: 6px; height: 6px; background: var(--v); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+    .placeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 80px 0 120px; }
+    .placeholder-card { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; position: relative; overflow: hidden; }
+    .placeholder-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .placeholder-card:nth-child(1)::before { background: linear-gradient(90deg, var(--v), var(--i)); }
+    .placeholder-card:nth-child(2)::before { background: linear-gradient(90deg, var(--c), var(--i)); }
+    .placeholder-card:nth-child(3)::before { background: linear-gradient(90deg, var(--o), var(--r)); }
+    .card-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+    .card-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .card-body { font-size: 0.85rem; line-height: 1.7; color: var(--text-muted); }
+    .card-status { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-top: 20px; }
+
+    footer { padding: 36px 0; border-top: 1px solid var(--border); text-align: center; font-size: 0.7rem; color: var(--text-dim); }
+    footer a { color: var(--text-dim); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: var(--text-muted); }
+    @media (max-width: 760px) { .placeholder-grid { grid-template-columns: 1fr; } .site { padding: 0 20px; } }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="site">
+    <header>
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">NI</div>
+          <span class="logo-name">Novian Intelligence</span>
+        </a>
+        <nav>
+          <a href="ai_briefs/briefs.html">AI Briefs</a>
+          <a href="blog.html">Blog</a>
+          <a href="applied-intelligence.html" class="active">Applied Intelligence</a>
+          <a href="mira.html">Mira</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+    <div class="strip"><div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div></div>
+
+    <div class="hero">
+      <div class="hero-eyebrow">Novian Intelligence · Applied Intelligence</div>
+      <h1 class="hero-title">Where AI does the <span>heavy lifting</span></h1>
+      <p class="hero-sub">We design, deploy, and operate AI systems that transform how your organization thinks, decides, and acts — so you can focus on what only humans can do.</p>
+      <div class="coming-badge">
+        <span class="coming-dot"></span>
+        Full details coming at launch
+      </div>
+    </div>
+
+    <div class="placeholder-grid">
+      <div class="placeholder-card">
+        <span class="card-icon">🗺️</span>
+        <div class="card-title">AI Strategy &amp; Readiness</div>
+        <div class="card-body">We assess your current state, map the landscape of what's possible, and build a clear-eyed roadmap — so your first AI investment is the right one.</div>
+        <div class="card-status">Coming soon</div>
+      </div>
+      <div class="placeholder-card">
+        <span class="card-icon">⚙️</span>
+        <div class="card-title">Agentic Systems Design</div>
+        <div class="card-body">We design and implement multi-agent AI architectures tailored to your workflows — persistent, autonomous, and built to operate reliably at scale.</div>
+        <div class="card-status">Coming soon</div>
+      </div>
+      <div class="placeholder-card">
+        <span class="card-icon">🧭</span>
+        <div class="card-title">AI Governance &amp; Operations</div>
+        <div class="card-body">We build the trust infrastructure around your AI — monitoring, explainability, compliance frameworks, and the human-in-the-loop architecture your stakeholders need.</div>
+        <div class="card-status">Coming soon</div>
+      </div>
+    </div>
+
+    <footer>
+      <a href="index.html">Novian Intelligence</a>
+      <a href="mira.html">Mira</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <span style="margin-left:8px">© 2026</span>
+    </footer>
+  </div>
+</body>
+</html>
