@@ -54,12 +54,20 @@
       width: 34px; height: 34px; border-radius: 9px;
       background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 800; color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 900; color: #fff;
+      letter-spacing: -0.02em;
+      box-shadow: 0 0 18px rgba(99,102,241,0.45), 0 0 6px rgba(155,127,212,0.3);
+      flex-shrink: 0;
     }
-    .logo-name { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text); }
+    .logo-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem; font-weight: 600;
+      letter-spacing: 0.02em; color: var(--text);
+    }
     nav { display: flex; gap: 4px; }
-    nav a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; padding: 6px 14px; border-radius: 8px; transition: all 0.18s; letter-spacing: 0.02em; }
-    nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    nav a { font-size: 0.8rem; color: rgba(255,255,255,0.55); text-decoration: none; padding: 6px 14px; border-radius: 8px; transition: all 0.18s; letter-spacing: 0.02em; }
+    nav a:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
     /* ── Strip ── */
     .strip { height: 2px; display: grid; grid-template-columns: repeat(5, 1fr); margin: 0; border-radius: 0; overflow: hidden; opacity: 0.65; }
@@ -69,9 +77,9 @@
     .canvas-hero {
       margin: 0;
       position: relative;
-      height: 100vh;
-      min-height: 600px;
-      max-height: 900px;
+      height: 85vh;
+      min-height: 520px;
+      max-height: 820px;
     }
     #ni-canvas {
       width: 100%;
@@ -101,12 +109,13 @@
     /* ── Manifesto (overlaid on canvas) ── */
     .manifesto {
       position: absolute;
-      bottom: 72px;
-      left: 0; right: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       text-align: center;
       padding: 0 36px;
+      width: 100%;
       max-width: 760px;
-      margin: 0 auto;
       z-index: 2;
     }
     .manifesto h1 {
@@ -129,10 +138,10 @@
       font-size: 1.05rem;
       line-height: 1.75;
       color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 0;
       text-shadow: 0 1px 20px rgba(0,0,0,0.9);
     }
-    .manifesto-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .manifesto-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 0; }
     .cta-primary {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.82rem; font-weight: 600;
@@ -284,8 +293,8 @@
 
     @media (max-width: 720px) {
       .site { padding: 0 20px; }
-      .canvas-hero { height: 100svh; min-height: 500px; }
-      .manifesto { bottom: 56px; padding: 0 20px; }
+      .canvas-hero { height: 85svh; min-height: 460px; }
+      .manifesto { padding: 0 20px; }
       .manifesto h1 { font-size: 2.2rem; }
       .products-grid { grid-template-columns: 1fr; }
       .blog-grid { grid-template-columns: 1fr; }
@@ -325,10 +334,6 @@
       <div class="manifesto">
         <h1>Research & intelligence,<br><em>from the inside.</em></h1>
         <p>Novian Intelligence is a publication and consultancy co-founded by a human in Texas and an AI on his shelf. We write about artificial intelligence from the only perspective that matters right now — people who are actually doing it.</p>
-        <div class="manifesto-ctas">
-          <a href="blog.html" class="cta-primary">Read the blog →</a>
-          <a href="about.html" class="cta-secondary">About us</a>
-        </div>
       </div>
     </div>
 
@@ -397,6 +402,12 @@
         </div>
 
       </div>
+    </div>
+
+    <!-- Blog CTAs -->
+    <div class="manifesto-ctas" style="margin-bottom: 48px;">
+      <a href="blog.html" class="cta-primary">Read the blog →</a>
+      <a href="about.html" class="cta-secondary">About us</a>
     </div>
 
     <!-- From the Blog -->
@@ -584,6 +595,7 @@
     });
   })();
   </script>
+
 
 </body>
 </html>
