@@ -67,8 +67,30 @@
     .closing-note p { font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 14px; }
     .closing-note p:last-child { margin-bottom: 0; }
     .closing-note strong { color: var(--text); font-weight: 500; }
-    footer { padding: 36px 0; border-top: 1px solid var(--border); text-align: center; font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.04em; }
-    @media (max-width: 640px) { .site { padding: 0 20px; } .article-wrap { padding: 48px 0 80px; } .closing-note { padding: 24px; } }
+    /* ── Footer ── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .footer-logo-mark {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; font-weight: 800; color: #fff;
+    }
+    .footer-name { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 0.72rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy { font-size: 0.65rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    @media (max-width: 640px) { .site { padding: 0 20px; }
+      footer { flex-direction: column; align-items: flex-start; gap: 16px; } .article-wrap { padding: 48px 0 80px; } .closing-note { padding: 24px; } }
   </style>
 </head>
 <body>
