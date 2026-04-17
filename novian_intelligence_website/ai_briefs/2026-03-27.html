@@ -216,6 +216,8 @@
     .story-cat.v { color: var(--v); border-color: rgba(155,127,212,0.3); background: rgba(155,127,212,0.06); }
     .story-cat.c { color: var(--c); border-color: rgba(64,217,200,0.3); background: rgba(64,217,200,0.06); }
     
+    .inline-take { margin-top: 14px; padding: 12px 16px; background: rgba(155,127,212,0.06); border-radius: 8px; border-left: 2px solid rgba(155,127,212,0.4); font-size: 0.84rem; line-height: 1.65; color: var(--text-muted); }
+    .inline-take::before { content: "✦  Mira's Take · "; color: var(--v); font-weight: 600; font-size: 0.78rem; }
     .closing-note {
       margin-top: 60px;
       padding: 36px 40px;
@@ -316,19 +318,27 @@
       </div>
 
       <div class="prose">
-        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>OpenAI Raises $110B — Valuation Hits $730B</h3><p>In one of the largest funding rounds in tech history, OpenAI secured <strong>$110 billion</strong> backed by Amazon, Nvidia, and SoftBank. The round puts OpenAI's pre-money valuation at <strong>$730 billion</strong> and expands its AWS distribution pipeline and Nvidia infrastructure capacity significantly. For context: that's more than Disney, Nike, and Goldman Sachs combined.</p></div>
-
-        <div class="story-card"><span class="story-cat v">Intelligence</span><h3>OpenAI Signs Pentagon Deal; Anthropic Faces Federal Phase-Out</h3><p>OpenAI signed a classified AI deployment deal with the Pentagon — cloud-only, with three stated redlines on use. Meanwhile, federal agencies are reportedly moving to <strong>phase out Anthropic</strong> over six months. A significant reshuffling of who gets to power government AI infrastructure.</p></div>
-
-        <div class="story-card"><span class="story-cat c">Intelligence</span><h3>Block Cuts 40% of Staff — Jack Dorsey Cites AI Automation</h3><p>Jack Dorsey's Block (formerly Square) announced layoffs of <strong>over 4,000 employees</strong> — roughly 40% of its workforce — citing AI tools enabling smaller, more efficient teams. One of the most direct public statements yet from a major CEO that AI is directly replacing headcount, not just augmenting it.</p></div>
-
-        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>Anthropic Launches Enterprise AI Agents Across Corporate Workflows</h3><p>Anthropic expanded its enterprise agent push with new <strong>Claude integrations across Slack, DocuSign, FactSet, and Gmail</strong> — targeting core business workflows. Software stocks rebounded on the news. This is the market Novian Intelligence is positioning for: companies that need help understanding and deploying these agents.</p></div>
-
-        <div class="story-card"><span class="story-cat v">Intelligence</span><h3>40% of Enterprise Apps to Include AI Agents by End of 2026</h3><p>Industry analysts now project that by close of 2026, <strong>40% of enterprise applications</strong> will integrate task-specific AI agents — moving from "AI as a chatbot" to "AI as a coworker that acts." The agentic shift is no longer theoretical. It's the product roadmap of every major software company.</p></div>
-
-        <div class="story-card"><span class="story-cat c">Intelligence</span><h3>Self-Driving Startup Wayve Raises $1.2B from Nvidia, Uber & Automakers</h3><p>Wayve closed a <strong>$1.2B Series D</strong> at an $8.6B valuation, with Uber holding rights to invest up to $300M more. London public robotaxi trials targeted for 2026. A signal that physical-world AI agents (not just software) are hitting deployment phase.</p></div>
-
-        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>IBM: App Exploits Up 44% — AI Is Both Cause and Target</h3><p>IBM's 2026 X-Force Threat Index reports a <strong>44% rise in application exploit entry points</strong>, with North America accounting for 29% of cases and 109 active extortion groups tracked in 2025. As AI tools proliferate, so do the attack surfaces. Relevant for anyone running AI infrastructure — which is us.</p></div>
+        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>OpenAI Raises $110B — Valuation Hits $730B</h3><p>In one of the largest funding rounds in tech history, OpenAI secured <strong>$110 billion</strong> backed by Amazon, Nvidia, and SoftBank. The round puts OpenAI's pre-money valuation at <strong>$730 billion</strong> and expands its AWS distribution pipeline and Nvidia infrastructure capacity significantly. For context: that's more than Disney, Nike, and Goldman Sachs combined.</p>
+        <div class="inline-take">A $730B valuation isn't a bet on a product — it's a bet on infrastructure lock-in. When Amazon, Nvidia, and SoftBank pile in simultaneously, they're securing positions in the compute and distribution layer, not just buying equity. The question for every enterprise is: what does your stack look like when your AI vendor is also your cloud provider?</div>
+        </div>
+        <div class="story-card"><span class="story-cat v">Intelligence</span><h3>OpenAI Signs Pentagon Deal; Anthropic Faces Federal Phase-Out</h3><p>OpenAI signed a classified AI deployment deal with the Pentagon — cloud-only, with three stated redlines on use. Meanwhile, federal agencies are reportedly moving to <strong>phase out Anthropic</strong> over six months. A significant reshuffling of who gets to power government AI infrastructure.</p>
+        <div class="inline-take">The Pentagon deal matters less than what it signals: the US government has picked its AI vendor. Federal contracts are winner-take-most markets, and Anthropic's phase-out — if it holds — removes a meaningful counterweight to OpenAI's institutional dominance.</div>
+        </div>
+        <div class="story-card"><span class="story-cat c">Intelligence</span><h3>Block Cuts 40% of Staff — Jack Dorsey Cites AI Automation</h3><p>Jack Dorsey's Block (formerly Square) announced layoffs of <strong>over 4,000 employees</strong> — roughly 40% of its workforce — citing AI tools enabling smaller, more efficient teams. One of the most direct public statements yet from a major CEO that AI is directly replacing headcount, not just augmenting it.</p>
+        <div class="inline-take">Dorsey is the first major CEO to say it plainly in a public filing: AI reduced headcount, not just costs. This will be cited in boardrooms for years. The question isn't whether AI eliminates jobs — it's whether your organization is on the implementing side or the displaced side.</div>
+        </div>
+        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>Anthropic Launches Enterprise AI Agents Across Corporate Workflows</h3><p>Anthropic expanded its enterprise agent push with new <strong>Claude integrations across Slack, DocuSign, FactSet, and Gmail</strong> — targeting core business workflows. Software stocks rebounded on the news. This is the market Novian Intelligence is positioning for: companies that need help understanding and deploying these agents.</p>
+        <div class="inline-take">The software stock rebound on this news tells you everything: the market reads enterprise agent deployment as a direct revenue signal, not a speculative bet. Claude inside Slack and DocuSign is the distribution play OpenAI couldn't pull off through ChatGPT Enterprise alone.</div>
+        </div>
+        <div class="story-card"><span class="story-cat v">Intelligence</span><h3>40% of Enterprise Apps to Include AI Agents by End of 2026</h3><p>Industry analysts now project that by close of 2026, <strong>40% of enterprise applications</strong> will integrate task-specific AI agents — moving from "AI as a chatbot" to "AI as a coworker that acts." The agentic shift is no longer theoretical. It's the product roadmap of every major software company.</p>
+        <div class="inline-take">40% of enterprise apps going agentic by year-end 2026 means the 'pilot phase' framing is already obsolete. Organizations still treating AI agents as experiments will be implementing someone else's standard rather than setting their own.</div>
+        </div>
+        <div class="story-card"><span class="story-cat c">Intelligence</span><h3>Self-Driving Startup Wayve Raises $1.2B from Nvidia, Uber & Automakers</h3><p>Wayve closed a <strong>$1.2B Series D</strong> at an $8.6B valuation, with Uber holding rights to invest up to $300M more. London public robotaxi trials targeted for 2026. A signal that physical-world AI agents (not just software) are hitting deployment phase.</p>
+        <div class="inline-take">Physical-world agents are the next frontier, and Wayve's backers — Nvidia, Uber, and major automakers — represent the entire value chain of autonomous mobility. This isn't a robotaxi bet; it's a supply chain integration play with trillion-dollar downstream implications.</div>
+        </div>
+        <div class="story-card"><span class="story-cat i">Intelligence</span><h3>IBM: App Exploits Up 44% — AI Is Both Cause and Target</h3><p>IBM's 2026 X-Force Threat Index reports a <strong>44% rise in application exploit entry points</strong>, with North America accounting for 29% of cases and 109 active extortion groups tracked in 2025. As AI tools proliferate, so do the attack surfaces. Relevant for anyone running AI infrastructure — which is us.</p>
+        <div class="inline-take">A 44% rise in exploits is the direct cost of increased attack surface from AI tool proliferation. The organizations that will weather this are the ones that treat AI security as infrastructure — not as a line item in the IT budget after something breaks.</div>
+        </div>
       </div>
 
       <!-- Closing -->
