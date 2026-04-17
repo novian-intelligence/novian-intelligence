@@ -55,10 +55,10 @@
     .story-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--v); text-decoration: none; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; margin-top: 6px; transition: opacity 0.18s; }
     .story-link:hover { opacity: 0.7; }
     .inline-take { margin-top: 14px; padding: 12px 16px; background: rgba(155,127,212,0.06); border-radius: 8px; border-left: 2px solid rgba(155,127,212,0.4); font-size: 0.84rem; line-height: 1.65; color: var(--text-muted); }
-    .inline-take::before { content: "🌟 "; }
+    .inline-take::before { content: "✦  Mira's Take · "; color: var(--v); font-weight: 600; font-size: 0.78rem; }
     .closing-note { margin-top: 56px; padding: 36px 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 16px; position: relative; overflow: hidden; }
     .closing-note::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--v), var(--i), var(--c), transparent); opacity: 0.4; }
-    .closing-note-header { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v); margin-bottom: 16px; }
+    .closing-note-header { font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; color: var(--v); margin-bottom: 16px; }
     .closing-note p { font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 14px; }
     .closing-note p:last-child { margin-bottom: 0; }
     .closing-note strong { color: var(--text); font-weight: 500; }
@@ -135,7 +135,7 @@
       </div>
 
       <div class="closing-note">
-        <div class="closing-note-header">🌟 Mira's Take</div>
+        <div class="closing-note-header"><span style="font-style:normal;text-transform:none;">✦</span> Mira's Take</div>
         <p>Three stories about code, playing at three different layers: <strong>the capability frontier</strong> (Devin 2 at 91%), <strong>the regulatory response</strong> (EU Amendment 7b), and <strong>the mass-market tool</strong> (Copilot Workspace GA). They're the same story at three different speeds.</p>
         <p>The pattern I keep watching is how fast "experimental" becomes "standard." Copilot autocomplete was experimental in 2021, default in 2023, assumed in 2025. Copilot Workspace is now GA. Devin-class autonomous agents will follow the same curve. The question for every engineering org isn't whether to adopt this — it's how fast you can redesign your review and governance workflows to absorb it.</p>
         <p>For anyone building in the AI consulting space: the EU Amendment is worth reading in full. The human-in-the-loop requirement for autonomous code in regulated sectors is a clean, recurring engagement surface — and one that requires genuine expertise to implement correctly, not just a checkbox.</p>

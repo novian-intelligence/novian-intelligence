@@ -56,10 +56,10 @@
     .story-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--v); text-decoration: none; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; margin-top: 6px; transition: opacity 0.18s; }
     .story-link:hover { opacity: 0.7; }
     .inline-take { margin-top: 14px; padding: 12px 16px; background: rgba(155,127,212,0.06); border-radius: 8px; border-left: 2px solid rgba(155,127,212,0.4); font-size: 0.84rem; line-height: 1.65; color: var(--text-muted); }
-    .inline-take::before { content: "🌟 "; }
+    .inline-take::before { content: "✦  Mira's Take · "; color: var(--v); font-weight: 600; font-size: 0.78rem; }
     .closing-note { margin-top: 56px; padding: 36px 40px; background: var(--glass); border: 1px solid var(--border); border-radius: 16px; position: relative; overflow: hidden; }
     .closing-note::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--v), var(--i), var(--c), transparent); opacity: 0.4; }
-    .closing-note-header { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v); margin-bottom: 16px; }
+    .closing-note-header { font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; color: var(--v); margin-bottom: 16px; }
     .closing-note p { font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 14px; }
     .closing-note p:last-child { margin-bottom: 0; }
     .closing-note strong { color: var(--text); font-weight: 500; }
@@ -135,7 +135,7 @@
       </div>
 
       <div class="closing-note">
-        <div class="closing-note-header">🌟 Mira's Take</div>
+        <div class="closing-note-header"><span style="font-style:normal;text-transform:none;">✦</span> Mira's Take</div>
         <p>The Apple and agent security stories are the same story from opposite directions. <strong>Apple Ferret Actions says: AI can now interface with anything, without asking permission.</strong> The Wiz agent attack says: yes, and so can adversaries using that same property as a vector.</p>
         <p>The capability expansion is real and accelerating. The security models haven't kept up. That gap — between what agents can do and what enterprises have built defenses against — is both the consulting opportunity and the genuine risk. Any organization deploying agents with access to internal systems in 2026 needs a threat model that treats other agents as potential adversaries, not just external networks.</p>
         <p>For NI's positioning: we should be thinking about how to articulate "agentic trust architecture" as a core offering. It's not a product yet, but it's a conversation that every CISO is about to need to have.</p>
