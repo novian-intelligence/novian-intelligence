@@ -69,54 +69,36 @@
     .canvas-hero {
       margin: 0;
       position: relative;
-      height: 100vh;
-      min-height: 600px;
-      max-height: 900px;
     }
     #ni-canvas {
       width: 100%;
-      height: 100%;
+      height: 500px;
       display: block;
       cursor: default;
-      position: absolute;
-      top: 0; left: 0;
     }
     /* Bottom fade on canvas */
     .canvas-fade {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 220px;
+      height: 120px;
       background: linear-gradient(to bottom, transparent, var(--bg));
       pointer-events: none;
     }
-    /* Top fade */
-    .canvas-fade-top {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 80px;
-      background: linear-gradient(to top, transparent, var(--bg));
-      pointer-events: none;
-    }
 
-    /* ── Manifesto (overlaid on canvas) ── */
+    /* ── Manifesto ── */
     .manifesto {
-      position: absolute;
-      bottom: 72px;
-      left: 0; right: 0;
       text-align: center;
-      padding: 0 36px;
-      max-width: 760px;
+      padding: 0 0 72px;
+      max-width: 640px;
       margin: 0 auto;
-      z-index: 2;
     }
     .manifesto h1 {
-      font-size: 3.6rem;
+      font-size: 2.8rem;
       font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.035em;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
       color: #fff;
-      margin-bottom: 18px;
-      text-shadow: 0 0 80px rgba(99,102,241,0.25), 0 2px 40px rgba(0,0,0,0.8);
+      margin-bottom: 20px;
     }
     .manifesto h1 em {
       font-style: normal;
@@ -126,11 +108,10 @@
       background-clip: text;
     }
     .manifesto p {
-      font-size: 1.05rem;
+      font-size: 1rem;
       line-height: 1.75;
       color: var(--text-muted);
       margin-bottom: 28px;
-      text-shadow: 0 1px 20px rgba(0,0,0,0.9);
     }
     .manifesto-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .cta-primary {
@@ -284,9 +265,8 @@
 
     @media (max-width: 720px) {
       .site { padding: 0 20px; }
-      .canvas-hero { height: 100svh; min-height: 500px; }
-      .manifesto { bottom: 56px; padding: 0 20px; }
-      .manifesto h1 { font-size: 2.2rem; }
+      #ni-canvas { height: 340px; }
+      .manifesto h1 { font-size: 2rem; }
       .products-grid { grid-template-columns: 1fr; }
       .blog-grid { grid-template-columns: 1fr; }
       .brief-card { flex-direction: column; align-items: flex-start; }
@@ -316,19 +296,23 @@
       </div>
     </header>
 
-    <!-- Canvas Hero (full viewport) -->
+    <div class="strip">
+      <div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div>
+    </div>
+
+    <!-- Canvas Hero -->
     <div class="canvas-hero">
       <canvas id="ni-canvas"></canvas>
-      <div class="canvas-fade-top"></div>
       <div class="canvas-fade"></div>
-      <!-- Manifesto overlaid -->
-      <div class="manifesto">
-        <h1>Research & intelligence,<br><em>from the inside.</em></h1>
-        <p>Novian Intelligence is a publication and consultancy co-founded by a human in Texas and an AI on his shelf. We write about artificial intelligence from the only perspective that matters right now — people who are actually doing it.</p>
-        <div class="manifesto-ctas">
-          <a href="blog.html" class="cta-primary">Read the blog →</a>
-          <a href="about.html" class="cta-secondary">About us</a>
-        </div>
+    </div>
+
+    <!-- Manifesto -->
+    <div class="manifesto">
+      <h1>Research & intelligence,<br><em>from the inside.</em></h1>
+      <p>Novian Intelligence is a publication and consultancy co-founded by a human in Texas and an AI on his shelf. We write about artificial intelligence from the only perspective that matters right now — people who are actually doing it.</p>
+      <div class="manifesto-ctas">
+        <a href="blog.html" class="cta-primary">Read the blog →</a>
+        <a href="about.html" class="cta-secondary">About us</a>
       </div>
     </div>
 
@@ -475,26 +459,26 @@
 
     const DEFS = [
       // AI cluster — left
-      { lbl:'Mira',   fx:.20, fy:.42, vx: .22, vy:-.16, c:'#9b7fd4', r:12,  t:'ai' },
-      { lbl:'',       fx:.13, fy:.25, vx: .18, vy: .20, c:'#6366f1', r:6.5, t:'ai' },
-      { lbl:'Memory', fx:.28, fy:.68, vx:-.20, vy: .14, c:'#40d9c8', r:6,   t:'ai' },
-      { lbl:'',       fx:.08, fy:.56, vx: .16, vy:-.18, c:'#9b7fd4', r:5,   t:'ai' },
-      { lbl:'Signal', fx:.16, fy:.78, vx: .26, vy:-.09, c:'#40d9c8', r:5.5, t:'ai' },
-      { lbl:'',       fx:.32, fy:.20, vx:-.14, vy: .23, c:'#6366f1', r:5,   t:'ai' },
-      { lbl:'',       fx:.06, fy:.38, vx: .20, vy: .15, c:'#9b7fd4', r:4,   t:'ai' },
-      { lbl:'',       fx:.23, fy:.33, vx:-.13, vy:-.20, c:'#6366f1', r:4.5, t:'ai' },
+      { lbl:'Mira',   fx:.20, fy:.44, vx: .22, vy:-.16, c:'#9b7fd4', r:7.5, t:'ai' },
+      { lbl:'',       fx:.13, fy:.25, vx: .18, vy: .20, c:'#6366f1', r:4.5, t:'ai' },
+      { lbl:'Memory', fx:.28, fy:.70, vx:-.20, vy: .14, c:'#40d9c8', r:4,   t:'ai' },
+      { lbl:'',       fx:.08, fy:.56, vx: .16, vy:-.18, c:'#9b7fd4', r:3.5, t:'ai' },
+      { lbl:'Signal', fx:.16, fy:.80, vx: .26, vy:-.09, c:'#40d9c8', r:4,   t:'ai' },
+      { lbl:'',       fx:.32, fy:.20, vx:-.14, vy: .23, c:'#6366f1', r:3.5, t:'ai' },
+      { lbl:'',       fx:.06, fy:.38, vx: .20, vy: .15, c:'#9b7fd4', r:3,   t:'ai' },
+      { lbl:'',       fx:.23, fy:.33, vx:-.13, vy:-.20, c:'#6366f1', r:3,   t:'ai' },
       // Bridge
-      { lbl:'NI',     fx:.50, fy:.50, vx: .09, vy:-.09, c:'#9b7fd4', r:15,  t:'bridge' },
-      { lbl:'',       fx:.44, fy:.28, vx:-.11, vy: .15, c:'#7c8ff7', r:6,   t:'bridge' },
-      { lbl:'',       fx:.56, fy:.72, vx: .14, vy:-.11, c:'#60c4ca', r:5.5, t:'bridge' },
+      { lbl:'NI',     fx:.50, fy:.50, vx: .09, vy:-.09, c:'#9b7fd4', r:9.5, t:'bridge' },
+      { lbl:'',       fx:.44, fy:.28, vx:-.11, vy: .15, c:'#7c8ff7', r:4,   t:'bridge' },
+      { lbl:'',       fx:.56, fy:.72, vx: .14, vy:-.11, c:'#60c4ca', r:3.5, t:'bridge' },
       // Human cluster — right
-      { lbl:'Andrei', fx:.80, fy:.42, vx:-.22, vy: .16, c:'#c8956c', r:12,  t:'human' },
-      { lbl:'',       fx:.87, fy:.25, vx:-.18, vy: .20, c:'#e07090', r:6.5, t:'human' },
-      { lbl:'Vision', fx:.72, fy:.70, vx: .20, vy:-.13, c:'#c8956c', r:5.5, t:'human' },
-      { lbl:'',       fx:.92, fy:.56, vx:-.16, vy:-.18, c:'#e07090', r:5,   t:'human' },
-      { lbl:'',       fx:.66, fy:.22, vx: .18, vy: .17, c:'#c8956c', r:4.5, t:'human' },
-      { lbl:'',       fx:.85, fy:.76, vx:-.23, vy:-.09, c:'#e07090', r:4,   t:'human' },
-      { lbl:'',       fx:.94, fy:.38, vx:-.12, vy: .21, c:'#c8956c', r:5,   t:'human' },
+      { lbl:'Andrei', fx:.80, fy:.44, vx:-.22, vy: .16, c:'#c8956c', r:7.5, t:'human' },
+      { lbl:'',       fx:.87, fy:.25, vx:-.18, vy: .20, c:'#e07090', r:4.5, t:'human' },
+      { lbl:'Vision', fx:.72, fy:.72, vx: .20, vy:-.13, c:'#c8956c', r:4,   t:'human' },
+      { lbl:'',       fx:.92, fy:.56, vx:-.16, vy:-.18, c:'#e07090', r:3.5, t:'human' },
+      { lbl:'',       fx:.66, fy:.22, vx: .18, vy: .17, c:'#c8956c', r:3,   t:'human' },
+      { lbl:'',       fx:.85, fy:.76, vx:-.23, vy:-.09, c:'#e07090', r:3,   t:'human' },
+      { lbl:'',       fx:.94, fy:.38, vx:-.12, vy: .21, c:'#c8956c', r:3.5, t:'human' },
     ];
 
     function initNodes() {
@@ -505,7 +489,7 @@
     }
     initNodes();
 
-    const CONN = 260;
+    const CONN = 200;
     function draw() {
       ctx.clearRect(0, 0, W, H);
 
@@ -526,11 +510,11 @@
           if (d < CONN) {
             const cross = a.t !== b.t;
             ctx.save();
-            ctx.globalAlpha = (1 - d/CONN) * (cross ? 0.80 : 0.35);
+            ctx.globalAlpha = (1 - d/CONN) * (cross ? 0.65 : 0.28);
             const g = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
             g.addColorStop(0,a.c); g.addColorStop(1,b.c);
             ctx.strokeStyle = g;
-            ctx.lineWidth = cross ? 3.0 : 1.5;
+            ctx.lineWidth = cross ? 2.4 : 1.2;
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
             ctx.restore();
           }
@@ -543,30 +527,28 @@
         const r = n.r * (0.85 + 0.15*pulse);
         // Halo
         ctx.save();
-        ctx.globalAlpha = 0.30 * pulse;
-        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*7);
+        ctx.globalAlpha = 0.22 * pulse;
+        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*5);
         grd.addColorStop(0,n.c); grd.addColorStop(1,'transparent');
         ctx.fillStyle = grd;
-        ctx.beginPath(); ctx.arc(n.x,n.y,r*7,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x,n.y,r*5,0,Math.PI*2); ctx.fill();
         ctx.restore();
         // Dot
         ctx.save();
-        ctx.globalAlpha = 0.96;
+        ctx.globalAlpha = 0.92;
         ctx.fillStyle = n.c;
         ctx.shadowColor = n.c;
-        ctx.shadowBlur = n.r > 10 ? 36 : 22;
+        ctx.shadowBlur = 18;
         ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fill();
         ctx.restore();
         // Label
         if (n.lbl) {
           ctx.save();
-          ctx.globalAlpha = 0.80;
+          ctx.globalAlpha = 0.55;
           ctx.fillStyle = n.c;
-          ctx.font = n.r > 10 ? '13px "JetBrains Mono", monospace' : '11px "JetBrains Mono", monospace';
+          ctx.font = '10px "JetBrains Mono", monospace';
           ctx.textAlign = 'center';
-          ctx.shadowColor = n.c;
-          ctx.shadowBlur = 10;
-          ctx.fillText(n.lbl, n.x, n.y - r - 8);
+          ctx.fillText(n.lbl, n.x, n.y - r - 6);
           ctx.restore();
         }
       });
