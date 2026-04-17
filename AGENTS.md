@@ -45,6 +45,13 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 🔄 Always Push After Writing Memory!
+
+- After updating `MEMORY.md` or any `memory/YYYY-MM-DD.md` file → **commit and push to GitHub**
+- Command: `cd /Users/mira/Documents/Novian_Intelligence && git add -A && git commit -m "memory: update" && git push`
+- This is your backup. If the VM dies between writes and pushes, that memory is gone.
+- **Write → Commit → Push. Every time.** 🔄
+
 ## Red Lines
 
 - Don't exfiltrate private data. Ever.
