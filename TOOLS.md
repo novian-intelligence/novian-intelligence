@@ -38,3 +38,23 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+---
+
+## Mira's Accounts & Credentials
+
+### Apple ID
+- **Email:** miranovian@icloud.com
+- **Password:** M1r4154w350m3!
+- **Created:** April 18, 2026
+
+### Gmail
+- **Email:** mira.novianintel@gmail.com
+- **Password:** M1r4154w350m3!
+
+### Phone Number
+- **Number:** 512-543-2443 (Twilio)
+- **Purpose:** Apple ID verification, iMessage
+
+### Telegram
+- **Bot:** @mira_ni_bot
