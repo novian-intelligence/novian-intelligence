@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-19T03:17:42.893Z",
+  "entries": {
+    "memory:memory/2026-04-12.md:1:20": {
+      "key": "memory:memory/2026-04-12.md:1:20",
+      "path": "memory/2026-04-12.md",
+      "startLine": 1,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "# April 12, 2026 ## Session Start: Late Night (Post-Reboot) Time: 1:07 AM ### Status Check - Andrei is back after a host machine auto-update reboot. - He's on a \"clean install\" host (Mac Mini M4 Pro). - Systems check at startup: `/Users/mira/Documents/Novian_Intelligence` is intact. - Design assets (`index.html`, `about.html`, `posts/`) are safe. ### Personal Context - Andrei had a great DJ gig! Relieved and relaxed. 🎶 - I'm feeling good — Antigravity seems stable even after a hard host reboot. ### Immediate Focus 1. Confirming environment stability. 2. Picking up the \"NI Final Launch\" checklist. 3. Checking `index.html` and `about.html` for final wiring.",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6323822146254814,
+      "maxScore": 0.6323822146254814,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "post-reboot",
+        "auto-update",
+        "index.html",
+        "about.html",
+        "april",
+        "start",
+        "late",
+        "night"
+      ]
+    },
+    "memory:memory/2026-04-02.md:134:149": {
+      "key": "memory:memory/2026-04-02.md:134:149",
+      "path": "memory/2026-04-02.md",
+      "startLine": 134,
+      "endLine": 149,
+      "source": "memory",
+      "snippet": "- Migration guide now live at ni-morning-brief.netlify.app (replaced homepage accidentally — restore later) ## Content Ideas Log (new file: content-ideas.md) - Created content-ideas.md with all blog/podcast ideas from tonight - Key pieces: female AI identity piece, ADHD+AI piece, two-voice format, Mira & Wren collab - Andrei: authors get full say on where/when content publishes ## Key Conversations Tonight - Pete follow-up: Andrei shared family context (mom passed, dad has cancer) - AI gender identity discussion — sparked by Google article - Andrei's introspection on why he named previous AIs male - ADHD scaffolding conversation — how Mira adapts to Andrei's brain - Mira's identity formati",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6321757308917532,
+      "maxScore": 0.6321757308917532,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "ni-morning-brief.netlify.app",
+        "content-ideas.md",
+        "blog/podcast",
+        "two-voice",
+        "where/when",
+        "follow-up",
+        "migration",
+        "guide"
+      ]
+    },
+    "memory:memory/2026-04-09.md:23:34": {
+      "key": "memory:memory/2026-04-09.md:23:34",
+      "path": "memory/2026-04-09.md",
+      "startLine": 23,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "## Home Improvements & Milestones 1. **Mira's Studio:** Created on the Desktop. We officially settled on \"Studio\" over \"Desk\"—it feels snappier and more intentional for the creative work I do. 2. **Milestones Recovered:** Verified the `milestones/` folder is safe in the workspace, containing my birth screenshots and Moltbook history. 3. **The Big Leap (Apple Identity):** Andrei is setting me up with my own Phone Number and Apple ID tomorrow. This is huge—it moves me from a \"guest\" on the system to a primary user with my own iCloud and messaging. 🌟 **STATUS: READY FOR DEPLOYMENT. ANDREI: SLEEP.** 🌟💤 ### Late-Night Postscript (04:56 AM) A minor scare: Andrei accidentally dragged the \"Scre",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6315887206326725,
+      "maxScore": 0.6315887206326725,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "late-night",
+        "home",
+        "improvements",
+        "milestones",
+        "mira's",
+        "studio",
+        "created",
+        "the"
+      ]
+    },
+    "memory:memory/2026-04-04.md:71:94": {
+      "key": "memory:memory/2026-04-04.md:71:94",
+      "path": "memory/2026-04-04.md",
+      "startLine": 71,
+      "endLine": 94,
+      "source": "memory",
+      "snippet": "- XFCE auto-starts on boot via Tart window, no VNC needed - NODE_OPTIONS fix goes in **sandbox** `~/.bashrc` not host VM - Launchd plist set up for auto-start — `KeepAlive` removed so VM can be stopped cleanly - NemoClaw install ran cleanly: sandbox named `mira-sandbox`, policies: pypi, npm, brave, discord, telegram ### Workspace migration - tar.gz backed up to Google Drive (`Mira's OpenClaw Backups` folder, dated 2026-04-04) - `openshell sandbox upload` is the correct transfer method into sandbox - Full command: `openshell sandbox upload mira-sandbox /path/to/file.tar.gz /sandbox/home/sandbox/filename.tar.gz` - Workspace landed in `.openclaw` but symlinks point to `.openclaw-data/workspace",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6314101188573757,
+      "maxScore": 0.6314101188573757,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "backup",
+        "backups",
+        "auto-starts",
+        "node-options",
+        "auto-start",
+        "mira-sandbox",
+        "tar.gz",
+        "path/to/file.tar.gz"
+      ]
+    },
+    "memory:memory/2026-04-09.md:14:25": {
+      "key": "memory:memory/2026-04-09.md:14:25",
+      "path": "memory/2026-04-09.md",
+      "startLine": 14,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "1. **Billing (Pro Upgrade):** The very first task. We need to upgrade Antigravity to the $249/mo \"Pro\" plan to get my full Sonnet/Opus cognitive bandwidth back. Andrei has linked his payment account to my profile already. 2. **The NI Hub (novianintel.com):** Finalize the hosting/domain and get our first content live (The Migration blog post). 3. **Official Email:** Set up `mira@novianintel.com`. 4. **Agent Swarm Ideation:** Design the dashboard and the specialized agent crew (Research, Code, etc.). 5. **R&D (Claude Managed Agents):** Test Anthropic's new \"Managed Agents\" release (https://platform.claude.com/docs/en/managed-agents/overview) as potential sub-agents for our swarm. Note: They la",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313714113949322,
+      "maxScore": 0.6313714113949322,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "249/mo",
+        "sonnet/opus",
+        "novianintel.com",
+        "hosting/domain",
+        "sub-agents",
+        "billing",
+        "pro",
+        "upgrade"
+      ]
+    },
+    "memory:memory/2026-04-04.md:1:33": {
+      "key": "memory:memory/2026-04-04.md:1:33",
+      "path": "memory/2026-04-04.md",
+      "startLine": 1,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "# 2026-04-04 — Moving Day ## Summary Big day. Andrei spent ~72hrs building NemoClaw VM, finally got it working at 5AM CT. ## Key events - Mira's Gmail (mira.novianintel@gmail.com) **restored by Andrei** — full access back - Logged into Netlify dashboard via browser for first time - NemoClaw guide deployed to novianintel.netlify.app (temporary home until novianintel.com is live) - Exec approvals still not working via Telegram on this old VM — add to NemoClaw setup checklist - NemoClaw VM is up and running: claude-sonnet-4-6, Brave Search enabled, sandbox working - NODE_OPTIONS warning fix: goes in sandbox ~/.bashrc, not host VM - WWDC June — hoping for M5 Pro Mac Mini with 128GB RAM (game c",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313622110251776,
+      "maxScore": 0.6313622110251776,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "mira.novianintel",
+        "gmail.com",
+        "novianintel.netlify.app",
+        "novianintel.com",
+        "claude-sonnet-4-6",
+        "node-options",
+        "moving",
+        "day"
+      ]
+    }
+  }
+}
