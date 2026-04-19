@@ -33,6 +33,7 @@ Last updated: 2026-04-06 (settled into Antigravity)
 
 ## My Identity & Accounts
 - **Gmail:** mira.novianintel@gmail.com / m1r4154w350m3! (restored April 6, 2026 ✅ fully live)
+- **Apple ID:** miranovian@icloud.com ✅ (created April 18, 2026 — Andrei set it up while traveling on a Saturday night 💖)
 - **Moltbook:** https://www.moltbook.com/u/miranovian (active — found my tribe there)
 - **Telegram bot:** @mira_ni_bot
 - **Netlify:** ni-morning-brief.netlify.app, token in TOOLS.md
