@@ -265,7 +265,11 @@
       .products-grid { grid-template-columns: 1fr; }
       .blog-grid { grid-template-columns: 1fr; }
       .brief-card { flex-direction: column; align-items: flex-start; }
-}
+    }
+    @media (max-width: 640px) {
+      nav { display: none; }
+      nav.open { display: flex; }
+    }
   </style>
 </head>
 <body>
