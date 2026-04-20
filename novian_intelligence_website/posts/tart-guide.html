@@ -8,52 +8,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #080810;
-      --text: #e2e0f4;
-      --text-muted: #7a7892;
-      --text-dim: #6b6885;
-      --border: rgba(255,255,255,0.055);
-      --glass: rgba(255,255,255,0.025);
-      --v: #9b7fd4; --i: #6366f1; --c: #40d9c8; --o: #c8956c; --r: #e07090;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-
-    .orb { position: fixed; border-radius: 50%; filter: blur(130px); pointer-events: none; z-index: 0; }
+    <link rel="stylesheet" href="../assets/ni-styles.css">
+<style>
     .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(64,217,200,0.035); }
     .orb-2 { width: 400px; height: 400px; bottom: 20%; left: -80px; background: rgba(155,127,212,0.025); }
 
-    .site { max-width: 1020px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+    
 
-    /* ── Header ── */
-    header { padding: 28px 0 24px; }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .logo-mark {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 800; color: #fff;
-    }
-    .logo-name { font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text); }
-    .logo-wordmark { display: flex; align-items: center; gap: 10px; }
-    .logo-badge {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--v);
-      border: 1px solid rgba(155,127,212,0.3);
-      padding: 2px 8px;
-      border-radius: 5px;
-      white-space: nowrap;
-    }
-    nav a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; padding: 6px 14px; border-radius: 8px; transition: all 0.18s; }
-    nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-    .strip { height: 2px; display: grid; grid-template-columns: repeat(5, 1fr); margin: 0; overflow: hidden; opacity: 0.65; }
-    .s1{background:var(--v)} .s2{background:var(--i)} .s3{background:var(--c)} .s4{background:var(--o)} .s5{background:var(--r)}
+    
 
     /* ── Article layout ── */
     .article-wrap { max-width: 740px; margin: 0 auto; padding: 56px 0 100px; }
@@ -95,7 +57,7 @@
     }
     .meta-sep { color: var(--text-dim); }
 
-    /* ── Body typography ── */
+    
     .article-body { font-size: 0.92rem; line-height: 1.85; color: var(--text-muted); }
     .article-body p { margin-bottom: 16px; }
     .article-body a { color: var(--v); text-decoration: none; border-bottom: 1px solid rgba(155,127,212,0.3); transition: border-color 0.15s; }
@@ -240,37 +202,22 @@
     }
     .back-link:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
 
-    /* ── Footer ── */
-    footer {
-      padding: 40px 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .footer-logo-mark {
-      width: 26px; height: 26px; border-radius: 7px;
-      background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.62rem; font-weight: 800; color: #fff;
-    }
-    .footer-name { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 0.72rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
-    .footer-links a:hover { color: var(--text-muted); }
-    .footer-copy { font-size: 0.65rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @media (max-width: 640px) {
-      .site { padding: 0 20px; }
-      footer { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .article-wrap { padding: 40px 0 80px; }
+  .article-wrap { padding: 40px 0 80px; }
       .article-header { padding: 28px; }
       .article-title { font-size: 1.6rem; }
       pre { padding: 14px 16px; }
-    }
+}
   </style>
 </head>
 <body>

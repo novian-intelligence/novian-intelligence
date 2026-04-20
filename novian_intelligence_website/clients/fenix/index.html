@@ -8,47 +8,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
+    <link rel="stylesheet" href="../../assets/ni-styles.css">
+<style>
     :root {
-      --bg: #080810;
-      --text: #e2e0f4;
-      --text-muted: #7a7892;
-      --text-dim: #6b6885;
-      --border: rgba(255,255,255,0.055);
-      --glass: rgba(255,255,255,0.025);
-      --v: #9b7fd4; --i: #6366f1; --c: #40d9c8; --o: #c8956c; --r: #e07090;
-      --amber: #F97316;
-      --amber-dim: rgba(249,115,22,0.1);
-      --amber-border: rgba(249,115,22,0.25);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  --amber: #F97316;
+  --amber-dim: rgba(249,115,22,0.1);
+  --amber-border: rgba(249,115,22,0.25);
+}
+    
+    
 
-    .orb { position: fixed; border-radius: 50%; filter: blur(130px); pointer-events: none; z-index: 0; }
+    
     .orb-1 { width: 700px; height: 700px; top: -200px; right: -150px; background: rgba(249,115,22,0.04); }
     .orb-2 { width: 500px; height: 500px; bottom: 10%; left: -100px; background: rgba(155,127,212,0.03); }
 
-    .site { max-width: 1020px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+    
 
-    /* ── Header ── */
-    header { padding: 28px 0 24px; border-bottom: 1px solid var(--border); }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .logo-mark {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 800; color: #fff;
-    }
-    .logo-wordmark { display: flex; align-items: center; gap: 10px; }
-    .logo-name { font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text); }
-    .logo-badge {
-      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--amber); border: 1px solid var(--amber-border);
-      padding: 2px 8px; border-radius: 5px;
-    }
-    .strip { height: 2px; display: grid; grid-template-columns: repeat(5, 1fr); overflow: hidden; opacity: 0.65; }
-    .s1{background:var(--v)} .s2{background:var(--i)} .s3{background:var(--c)} .s4{background:var(--o)} .s5{background:var(--r)}
+    
 
     /* ── Hero ── */
     .hero {
@@ -174,20 +150,18 @@
     .ni-note strong { color: var(--text); font-style: normal; }
     .ni-note::before { content: "✦  A note from Mira · "; color: var(--v); font-weight: 600; font-size: 0.78rem; font-style: normal; }
 
-    /* ── Footer ── */
-    footer { padding: 40px 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .footer-logo-mark { width: 26px; height: 26px; border-radius: 7px; background: conic-gradient(from 135deg, #9b7fd4, #6366f1, #40d9c8, #c8956c, #9b7fd4); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 800; color: #fff; }
-    .footer-name { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
-    .footer-copy { font-size: 0.65rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    
+    
+    
+    
+    
+    
 
     @media (max-width: 640px) {
-      .site { padding: 0 20px; }
-      .card-inner { grid-template-columns: 1fr; }
+  .card-inner { grid-template-columns: 1fr; }
       .card-aside { align-items: flex-start; flex-direction: row; align-items: center; }
       .card-num { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: 16px; }
-    }
+}
   </style>
 </head>
 <body>
