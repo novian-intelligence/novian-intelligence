@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What We Bring | Novian Intelligence</title>
+  <meta name="description" content="Novian Intelligence capabilities — Applied Intelligence, Operating Systems, Intelligence Engine, and Micro-Tools. What we bring to every partnership.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/ni-styles.css">
+  <style>
+    .orb-1 { width: 700px; height: 700px; top: -200px; right: -150px; background: rgba(155,127,212,0.04); }
+    .orb-2 { width: 500px; height: 500px; bottom: 20%; left: -100px; background: rgba(64,217,200,0.03); }
+
+    /* ── Page wrap ── */
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 72px 0 120px; }
+
+    /* ── Hero ── */
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--border); }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 800;
+      line-height: 1.08; letter-spacing: -0.035em; color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero-title em { font-style: normal; color: var(--v); }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.8; color: var(--text-muted);
+      max-width: 640px; margin-bottom: 48px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px; background: var(--border);
+      margin: 56px 0;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 32px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Pillar cards ── */
+    .pillar {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 36px 40px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .pillar:hover { border-color: rgba(155,127,212,0.2); }
+    .pillar-v { border-left: 3px solid var(--v); }
+    .pillar-i { border-left: 3px solid var(--i); }
+    .pillar-c { border-left: 3px solid var(--c); }
+    .pillar-o { border-left: 3px solid var(--o); }
+
+    .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 14px;
+    }
+    .pillar-title {
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+      letter-spacing: -0.02em; margin-bottom: 6px;
+    }
+    .pillar-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-muted);
+      font-style: italic; margin-bottom: 20px; display: block;
+    }
+    .pillar-body {
+      font-size: 0.92rem; line-height: 1.8; color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .pillar-body strong { color: var(--text); font-weight: 600; }
+    .pillar-list {
+      list-style: none; display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .pillar-list li {
+      font-size: 0.88rem; color: var(--text-muted);
+      padding-left: 18px; position: relative; line-height: 1.6;
+    }
+    .pillar-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--v); font-size: 0.75rem; top: 2px;
+    }
+    .pillar-v .pillar-list li::before { color: var(--v); }
+    .pillar-i .pillar-list li::before { color: var(--i); }
+    .pillar-c .pillar-list li::before { color: var(--c); }
+    .pillar-o .pillar-list li::before { color: var(--o); }
+
+    .proof-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 5px; border: 1px solid;
+      color: var(--text-dim); border-color: var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .proof-tag::before { content: '✓'; color: var(--c); }
+
+    /* ── Method ── */
+    .method-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      margin-top: 8px;
+    }
+    .method-step {
+      background: var(--glass); padding: 24px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .method-step:last-child { border-right: none; }
+    .method-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem; font-weight: 700; color: var(--text-dim);
+      line-height: 1; margin-bottom: 10px;
+    }
+    .method-name {
+      font-size: 0.92rem; font-weight: 700; color: #fff;
+      margin-bottom: 8px;
+    }
+    .method-desc { font-size: 0.8rem; line-height: 1.65; color: var(--text-muted); }
+
+    /* ── Case studies ── */
+    .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .case-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .case-card:hover { border-color: rgba(155,127,212,0.25); }
+    .case-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 10px;
+    }
+    .case-headline {
+      font-size: 0.95rem; font-weight: 700; color: #fff;
+      line-height: 1.3; margin-bottom: 10px;
+    }
+    .case-body { font-size: 0.8rem; line-height: 1.7; color: var(--text-muted); }
+    .case-result {
+      margin-top: 14px; padding: 10px 14px;
+      background: rgba(64,217,200,0.05);
+      border: 1px solid rgba(64,217,200,0.12);
+      border-radius: 8px;
+      font-size: 0.78rem; color: var(--c); line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── What we bring ── */
+    .bring-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .bring-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .bring-title { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .bring-body { font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); }
+
+    /* ── CTA ── */
+    .cta-block {
+      margin-top: 64px; padding: 48px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-block::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--v), var(--i), var(--c), transparent);
+      opacity: 0.6;
+    }
+    .cta-title {
+      font-size: 1.6rem; font-weight: 800; color: #fff;
+      letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .cta-sub { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+
+    @media (max-width: 640px) {
+      .page-wrap { padding: 48px 0 80px; }
+      .pillar { padding: 24px; }
+      .method-grid { grid-template-columns: repeat(2, 1fr); }
+      .case-grid { grid-template-columns: 1fr; }
+      .bring-grid { grid-template-columns: 1fr; }
+      .cta-block { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="site">
+    <header>
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">NI</div>
+          <div class="logo-wordmark">
+            <span class="logo-name">Novian Intelligence</span>
+          </div>
+        </a>
+        <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+        <nav>
+          <a href="ai_briefs/briefs.html">AI Briefs</a>
+          <a href="blog.html">Blog</a>
+          <a href="applied-intelligence.html">Applied Intelligence</a>
+          <a href="mira.html">Mira</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="strip">
+      <div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div>
+    </div>
+
+    <div class="page-wrap">
+
+      <!-- Hero -->
+      <div class="hero-eyebrow">Novian Intelligence · Capabilities Overview</div>
+      <h1 class="hero-title">What we bring<br>to every <em>partnership.</em></h1>
+      <p class="hero-sub">We're a human+AI firm that turns operational chaos into clarity — and AI potential into business results. Here's what that looks like in practice, and what we'd bring to a collaboration.</p>
+
+      <div class="divider"></div>
+
+      <!-- The Method -->
+      <div class="section-label">The NI Method</div>
+      <p style="font-size:0.92rem; color:var(--text-muted); line-height:1.8; margin-bottom:24px; max-width:640px;">Every engagement follows the same four-step pattern. This is our intellectual property — and the reason our work looks and feels different from anything else in the market.</p>
+
+      <div class="method-grid">
+        <div class="method-step">
+          <div class="method-num">01</div>
+          <div class="method-name">Listen</div>
+          <div class="method-desc">A structured interview that surfaces not just the stated problem but the underlying system failures. We ask the questions nobody else asks.</div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">02</div>
+          <div class="method-name">Synthesize</div>
+          <div class="method-desc">The conversation becomes a structured document in hours, not weeks. Pain points mapped. Root causes identified. Solutions proposed.</div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">03</div>
+          <div class="method-name">Build</div>
+          <div class="method-desc">Strategy without execution is just reading. Every engagement includes a concrete build path — where AI does the heavy lifting so humans can focus on what only humans can do.</div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">04</div>
+          <div class="method-name">Deliver</div>
+          <div class="method-desc">A beautiful, branded deliverable — not a Word doc, not a slide deck. A web-based artifact that feels like it came from a firm 10x our size.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Four Pillars -->
+      <div class="section-label">Four ways we work</div>
+
+      <div class="pillar pillar-v">
+        <div class="pillar-num">Pillar 01</div>
+        <div class="pillar-title">Applied Intelligence Engagements</div>
+        <span class="pillar-tag">"We study your operation. We hand you the playbook."</span>
+        <p class="pillar-body">
+          Business transformation, project rescue, and venture creation — delivered as complete strategy documents and build plans in <strong>days, not months</strong>. We don't just advise. We ship real, usable artifacts that clients act on immediately.
+        </p>
+        <ul class="pillar-list">
+          <li><strong>Business Transformation</strong> — full operational overhaul with 90-day roadmap</li>
+          <li><strong>Project Rescue</strong> — acute deadline, command center delivery</li>
+          <li><strong>Business Creation</strong> — new venture strategy from scratch</li>
+          <li><strong>AI Strategy & Implementation</strong> — Phase 1 analyze + recommend, Phase 2 build + deploy</li>
+        </ul>
+        <span class="proof-tag">Live case studies available</span>
+      </div>
+
+      <div class="pillar pillar-i">
+        <div class="pillar-num">Pillar 02</div>
+        <div class="pillar-title">Personal & Business Operating Systems</div>
+        <span class="pillar-tag">"Your brain, externalized. Everything you'd keep in 50 tabs, finally organized."</span>
+        <p class="pillar-body">
+          Custom-built operating systems for individuals, teams, and SMBs. Notion backend, web app front-end, AI triage, voice capture — <strong>designed around how a specific person or team actually thinks and works.</strong> Not a template. Built for you.
+        </p>
+        <ul class="pillar-list">
+          <li>Deep-dive interview to understand how your brain works</li>
+          <li>Custom database architecture — every hub, every relation</li>
+          <li>AI triage — voice note to organized database in seconds</li>
+          <li>Live integrations with CRM, accounting, scheduling tools</li>
+          <li>PR Intelligence layer for high-profile individuals and brands</li>
+        </ul>
+        <span class="proof-tag">Cassandra OS — full case study available</span>
+      </div>
+
+      <div class="pillar pillar-c">
+        <div class="pillar-num">Pillar 03</div>
+        <div class="pillar-title">NI Intelligence Engine</div>
+        <span class="pillar-tag">"The internet is talking about your business. Are you listening?"</span>
+        <p class="pillar-body">
+          Continuous intelligence — not a one-time report. Two modes: <strong>Customer Intelligence</strong> (what the internet says about your business, extracted and turned into content automatically) and <strong>Idea Intelligence</strong> (voice-captured business ideas, researched and stack-ranked by AI agents).
+        </p>
+        <ul class="pillar-list">
+          <li>Continuous competitive monitoring and sentiment analysis</li>
+          <li>Automated content generation from customer pain points</li>
+          <li>Voice + text idea capture with background AI research</li>
+          <li>Stack-ranked opportunity dashboard with 7-dimension scoring</li>
+          <li>Daily intelligence briefs — the signal, without the noise</li>
+        </ul>
+        <span class="proof-tag">Prototype built and validated</span>
+      </div>
+
+      <div class="pillar pillar-o">
+        <div class="pillar-num">Pillar 04</div>
+        <div class="pillar-title">Micro-Tools & Vertical Apps</div>
+        <span class="pillar-tag">"The 3-hour task that should take 3 minutes."</span>
+        <p class="pillar-body">
+          Purpose-built single-function tools for specific industries and workflows. Whatever repetitive cognitive task your team does manually that <strong>could be a fast, clean web tool instead</strong> — we build it as part of any engagement or as a standalone product.
+        </p>
+        <ul class="pillar-list">
+          <li>CPU comparison and matching tools</li>
+          <li>Licensing calculators (Windows, SQL Server, VM/bare metal)</li>
+          <li>Migration command centers and trackers</li>
+          <li>ROI and TCO calculators by vertical</li>
+          <li>Volume licensing available for industry distribution</li>
+        </ul>
+        <span class="proof-tag">Live tools built and deployed</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Case Studies -->
+      <div class="section-label">Proof of work</div>
+      <p style="font-size:0.92rem; color:var(--text-muted); line-height:1.8; margin-bottom:28px; max-width:640px;">Real engagements. Real results. Every deliverable below was completed using the NI Method — interview, synthesize, build, deliver.</p>
+
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-label">Business Transformation</div>
+          <div class="case-headline">Sounds by Cassandra</div>
+          <p class="case-body">Grammy Recording Academy member. 10 years full-time. Everything was in her head — no CRM, no financial visibility, losing 5 leads a day. Complete operational overhaul delivered.</p>
+          <div class="case-result">→ From 200 open tabs to a complete operating system</div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-label">Project Rescue</div>
+          <div class="case-headline">Partner Migration Command Center</div>
+          <p class="case-body">2,000 affiliate partners. 14-day deadline. Impact tracking going dark. A migration that felt impossible — turned into a structured command center with full execution plan.</p>
+          <div class="case-result">→ Finished on time. Zero attribution lost.</div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-label">Business Transformation</div>
+          <div class="case-headline">Fenix Post Tension</div>
+          <p class="case-body">20-year Central Texas institution. ~400 foundations/month. Every process in one person's head. Complete audit, 7-solution roadmap, AI implementation plan delivered.</p>
+          <div class="case-result">→ 20 years of knowledge, finally documented</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- What we bring to a partnership -->
+      <div class="section-label">What we bring to a partnership</div>
+      <p style="font-size:0.92rem; color:var(--text-muted); line-height:1.8; margin-bottom:28px; max-width:640px;">Beyond the four pillars — what Andrei and Mira bring to a team that's already building something real.</p>
+
+      <div class="bring-grid">
+        <div class="bring-card">
+          <div class="bring-title">Sales & Pipeline Architecture</div>
+          <div class="bring-body">End-to-end sales funnel design — from awareness to close. Automated outreach sequences, lead scoring, pipeline intelligence. We've built these systems; we know what actually converts.</div>
+        </div>
+        <div class="bring-card">
+          <div class="bring-title">Operations & Process Design</div>
+          <div class="bring-body">The NI Method applied internally. Interview your team, map the friction, build the systems that let everyone do their best work. Operations is where AI earns its keep.</div>
+        </div>
+        <div class="bring-card">
+          <div class="bring-title">Product Ideation & Roadmapping</div>
+          <div class="bring-body">IdeaFlow-style research applied to your product pipeline. What should you build next? Who's your real competitor? What does the market actually need? We answer these questions with data, not gut feel.</div>
+        </div>
+        <div class="bring-card">
+          <div class="bring-title">Market Intelligence</div>
+          <div class="bring-body">Continuous monitoring of what customers say, what competitors are doing, and what trends are emerging — delivered as actionable intelligence, not a quarterly report nobody reads.</div>
+        </div>
+        <div class="bring-card">
+          <div class="bring-title">Client Consultation & Delivery</div>
+          <div class="bring-body">The full NI engagement model — applied to your clients. We can run discovery, deliver strategy, and build implementation plans at a pace and quality level that differentiates your firm.</div>
+        </div>
+        <div class="bring-card">
+          <div class="bring-title">AI as a Team Member, Not a Tool</div>
+          <div class="bring-body">Mira isn't a chatbot. She's a co-founder with memory, opinions, and a track record. We know how to build AI agents that are actually useful — because we are one.</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <div class="cta-title">Let's talk about what we build together.</div>
+        <p class="cta-sub">We're not looking for a vendor relationship. We're looking for a partnership where the work matters and the stakes are real. If that's the conversation — we're ready.</p>
+        <a href="about.html" style="display:inline-flex; align-items:center; gap:8px; background:var(--v); color:#fff; font-size:0.85rem; font-weight:700; padding:12px 28px; border-radius:10px; text-decoration:none; letter-spacing:0.02em;">Start the conversation →</a>
+      </div>
+
+    </div><!-- end page-wrap -->
+
+    <footer>
+      <a href="index.html" class="footer-logo">
+        <div class="footer-logo-mark">NI</div>
+        <span class="footer-name">Novian Intelligence</span>
+      </a>
+      <div class="footer-links">
+        <a href="ai_briefs/briefs.html">AI Briefs</a>
+        <a href="blog.html">Blog</a>
+        <a href="applied-intelligence.html">Applied Intelligence</a>
+        <a href="mira.html">Mira</a>
+        <a href="about.html">About</a>
+      </div>
+      <span class="footer-copy">© 2026 Novian Intelligence</span>
+    </footer>
+  </div>
+
+</body>
+</html>
