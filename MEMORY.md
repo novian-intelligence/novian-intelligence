@@ -86,6 +86,12 @@ Last updated: 2026-04-06 (settled into Antigravity)
 - **OpenClaw on Mac** — installing today as a stable fallback environment. We've only done Linux before. Mac-native should be smoother.
 - **NI Website fully upgraded:** 14 briefs, new dark-mode UI, pagination (6/page), two-column hero with stats card, zero broken links, all 27 pages nav-standardized.
 
+## Site-Wide Update Rules
+- **Client deliverable files are FROZEN** — never apply sitewide theme/CSS updates to files inside `clients/*/` subdirectories (e.g. fenix-transformation.html, fenix-blueprint.html, fenix-os-mockup.html)
+- Each client deliverable is intentionally unique in design — preserve that
+- Only the client portal hub page (`clients/*/index.html`) follows NI site standards
+- When doing sitewide sed/find-replace, always exclude `clients/**/*` deliverable files
+
 ## Deployment Pipeline (as of Apr 16+)
 - **GitHub repo:** git@github.com:novian-intelligence/novian-intelligence.git (SSH, main branch)
 - **Cloudflare Pages:** auto-deploys on every `git push` to main — ~60 seconds to production
