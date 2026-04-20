@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fenix Post Tension — A Parallel Path Forward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300..700&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F1EA;
+  --parchment: #EDE6D7;
+  --paper: #FBF8F2;
+  --ink: #1A1815;
+  --graphite: #3B4451;
+  --slate: #6C7380;
+  --amber: #D4622A;
+  --amber-soft: #E89B6C;
+  --amber-dim: rgba(212, 98, 42, 0.12);
+  --terracotta: #A14236;
+  --sage: #7A8471;
+  --line: rgba(26, 24, 21, 0.1);
+  --line-strong: rgba(26, 24, 21, 0.25);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.6;
+  font-size: 17px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle grain overlay for warmth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+}
+
+main, header, footer, nav { position: relative; z-index: 2; }
+
+/* ============ NAV ============ */
+nav.top {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 241, 234, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  font-variation-settings: "opsz" 14, "SOFT" 50;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.brand-mark svg { width: 100%; height: 100%; }
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--graphite);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--amber);
+  background: var(--amber-dim);
+}
+
+.nav-links a.active {
+  color: var(--ink);
+}
+
+.nav-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--slate);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--ink); }
+
+@media (max-width: 900px) {
+  .nav-inner { padding: 14px 20px; flex-wrap: wrap; }
+  .nav-links { display: none; width: 100%; flex-direction: column; padding-top: 12px; gap: 2px; align-items: flex-start;}
+  .nav-links.open { display: flex; }
+  .nav-links a { width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav-meta { display: none; }
+  .mobile-toggle { display: block; margin-left: auto; }
+}
+
+/* ============ LAYOUT ============ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+section {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 700px) {
+  .container, .container-wide { padding: 0 20px; }
+  section { padding: 80px 0; }
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.section-number {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--slate);
+}
+
+/* ============ TYPOGRAPHY ============ */
+.display-xl {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 120, "SOFT" 30;
+}
+
+.display-lg {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 80, "SOFT" 40;
+  margin-bottom: 24px;
+}
+
+.display-md {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 60, "SOFT" 50;
+  margin-bottom: 20px;
+}
+
+.display-sm {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(22px, 2.5vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 30, "SOFT" 50;
+}
+
+.italic { font-style: italic; }
+
+.lead {
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: 1.55;
+  color: var(--graphite);
+  font-weight: 300;
+  max-width: 70ch;
+}
+
+p { max-width: 72ch; color: var(--graphite); }
+p + p { margin-top: 18px; }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--slate);
+  font-weight: 500;
+}
+
+strong { color: var(--ink); font-weight: 600; }
+em { font-style: italic; }
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 160px 0 100px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--amber);
+  margin-bottom: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--amber);
+  border-radius: 100px;
+  background: rgba(212, 98, 42, 0.04);
+}
+
+.hero-tag-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--amber);
+  border-radius: 50%;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.hero-title {
+  max-width: 18ch;
+  margin-bottom: 40px;
+}
+
+.hero-title .amber { color: var(--amber); font-style: italic; }
+
+.hero-lead {
+  max-width: 50ch;
+  margin-bottom: 60px;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.hero-meta-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--slate); }
+.hero-meta-value { font-size: 15px; color: var(--ink); font-weight: 500; }
+
+@media (max-width: 700px) {
+  .hero { min-height: auto; padding: 100px 0 60px;}
+  .hero-meta { gap: 24px; }
+}
+
+/* ============ EXEC SUMMARY ============ */
+.exec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .exec-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+.thesis {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 48px;
+  position: relative;
+}
+
+.thesis::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--amber);
+}
+
+.thesis-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.thesis p {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 1.4;
+  color: var(--ink);
+  font-variation-settings: "opsz" 32, "SOFT" 70;
+  font-style: italic;
+}
+
+/* ============ STAT BLOCKS ============ */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 80px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .stat-row { grid-template-columns: 1fr; } }
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-number {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(42px, 5vw, 56px);
+  line-height: 1;
+  color: var(--ink);
+  font-variation-settings: "opsz" 72, "SOFT" 30;
+}
+
+.stat-number .unit {
+  font-size: 0.5em;
+  color: var(--slate);
+  margin-left: 4px;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
+/* ============ PAIN POINTS ============ */
+.pain-clusters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.pain-cluster {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 36px 40px;
+  transition: border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pain-cluster:hover { border-color: var(--amber); }
+
+.pain-cluster-header {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pain-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.pain-cluster-title {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  font-variation-settings: "opsz" 30, "SOFT" 50;
+}
+
+.severity {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.severity-high { color: var(--terracotta); border-color: var(--terracotta); }
+.severity-med { color: var(--amber); border-color: var(--amber); }
+.severity-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pain-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+@media (max-width: 800px) {
+  .pain-body { grid-template-columns: 1fr; gap: 20px; }
+  .pain-cluster-header { grid-template-columns: 32px 1fr; }
+  .pain-cluster-header .severity { grid-column: 2; justify-self: flex-start; }
+}
+
+.pain-section h5 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--slate);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.pain-list { list-style: none; }
+.pain-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  color: var(--graphite);
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+.pain-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 10px;
+  height: 1px;
+  background: var(--amber);
+}
+
+.impact-list li::before { background: var(--terracotta); }
+
+/* ============ PRINCIPLES ============ */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 60px;
+}
+
+@media (max-width: 800px) { .principles-grid { grid-template-columns: 1fr; } }
+
+.principle {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 24px;
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+}
+
+.principle-num {
+  font-family: 'Fraunces', serif;
+  font-size: 52px;
+  line-height: 0.9;
+  color: var(--amber);
+  font-weight: 300;
+  font-variation-settings: "opsz" 72, "SOFT" 50;
+}
+
+.principle-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 28, "SOFT" 50;
+}
+
+.principle-desc { font-size: 15.5px; line-height: 1.55; color: var(--graphite); }
+
+/* ============ ARCHITECTURE DIAGRAM ============ */
+.architecture-frame {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 60px 40px;
+  margin-top: 60px;
+  overflow-x: auto;
+}
+
+.arch-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-align: center;
+  margin-top: 32px;
+}
+
+/* ============ BLUEPRINT ============ */
+.workstream {
+  padding: 56px 0;
+  border-top: 1px solid var(--line-strong);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 64px;
+}
+
+.workstream:first-of-type { border-top: none; padding-top: 20px;}
+
+@media (max-width: 900px) {
+  .workstream { grid-template-columns: 1fr; gap: 32px; padding: 40px 0; }
+}
+
+.workstream-head h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+}
+
+.workstream-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.workstream-tagline {
+  color: var(--graphite);
+  font-size: 15px;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.workstream-cost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--graphite);
+  padding: 6px 10px;
+  background: var(--parchment);
+  border-radius: 3px;
+}
+
+.ws-body-block {
+  margin-bottom: 28px;
+}
+.ws-body-block:last-child { margin-bottom: 0; }
+
+.ws-body-block h5 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--slate);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.ws-body-block p { font-size: 15.5px; margin-bottom: 8px; }
+
+.tool-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: var(--cream);
+  border: 1px solid var(--line-strong);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--ink);
+  margin: 4px 6px 4px 0;
+  font-weight: 500;
+}
+
+.tool-chip.saas { border-color: var(--graphite); }
+.tool-chip.custom { background: var(--amber); color: var(--cream); border-color: var(--amber); }
+.tool-chip.existing { background: var(--sage); color: var(--cream); border-color: var(--sage); }
+
+.split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 600px) { .split-row { grid-template-columns: 1fr;} }
+
+.split-col {
+  background: var(--cream);
+  padding: 20px;
+  border-left: 2px solid var(--amber);
+}
+
+.split-col.human { border-left-color: var(--graphite); }
+
+.split-col h6 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.split-col ul { list-style: none; }
+.split-col li {
+  font-size: 14px;
+  padding: 4px 0;
+  color: var(--graphite);
+}
+
+/* ============ ROADMAP ============ */
+.roadmap {
+  display: grid;
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.phase {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  padding: 36px 40px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  position: relative;
+  transition: all 0.3s;
+}
+
+.phase:hover {
+  border-color: var(--amber);
+  transform: translateX(4px);
+}
+
+@media (max-width: 800px) {
+  .phase { grid-template-columns: 1fr; padding: 28px 24px; gap: 20px; }
+}
+
+.phase-meta { border-right: 1px solid var(--line); padding-right: 24px; }
+@media (max-width: 800px) { .phase-meta { border-right: none; padding-right: 0; padding-bottom: 16px; border-bottom: 1px solid var(--line); } }
+
+.phase-num {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--amber);
+  font-variation-settings: "opsz" 72, "SOFT" 50;
+}
+.phase-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--graphite);
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.phase-timing { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--slate); }
+
+.phase-body h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-variation-settings: "opsz" 32, "SOFT" 40;
+}
+
+.phase-body p { font-size: 15px; margin-bottom: 16px; }
+
+.phase-deliverables {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 20px;
+  margin-top: 14px;
+}
+@media (max-width: 600px) { .phase-deliverables { grid-template-columns: 1fr;} }
+
+.phase-deliverables li {
+  font-size: 14px;
+  color: var(--graphite);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+.phase-deliverables li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============ DAD PLAN ============ */
+.dad-quote {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--ink);
+  font-style: italic;
+  padding: 40px 0 16px;
+  border-top: 1px solid var(--line);
+  font-variation-settings: "opsz" 44, "SOFT" 60;
+  max-width: 24ch;
+}
+
+.dad-quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 48px;
+}
+
+.dad-strategy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) { .dad-strategy { grid-template-columns: 1fr; gap: 32px; } }
+
+.dad-move {
+  padding: 32px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.dad-move-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.dad-move h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  font-variation-settings: "opsz" 32, "SOFT" 50;
+}
+
+.dad-move p { font-size: 15.5px; line-height: 1.6;}
+
+/* ============ METRICS ============ */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 900px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .metrics-grid { grid-template-columns: 1fr; } }
+
+.metric {
+  background: var(--paper);
+  padding: 32px 28px;
+}
+
+.metric-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  margin-bottom: 20px;
+  min-height: 2.4em;
+}
+
+.metric-compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metric-now, .metric-target {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-micro {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+}
+
+.metric-now .metric-val { color: var(--terracotta); }
+.metric-target .metric-val { color: var(--sage); }
+
+.metric-val {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-variation-settings: "opsz" 40, "SOFT" 40;
+}
+
+.metric-arrow { color: var(--amber); font-family: 'JetBrains Mono', monospace; }
+
+.metric-source {
+  font-size: 13px;
+  color: var(--graphite);
+  line-height: 1.5;
+}
+
+/* ============ CTA / NEXT STEPS ============ */
+.cta {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 100px 0;
+  border-top: none;
+  border-bottom: none;
+}
+
+.cta .section-label { color: var(--amber-soft); }
+.cta .section-label::after { background: rgba(245, 241, 234, 0.15); }
+.cta p { color: rgba(245, 241, 234, 0.7); }
+.cta .display-lg { color: var(--cream); }
+
+.week-one {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+  background: rgba(245, 241, 234, 0.1);
+}
+
+@media (max-width: 900px) { .week-one { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .week-one { grid-template-columns: 1fr; } }
+
+.day {
+  background: var(--ink);
+  padding: 28px 20px;
+}
+
+.day-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber-soft);
+  margin-bottom: 10px;
+}
+
+.day-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  line-height: 1.2;
+  font-weight: 500;
+  font-variation-settings: "opsz" 28, "SOFT" 50;
+}
+
+.day-detail { font-size: 13px; color: rgba(245, 241, 234, 0.6); line-height: 1.45; }
+
+/* ============ FOOTER ============ */
+footer {
+  padding: 60px 0 40px;
+  background: var(--cream);
+  border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-variation-settings: "opsz" 20, "SOFT" 50;
+  color: var(--graphite);
+  font-style: italic;
+}
+
+.footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+/* ============ UTILITY ============ */
+.deck { max-width: 70ch; }
+.cluster-quote {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--graphite);
+  font-size: 15px;
+  border-left: 2px solid var(--amber);
+  padding-left: 16px;
+  margin-top: 14px;
+  font-variation-settings: "opsz" 20, "SOFT" 70;
+}
+
+.disclaimer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--slate);
+  font-style: italic;
+  line-height: 1.55;
+  max-width: 72ch;
+}
+
+/* reveal */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2 L28 10 L28 22 L16 30 L4 22 L4 10 Z" fill="none" stroke="#D4622A" stroke-width="1.5"/>
+          <path d="M16 8 L22 12 L22 20 L16 24 L10 20 L10 12 Z" fill="#D4622A"/>
+          <path d="M16 2 L16 30 M4 10 L28 22 M4 22 L28 10" stroke="#1A1815" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </span>
+      Fenix <em style="font-weight:300; font-variation-settings:'opsz' 14, 'SOFT' 80;">Blueprint</em>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#landscape">Landscape</a>
+      <a href="#strategy">Strategy</a>
+      <a href="#blueprint">Blueprint</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#dad">The Dad Plan</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#next">Next Steps</a>
+    </div>
+    <div class="nav-meta">v1.0 / Opus 4.6</div>
+    <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="padding-bottom: 60px;">
+  <svg class="hero-grid" viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="rebar" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M 0 40 L 80 40 M 40 0 L 40 80" stroke="#1A1815" stroke-width="0.4" opacity="0.15"/>
+      </pattern>
+      <linearGradient id="fade" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F5F1EA" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#F5F1EA" stop-opacity="0.95"/>
+      </linearGradient>
+    </defs>
+    <rect width="1400" height="800" fill="url(#rebar)"/>
+    <!-- Tension cable lines -->
+    <g opacity="0.3">
+      <path d="M -50 200 Q 700 400 1450 180" stroke="#D4622A" stroke-width="1" fill="none" stroke-dasharray="3 6"/>
+      <path d="M -50 400 Q 700 600 1450 380" stroke="#D4622A" stroke-width="1" fill="none" stroke-dasharray="3 6"/>
+      <path d="M -50 600 Q 700 800 1450 580" stroke="#D4622A" stroke-width="1" fill="none" stroke-dasharray="3 6"/>
+    </g>
+    <rect width="1400" height="800" fill="url(#fade)"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Business Transformation Blueprint / v1
+    </div>
+
+    <h1 class="display-xl hero-title">
+      A Parallel <span class="amber">Path</span> Forward for Fenix Post Tension
+    </h1>
+
+    <p class="lead hero-lead">
+      Twenty years of engineering excellence deserves a second act. This is a plan to modernize Fenix without breaking what works — to build a second, parallel operating system that runs alongside the first, quietly captures the business's invisible intelligence, and hands the next generation a company that can scale.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Prepared for</span>
+        <span class="hero-meta-value">Jason Cuéllar</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Authored by</span>
+        <span class="hero-meta-value">Andrei · Novian Intelligence</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Date</span>
+        <span class="hero-meta-value">April 2026</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Engagement</span>
+        <span class="hero-meta-value">Pro Bono · POC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OVERVIEW / EXEC SUMMARY ============ -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">01</span>
+      <span>Executive Summary</span>
+    </div>
+
+    <h2 class="display-lg">The business runs. The business is at risk. Both are true.</h2>
+
+    <div class="exec-grid" style="margin-top: 40px;">
+      <div>
+        <p class="lead" style="margin-bottom: 32px;">
+          Fenix Post Tension is a profitable, trusted, 20-year Central Texas supplier moving roughly four hundred foundations a month at peak. Customers stay for two decades. The quality is real. The margins are healthy.
+        </p>
+        <p>
+          And yet the entire operational intelligence of the company — which builder gets which pricing, what a plan takes to quote, when to reorder cable, which jobs are priority, how a new hire learns the trade — lives in three people's heads and one wobbly binder. The estimating genius is your dad's. The inventory discipline is Larry's. The coordination choreography is Carlos's. None of it is written down. None of it is queryable. None of it is transferable.
+        </p>
+        <p>
+          The risk isn't today. The risk is the day one of those brains walks out the door — retirement, illness, a better offer — and the business discovers it cannot function without them. Consolidators like QXO are already buying up post-tensioning shops and undercutting on price. Competing on relationships alone is a closing window.
+        </p>
+      </div>
+      <div class="thesis">
+        <div class="thesis-label">The Strategic Bet</div>
+        <p>
+          Don't rebuild Fenix. Build a <em>shadow twin</em> of Fenix — a second operating system that runs in parallel, captures everything the humans do, learns the patterns, and slowly becomes capable of doing more of the work itself. Dad keeps doing dad. The company gets modern underneath him.
+        </p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-number">~400<span class="unit">/mo</span></div>
+        <div class="stat-label">Foundations at peak volume</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">80<span class="unit">%</span></div>
+        <div class="stat-label">Repeat-customer revenue</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Person who reads every plan</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Real-time visibility systems</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LANDSCAPE / PAIN POINTS ============ -->
+<section id="landscape">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">02</span>
+      <span>The Landscape</span>
+    </div>
+
+    <h2 class="display-lg">Where the friction lives.</h2>
+    <p class="lead deck" style="margin-bottom: 16px;">
+      What follows is what we heard in a ninety-minute conversation — organized into six clusters, each rated for risk severity and paired with the business impact of leaving it as-is.
+    </p>
+    <p class="lead deck" style="margin-bottom: 60px;">
+      This isn't a gotcha list. These are the places where a company built on relationships runs face-first into the limits of memory and paper.
+    </p>
+
+    <div class="pain-clusters">
+
+      <!-- Cluster 1: Intake & Estimating -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">01</div>
+          <div class="pain-cluster-title">Plans Intake & Estimating</div>
+          <div class="severity severity-high"><span class="severity-dot"></span>Critical</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>Builder plans arrive as PDFs scattered across individual Gmail inboxes — and Dad's Yahoo.</li>
+              <li>No unified intake address. If a plan lands in the wrong person's inbox, it sits there.</li>
+              <li>Dad personally reads every plan and produces every takeoff, by eye and experience.</li>
+              <li>Typical quote turnaround is ~1 week. Dad doesn't know the industry average. Nobody does.</li>
+              <li>No queue. No priority view. No visibility into which quotes are in flight.</li>
+              <li>The pricing matrix lives partially in Excel and partially in Dad's twenty-year memory.</li>
+            </ul>
+            <div class="cluster-quote">"There's not really a queue that you can look at and just be like, okay, this one is the one that's most important right now."</div>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>Single point of failure: if Dad is out, quoting stops entirely.</li>
+              <li>Turnaround likely 2–3x slower than industry leaders — measurable revenue left on the table as builders go elsewhere for urgent jobs.</li>
+              <li>Impossible to benchmark or improve a process that isn't instrumented.</li>
+              <li>The company's most valuable IP — how Dad prices — walks out the door when he does.</li>
+              <li>Near-zero leverage: Dad's output is capped at Dad's personal capacity.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cluster 2: Scheduling & Job Ops -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">02</div>
+          <div class="pain-cluster-title">Scheduling & Job Operations</div>
+          <div class="severity severity-high"><span class="severity-dot"></span>Critical</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>Scheduling lives in one Google Sheet maintained by Carlos and a few others.</li>
+              <li>Drivers, field crews, warehouse, and office coordinate via individual texts and phone calls — no shared visibility.</li>
+              <li>Field contractors (not employees) call in when jobs are done; someone in the office manually notes it.</li>
+              <li>~10–15% of jobs have change orders — all handled verbally, rippled to production by voice.</li>
+              <li>Builders call Fenix to ask where their job is in the queue, because they have no other way to find out.</li>
+            </ul>
+            <div class="cluster-quote">"If that spreadsheet had its own section... its own login for a fucking builder to see where in the process their house is — because sometimes they'll call to just know that."</div>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>Office time absorbed by status-check phone calls that could be self-serve.</li>
+              <li>No way to measure cycle time, delivery performance, or on-time rate — you're flying blind on operational KPIs.</li>
+              <li>Change orders routed verbally invite miscommunication and waste.</li>
+              <li>Jason has no visibility when he's not physically in the office, which means he has to be in the office.</li>
+              <li>Zero competitive marketing story (e.g. "fastest turnaround in Central Texas") because no data backs it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cluster 3: Inventory & Supply Chain -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">03</div>
+          <div class="pain-cluster-title">Inventory & Supply Chain</div>
+          <div class="severity severity-high"><span class="severity-dot"></span>Critical</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>Larry (warehouse manager, late 60s) tracks all material in a <em>physical binder</em>. Pen and paper.</li>
+              <li>Reorder decisions are based on Larry's mental model of "job trends" — no formula, no data.</li>
+              <li>No real-time answer to "do we have the cable for this week's jobs?"</li>
+              <li>Material arrives via multiple suppliers (direct-from-China via brother, U.S. middlemen) with no unified view.</li>
+              <li>Mid-job shortages happen; they're resolved reactively by phone.</li>
+            </ul>
+            <div class="cluster-quote">"If we have a screw to leave the warehouse, how do we know?"</div>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>Capital tied up in over-ordering as a hedge against uncertainty.</li>
+              <li>Stockouts cause job delays, which damage builder relationships.</li>
+              <li>When Larry retires, the business loses institutional memory of every supplier, every spec, every price point.</li>
+              <li>No ability to attribute material cost accurately to specific jobs — margin analysis is approximation.</li>
+              <li>No leverage for supplier negotiation — nobody can see consumption patterns in aggregate.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cluster 4: Customer Experience & Relationships -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">04</div>
+          <div class="pain-cluster-title">Customer Experience & Relationships</div>
+          <div class="severity severity-med"><span class="severity-dot"></span>High</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>No CRM. Client contact info is scattered across individual Gmail inboxes and one shared spreadsheet.</li>
+              <li>No client portal. Builders have no way to self-serve job status, documents, or invoice history.</li>
+              <li>Google reviews are positive but sparse — no systematic incentive to capture them.</li>
+              <li>80% of revenue is repeat business, but there's no relationship management layer, just personal habits.</li>
+              <li>Christmas gift baskets are the retention strategy. (Which is lovely, but unscalable.)</li>
+            </ul>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>Growth is bottlenecked by founder-led relationships that don't transfer.</li>
+              <li>Builder churn risk is invisible until it's too late — no health-score on any account.</li>
+              <li>Review scarcity hurts both SEO and social proof at exactly the moment consolidators are buying up competitors.</li>
+              <li>Missed cross-sell / upsell opportunities — no tracking of which customers use which products.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cluster 5: Knowledge & Documentation -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">05</div>
+          <div class="pain-cluster-title">Knowledge & Documentation</div>
+          <div class="severity severity-high"><span class="severity-dot"></span>Critical</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>No employee handbook. No SOPs. The OSHA manual is "under a wobbly table somewhere."</li>
+              <li>Past jobs are stored in binders — you cannot query "what did we do for this builder in 2021?"</li>
+              <li>New hires learn by shadowing the warehouse manager. Tribal knowledge, start to finish.</li>
+              <li>Custom pricing for long-term clients lives only in Dad's head and email history.</li>
+              <li>Jason has started drafting SOPs with ChatGPT during slow months but hasn't had time to push further.</li>
+            </ul>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>The company is not sellable at fair value without documented processes.</li>
+              <li>Succession is a leap of faith, not a transfer of assets.</li>
+              <li>Onboarding new hires takes longer than it should and produces inconsistent results.</li>
+              <li>Every time a long-tenured employee leaves, the company loses institutional knowledge permanently.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cluster 6: Tech Foundation & Web Presence -->
+      <div class="pain-cluster">
+        <div class="pain-cluster-header">
+          <div class="pain-num">06</div>
+          <div class="pain-cluster-title">Tech Foundation & Web Presence</div>
+          <div class="severity severity-med"><span class="severity-dot"></span>High</div>
+        </div>
+        <div class="pain-body">
+          <div class="pain-section">
+            <h5>What We Heard</h5>
+            <ul class="pain-list">
+              <li>Mixed email environment: most of the team on Gmail, Dad on Yahoo. No shared identity domain.</li>
+              <li>Website is on Wix. SEO has slipped off the first page of Google.</li>
+              <li>Blog exists but has been abandoned.</li>
+              <li>No internal messaging (no Slack, no Teams). Communication is texts and calls.</li>
+              <li>No paid ads, no lead tracking, no website analytics review.</li>
+              <li>Networking, camera systems, and hardware foundation are actually solid — Jason has already run Unifi throughout.</li>
+            </ul>
+          </div>
+          <div class="pain-section">
+            <h5>Business Impact</h5>
+            <ul class="pain-list impact-list">
+              <li>Missing shared identity (@fenixposttension.com) makes everything downstream — CRM, document sharing, AI automation — harder to deploy cleanly.</li>
+              <li>Losing SEO position to competitors is losing inbound pipeline for the 20% of net-new revenue.</li>
+              <li>Zero internal comms tooling means coordination friction scales linearly with headcount — it's already hurting a 25-person company.</li>
+              <li>You can't instrument what you can't route through a common system.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRATEGY ============ -->
+<section id="strategy">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">03</span>
+      <span>Strategy</span>
+    </div>
+
+    <h2 class="display-lg">Five principles that govern every decision in this plan.</h2>
+    <p class="lead deck">
+      Before any tool selection, any phase, any investment — these five rules shape the approach. When in doubt, come back here.
+    </p>
+
+    <div class="principles-grid">
+      <div class="principle">
+        <div class="principle-num">01</div>
+        <div>
+          <div class="principle-title">Parallel, never replace.</div>
+          <div class="principle-desc">Nothing we build removes a tool, inbox, or workflow that Dad, Larry, or Carlos currently depends on. New systems run <em>in addition to</em> old ones until value is self-evident. Day one of every new tool: the old way still works exactly as before.</div>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">02</div>
+        <div>
+          <div class="principle-title">Visibility before automation.</div>
+          <div class="principle-desc">You cannot automate a process you cannot see. The first act of every workstream is to make the current (manual) process measurable and observable. Only then do we decide what to automate and what to preserve as human judgment.</div>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">03</div>
+        <div>
+          <div class="principle-title">Capture tribal knowledge as insurance.</div>
+          <div class="principle-desc">Treat Dad's estimating intuition, Larry's supplier playbook, and Carlos's scheduling dance as irreplaceable business assets. Document them as we go — with their consent — into a structured knowledge base that outlives any one person.</div>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">04</div>
+        <div>
+          <div class="principle-title">Adopt before building.</div>
+          <div class="principle-desc">For any need, we try SaaS first. Custom-built only where SaaS fails — usually because (a) no vendor serves the post-tensioning niche, or (b) integration across systems demands glue code we have to write ourselves. AI agents are the glue layer.</div>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">05</div>
+        <div>
+          <div class="principle-title">Every phase must show Dad-proof ROI.</div>
+          <div class="principle-desc">Each phase is designed to produce one undeniable, visible-in-a-spreadsheet business win within 30–60 days. Not theoretical value. Actual dollars, hours, or new leads. That is how a 60-year-old founder changes his mind — evidence, not evangelism.</div>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">06</div>
+        <div>
+          <div class="principle-title">Jason's POC, Jason's leverage.</div>
+          <div class="principle-desc">Because you (Jason) are self-funding the POC, the entire early-phase plan must be achievable on a personal budget — under a few hundred dollars a month in tools. We prove the model, then the business buys in. No asking Dad to approve anything until there's a working demo to point at.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture Diagram -->
+    <div style="margin-top: 100px;">
+      <div class="eyebrow" style="margin-bottom: 16px;">THE FUTURE STATE</div>
+      <h3 class="display-md">A four-layer operating system, built in concentric rings.</h3>
+      <p style="max-width: 72ch;">Think of it like post-tension itself — layered structure, each layer carrying the load of the one above it. We build from the foundation up. Nothing higher works without the layer beneath it.</p>
+
+      <div class="architecture-frame">
+        <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto;">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F5F1EA"/>
+              <stop offset="100%" stop-color="#EDE6D7"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Outer ring: Experience -->
+          <ellipse cx="450" cy="260" rx="430" ry="240" fill="url(#ringGrad)" stroke="#1A1815" stroke-width="1" opacity="0.6"/>
+          <text x="70" y="36" font-family="JetBrains Mono" font-size="11" fill="#6C7380" letter-spacing="1.5">LAYER 04 — EXPERIENCE</text>
+          <text x="70" y="56" font-family="Fraunces" font-size="18" font-weight="500" fill="#1A1815">Builder Portal · Review Automation · Marketing CRM · Website</text>
+
+          <!-- Third ring: Intelligence -->
+          <ellipse cx="450" cy="260" rx="340" ry="180" fill="#EDE6D7" stroke="#1A1815" stroke-width="1" opacity="0.7"/>
+          <text x="130" y="120" font-family="JetBrains Mono" font-size="11" fill="#D4622A" letter-spacing="1.5">LAYER 03 — INTELLIGENCE</text>
+          <text x="130" y="140" font-family="Fraunces" font-size="16" font-weight="500" fill="#1A1815">AI Takeoff Assist · Reorder Forecast · Knowledge Agent · Status Bot</text>
+
+          <!-- Second ring: Visibility -->
+          <ellipse cx="450" cy="260" rx="240" ry="120" fill="#F5F1EA" stroke="#1A1815" stroke-width="1"/>
+          <text x="230" y="200" font-family="JetBrains Mono" font-size="11" fill="#3B4451" letter-spacing="1.5">LAYER 02 — VISIBILITY</text>
+          <text x="230" y="220" font-family="Fraunces" font-size="15" font-weight="500" fill="#1A1815">Job Board · Inventory · Scheduling · KPIs</text>
+
+          <!-- Core: Foundation -->
+          <ellipse cx="450" cy="260" rx="140" ry="60" fill="#D4622A"/>
+          <text x="450" y="258" font-family="JetBrains Mono" font-size="10" fill="#F5F1EA" letter-spacing="1.5" text-anchor="middle">LAYER 01 — FOUNDATION</text>
+          <text x="450" y="280" font-family="Fraunces" font-size="14" font-weight="500" fill="#F5F1EA" text-anchor="middle">Google Workspace · Notion · QuickBooks</text>
+
+          <!-- Connection lines -->
+          <g stroke="#D4622A" stroke-width="0.8" opacity="0.4" fill="none" stroke-dasharray="2 3">
+            <line x1="450" y1="200" x2="450" y2="140"/>
+            <line x1="450" y1="320" x2="450" y2="380"/>
+            <line x1="310" y1="260" x2="210" y2="260"/>
+            <line x1="590" y1="260" x2="690" y2="260"/>
+          </g>
+
+          <!-- Annotations -->
+          <text x="450" y="475" font-family="JetBrains Mono" font-size="10" fill="#6C7380" text-anchor="middle" letter-spacing="1">EACH LAYER DEPENDS ON THE ONE BELOW IT</text>
+        </svg>
+        <div class="arch-caption">Fig. 1 — The Modernization Stack. Build from the core outward.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLUEPRINT ============ -->
+<section id="blueprint">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">04</span>
+      <span>The Blueprint</span>
+    </div>
+
+    <h2 class="display-lg">The seven workstreams, in detail.</h2>
+    <p class="lead deck" style="margin-bottom: 20px;">
+      Each workstream maps a pain cluster to a proposed solution — the specific tools, the automation/human split, the integration points, and a cost envelope. Tools are color-coded:
+    </p>
+    <p style="max-width: 72ch;">
+      <span class="tool-chip saas">SaaS</span> commercial software we subscribe to &nbsp;
+      <span class="tool-chip custom">Custom</span> we build ourselves &nbsp;
+      <span class="tool-chip existing">Keep</span> already in place, don't replace
+    </p>
+
+    <!-- Workstream 1: Foundation -->
+    <div class="workstream" style="margin-top: 80px;">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 01</span>
+        <h3>The Foundation</h3>
+        <p class="workstream-tagline">Email, identity, file storage, and a single source of truth — the stuff everything else sits on top of.</p>
+        <span class="workstream-cost">Est. $200–300/mo</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Consolidate the company onto Google Workspace Business Standard with a proper <em>@fenixposttension.com</em> domain for everyone — Dad included. Migrate Yahoo to Gmail under the hood (Dad keeps reading his email exactly the way he always has, he just has a new address bar). Roll out a shared Google Drive for plans, contracts, and job files. Stand up Notion as the knowledge base and SOP library.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">Google Workspace Business Standard</span>
+          <span class="tool-chip saas">Notion Team</span>
+          <span class="tool-chip existing">QuickBooks Online</span>
+          <span class="tool-chip existing">ADP</span>
+          <span class="tool-chip existing">Unifi Network</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Auto-forward and classify inbound emails</li><li>Auto-file plan PDFs by builder</li><li>Extract metadata (builder, address, job type)</li><li>Populate Notion database entries from emails</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Review classifications (at first)</li><li>Approve SOPs and Notion pages</li><li>Handle sensitive client escalations</li><li>Decide pricing and quotes</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 2: Plans Intake -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 02</span>
+        <h3>Plans Intake & Quote Engine</h3>
+        <p class="workstream-tagline">Turn a chaotic email-driven intake into a tracked, measurable pipeline — and quietly prepare to AI-assist the takeoff process itself.</p>
+        <span class="workstream-cost">Est. $150–400/mo (POC), $800–1,500/mo (full)</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Create one unified intake address (<em>plans@fenixposttension.com</em>) that receives every new plan. A small agentic workflow classifies the email, extracts the PDF, identifies the builder, and creates a job record in Airtable — automatically. Dad still receives his copy in his inbox exactly as always, but now every plan is <strong>also</strong> tracked in a shared queue with status, priority, assigned-to, and SLA timer. Quote turnaround becomes measurable for the first time.</p>
+          <p>Phase 2 adds AI-assisted takeoff: Claude (or a specialist like Togal.AI / Kreo) reads the PDF plans and proposes a rough takeoff that Dad reviews and corrects. Over 6–12 months, the system learns Dad's preferences and gets dramatically more accurate — the shadow twin of his estimating brain.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">Airtable (job records)</span>
+          <span class="tool-chip saas">Zapier / Make (email automation)</span>
+          <span class="tool-chip custom">Claude agent for plan parsing</span>
+          <span class="tool-chip saas">Togal.AI or Kreo (optional, takeoff)</span>
+          <span class="tool-chip saas">Softr (builder-facing portal)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Intake classification & routing</li><li>PDF parsing & data extraction</li><li>Queue management & SLA timers</li><li>Draft takeoff suggestions (Phase 2)</li><li>Builder status replies</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Final pricing decisions (Dad)</li><li>Plan interpretation edge cases</li><li>Client negotiation & relationship</li><li>Approval on every quote before send</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 3: Job Tracking -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 03</span>
+        <h3>Job Tracking & Scheduling</h3>
+        <p class="workstream-tagline">One live view of every job in every stage — for office, warehouse, drivers, field crews, <em>and</em> builders.</p>
+        <span class="workstream-cost">Est. $100–250/mo</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Every job becomes a row in Airtable with stages: <em>Plans Received → Quoted → Confirmed → Scheduled → Cut → Loaded → Delivered → Installed → Invoiced</em>. The existing Google Sheet continues to work unchanged (parallel rule) — but the Airtable view is auto-populated from it, and a driver-facing iPhone view lets drivers tap "Delivered" instead of calling the office. A Softr-built builder portal lets Lennar, D.R. Horton, and the rest self-serve status by job address.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">Airtable (core job database)</span>
+          <span class="tool-chip saas">Softr (builder portal)</span>
+          <span class="tool-chip saas">Airtable mobile (driver & field view)</span>
+          <span class="tool-chip existing">Google Sheets (parallel-running source of truth, first 90 days)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Stage transitions based on triggers (e.g., invoice sent → stage 9)</li><li>Priority re-ranking based on builder deadlines</li><li>Auto-alert when a job is at risk of missing SLA</li><li>Builder status responses to inbound queries</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Carlos's scheduling judgment</li><li>Field crew coordination</li><li>Change-order conversations with builders</li><li>Anomaly resolution</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 4: Inventory -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 04</span>
+        <h3>Inventory & Supply Chain</h3>
+        <p class="workstream-tagline">Retire the binder — respectfully — with QR-coded digital inventory and a reorder engine that learns Larry's patterns before he walks.</p>
+        <span class="workstream-cost">Est. $80–200/mo + one-time hardware ~$400</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Deploy Sortly (or a lightweight Airtable-based inventory) with QR codes on every bin, coil, and pallet. For the first 60 days, Larry continues his binder while a warehouse helper scans items in and out — the two systems run side-by-side so Larry can validate the digital version matches his reality. Reorder thresholds start at simple min/max quantities, then evolve into a forecast model driven by upcoming job volume from Workstream 03.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">Sortly (inventory + QR codes)</span>
+          <span class="tool-chip saas">Airtable (alternative, if unifying stack)</span>
+          <span class="tool-chip custom">Reorder forecast agent (Claude-powered)</span>
+          <span class="tool-chip existing">QuickBooks Online (integration for COGS)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Forecast demand from upcoming job queue</li><li>Flag low-stock items before they become critical</li><li>Suggest POs with supplier, quantity, and ETA</li><li>Track material-to-job attribution automatically</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Larry approves every PO (at first)</li><li>Supplier negotiation & relationship</li><li>Physical receipt, inspection, QC</li><li>Override on demand spikes</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 5: Customer & CRM -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 05</span>
+        <h3>Customer Relationships & CRM</h3>
+        <p class="workstream-tagline">One shared view of every builder relationship — with agentic workflows that harvest reviews, nurture accounts, and flag churn risk.</p>
+        <span class="workstream-cost">Est. $100–300/mo</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Stand up HubSpot Free (yes, free tier is real and usable) or Attio for a clean modern CRM. Every builder, contact, job, and invoice lives linked in one graph. An agentic review workflow triggers a branded text or email after every delivery with a one-tap Google review link — then drops the contact into a gift-card raffle maintained by an automation. For Jason's DJ business as a bonus, the same CRM pattern applies; we can template it.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">HubSpot Free or Attio</span>
+          <span class="tool-chip saas">NiceJob or Podium (review automation)</span>
+          <span class="tool-chip custom">Claude agent for churn-signal monitoring</span>
+          <span class="tool-chip saas">Zapier (glue for automations)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Post-delivery review requests</li><li>Raffle / incentive management</li><li>Account health scoring</li><li>Flag builders who haven't ordered recently</li><li>Draft personalized outreach</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Relationship-critical calls</li><li>Negotiation on pricing</li><li>Escalation on unhappy accounts</li><li>Christmas baskets (keep it!)</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 6: Knowledge -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 06</span>
+        <h3>Knowledge Capture & SOPs</h3>
+        <p class="workstream-tagline">Record, structure, and preserve the tribal knowledge sitting in Dad, Larry, and Carlos's heads — before the market forces the issue.</p>
+        <span class="workstream-cost">Est. $50–150/mo</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Run structured, recorded interviews (the exact methodology Andrei used for this document) with Dad, Larry, Carlos, and the warehouse manager — one topic per session, 30–45 minutes. Transcribe with MacWhisper locally. Claude synthesizes each transcript into a structured Notion page: pricing logic, supplier relationships, scheduling rules, installation standards. Over a quarter, you end up with a living, queryable Fenix operations manual. Dad's ongoing emails and calls can be optionally captured and appended by an AI teammate running quietly in the background.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip existing">MacWhisper (already in use)</span>
+          <span class="tool-chip saas">Notion</span>
+          <span class="tool-chip custom">Claude synthesis pipeline (already built for Novian)</span>
+          <span class="tool-chip saas">Granola or Otter (optional, live meeting capture)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Transcription & speaker diarization</li><li>Summarization into structured SOPs</li><li>Cross-reference related topics</li><li>Query interface ("what did Dad charge X in 2019?")</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Interviewer (Jason, most likely)</li><li>Subject-matter review & approval</li><li>Judgment on what to document vs. withhold</li><li>Ongoing curation</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workstream 7: Web & Lead Gen -->
+    <div class="workstream">
+      <div class="workstream-head">
+        <span class="workstream-num">WORKSTREAM 07</span>
+        <h3>Website, SEO, and Lead Generation</h3>
+        <p class="workstream-tagline">Reclaim the first page of Google, instrument the funnel, and give the 20% of net-new business a reason to call Fenix first.</p>
+        <span class="workstream-cost">Est. $50–200/mo hosting + one-time build ~$0–2,000</span>
+      </div>
+      <div>
+        <div class="ws-body-block">
+          <h5>The Move</h5>
+          <p>Move off Wix. Rebuild on Framer or a custom Next.js site (Netlify-hosted, free tier covers the traffic profile) — far more design flexibility than Webflow at a fraction of the cost. Re-establish Google Business Profile, publish real case studies from your best jobs, and have an AI agent produce one technical blog post per month (on topics like "choosing rebar spacing for slab-on-grade in Central Texas clay") to rebuild SEO authority. Add GA4 analytics, call tracking, and a Calendly-style quote-request flow.</p>
+        </div>
+        <div class="ws-body-block">
+          <h5>Tools</h5>
+          <span class="tool-chip saas">Framer or Next.js + Netlify</span>
+          <span class="tool-chip saas">Google Business Profile</span>
+          <span class="tool-chip saas">GA4 + Plausible</span>
+          <span class="tool-chip custom">Claude-powered content pipeline</span>
+          <span class="tool-chip saas">CallRail (call tracking, optional)</span>
+        </div>
+        <div class="ws-body-block">
+          <h5>What AI Handles vs. What Humans Do</h5>
+          <div class="split-row">
+            <div class="split-col"><h6>AI / Automation</h6><ul><li>Monthly SEO content drafts</li><li>Google Business review monitoring</li><li>Inbound lead routing & qualification</li><li>Case study drafting from job records</li></ul></div>
+            <div class="split-col human"><h6>Humans Still</h6><ul><li>Final review on public content</li><li>Client approval on case studies</li><li>Strategic marketing direction</li><li>Handling the first call with a lead</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">05</span>
+      <span>The Roadmap</span>
+    </div>
+
+    <h2 class="display-lg">A phased, Dad-proof twelve-month plan.</h2>
+    <p class="lead deck">
+      Five phases. Each phase ends with one undeniable, visible business win. No phase depends on Dad approving anything — every dollar of early investment is Jason's personal POC budget. The first real ask of the business comes only after value is self-evident.
+    </p>
+
+    <div class="roadmap">
+
+      <div class="phase">
+        <div class="phase-meta">
+          <div class="phase-num">00</div>
+          <div class="phase-name">Foundation</div>
+          <div class="phase-timing">Weeks 1–2</div>
+        </div>
+        <div class="phase-body">
+          <h4>Set the stage. Zero disruption. Zero cost to the business.</h4>
+          <p>Jason stands up a personal Google Workspace account for <em>@fenixposttension.com</em> (or a test subdomain), provisions Notion and Airtable workspaces, and configures the intake automation sandbox. Nobody at the company has to do anything yet. This is the scaffolding for everything that follows.</p>
+          <ul class="phase-deliverables">
+            <li>Google Workspace POC environment</li>
+            <li>Notion workspace with initial SOP structure</li>
+            <li>Airtable with job-tracking schema</li>
+            <li>Shared Drive architecture designed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <div class="phase-num">01</div>
+          <div class="phase-name">Visibility</div>
+          <div class="phase-timing">Weeks 3–8</div>
+        </div>
+        <div class="phase-body">
+          <h4>Make the invisible visible. First KPI in 30 days.</h4>
+          <p>Wire up the Airtable job board to mirror the existing Google Sheet. Deploy to Carlos and the drivers (iPhones already in pocket — Jason handled that years ago). Instrument the first KPIs: quote turnaround time, job cycle time, on-time delivery rate. Run Larry's inventory in Sortly in parallel to his binder. <strong>The visible win:</strong> Jason walks in with a dashboard showing average quote turnaround dropped from X days to Y — and can prove it.</p>
+          <ul class="phase-deliverables">
+            <li>Live job dashboard (read-only for team)</li>
+            <li>Driver mobile view with tap-to-complete</li>
+            <li>Sortly inventory running parallel to binder</li>
+            <li>First KPI snapshot & baseline</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <div class="phase-num">02</div>
+          <div class="phase-name">Intake & Portal</div>
+          <div class="phase-timing">Weeks 9–16</div>
+        </div>
+        <div class="phase-body">
+          <h4>Builders self-serve. Plans get tracked from moment one.</h4>
+          <p>Stand up <em>plans@fenixposttension.com</em> with auto-classification. Launch the builder portal on Softr — Lennar, D.R. Horton, and your top five accounts get logins to see job status without calling the office. Deploy HubSpot for contact tracking. Begin Dad knowledge-capture interviews. <strong>The visible win:</strong> status-check phone calls to the office drop by 50%, giving Carlos and the office team hours back each week.</p>
+          <ul class="phase-deliverables">
+            <li>Unified plans intake with AI routing</li>
+            <li>Builder portal live for top 5 accounts</li>
+            <li>HubSpot CRM seeded with existing contacts</li>
+            <li>Dad's first pricing-logic interview completed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <div class="phase-num">03</div>
+          <div class="phase-name">Automation & Intelligence</div>
+          <div class="phase-timing">Months 5–8</div>
+        </div>
+        <div class="phase-body">
+          <h4>The shadow twin starts pulling its weight.</h4>
+          <p>AI-assisted takeoff goes into beta with Dad's oversight — Claude (or Togal.AI) proposes preliminary takeoffs from plans; Dad reviews, corrects, approves. The reorder forecast engine begins suggesting POs to Larry based on upcoming job volume. Review automation goes live — every delivery triggers a branded review request. Website migration kicks off. <strong>The visible win:</strong> quote turnaround drops dramatically, and 5-star Google reviews start multiplying.</p>
+          <ul class="phase-deliverables">
+            <li>AI takeoff in beta with Dad-in-the-loop</li>
+            <li>Reorder forecast engine suggesting POs</li>
+            <li>Review automation generating 20+ reviews/month</li>
+            <li>New Framer website launched</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-meta">
+          <div class="phase-num">04</div>
+          <div class="phase-name">Platform</div>
+          <div class="phase-timing">Months 9–12</div>
+        </div>
+        <div class="phase-body">
+          <h4>One cockpit. Measurable company. Ready to scale (or sell).</h4>
+          <p>Single-pane-of-glass dashboard unifies jobs, inventory, revenue, customer health, and marketing funnel. SOPs cover every critical process. The knowledge base is queryable. Larry has a documented successor playbook. Dad's estimating intuition is 70% captured. Consolidators come calling — and you have numbers to show them. <strong>The visible win:</strong> Jason can run operations from anywhere. The business has been transformed into an asset, not just a cash-flowing shop.</p>
+          <ul class="phase-deliverables">
+            <li>Unified executive dashboard</li>
+            <li>Full SOP library published</li>
+            <li>Dad-knowledge capture at 70%+ coverage</li>
+            <li>12-month KPI trend charts for all metrics</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ DAD PLAN ============ -->
+<section id="dad">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">06</span>
+      <span>The Dad Plan</span>
+    </div>
+
+    <h2 class="display-lg">The single biggest risk factor is Dad.<br><span style="color: var(--amber); font-style: italic;">The single biggest asset is also Dad.</span></h2>
+    <p class="lead deck">
+      Every transformation of a family business fails or succeeds on this one question: what do you do with the founder who built the thing, knows everything, and has every reason to resist change? The answer is not to fight him. The answer is to build around him, with him, in service of him.
+    </p>
+
+    <div class="dad-quote">"My dad is just — to him, everything is like fucking voodoo. He's never liked anything I've suggested or done. So I just have to do it."</div>
+    <div class="dad-quote-attr">— Jason, during the interview</div>
+
+    <div class="dad-strategy">
+      <div class="dad-move">
+        <div class="dad-move-label">Move 01 / Parallel Tracks</div>
+        <h4>Dad's workflow never changes — not for a single day.</h4>
+        <p>Every new system runs alongside the one Dad uses, never as a replacement. He continues to receive plans in his Yahoo-migrated Gmail. He continues to read them the way he always has. He continues to produce takeoffs in Excel. The new system silently captures his inputs and outputs — builds a parallel structured record — and over time learns his pricing patterns. Dad does not need to approve, adopt, or even notice. When he finally does notice, it will be because Jason shows him a dashboard with his own numbers on it and says, <em>"look what your expertise built."</em></p>
+      </div>
+
+      <div class="dad-move">
+        <div class="dad-move-label">Move 02 / Legacy Framing</div>
+        <h4>Position everything as protecting Dad's legacy, not replacing it.</h4>
+        <p>Dad has twenty years of pricing intuition that no software, no agency, no successor can match. That intuition is the most valuable asset in the company. It's also dangerously stored in exactly one brain. The modernization is not about making Dad obsolete — it's about making sure his life's work survives him. Every interview, every SOP, every documented process is a tribute to how much of what he does genuinely cannot be replaced. Lead with that. He'll listen differently.</p>
+      </div>
+
+      <div class="dad-move">
+        <div class="dad-move-label">Move 03 / Evidence, Not Evangelism</div>
+        <h4>Show him the before-and-after, measured in dollars or hours.</h4>
+        <p>Don't pitch Dad on agents, or AI, or automation, or platforms. Pitch him on: "we used to spend X hours a week on status calls from Lennar; now it's Y because they self-serve." Or: "quote turnaround used to be a week; now it's two days — and Lennar just called me asking if we could handle their Houston volume too." Dad did not build this company on theory. He built it on results. Bring him results.</p>
+      </div>
+
+      <div class="dad-move">
+        <div class="dad-move-label">Move 04 / The Mentor Path</div>
+        <h4>Honor his stated goal of mentoring a successor.</h4>
+        <p>He's said he wants to mentor someone into the business. Structure the knowledge-capture interviews <em>as</em> that mentorship — just with an AI teammate quietly documenting every session. Dad teaches. Jason listens. Claude transcribes, structures, and stores. Dad gets to do the thing he wants (pass wisdom down); the business gets the permanent asset it needs (captured institutional knowledge). Nobody has to call it "documentation."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METRICS ============ -->
+<section id="metrics">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">07</span>
+      <span>Metrics</span>
+    </div>
+
+    <h2 class="display-lg">If we can't measure it, we didn't change it.</h2>
+    <p class="lead deck">
+      Eight KPIs to instrument from day one. Baseline numbers are estimates drawn from the interview and will be replaced with actuals in Phase 01. Targets are conservative — real results likely outperform.
+    </p>
+
+    <div class="metrics-grid">
+
+      <div class="metric">
+        <div class="metric-name">Quote Turnaround Time</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">~7 days</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">2 days</span></div>
+        </div>
+        <div class="metric-source">Measured from plan received to quote delivered. Enables competitive "fastest turnaround" marketing claim.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Status-Check Calls to Office</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">Daily</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">–75%</span></div>
+        </div>
+        <div class="metric-source">Reduction driven by builder self-service portal. Frees up Carlos and office staff hours.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Google Reviews / Month</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">Sporadic</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">20+</span></div>
+        </div>
+        <div class="metric-source">Automated post-delivery review requests with incentive raffle.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Stockout Events</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">Unknown</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">–90%</span></div>
+        </div>
+        <div class="metric-source">Requires instrumenting Larry's binder first. Forecast-driven reordering closes the loop.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">% of Dad's Pricing Logic Documented</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">0%</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">70%</span></div>
+        </div>
+        <div class="metric-source">By end of year one, via structured interview series and quote-history analysis.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Jobs Visible in Real-Time</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">~20%</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">100%</span></div>
+        </div>
+        <div class="metric-source">Every job in every stage visible on dashboard. Enables single-pane-of-glass cockpit.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Net-New Inbound Leads / Month</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">Untracked</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">+40%</span></div>
+        </div>
+        <div class="metric-source">Post-website relaunch & SEO rebuild. GA4 + call tracking enable attribution.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Builder Account Health Score</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">Vibes</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">Measured</span></div>
+        </div>
+        <div class="metric-source">Scored by order frequency, on-time delivery, review score, and comms velocity per account.</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-name">Total Monthly Tech Spend</div>
+        <div class="metric-compare">
+          <div class="metric-now"><span class="metric-micro">Today</span><span class="metric-val">~$100</span></div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-target"><span class="metric-micro">Target</span><span class="metric-val">$800–1,500</span></div>
+        </div>
+        <div class="metric-source">Against a business doing hundreds of jobs/month, this is a fraction of what Procore quoted years ago — and far more capable.</div>
+      </div>
+
+    </div>
+
+    <p class="disclaimer">
+      A note on baselines: the "today" values above are estimated from a single ninety-minute conversation and should be treated as directional, not definitive. Phase 01 of the roadmap exists specifically to replace every estimate with a measured baseline — because the discipline of measuring is itself the first transformation.
+    </p>
+  </div>
+</section>
+
+<!-- ============ NEXT STEPS / CTA ============ -->
+<section id="next" class="cta">
+  <div class="container">
+    <div class="section-label">
+      <span class="section-number">08</span>
+      <span>Week One</span>
+    </div>
+
+    <h2 class="display-lg">The first five days. Five concrete actions.</h2>
+    <p class="lead deck" style="color: rgba(245, 241, 234, 0.75);">
+      No phase of the roadmap begins in earnest until Jason commits to this week. Every action here costs under an hour and under thirty dollars.
+    </p>
+
+    <div class="week-one">
+      <div class="day">
+        <div class="day-num">Day 01 · Mon</div>
+        <div class="day-title">Buy the domain foundation.</div>
+        <div class="day-detail">Sign up for Google Workspace Business Standard at @fenixposttension.com. Provision accounts for yourself and a test account for Dad — don't cut him over yet.</div>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 02 · Tue</div>
+        <div class="day-title">Spin up the workspaces.</div>
+        <div class="day-detail">Create the Airtable base with the job-tracking schema. Create the Notion workspace with the SOP template library. Connect your Anthropic API key.</div>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 03 · Wed</div>
+        <div class="day-title">Sync the sheet.</div>
+        <div class="day-detail">Build the first integration — the existing Google Sheet auto-syncs to Airtable. Nothing changes for the team. Now every job is also tracked in the new system.</div>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 04 · Thu</div>
+        <div class="day-title">Record Dad.</div>
+        <div class="day-detail">Sit with Dad over coffee for 30 minutes. Frame it as "teach me how you price Lennar jobs." Record with your phone. Transcribe with MacWhisper. That's your first knowledge capture.</div>
+      </div>
+      <div class="day">
+        <div class="day-num">Day 05 · Fri</div>
+        <div class="day-title">Show the ghost twin.</div>
+        <div class="day-detail">Build the first version of the dashboard — job count, stage distribution, oldest open quote. Send the screenshot to your brother. Don't ask permission yet. Plant the seed.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 100px; padding-top: 40px; border-top: 1px solid rgba(245, 241, 234, 0.15);">
+      <p class="eyebrow" style="color: var(--amber-soft); margin-bottom: 20px;">A CLOSING THOUGHT</p>
+      <p class="display-sm" style="color: var(--cream); max-width: 68ch; line-height: 1.35; font-weight: 400; font-variation-settings: 'opsz' 32, 'SOFT' 70;">
+        Fenix was named for a reason. Phoenixes don't tear themselves down — they transform themselves from within. This plan is the same bet: preserve the fire, modernize the structure around it, and give the next generation a company worth inheriting.
+      </p>
+      <p style="color: rgba(245, 241, 234, 0.6); margin-top: 40px; font-style: italic; font-family: 'Fraunces', serif; font-size: 16px; font-variation-settings: 'opsz' 20, 'SOFT' 70;">
+        — Claude Opus 4.6, for Andrei · Novian Intelligence · April 2026
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">Fenix Post Tension · A Parallel Path Forward</div>
+      <div class="footer-meta">Prepared Pro Bono · Novian Intelligence · v1.0</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Smooth nav highlighting
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+function updateActiveLink() {
+  const scrollPos = window.scrollY + 150;
+  sections.forEach(section => {
+    if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+      const id = section.getAttribute('id');
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    }
+  });
+}
+
+window.addEventListener('scroll', updateActiveLink);
+updateActiveLink();
+
+// Close mobile nav on link click
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Reveal on scroll
+const revealElements = document.querySelectorAll('.pain-cluster, .principle, .workstream, .phase, .dad-move, .metric, .day');
+revealElements.forEach(el => el.classList.add('reveal'));
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
