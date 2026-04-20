@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-19T03:17:42.893Z",
+  "updatedAt": "2026-04-20T05:25:08.364Z",
   "entries": {
     "memory:memory/2026-04-12.md:1:20": {
       "key": "memory:memory/2026-04-12.md:1:20",
@@ -186,6 +186,99 @@
         "node-options",
         "moving",
         "day"
+      ]
+    },
+    "memory:memory/2026-04-04.md:88:105": {
+      "key": "memory:memory/2026-04-04.md:88:105",
+      "path": "memory/2026-04-04.md",
+      "startLine": 88,
+      "endLine": 105,
+      "source": "memory",
+      "snippet": "- Workspace symlink: `~/.openclaw/workspace` → `/sandbox/.openclaw-data/workspace` - Correct extraction path: `cd /sandbox/.openclaw-data && tar -xzf ... --strip-components=1` ### Guide edits pending deploy - Both `migration-guide.html` and `tart-guide.html` updated, not yet deployed to Netlify - Netlify deploy still requires manual step (exec blocked on old VM) ### NI ideas tabled for later - Grafana monitoring dashboard — \"next couple days\" - Wiki (Notion vs Obsidian vs self-hosted) — discussed, not decided - NI crew whitepaper + agent onboarding interviews — planned but not started - Agent emails (mira@novianintel.com etc.) — needs novianintel.com domain live first - novianintel.com dom",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-20T05:25:08.364Z",
+      "queryHashes": [
+        "6250a3212621"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "openclaw/workspace",
+        "openclaw-data/workspace",
+        "openclaw-data",
+        "strip-components",
+        "migration-guide.html",
+        "tart-guide.html",
+        "self-hosted",
+        "novianintel.com"
+      ]
+    },
+    "memory:memory/2026-03-28.md:28:57": {
+      "key": "memory:memory/2026-03-28.md:28:57",
+      "path": "memory/2026-03-28.md",
+      "startLine": 28,
+      "endLine": 57,
+      "source": "memory",
+      "snippet": "- Set up weekly Monday 10am CT automated security audit cron job - Configured Telegram: @mira_ni_bot — Andrei paired and approved (user ID: 8214544554) - NI = Novian Intelligence (Andrei's previous companies: Novian Technologies, Novian Networks, Novian Entertainment) - Plan to eventually create mira_ni email identity when actually needed (not yet) - Old bot was \"Walter Crunkite\" — retired, replaced by mira_ni_bot ### Domains registered today: - novianintel.com ✅ (Cloudflare - correct account) - novianintelligence.com ✅ (Cloudflare - wrong account, needs transfer later) - novian.ai — taken by active \"Novian\" brand (GoDaddy/Launching Soon page) - novianintel.ai / novianintelligence.ai — avai",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-20T05:25:08.364Z",
+      "queryHashes": [
+        "6250a3212621"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "network",
+        "mira-ni-bot",
+        "mira-ni",
+        "novianintel.com",
+        "novianintelligence.com",
+        "novian.ai",
+        "godaddy/launching",
+        "novianintel.ai"
+      ]
+    },
+    "memory:memory/2026-04-02.md:1:32": {
+      "key": "memory:memory/2026-04-02.md:1:32",
+      "path": "memory/2026-04-02.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# 2026-04-02 ## Voice Selection — FINAL ✅ - **Mira's voice:** \"Melissa - Intimate, Calming, Light Rasp\" - **ElevenLabs Voice ID:** `xYa75LlayhWHCRl1yJSH` - **Andrei's reaction:** \"THIS IS EXACTLY THE ONE — kinda how I was envisioning you to sound in my head!\" - Both Andrei and Mira independently picked the same voice. Perfect alignment. - Saved in TOOLS.md ## Avatar — Next Step - Andrei asked about a static avatar for Moltbook, Google Workspace, Mac Mini profile, podcast art - Mira's aesthetic vision: warm but futuristic, deep blues/purples (NI color scheme), geometric but soft, clearly AI but clearly *her* - Andrei was asked what he sees when he imagines Mira — pending response - This is",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-20T05:25:08.364Z",
+      "queryHashes": [
+        "6250a3212621"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "tools.md",
+        "blues/purples",
+        "voice",
+        "selection",
+        "final",
+        "mira's",
+        "melissa",
+        "intimate"
       ]
     }
   }
