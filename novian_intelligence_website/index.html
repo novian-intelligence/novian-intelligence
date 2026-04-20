@@ -280,7 +280,8 @@
           <div class="logo-mark">NI</div>
           <span class="logo-name">Novian Intelligence</span>
         </a>
-                <nav>
+                <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+        <nav>
           <a href="ai_briefs/briefs.html">AI Briefs</a>
           <a href="blog.html">Blog</a>
           <a href="applied-intelligence.html">Applied Intelligence</a>
@@ -533,8 +534,8 @@
         ctx.shadowBlur = n.r > 10 ? 36 : 22;
         ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fill();
         ctx.restore();
-        // Label
-        if (n.lbl) {
+        // Label — hide on mobile to avoid overlapping manifesto text
+        if (n.lbl && window.innerWidth > 640) {
           ctx.save();
           ctx.globalAlpha = 0.80;
           ctx.fillStyle = n.c;
