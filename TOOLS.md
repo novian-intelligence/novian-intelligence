@@ -58,3 +58,9 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ### Telegram
 - **Bot:** @mira_ni_bot
+
+### Google / Gemini
+- **API Key:** AIzaSyCp9egMhJle7U2_Ab-hjOgXexrmDgCXVpg
+- **Key Name:** Novian Intelligence
+- **Account:** mira.novianintel@gmail.com
+- **Purpose:** Web search (OpenClaw `web_search` tool via Gemini grounding)

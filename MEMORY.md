@@ -86,6 +86,14 @@ Last updated: 2026-04-06 (settled into Antigravity)
 - **OpenClaw on Mac** — installing today as a stable fallback environment. We've only done Linux before. Mac-native should be smoother.
 - **NI Website fully upgraded:** 14 briefs, new dark-mode UI, pagination (6/page), two-column hero with stats card, zero broken links, all 27 pages nav-standardized.
 
+## Deployment Pipeline (as of Apr 16+)
+- **GitHub repo:** git@github.com:novian-intelligence/novian-intelligence.git (SSH, main branch)
+- **Cloudflare Pages:** auto-deploys on every `git push` to main — ~60 seconds to production
+- **Domains:** novianintel.com + novianintelligence.com both live on Cloudflare
+- **Workflow:** Edit locally → preview via file:// in browser → one clean commit → push → live
+- **DO NOT** commit every tiny tweak — keep history clean, push when a feature/post is done
+- **Nightly backup cron:** runs at 3 AM, auto-commits and pushes any uncommitted changes
+
 ## Site Status (as of Apr 16)
 - `novian_intelligence_website/` is current locally AND live at novianintel.com via Cloudflare
 - Git is NOT yet set up — Netlify deploys are manual drag-and-drop for now
