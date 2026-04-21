@@ -523,10 +523,14 @@
 
 
 
-    @media (max-width: 720px) {
+    @media (max-width: 768px) {
       .canvas-hero {
         height: 65svh;
         min-height: 380px;
+        /* Static gradient fallback when canvas is disabled on mobile */
+        background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 50%, rgba(200,149,108,0.10) 0%, transparent 60%),
+                    radial-gradient(ellipse at 50% 50%, rgba(155,127,212,0.08) 0%, transparent 70%);
       }
 
       .manifesto {
@@ -787,6 +791,12 @@
   <!-- Canvas Animation -->
   <script>
     (function () {
+      // Disable canvas animation on mobile — too GPU-heavy for Safari iOS
+      if (window.innerWidth <= 768) {
+        const canvas = document.getElementById('ni-canvas');
+        if (canvas) canvas.style.display = 'none';
+        return;
+      }
       const canvas = document.getElementById('ni-canvas');
       const ctx = canvas.getContext('2d');
       let W, H, nodes = [];
@@ -895,8 +905,9 @@
           }
         });
 
-        requestAnimationFrame(draw);
+        if (!document.hidden) requestAnimationFrame(draw);
       }
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) draw(); });
       draw();
 
       window.addEventListener('resize', () => {
