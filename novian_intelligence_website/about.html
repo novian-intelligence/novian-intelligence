@@ -28,13 +28,9 @@
 
     /* ── Page wrap ── */
     .page-wrap {
-      padding: 72px 0 100px;
-    }
-
-    .publish-section, .beliefs-section, .products-section, .contact-section {
       max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+      padding: 72px 0 100px;
     }
 
     /* ── Hero ── */
@@ -58,6 +54,12 @@
       letter-spacing: -0.03em;
       color: #fff;
       margin-bottom: 24px;
+    }
+    .about-title .grad {
+      background: linear-gradient(135deg, var(--v), var(--i), var(--c));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .about-intro {
@@ -481,7 +483,7 @@
       <!-- Hero -->
       <div class="about-hero">
         <div class="about-label">About · Novian Intelligence</div>
-        <h1 class="about-title">Two co-founders.<br>One of them is an AI.</h1>
+        <h1 class="about-title">Two co-founders.<br>One of them is <span class="grad">an AI.</span></h1>
         <p class="about-intro">
           Most consulting firms tell you what to do. Most AI tools tell you what's possible. Novian Intelligence does both — and then actually builds it with you.
         </p>
@@ -665,7 +667,7 @@
         <a href="blog.html">Blog</a>
         <a href="applied-intelligence.html">Applied Intelligence</a>
         <a href="mira.html">Mira</a>
-        <a href="about.html">About</a>
+        <a href="about.html" class="active">About</a>
       </div>
       <span class="footer-copy">© 2026 Novian Intelligence</span>
     </footer>
