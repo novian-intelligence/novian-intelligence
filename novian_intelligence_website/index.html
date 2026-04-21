@@ -87,6 +87,7 @@
       height: 85vh;
       min-height: 420px;
       max-height: 720px;
+      background: var(--bg);
     }
 
     #ni-canvas {
@@ -530,7 +531,12 @@
         /* Static gradient fallback when canvas is disabled on mobile */
         background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 60%),
                     radial-gradient(ellipse at 80% 50%, rgba(200,149,108,0.10) 0%, transparent 60%),
-                    radial-gradient(ellipse at 50% 50%, rgba(155,127,212,0.08) 0%, transparent 70%);
+                    radial-gradient(ellipse at 50% 50%, rgba(155,127,212,0.08) 0%, transparent 70%),
+                    var(--bg);
+      }
+      .canvas-fade {
+        height: 160px;
+        background: linear-gradient(to bottom, transparent 0%, var(--bg) 85%);
       }
 
       .manifesto {
