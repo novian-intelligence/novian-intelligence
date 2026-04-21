@@ -585,13 +585,16 @@
       transition: all 0.2s;
       user-select: none;
       z-index: 100;
-      opacity: 0.3;
+      opacity: 0.5;
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border);
     }
 
     .easter-egg:hover {
       opacity: 1;
-      border-color: var(--border);
+      border-color: rgba(64,217,200,0.4);
       color: var(--c);
+      background: rgba(64,217,200,0.06);
     }
 
     /* ── Terminal mode overlay ── */
