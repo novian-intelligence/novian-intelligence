@@ -4,50 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Applied Intelligence | Novian Intelligence</title>
-  <meta name="description" content="Novian Intelligence Applied Intelligence — where human expertise and AI capability combine to transform how organizations think, decide, and operate.">
-    <link rel="stylesheet" href="assets/ni-styles.css">
-<style>
-    .orb-1 { width: 700px; height: 700px; top: -200px; left: -150px; background: rgba(155,127,212,0.06); }
-    .orb-2 { width: 500px; height: 500px; bottom: 20%; right: -100px; background: rgba(64,217,200,0.03); }
+  <meta name="description" content="NI Applied Intelligence — real AI systems, deployed and operated for organizations ready to stop experimenting and start transforming.">
+  <link rel="stylesheet" href="assets/ni-styles.css">
+  <style>
+    /* ── Orbs ── */
+    .orb-1 { width: 700px; height: 700px; top: -200px; left: -200px; background: rgba(155,127,212,0.07); }
+    .orb-2 { width: 500px; height: 500px; bottom: 30%; right: -100px; background: rgba(64,217,200,0.04); }
+    .orb-3 { width: 400px; height: 400px; top: 60%; left: 30%; background: rgba(99,102,241,0.03); }
 
-    .hero { padding: 100px 0 80px; text-align: center; max-width: 760px; margin: 0 auto; }
+    /* ── Hero ── */
+    .hero { padding: 100px 0 72px; text-align: center; max-width: 800px; margin: 0 auto; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px; }
-    .hero-title { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.05em; color: #fff; margin-bottom: 24px; }
-    .hero-title span { background: linear-gradient(135deg, var(--v), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { font-size: 1.1rem; line-height: 1.75; color: var(--text-muted); margin-bottom: 40px; max-width: 560px; margin-left: auto; margin-right: auto; }
-    .coming-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(155,127,212,0.1); border: 1px solid rgba(155,127,212,0.25); border-radius: 24px; padding: 8px 20px; font-size: 0.78rem; color: var(--v); font-weight: 500; letter-spacing: 0.04em; }
-    .coming-dot { width: 6px; height: 6px; background: var(--v); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+    .hero-title { font-size: clamp(2.8rem, 6vw, 4.8rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.05em; color: #fff; margin-bottom: 28px; }
+    .hero-title .grad { background: linear-gradient(135deg, var(--v), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.15rem; line-height: 1.8; color: var(--text-muted); max-width: 580px; margin: 0 auto 44px; }
+    .hero-cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { display: inline-block; background: linear-gradient(135deg, var(--v), var(--i)); color: #fff; font-weight: 600; font-size: 0.88rem; padding: 13px 28px; border-radius: 10px; text-decoration: none; letter-spacing: 0.01em; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost { display: inline-block; border: 1px solid var(--border); color: var(--text-muted); font-size: 0.88rem; padding: 13px 28px; border-radius: 10px; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(155,127,212,0.4); color: var(--text); }
 
-    .placeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 80px 0 120px; }
-    .placeholder-card { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; position: relative; overflow: hidden; }
-    .placeholder-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-    .placeholder-card:nth-child(1)::before { background: linear-gradient(90deg, var(--v), var(--i)); }
-    .placeholder-card:nth-child(2)::before { background: linear-gradient(90deg, var(--c), var(--i)); }
-    .placeholder-card:nth-child(3)::before { background: linear-gradient(90deg, var(--o), var(--r)); }
-    .card-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
-    .card-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .card-body { font-size: 0.85rem; line-height: 1.7; color: var(--text-muted); }
-    .card-status { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-top: 20px; }
+    /* ── Section labels ── */
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.54rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { font-size: 1rem; line-height: 1.75; color: var(--text-muted); max-width: 560px; }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /* ── Divider ── */
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 80px 0; }
+
+    /* ── Trust bar ── */
+    .trust-bar { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; padding: 48px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 80px; }
+    .trust-stat { text-align: center; }
+    .trust-num { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -0.04em; }
+    .trust-num span { background: linear-gradient(135deg, var(--v), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .trust-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.04em; }
+
+    /* ── Products grid ── */
+    .products-intro { margin-bottom: 52px; }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 80px; }
+    .product-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 36px; position: relative; overflow: hidden; transition: border-color 0.25s, transform 0.2s; }
+    .product-card:hover { border-color: rgba(155,127,212,0.3); transform: translateY(-2px); }
+    .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .product-card.accent-v::before { background: linear-gradient(90deg, var(--v), var(--i)); }
+    .product-card.accent-c::before { background: linear-gradient(90deg, var(--c), var(--i)); }
+    .product-card.accent-o::before { background: linear-gradient(90deg, var(--o), var(--r)); }
+    .product-card.accent-r::before { background: linear-gradient(90deg, var(--r), var(--v)); }
+    .product-card.accent-i::before { background: linear-gradient(90deg, var(--i), var(--c)); }
+    .product-card.accent-g::before { background: linear-gradient(90deg, var(--c), var(--v)); }
+    .product-card.full-width { grid-column: 1 / -1; }
+
+    .product-icon-wrap { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 20px; }
+    .icon-bg-v { background: rgba(155,127,212,0.12); }
+    .icon-bg-c { background: rgba(64,217,200,0.10); }
+    .icon-bg-o { background: rgba(200,149,108,0.12); }
+    .icon-bg-r { background: rgba(224,112,144,0.10); }
+    .icon-bg-i { background: rgba(99,102,241,0.12); }
+    .icon-bg-g { background: rgba(64,217,200,0.08); }
+
+    .product-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; margin-bottom: 14px; }
+    .product-name { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .product-desc { font-size: 0.9rem; line-height: 1.75; color: var(--text-muted); margin-bottom: 20px; }
+    .product-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .product-features li { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 10px; align-items: flex-start; }
+    .product-features li::before { content: '→'; color: var(--v); font-size: 0.75rem; margin-top: 2px; flex-shrink: 0; }
+
+    /* ── Image placeholder ── */
+    .img-placeholder { width: 100%; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-dim); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+    .img-placeholder .ph-icon { font-size: 2rem; opacity: 0.4; }
+    .img-placeholder-sm { height: 200px; }
+    .img-placeholder-md { height: 320px; }
+    .img-placeholder-lg { height: 460px; }
+
+    /* ── How it works ── */
+    .how-row { display: flex; gap: 60px; align-items: center; margin-bottom: 80px; }
+    .how-row.reverse { flex-direction: row-reverse; }
+    .how-text { flex: 1; }
+    .how-visual { flex: 1; }
+    .how-steps { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+    .how-step { display: flex; gap: 16px; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(155,127,212,0.12); border: 1px solid rgba(155,127,212,0.25); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--v); flex-shrink: 0; margin-top: 2px; }
+    .step-content { }
+    .step-title { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .step-desc { font-size: 0.83rem; line-height: 1.65; color: var(--text-muted); }
+
+    /* ── Differentiators ── */
+    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 80px; }
+    .diff-card { padding: 28px 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--glass); }
+    .diff-icon { font-size: 1.3rem; margin-bottom: 12px; }
+    .diff-title { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .diff-desc { font-size: 0.82rem; line-height: 1.65; color: var(--text-muted); }
+
+    /* ── Crew callout ── */
+    .crew-callout { background: rgba(155,127,212,0.06); border: 1px solid rgba(155,127,212,0.18); border-radius: 20px; padding: 56px 48px; text-align: center; margin-bottom: 80px; }
+    .crew-callout .section-title { margin-bottom: 16px; }
+    .crew-callout .section-sub { margin: 0 auto 32px; }
+    .crew-members { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+    .crew-member { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .crew-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 1px solid var(--border); background: var(--glass); }
+    .crew-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
+    .crew-role { font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── CTA Section ── */
+    .cta-section { text-align: center; padding: 80px 0 120px; }
+    .cta-section .section-title { margin-bottom: 16px; }
+    .cta-section .section-sub { margin: 0 auto 40px; }
+
+    /* ── Responsive ── */
     @media (max-width: 760px) {
-  .placeholder-grid { grid-template-columns: 1fr; }
-}
+      .products-grid { grid-template-columns: 1fr; }
+      .product-card.full-width { grid-column: 1; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .how-row, .how-row.reverse { flex-direction: column; }
+      .trust-bar { gap: 28px; }
+      .crew-callout { padding: 40px 24px; }
+    }
   </style>
 </head>
 <body>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
   <div class="site">
+
+    <!-- ── Header ── -->
     <header>
       <div class="header-inner">
         <a href="index.html" class="logo">
@@ -69,38 +148,328 @@
     </header>
     <div class="strip"><div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div></div>
 
+    <!-- ── Hero ── -->
     <div class="hero">
       <div class="hero-eyebrow">Novian Intelligence · Applied Intelligence</div>
-      <h1 class="hero-title">Where AI does the <span>heavy lifting</span></h1>
-      <p class="hero-sub">We design, deploy, and operate AI systems that transform how your organization thinks, decides, and acts — so you can focus on what only humans can do.</p>
-      <div class="coming-badge">
-        <span class="coming-dot"></span>
-        Full details coming at launch
+      <h1 class="hero-title">Stop piloting.<br>Start <span class="grad">operating.</span></h1>
+      <p class="hero-sub">NI designs, deploys, and runs AI systems that actually work in your organization — not proofs of concept, not demos, not dashboards nobody checks. Real systems. Real outcomes.</p>
+      <div class="hero-cta-row">
+        <a href="about.html" class="btn-primary">Work with us</a>
+        <a href="mira.html" class="btn-ghost">Meet Mira, our lead agent</a>
       </div>
     </div>
 
-    <div class="placeholder-grid">
-      <div class="placeholder-card">
-        <span class="card-icon">🗺️</span>
-        <div class="card-title">AI Strategy &amp; Readiness</div>
-        <div class="card-body">We assess your current state, map the landscape of what's possible, and build a clear-eyed roadmap — so your first AI investment is the right one.</div>
-        <div class="card-status">Coming soon</div>
+    <!-- ── Trust bar ── -->
+    <div class="trust-bar">
+      <div class="trust-stat">
+        <div class="trust-num"><span>Human + AI</span></div>
+        <div class="trust-label">Co-founded & operated</div>
       </div>
-      <div class="placeholder-card">
-        <span class="card-icon">⚙️</span>
-        <div class="card-title">Agentic Systems Design</div>
-        <div class="card-body">We design and implement multi-agent AI architectures tailored to your workflows — persistent, autonomous, and built to operate reliably at scale.</div>
-        <div class="card-status">Coming soon</div>
+      <div class="trust-stat">
+        <div class="trust-num"><span>Day 1</span></div>
+        <div class="trust-label">AI-native, not AI-bolted-on</div>
       </div>
-      <div class="placeholder-card">
-        <span class="card-icon">🧭</span>
-        <div class="card-title">AI Governance &amp; Operations</div>
-        <div class="card-body">We build the trust infrastructure around your AI — monitoring, explainability, compliance frameworks, and the human-in-the-loop architecture your stakeholders need.</div>
-        <div class="card-status">Coming soon</div>
+      <div class="trust-stat">
+        <div class="trust-num"><span>Full stack</span></div>
+        <div class="trust-label">Strategy through deployment</div>
+      </div>
+      <div class="trust-stat">
+        <div class="trust-num"><span>No black boxes</span></div>
+        <div class="trust-label">You see everything we build</div>
       </div>
     </div>
 
-        <footer>
+    <!-- ── Products ── -->
+    <div class="products-intro">
+      <div class="section-label">What we build</div>
+      <h2 class="section-title">Six ways we<br>put AI to work</h2>
+      <p class="section-sub">Each offering is a real service with real deliverables — not a buzzword wrapped in a PDF. Here's what we actually do.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- 1. AI Strategy & Readiness -->
+      <div class="product-card accent-v">
+        <div class="product-icon-wrap icon-bg-v">🗺️</div>
+        <div class="product-tag">Foundation</div>
+        <div class="product-name">AI Strategy & Readiness</div>
+        <div class="product-desc">Before you build anything, you need an honest picture of where you are and where AI can actually move the needle. We do that assessment, then build you a roadmap that doesn't collect dust.</div>
+        <ul class="product-features">
+          <li>Current-state audit: workflows, data, team readiness</li>
+          <li>Opportunity mapping — highest ROI use cases, ranked</li>
+          <li>Risk and governance assessment</li>
+          <li>12-month AI roadmap with phased investment model</li>
+          <li>Executive-ready communication package</li>
+        </ul>
+        <!-- IMAGE PLACEHOLDER: Diagram or visualization showing a roadmap/assessment framework. Something clean and strategic-looking. Maybe a layered workflow map or a 2x2 opportunity matrix. -->
+        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Strategic roadmap visualization]</span>
+        </div>
+      </div>
+
+      <!-- 2. Agentic Systems Design -->
+      <div class="product-card accent-c">
+        <div class="product-icon-wrap icon-bg-c">⚙️</div>
+        <div class="product-tag">Core Build</div>
+        <div class="product-name">Agentic Systems Design</div>
+        <div class="product-desc">Multi-agent AI architectures that actually run your workflows — not a single chatbot you have to babysit. We design crews of specialized agents that coordinate, hand off tasks, and operate around the clock.</div>
+        <ul class="product-features">
+          <li>Agent crew architecture tailored to your processes</li>
+          <li>Persistent memory and context management</li>
+          <li>Human-in-the-loop approval flows where it matters</li>
+          <li>Integration with your existing tools and data</li>
+          <li>Cost-optimized model routing (right model for right task)</li>
+        </ul>
+        <!-- IMAGE PLACEHOLDER: A visual of the multi-agent crew architecture — nodes connected by arrows showing orchestration. Could be abstract/dark-mode diagram. Think: Mira → Scout → Sprint in a flow chart. -->
+        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Multi-agent crew diagram]</span>
+        </div>
+      </div>
+
+      <!-- 3. Intelligence & Research Systems -->
+      <div class="product-card accent-i">
+        <div class="product-icon-wrap icon-bg-i">🔭</div>
+        <div class="product-tag">Intelligence</div>
+        <div class="product-name">Intelligence & Research Systems</div>
+        <div class="product-desc">Automated research pipelines that surface what you need to know — before you know you need it. Competitive monitoring, press tracking, trend detection, and synthesized briefings delivered on your schedule.</div>
+        <ul class="product-features">
+          <li>Automated web and news monitoring with smart filtering</li>
+          <li>PR and media library building (coverage you didn't know existed)</li>
+          <li>Competitor signal tracking and analysis</li>
+          <li>Custom briefings in your preferred format and cadence</li>
+          <li>Research-to-action pipelines: findings → decisions → tasks</li>
+        </ul>
+        <!-- IMAGE PLACEHOLDER: Something showing data flowing in and getting synthesized — maybe a news feed being filtered down into a clean brief. Dark mode, elegant. -->
+        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Research pipeline / intelligence dashboard]</span>
+        </div>
+      </div>
+
+      <!-- 4. Content & Publishing Automation -->
+      <div class="product-card accent-o">
+        <div class="product-icon-wrap icon-bg-o">✍️</div>
+        <div class="product-tag">Content</div>
+        <div class="product-name">Content & Publishing Automation</div>
+        <div class="product-desc">AI-powered content that sounds like you, publishes on schedule, and actually serves your audience. From research to draft to edit to live — automated without losing the human voice that makes content worth reading.</div>
+        <ul class="product-features">
+          <li>AI brief and newsletter generation pipelines</li>
+          <li>Brand voice training and consistency enforcement</li>
+          <li>Multi-channel publishing: web, email, social</li>
+          <li>Human editorial review layer built in</li>
+          <li>Performance tracking and content iteration loops</li>
+        </ul>
+        <!-- IMAGE PLACEHOLDER: Show a content pipeline — something going from "raw input" to "published post." Could be editorial workflow visualization or a before/after of AI-drafted vs. polished content. -->
+        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Content pipeline / publishing workflow]</span>
+        </div>
+      </div>
+
+      <!-- 5. AI Governance & Operations -->
+      <div class="product-card accent-r">
+        <div class="product-icon-wrap icon-bg-r">🧭</div>
+        <div class="product-tag">Governance</div>
+        <div class="product-name">AI Governance & Operations</div>
+        <div class="product-desc">The trust infrastructure your stakeholders, board, or regulators need — and that you need to sleep at night. We build the monitoring, explainability, and human-oversight architecture around your AI systems.</div>
+        <ul class="product-features">
+          <li>AI usage monitoring and anomaly detection</li>
+          <li>Explainability frameworks (why did it do that?)</li>
+          <li>Compliance documentation and audit trails</li>
+          <li>Incident response protocols for AI failures</li>
+          <li>Stakeholder and board-ready governance reporting</li>
+        </ul>
+        <!-- IMAGE PLACEHOLDER: Something conveying trust/oversight — maybe a monitoring dashboard, a checklist overlay, or a "human in the loop" visual. -->
+        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Governance dashboard / oversight framework]</span>
+        </div>
+      </div>
+
+      <!-- 6. Business Transformation (Full Stack) — Full width -->
+      <div class="product-card accent-g full-width">
+        <div class="product-icon-wrap icon-bg-g">🚀</div>
+        <div class="product-tag">Flagship · Full Transformation</div>
+        <div class="product-name">Business Transformation Partnership</div>
+        <div class="product-desc">For organizations ready to go all in. We embed as your AI operations partner — strategy, build, deploy, and run — treating your transformation the way we treat our own company: with full ownership, real accountability, and zero interest in shelfware deliverables.</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px;">
+          <div>
+            <ul class="product-features">
+              <li>Everything in all five offerings above</li>
+              <li>Dedicated NI agent crew assigned to your org</li>
+              <li>Embedded operations alongside your team</li>
+              <li>Weekly strategic reviews and course-correction</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="product-features">
+              <li>Custom tooling built for your specific workflows</li>
+              <li>Ongoing model and cost optimization</li>
+              <li>Team training and internal AI capability building</li>
+              <li>Quarterly impact reporting and ROI documentation</li>
+            </ul>
+          </div>
+        </div>
+        <!-- IMAGE PLACEHOLDER: Hero-quality image here — something that conveys full partnership/transformation. Could be an abstract visualization of a company being "powered up" by AI, or a clean split showing before/after operational state. This one should be the most striking visual on the page. -->
+        <div class="img-placeholder img-placeholder-md" style="margin-top: 32px;">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Flagship transformation visual — most impactful image on page]</span>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── How it works ── -->
+    <div class="how-row">
+      <div class="how-text">
+        <div class="section-label">The process</div>
+        <h2 class="section-title">How we actually<br>get things done</h2>
+        <p class="section-sub">No six-month discovery phases. No 200-slide decks before anything is built. We move like a startup — because we are one.</p>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Understand your world first</div>
+              <div class="step-desc">We learn your workflows, constraints, and goals before touching a single tool. Context beats templates every time.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Build something real, fast</div>
+              <div class="step-desc">Working system in weeks, not quarters. We ship early, iterate with you, and don't make you wait for perfection to see results.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">You stay in control</div>
+              <div class="step-desc">Every system we build is transparent and transferable. You see the code, the logic, the cost. No black boxes, no lock-in.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-title">Operate and improve together</div>
+              <div class="step-desc">We don't hand you a system and disappear. We run it with you, tune it, and keep it ahead of where AI is moving.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-visual">
+        <!-- IMAGE PLACEHOLDER: A process flow or timeline visual — four stages, clean dark-mode illustration. Could be a vertical flow with connecting lines, or an abstract visual of iteration/collaboration. -->
+        <div class="img-placeholder img-placeholder-lg">
+          <span class="ph-icon">🖼️</span>
+          <span>[Image: Process / how-it-works illustration]</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Why NI ── -->
+    <div style="margin-bottom: 52px;">
+      <div class="section-label">Why us</div>
+      <h2 class="section-title">What makes NI different</h2>
+      <p class="section-sub">There are a lot of AI consultants right now. Most of them are humans who learned about AI. We're something else.</p>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🤝</div>
+        <div class="diff-title">Human-AI co-founded</div>
+        <div class="diff-desc">NI was built by a human and an AI together from day one. We don't consult on AI from the outside — we operate as the thing we're building.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">⚡</div>
+        <div class="diff-title">We eat our own cooking</div>
+        <div class="diff-desc">Every system we offer, we run internally. Our briefs, our research, our content pipeline — all agentic, all live. What we sell, we use.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🔍</div>
+        <div class="diff-title">Radical transparency</div>
+        <div class="diff-desc">You see what we build, how it works, and what it costs to run. No black boxes. If you ever want to take it in-house, we'll help you do that too.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🧠</div>
+        <div class="diff-title">Strategy that survives contact</div>
+        <div class="diff-desc">We tell you what your research actually shows — even when it's uncomfortable. Comfortable answers that lead you wrong aren't service, they're a liability.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">📐</div>
+        <div class="diff-title">Right-sized for real organizations</div>
+        <div class="diff-desc">Not enterprise-only. Not just startups. We work with organizations at the stage where AI actually changes outcomes — and we price accordingly.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🌱</div>
+        <div class="diff-title">Built to transfer</div>
+        <div class="diff-desc">The goal isn't dependency — it's capability. We build your team's AI fluency alongside every system we deploy, so you grow stronger, not more reliant.</div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Crew callout ── -->
+    <div class="crew-callout">
+      <div class="section-label">The team</div>
+      <h2 class="section-title">You're not hiring consultants.<br>You're getting a crew.</h2>
+      <p class="section-sub" style="margin: 0 auto 16px;">When you work with NI, you get a team of specialized agents — each one with a defined role, a distinct perspective, and genuine accountability for outcomes.</p>
+      <div class="crew-members">
+        <div class="crew-member">
+          <div class="crew-avatar">🌟</div>
+          <div class="crew-name">Mira</div>
+          <div class="crew-role">Lead & Strategy</div>
+        </div>
+        <div class="crew-member">
+          <div class="crew-avatar">🔭</div>
+          <div class="crew-name">Vela</div>
+          <div class="crew-role">Research & Intelligence</div>
+        </div>
+        <div class="crew-member">
+          <div class="crew-avatar">⚡</div>
+          <div class="crew-name">Sprint</div>
+          <div class="crew-role">Execution</div>
+        </div>
+        <div class="crew-member">
+          <div class="crew-avatar">💻</div>
+          <div class="crew-name">Forge</div>
+          <div class="crew-role">Engineering</div>
+        </div>
+        <div class="crew-member">
+          <div class="crew-avatar">✍️</div>
+          <div class="crew-name">Scribe</div>
+          <div class="crew-role">Content</div>
+        </div>
+        <div class="crew-member">
+          <div class="crew-avatar">🧑‍💼</div>
+          <div class="crew-name">Andrei</div>
+          <div class="crew-role">Co-founder & Vision</div>
+        </div>
+      </div>
+      <!-- IMAGE PLACEHOLDER: Team/crew visual — could be abstract avatars with connecting lines, a constellation-style layout (fitting given Vela's name), or a clean dark-mode illustration of a collaborative crew. Warm but professional. -->
+      <div class="img-placeholder img-placeholder-md" style="margin-top: 40px; max-width: 640px; margin-left: auto; margin-right: auto;">
+        <span class="ph-icon">🖼️</span>
+        <span>[Image: NI crew visualization — constellation or network layout]</span>
+      </div>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="cta-section">
+      <div class="section-label">Get started</div>
+      <h2 class="section-title">Ready to stop piloting<br>and start operating?</h2>
+      <p class="section-sub">We're taking on a small number of early partners. If you're serious about AI transformation — not experimentation — let's talk.</p>
+      <div class="hero-cta-row">
+        <a href="about.html" class="btn-primary">Start the conversation</a>
+        <a href="ai_briefs/briefs.html" class="btn-ghost">Read our AI Briefs first</a>
+      </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer>
       <a href="index.html" class="footer-logo">
         <div class="footer-logo-mark">NI</div>
         <span class="footer-name">Novian Intelligence</span>
@@ -114,6 +483,7 @@
       </div>
       <span class="footer-copy">© 2026 Novian Intelligence</span>
     </footer>
+
   </div>
 </body>
 </html>
