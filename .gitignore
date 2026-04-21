@@ -26,3 +26,8 @@ Research/
 *.tar.gz
 temp/
 tmp/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
