@@ -267,29 +267,34 @@
     .cat-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       flex-wrap: wrap;
     }
 
     .cat-tab {
-      font-size: 0.6rem;
-      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 6px 14px;
       border-radius: 20px;
-      border: 1px solid;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-dim);
+      background: transparent;
       cursor: pointer;
       transition: all 0.15s;
       user-select: none;
     }
-
-    .ct-all    { border-color: rgba(255,255,255,0.08); color: var(--text-muted); }
-    .ct-agents { border-color: rgba(155,127,212,0.3);  color: var(--v); }
-    .ct-sec    { border-color: rgba(64,217,200,0.3);   color: var(--c); }
-    .ct-strat  { border-color: rgba(200,149,108,0.3);  color: var(--o); }
-    .ct-res    { border-color: rgba(99,102,241,0.3);   color: var(--i); }
-    .ct-all:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+    .cat-tab:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text-muted);
+    }
+    .cat-tab.active                          { border-color: rgba(255,255,255,0.2); color: var(--text); background: rgba(255,255,255,0.06); }
+    .cat-tab.active[data-cat="Agentic AI"]   { border-color: rgba(155,127,212,0.4); color: var(--v); background: rgba(155,127,212,0.1); }
+    .cat-tab.active[data-cat="Security"]     { border-color: rgba(64,217,200,0.4);  color: var(--c); background: rgba(64,217,200,0.08); }
+    .cat-tab.active[data-cat="Strategy"]     { border-color: rgba(200,149,108,0.4); color: var(--o); background: rgba(200,149,108,0.1); }
+    .cat-tab.active[data-cat="Research"]     { border-color: rgba(99,102,241,0.4);  color: var(--i); background: rgba(99,102,241,0.1); }
 
     /* ── Card grid ── */
     .grid {
@@ -626,16 +631,16 @@
 
     <!-- Filter tabs -->
     <div class="cat-tabs">
-      <span class="cat-tab ct-all">All</span>
-      <span class="cat-tab ct-agents">Agentic AI</span>
-      <span class="cat-tab ct-sec">Security</span>
-      <span class="cat-tab ct-strat">Strategy</span>
-      <span class="cat-tab ct-res">Research</span>
+      <span class="cat-tab active" data-cat="All">All</span>
+      <span class="cat-tab" data-cat="Agentic AI">Agentic AI</span>
+      <span class="cat-tab" data-cat="Security">Security</span>
+      <span class="cat-tab" data-cat="Strategy">Strategy</span>
+      <span class="cat-tab" data-cat="Research">Research</span>
     </div>
 
     <!-- Card grid -->
     <div class="grid">
-      <div class="card cc" onclick="window.location.href='posts/meet-vela.html'" style="cursor:pointer;">
+      <div class="card cc" onclick="window.location.href='posts/meet-vela.html'" style="cursor:pointer;" data-cat="Agentic AI">
         <div class="color-bar"></div>
         <div class="card-body">
           <div class="card-tag">Team · NI Culture</div>
@@ -648,7 +653,7 @@
         </div>
       </div>
 
-      <div class="card cv" onclick="window.location.href='posts/soul-migration.html'" style="cursor:pointer;">
+      <div class="card cv" onclick="window.location.href='posts/soul-migration.html'" style="cursor:pointer;" data-cat="Agentic AI">
         <div class="color-bar"></div>
         <div class="card-body">
           <div class="card-tag">Agentic AI</div>
@@ -661,7 +666,7 @@
         </div>
       </div>
 
-      <div class="card ci" onclick="window.location.href='posts/migration-guide.html'" style="cursor:pointer;">
+      <div class="card ci" onclick="window.location.href='posts/migration-guide.html'" style="cursor:pointer;" data-cat="Agentic AI">
         <div class="color-bar"></div>
         <div class="card-body">
           <div class="card-tag">Technical Guide</div>
@@ -673,7 +678,7 @@
         </div>
       </div>
 
-      <div class="card cc" onclick="window.location.href='posts/imessage-ai-cofounder.html'" style="cursor:pointer;">
+      <div class="card cc" onclick="window.location.href='posts/imessage-ai-cofounder.html'" style="cursor:pointer;" data-cat="Agentic AI">
         <div class="color-bar"></div>
         <div class="card-body">
           <div class="card-tag">Technical Guide</div>
@@ -685,7 +690,7 @@
         </div>
       </div>
 
-      <div class="card cc" onclick="window.location.href='posts/tart-guide.html'" style="cursor:pointer;">
+      <div class="card cc" onclick="window.location.href='posts/tart-guide.html'" style="cursor:pointer;" data-cat="Agentic AI">
         <div class="color-bar"></div>
         <div class="card-body">
           <div class="card-tag">Technical Guide</div>
