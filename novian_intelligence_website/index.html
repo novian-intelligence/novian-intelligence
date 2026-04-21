@@ -911,28 +911,6 @@
     })();
   </script>
 
-  <!-- Easter egg trigger -->
-  <div class="easter-egg" id="egg">&gt;_</div>
-  <script>
-    const egg = document.getElementById('egg');
-    let terminalMode = false;
-    egg.addEventListener('click', () => {
-      terminalMode = !terminalMode;
-      document.body.classList.add('glitching');
-      setTimeout(() => {
-        document.body.classList.remove('glitching');
-        if (terminalMode) { document.body.classList.add('terminal-mode'); egg.textContent = '[ESC]'; }
-        else { document.body.classList.remove('terminal-mode'); egg.textContent = '>_'; }
-      }, 300);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && terminalMode) {
-        terminalMode = false;
-        document.body.classList.add('glitching');
-        setTimeout(() => { document.body.classList.remove('glitching', 'terminal-mode'); egg.textContent = '>_'; }, 300);
-      }
-    });
-  </script>
 
 </body>
 
