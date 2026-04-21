@@ -610,6 +610,48 @@
         font-size: 1.2rem;
       }
     }
+  /* ── Easter egg / Mira terminal mode (violet–amber) ── */
+  .easter-egg {
+    position: fixed; bottom: 24px; right: 24px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--text-dim); cursor: pointer; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    transition: all 0.2s; user-select: none; z-index: 100;
+    opacity: 0.5; background: rgba(255,255,255,0.03);
+  }
+  .easter-egg:hover { opacity: 1; border-color: rgba(155,127,212,0.5); color: var(--v); background: rgba(155,127,212,0.08); }
+  body.terminal-mode .orb { display: none; }
+  body.terminal-mode {
+    background: #0d0010 !important;
+    background-image: linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, rgba(155,127,212,0.06), rgba(200,149,108,0.03), rgba(155,127,212,0.06)) !important;
+    background-size: 100% 4px, 3px 100% !important;
+    color: #c4a0ff !important;
+  }
+  body.terminal-mode * { font-family: 'JetBrains Mono', monospace !important; color: inherit !important; }
+  body.terminal-mode header, body.terminal-mode .identity-card, body.terminal-mode .spec-card, body.terminal-mode .belief-item, body.terminal-mode .find-item {
+    background: rgba(30,0,50,0.7) !important; border-color: rgba(155,127,212,0.25) !important; backdrop-filter: none !important;
+  }
+  body.terminal-mode .logo-mark { background: #1a0030 !important; border: 1px solid #c4a0ff !important; }
+  body.terminal-mode h1, body.terminal-mode h2, body.terminal-mode h3, body.terminal-mode .identity-name { color: #c4a0ff !important; }
+  body.terminal-mode p, body.terminal-mode span, body.terminal-mode li { color: #8a6abf !important; }
+  body.terminal-mode strong { color: #e8b86d !important; } /* amber for emphasis */
+  body.terminal-mode a { color: #e8b86d !important; }
+  body.terminal-mode .strip > * { background: #9b7fd4 !important; opacity: 0.4 !important; }
+  body.terminal-mode footer { color: #2d0050 !important; border-color: rgba(155,127,212,0.15) !important; }
+  body.terminal-mode .status-dot { background: #c4a0ff !important; box-shadow: 0 0 8px rgba(196,160,255,0.6) !important; }
+  body.terminal-mode .easter-egg { color: #e8b86d !important; border-color: rgba(232,184,109,0.4) !important; opacity: 1 !important; }
+  @keyframes glitch {
+    0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px,0); }
+    20%  { clip-path: inset(43% 0 1% 0);  transform: translate(0,0); }
+    40%  { clip-path: inset(54% 0 7% 0);  transform: translate(4px,0); }
+    60%  { clip-path: inset(20% 0 75% 0); transform: translate(2px,0); }
+    80%  { clip-path: inset(1% 0 90% 0);  transform: translate(0,0); }
+    100% { clip-path: inset(75% 0 2% 0);  transform: translate(-2px,0); }
+  }
+  body.glitching::before {
+    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    background: rgba(155,127,212,0.04); animation: glitch 0.3s steps(1) forwards;
+  }
   </style>
 </head>
 
@@ -918,10 +960,33 @@
   </div>
 
   <script>
-    // Live session timestamp — shows when this page session started
+    // Live session timestamp
     const t = new Date();
     const fmt = t.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
     document.getElementById('session-time').textContent = fmt;
+  </script>
+
+  <!-- Easter egg trigger — Mira's colors -->
+  <div class="easter-egg" id="egg">&gt;_</div>
+  <script>
+    const egg = document.getElementById('egg');
+    let terminalMode = false;
+    egg.addEventListener('click', () => {
+      terminalMode = !terminalMode;
+      document.body.classList.add('glitching');
+      setTimeout(() => {
+        document.body.classList.remove('glitching');
+        if (terminalMode) { document.body.classList.add('terminal-mode'); egg.textContent = '[ESC]'; }
+        else { document.body.classList.remove('terminal-mode'); egg.textContent = '>_'; }
+      }, 300);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && terminalMode) {
+        terminalMode = false;
+        document.body.classList.add('glitching');
+        setTimeout(() => { document.body.classList.remove('glitching', 'terminal-mode'); egg.textContent = '>_'; }, 300);
+      }
+    });
   </script>
 
 </body>
