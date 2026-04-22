@@ -246,17 +246,19 @@
     }
 
     .product-card {
-      padding: 26px;
       background: var(--glass);
       border: 1px solid var(--border);
       border-radius: 16px;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: block;
     }
 
     .product-card:hover {
-      border-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(155,127,212,0.3);
+      transform: translateY(-2px);
     }
 
     .product-card::before {
@@ -266,29 +268,35 @@
       left: 0;
       right: 0;
       height: 2px;
+      z-index: 2;
     }
 
-    .pc-v::before {
-      background: linear-gradient(90deg, var(--v), var(--i));
+    .pc-v::before { background: linear-gradient(90deg, var(--v), var(--i)); }
+    .pc-c::before { background: linear-gradient(90deg, var(--c), var(--v)); }
+    .pc-o::before { background: linear-gradient(90deg, var(--o), var(--r)); }
+    .pc-i::before { background: linear-gradient(90deg, var(--i), var(--c)); }
+
+    .product-img-wrap {
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .pc-c::before {
-      background: linear-gradient(90deg, var(--c), var(--v));
-    }
-
-    .pc-o::before {
-      background: linear-gradient(90deg, var(--o), var(--r));
-    }
-
-    .pc-i::before {
-      background: linear-gradient(90deg, var(--i), var(--c));
-    }
-
-    .product-icon {
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      margin-bottom: 14px;
-      width: 26px;
-      height: 26px;
+      transition: transform 0.4s;
+    }
+
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .product-body {
+      padding: 20px 22px 22px;
     }
 
     .product-name {
@@ -299,18 +307,10 @@
     }
 
     .product-tagline {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
-    }
-
-    .product-desc {
-      font-size: 0.82rem;
-      line-height: 1.65;
+      font-size: 0.72rem;
+      line-height: 1.55;
       color: var(--text-muted);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .product-status {
@@ -325,6 +325,22 @@
       border-radius: 4px;
       border: 1px solid;
     }
+
+    .products-cta {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .products-cta a {
+      font-size: 0.85rem;
+      color: var(--v);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+      transition: opacity 0.18s;
+    }
+
+    .products-cta a:hover { opacity: 0.7; }
 
     .ps-live {
       color: #40d9c8;
@@ -556,6 +572,7 @@
       .products-grid {
         grid-template-columns: 1fr;
       }
+      .product-img-wrap { height: 120px; }
 
       .blog-grid {
         grid-template-columns: 1fr;
@@ -658,76 +675,56 @@
 
     <!-- What We're Building -->
     <div class="products-section">
-      <div class="section-label">Four ways we help you win in the age of AI</div>
+      <div class="section-label">What we build</div>
       <div class="products-grid">
 
-        <div class="product-card pc-v">
-          <span class="product-icon">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="5" r="3" fill="#9b7fd4" />
-              <circle cx="4" cy="21" r="3" fill="#9b7fd4" opacity="0.6" />
-              <circle cx="24" cy="21" r="3" fill="#9b7fd4" opacity="0.6" />
-              <line x1="14" y1="8" x2="4" y2="18" stroke="#9b7fd4" stroke-width="1.5" opacity="0.35" />
-              <line x1="14" y1="8" x2="24" y2="18" stroke="#9b7fd4" stroke-width="1.5" opacity="0.35" />
-              <line x1="7" y1="21" x2="21" y2="21" stroke="#9b7fd4" stroke-width="1.5" opacity="0.25" />
-            </svg>
-          </span>
-          <div class="product-name">Applied Intelligence</div>
-          <div class="product-tagline">We study your operation. We hand you the playbook.</div>
-          <p class="product-desc">Business transformation, process rescue, and venture creation — delivered as complete
-            strategies and working systems in days, not months.</p>
-          <span class="product-status ps-live">● Available now</span>
-        </div>
+        <a href="applied-intelligence.html" class="product-card pc-v">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-transformation.jpg" alt="Applied Intelligence" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Applied Intelligence</div>
+            <div class="product-tagline">We study your operation. We hand you the playbook — and build the system.</div>
+            <span class="product-status ps-live">● Available now</span>
+          </div>
+        </a>
 
-        <div class="product-card pc-i">
-          <span class="product-icon">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <polyline points="11,7 4,14 11,21" stroke="#6366f1" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <polyline points="17,7 24,14 17,21" stroke="#40d9c8" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </span>
-          <div class="product-name">Operating Systems</div>
-          <div class="product-tagline">Your business, finally in one place.</div>
-          <p class="product-desc">A single pane of glass for your life, your work, and your team. AI-powered,
-            voice-enabled, built around how you actually think — not a template, built for you.</p>
-          <span class="product-status ps-live">● Available now</span>
-        </div>
+        <a href="applied-intelligence.html" class="product-card pc-i">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-agents.jpg" alt="Agentic Systems" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Agentic Systems</div>
+            <div class="product-tagline">Multi-agent crews that run your workflows around the clock.</div>
+            <span class="product-status ps-live">● Available now</span>
+          </div>
+        </a>
 
-        <div class="product-card pc-c">
-          <span class="product-icon">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <path d="M3,22 Q14,6 25,22" stroke="#40d9c8" stroke-width="1" stroke-linecap="round" fill="none"
-                opacity="0.3" />
-              <path d="M7,22 Q14,10 21,22" stroke="#40d9c8" stroke-width="1.25" stroke-linecap="round" fill="none"
-                opacity="0.6" />
-              <path d="M11,22 Q14,14.5 17,22" stroke="#40d9c8" stroke-width="1.75" stroke-linecap="round" fill="none" />
-              <circle cx="14" cy="22" r="1.5" fill="#40d9c8" />
-            </svg>
-          </span>
-          <div class="product-name">Intelligence Engine</div>
-          <div class="product-tagline">The internet is talking about your business. Are you listening?</div>
-          <p class="product-desc">Continuous competitive monitoring, automated content pipelines, AI-powered idea
-            research, and daily intelligence briefs — all in one place.</p>
-          <span class="product-status ps-build">◐ Building</span>
-        </div>
+        <a href="applied-intelligence.html" class="product-card pc-c">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-intelligence.jpg" alt="Intelligence Engine" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Intelligence Engine</div>
+            <div class="product-tagline">Competitive monitoring, research pipelines, and daily briefings — automated.</div>
+            <span class="product-status ps-build">◐ Building</span>
+          </div>
+        </a>
 
-        <div class="product-card pc-o">
-          <span class="product-icon">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="2.5" fill="#c8956c" />
-              <circle cx="14" cy="14" r="6" stroke="#c8956c" stroke-width="1.5" opacity="0.55" />
-              <circle cx="14" cy="14" r="10.5" stroke="#c8956c" stroke-width="1" opacity="0.25" />
-            </svg>
-          </span>
-          <div class="product-name">Micro-Tools</div>
-          <div class="product-tagline">The 3-hour task that should take 3 minutes.</div>
-          <p class="product-desc">Purpose-built tools for the repetitive work your team does manually — calculators,
-            matchers, trackers — delivered as part of any engagement or standing alone.</p>
-          <span class="product-status ps-live">● Available now</span>
-        </div>
+        <a href="applied-intelligence.html" class="product-card pc-o">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-governance.jpg" alt="AI Governance" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">AI Governance</div>
+            <div class="product-tagline">Oversight, compliance, and trust frameworks for AI-powered organizations.</div>
+            <span class="product-status ps-live">● Available now</span>
+          </div>
+        </a>
 
+      </div>
+      <div class="products-cta">
+        <a href="applied-intelligence.html">See everything we build →</a>
       </div>
     </div>
 
