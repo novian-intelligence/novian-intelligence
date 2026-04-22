@@ -241,7 +241,7 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
 
@@ -570,9 +570,12 @@
       }
 
       .products-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
       .product-img-wrap { height: 120px; }
+    }
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
 
       .blog-grid {
         grid-template-columns: 1fr;
@@ -718,6 +721,28 @@
           <div class="product-body">
             <div class="product-name">AI Governance</div>
             <div class="product-tagline">Oversight, compliance, and trust frameworks for AI-powered organizations.</div>
+            <span class="product-status ps-live">● Available now</span>
+          </div>
+        </a>
+
+        <a href="applied-intelligence.html" class="product-card pc-v">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-strategy.jpg" alt="AI Strategy" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">AI Strategy & Readiness</div>
+            <div class="product-tagline">Honest assessment. Ranked opportunities. A roadmap that doesn’t collect dust.</div>
+            <span class="product-status ps-live">● Available now</span>
+          </div>
+        </a>
+
+        <a href="applied-intelligence.html" class="product-card pc-c">
+          <div class="product-img-wrap">
+            <img src="assets/ni-img-content.jpg" alt="Content & Publishing" loading="lazy">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Content & Publishing</div>
+            <div class="product-tagline">AI-authored briefs, posts, and pipelines — in your voice, on your schedule.</div>
             <span class="product-status ps-live">● Available now</span>
           </div>
         </a>
