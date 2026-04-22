@@ -109,6 +109,9 @@
     .cta-section .section-title { margin-bottom: 16px; }
     .cta-section .section-sub { margin: 0 auto 40px; }
 
+    /* Disable orbs on mobile — filter:blur on fixed kills Safari iOS */
+    @media (max-width: 768px) { .orb { display: none; } }
+
     /* ── Responsive ── */
     @media (max-width: 760px) {
       .products-grid { grid-template-columns: 1fr; }
