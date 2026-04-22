@@ -302,6 +302,13 @@
 
     .product-card:hover .product-icon-wrap::before { opacity: 0.55; }
 
+    /* Kill all blur on mobile — Safari iOS chokes on it */
+    @media (max-width: 768px) {
+      .product-icon-wrap::before { display: none; }
+      .orb { display: none !important; }
+      * { filter: none !important; }
+    }
+
     .piw-v { background: rgba(155,127,212,0.15); border: 1px solid rgba(155,127,212,0.35); }
     .piw-v::before { background: #9b7fd4; }
     .piw-i { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.35); }
