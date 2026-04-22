@@ -983,7 +983,20 @@
 
       const CONN = 260;
       function draw() {
+        // Match page bg with subtle orb-like gradient
         ctx.fillStyle = '#030308';
+        ctx.fillRect(0, 0, W, H);
+        // Subtle indigo glow top-left (matches orb-1)
+        const g1 = ctx.createRadialGradient(0, 0, 0, 0, 0, W * 0.6);
+        g1.addColorStop(0, 'rgba(99,102,241,0.04)');
+        g1.addColorStop(1, 'transparent');
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, W, H);
+        // Subtle violet glow right (matches orb-2)
+        const g2 = ctx.createRadialGradient(W, H * 0.5, 0, W, H * 0.5, W * 0.5);
+        g2.addColorStop(0, 'rgba(155,127,212,0.035)');
+        g2.addColorStop(1, 'transparent');
+        ctx.fillStyle = g2;
         ctx.fillRect(0, 0, W, H);
 
         nodes.forEach(n => {
