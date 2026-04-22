@@ -29,3 +29,6 @@ tmp/
 bluebubbles/firebase-adminsdk.json
 secure/
 bluebubbles/google-services.json
+TOOLS.md
+MEMORY.md
+memory/
