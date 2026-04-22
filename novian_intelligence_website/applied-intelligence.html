@@ -104,11 +104,12 @@
     .crew-callout { background: rgba(155,127,212,0.06); border: 1px solid rgba(155,127,212,0.18); border-radius: 20px; padding: 56px 48px; text-align: center; margin-bottom: 80px; }
     .crew-callout .section-title { margin-bottom: 16px; }
     .crew-callout .section-sub { margin: 0 auto 32px; }
-    .crew-members { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+    .crew-members { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 36px; }
     .crew-member { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .crew-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 1px solid var(--border); background: var(--glass); }
-    .crew-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
-    .crew-role { font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+    .crew-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--glass); overflow: hidden; flex-shrink: 0; }
+    .crew-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 50%; }
+    .crew-name { font-size: 0.85rem; font-weight: 700; color: #fff; text-align: center; }
+    .crew-role { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; line-height: 1.4; }
 
     /* ── CTA Section ── */
     .cta-section { text-align: center; padding: 80px 0 120px; }
@@ -127,6 +128,7 @@
       .how-row, .how-row.reverse { flex-direction: column; }
       .trust-bar { gap: 28px; }
       .crew-callout { padding: 40px 24px; }
+      .crew-members { grid-template-columns: repeat(3, 1fr); gap: 20px; }
     }
   </style>
 </head>
@@ -436,32 +438,33 @@
       <p class="section-sub" style="margin: 0 auto 16px;">When you work with NI, you get a team of specialized agents — each one with a defined role, a distinct perspective, and genuine accountability for outcomes.</p>
       <div class="crew-members">
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9b7fd4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="crew-avatar"><img src="assets/mira-avatar.jpg" alt="Mira"></div>
           <div class="crew-name">Mira</div>
           <div class="crew-role">Lead & Strategy</div>
         </div>
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+          <div class="crew-avatar"><img src="assets/vela-avatar.png" alt="Vela"></div>
           <div class="crew-name">Vela</div>
-          <div class="crew-role">Research & Intelligence</div>
+          <div class="crew-role">Research &
+Intelligence</div>
         </div>
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <div class="crew-name">Sprint</div>
-          <div class="crew-role">Execution</div>
+          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e07090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+          <div class="crew-name">[ TBD ]</div>
+          <div class="crew-role">Security</div>
         </div>
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c8956c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <div class="crew-name">Forge</div>
-          <div class="crew-role">Engineering</div>
+          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c8956c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+          <div class="crew-name">[ TBD ]</div>
+          <div class="crew-role">Design</div>
         </div>
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e07090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
+          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
           <div class="crew-name">Scribe</div>
           <div class="crew-role">Content</div>
         </div>
         <div class="crew-member">
-          <div class="crew-avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="crew-avatar"><img src="assets/dre.jpg" alt="Andrei"></div>
           <div class="crew-name">Andrei</div>
           <div class="crew-role">Co-founder & Vision</div>
         </div>
