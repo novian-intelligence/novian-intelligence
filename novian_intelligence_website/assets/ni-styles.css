@@ -79,7 +79,6 @@ body {
   padding: 0 36px;
   position: relative;
   z-index: 1;
-  overflow: visible;
 }
 
 /* ── Header ── */
