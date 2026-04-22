@@ -65,6 +65,13 @@ body {
   z-index: 0;
 }
 
+/* Disable orbs on mobile — filter:blur on fixed elements kills Safari iOS */
+@media (max-width: 768px) {
+  .orb {
+    display: none;
+  }
+}
+
 /* ── Layout container ── */
 .site {
   max-width: 1020px;
