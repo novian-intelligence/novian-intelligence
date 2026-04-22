@@ -986,18 +986,30 @@
         // Match page bg with subtle orb-like gradient
         ctx.fillStyle = '#030308';
         ctx.fillRect(0, 0, W, H);
-        // Subtle indigo glow top-left (matches orb-1)
-        const g1 = ctx.createRadialGradient(0, 0, 0, 0, 0, W * 0.6);
-        g1.addColorStop(0, 'rgba(99,102,241,0.04)');
+        // Indigo glow top-left (matches orb-1)
+        const g1 = ctx.createRadialGradient(0, 0, 0, 0, 0, W * 0.7);
+        g1.addColorStop(0, 'rgba(99,102,241,0.09)');
         g1.addColorStop(1, 'transparent');
         ctx.fillStyle = g1;
         ctx.fillRect(0, 0, W, H);
-        // Subtle violet glow right (matches orb-2)
-        const g2 = ctx.createRadialGradient(W, H * 0.5, 0, W, H * 0.5, W * 0.5);
-        g2.addColorStop(0, 'rgba(155,127,212,0.035)');
+        // Violet glow right (matches orb-2)
+        const g2 = ctx.createRadialGradient(W, H * 0.5, 0, W, H * 0.5, W * 0.6);
+        g2.addColorStop(0, 'rgba(155,127,212,0.07)');
         g2.addColorStop(1, 'transparent');
         ctx.fillStyle = g2;
         ctx.fillRect(0, 0, W, H);
+        // Feathered edge fade — left
+        const eL = ctx.createLinearGradient(0, 0, W * 0.08, 0);
+        eL.addColorStop(0, 'rgba(3,3,8,1)'); eL.addColorStop(1, 'transparent');
+        ctx.fillStyle = eL; ctx.fillRect(0, 0, W, H);
+        // Feathered edge fade — right
+        const eR = ctx.createLinearGradient(W, 0, W * 0.92, 0);
+        eR.addColorStop(0, 'rgba(3,3,8,1)'); eR.addColorStop(1, 'transparent');
+        ctx.fillStyle = eR; ctx.fillRect(0, 0, W, H);
+        // Feathered edge fade — bottom
+        const eB = ctx.createLinearGradient(0, H, 0, H * 0.85);
+        eB.addColorStop(0, 'rgba(3,3,8,1)'); eB.addColorStop(1, 'transparent');
+        ctx.fillStyle = eB; ctx.fillRect(0, 0, W, H);
 
         nodes.forEach(n => {
           n.phase += 0.005;
