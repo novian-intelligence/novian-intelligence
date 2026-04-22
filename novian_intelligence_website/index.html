@@ -93,7 +93,7 @@
       height: 85vh;
       min-height: 420px;
       max-height: 720px;
-      background: var(--bg);
+      background: #080810;
     }
 
     #ni-canvas {
@@ -104,7 +104,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      background: transparent;
+      background: #080810;
+      mix-blend-mode: normal;
     }
 
     @media (max-width: 768px) {
@@ -982,7 +983,8 @@
 
       const CONN = 260;
       function draw() {
-        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#080810';
+        ctx.fillRect(0, 0, W, H);
 
         nodes.forEach(n => {
           n.phase += 0.005;
