@@ -262,30 +262,34 @@
       overflow: hidden;
       transition: border-color 0.25s;
       cursor: pointer;
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 0;
-      align-items: stretch;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
     .hero-body {
       padding: 48px 44px;
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 24px;
     }
     .hero-thumb {
-      position: relative;
-      overflow: hidden;
-      border-radius: 0 20px 20px 0;
       flex-shrink: 0;
+      width: 380px;
+      border-left: 1px solid var(--border);
+      border-radius: 0 20px 20px 0;
+      overflow: hidden;
+      align-self: stretch;
+      display: flex;
+      align-items: flex-start;
     }
     .hero-thumb img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
+      height: auto;
       display: block;
-      filter: brightness(0.9);
+      object-position: top left;
+      filter: brightness(0.92);
       transition: filter 0.25s;
     }
     .hero:hover .hero-thumb img { filter: brightness(1.0); }
