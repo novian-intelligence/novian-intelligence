@@ -26,3 +26,4 @@ Research/
 *.tar.gz
 temp/
 tmp/
+bluebubbles/firebase-adminsdk.json
