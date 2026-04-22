@@ -41,7 +41,7 @@
 
     /* ── Products grid ── */
     .products-intro { margin-bottom: 52px; }
-    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 80px; }
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
     .product-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 36px; position: relative; overflow: hidden; transition: border-color 0.25s, transform 0.2s; }
     .product-card:hover { border-color: rgba(155,127,212,0.3); transform: translateY(-2px); }
     .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
@@ -51,7 +51,7 @@
     .product-card.accent-r::before { background: linear-gradient(90deg, var(--r), var(--v)); }
     .product-card.accent-i::before { background: linear-gradient(90deg, var(--i), var(--c)); }
     .product-card.accent-g::before { background: linear-gradient(90deg, var(--c), var(--v)); }
-    .product-card.full-width { grid-column: 1 / -1; }
+    .product-card.full-width { grid-column: auto; }
 
     .product-icon-wrap { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 20px; }
     .icon-bg-v { background: rgba(155,127,212,0.12); }
@@ -76,7 +76,7 @@
     .card-header-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(8px); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
     .card-header-text { display: flex; flex-direction: column; gap: 3px; }
     .card-header-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.46rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
-    .card-header-name { font-size: 1.0rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
+    .card-header-name { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
 
     /* ── How it works ── */
     .how-row { display: flex; gap: 60px; align-items: center; margin-bottom: 80px; }
@@ -118,7 +118,8 @@
     /* ── Responsive ── */
     @media (max-width: 760px) {
       .products-grid { grid-template-columns: 1fr; }
-      .product-card.full-width { grid-column: 1; }
+      .product-card.full-width { grid-column: auto; }
+      .product-card.full-width { grid-column: auto; }
       .diff-grid { grid-template-columns: 1fr; }
       .how-row, .how-row.reverse { flex-direction: column; }
       .trust-bar { gap: 28px; }
@@ -335,24 +336,16 @@
           </div>
         </div>
         <div class="product-desc">For organizations ready to go all in. We embed as your AI operations partner — strategy, build, deploy, and run — treating your transformation the way we treat our own company: with full ownership, real accountability, and zero interest in shelfware deliverables.</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px;">
-          <div>
-            <ul class="product-features">
-              <li>Everything in all five offerings above</li>
-              <li>Dedicated NI agent crew assigned to your org</li>
-              <li>Embedded operations alongside your team</li>
-              <li>Weekly strategic reviews and course-correction</li>
-            </ul>
-          </div>
-          <div>
-            <ul class="product-features">
-              <li>Custom tooling built for your specific workflows</li>
-              <li>Ongoing model and cost optimization</li>
-              <li>Team training and internal AI capability building</li>
-              <li>Quarterly impact reporting and ROI documentation</li>
-            </ul>
-          </div>
-        </div>
+        <ul class="product-features">
+          <li>Everything in all five offerings above</li>
+          <li>Dedicated NI agent crew assigned to your org</li>
+          <li>Embedded operations alongside your team</li>
+          <li>Weekly strategic reviews and course-correction</li>
+          <li>Custom tooling built for your specific workflows</li>
+          <li>Ongoing model and cost optimization</li>
+          <li>Team training and internal AI capability building</li>
+          <li>Quarterly impact reporting and ROI documentation</li>
+        </ul>
       </div>
 
     </div>
