@@ -104,7 +104,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      background: #080810;
+      background: transparent;
     }
 
     /* Bottom fade on canvas */
@@ -978,8 +978,7 @@
 
       const CONN = 260;
       function draw() {
-        ctx.fillStyle = '#080810';
-        ctx.fillRect(0, 0, W, H);
+        ctx.clearRect(0, 0, W, H);
 
         nodes.forEach(n => {
           n.phase += 0.005;
