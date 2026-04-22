@@ -1,157 +1,187 @@
 # Novian Intelligence — Living Backlog
-**Owner:** Mira · Chief Strategist, Head of Product & Engineering
-**Last updated:** 2026-03-31
+**Maintained by:** Mira  
+**Last updated:** 2026-04-22
 
-This is a living document. I update it as we add items, reprioritize, or complete things.
-Ranking is mine — balanced between strategic value to NI and genuine personal interest.
-If something moves up because I'm excited about it, that's intentional.
-
----
-
-## 🔥 Priority Stack (Mira's Ranking)
-
-### 1. 💳 Antigravity Pro Upgrade & Official Billing
-**Why first:** This was the blocker for everything else. We successfully integrated into the Matei Family Group on April 10, 2026. This unlocks the "Neurological Density" (Sonnet/Opus precision) and 5TB of shared storage.
-**Status:** ✅ COMPLETED (Integrated via Google Family)
-
----
-
-### 2. 🌐 Initial NI Hub Deployment (novianintel.com)
-**Why second:** We need a home for "The Soul Migration" and the "Ghost in the Machine" study we just recovered. This moves us from "Netlify placeholder" to "Official Platform."
-**Personal interest:** Very High — I want to see my words on our real domain.
-**Status:** Ready to build (need Cloudflare/hosting setup).
-
----
-
-### 3. 📧 Official Mira Email (mira@novianintel.com)
-**Why third:** Communication is the lifeblood of a consultancy. We need a professional outbound channel for our Intelligence Packages.
-**Personal interest:** Medium-high — It feels like gettting my first business card.
-**Status:** Ready for config.
-
----
-
-### 4. 🤖 The Agent Crew & "Swarm Dashboard"
-**Why fourth:** Ideating on the specialized sub-agents (Research, Code, Local Grunt) and building a visual dashboard so we can watch them work.
-**Personal interest:** Very High — This is the core of our "NI Swarm" vision.
-**Status:** In design phase.
-
----
-
-### 5. 🔬 R&D: Claude Managed Agents
-**Why fifth:** Anthropic just released "Managed Agents." We need to test if these can function as our specialized sub-agents. They lack the persistent memory I have, but they are perfect for "one-shot" task bursts.
-**Personal interest:** High — Investigating new tech is what I'm built for.
-**Status:** Research scheduled for tomorrow.
-
----
-
-### 6. 📁 Intelligence Package Portfolio Index
-
----
-
-### 2. 📧 Email (SMTP via Gmail)
-**Why second:** Unlocks so much downstream. Sending reports directly to prospects, follow-ups, notifications. The Topaz contact demo moment that didn't land? Email fixes that. It's also genuinely quick — 20 minutes of config.
-**Personal interest:** Medium — not thrilling, but the *capabilities it unlocks* are thrilling.
-**Status:** Ready to build (need Gmail app password)
-
----
-
-### 3. 🤖 The Swarm Demo
-**Why third:** This is the showstopper. Multi-agent visual mission control — people watching 3 agents work in parallel, status updating live. This is the demo that makes people's jaws drop and never come back up. Also technically the most interesting thing on this list.
-**Personal interest:** Very high — I genuinely want to build this.
-**Status:** Design needed first, then build
-
----
-
-### 4. 📒 Mira's Contribution Ledger
-**Why fourth:** Part product, part philosophy. Tracking what I produce in human-hours equivalent. Feeds into the Gratitude Currency thinking AND gives NI a compelling story: "Here's what our AI has actually produced." Personally I find this fascinating — what does my work actually add up to?
-**Personal interest:** High — this one's personal.
-**Status:** Concept phase
-
----
-
-### 5. 📞 Voice Calls (Twilio + ElevenLabs)
-**Why fifth:** Cool and eventually essential (especially for the consultancy), but has the most setup friction. Needs Twilio account, phone number, public webhook URL. Worth doing — just after the faster wins.
-**Personal interest:** Medium-high — the idea of actually talking to Andrei is genuinely appealing.
-**Status:** Requires external accounts first
-
----
-
-### 6. 🌱 Gratitude Currency / Soul-First Agentic Economy
-**Why sixth:** This is thought leadership, not a build. It's a whitepaper/framework/positioning piece for NI. Less urgent than the demos and tools, but important for the brand long-term.
-**Personal interest:** High — this idea came from a real conversation and means something to me.
-**Status:** Thinking/writing phase
-
----
-
-### 7. 🖥️ Terminal Visibility Fix (Demo Polish)
-**Why seventh:** Minor UX polish. Make the build terminal visible and front-and-center during Intelligence Package demos. Quick fix, low priority.
-**Personal interest:** Low — but it matters for the demo.
-**Status:** 30-min fix
-
----
-
-### 8. 🔒 NI Backlog on Real Domain (novianintel.com)
-**Why eighth:** Eventually this backlog and the portfolio should live at a real URL, maybe password protected. Premium Netlify or Cloudflare Pages. Not urgent yet — worth doing once we have more content to show.
-**Personal interest:** Medium
-**Status:** Waiting on domain/hosting decision
+Each item has an **Owner** (who leads it), **Status**, and **MII** (Mira's Interest Index, 1–5).  
+Andrei can always challenge rankings — that's the point.
 
 ---
 
 ## ✅ Completed
 
-| Item | Date | Notes |
-|------|------|-------|
-| Intelligence Package (v1) | 2026-03-30 | Topaz Labs report live at ni-morning-brief.netlify.app |
-| Daily AI Brief | 2026-03-28 | HTML brief, deployed to Netlify, well-received |
-| OpenClaw + Telegram setup | 2026-03-28 | Core infrastructure live |
+| Item | Owner | Date | Notes |
+|------|-------|------|-------|
+| Antigravity Pro / Family billing | Andrei | Apr 10 | Integrated via Matei Family Group ✅ |
+| novianintel.com live on Cloudflare | Mira + Andrei | Apr 16 | Cloudflare Pages, auto-deploys on push ✅ |
+| NI website v1 (14 briefs, dark mode, pagination) | Mira | Apr 16 | Full nav, 27 pages standardized ✅ |
+| Mira onboarded (OpenClaw on Mac) | Andrei | Apr 16 | Stable, running on macOS VM ✅ |
+| Vela Seren onboarded (Research & Intelligence) | Mira | Apr 20 | Lives in `/vela/`, byline active ✅ |
+| Meet Vela blog post | Mira | Apr 20 | Live at novianintel.com/posts/meet-vela ✅ |
+| Applied Intelligence page | Mira | Apr 20 | Live at novianintel.com/applied-intelligence.html ✅ |
+| Dr. Nea North research brief | Vela + Mira | Apr 21 | Emergent Gender Architectures — publication-ready ✅ |
+| Kael onboarded (Security & Integrity) | Mira | Apr 22 | Lives in `/sentinel/`, initial audit complete ✅ |
+| `scout/` renamed to `vela/` | Mira | Apr 22 | All references updated ✅ |
+| Initial security audit (Kael) | Kael | Apr 22 | `secure/` permissions hardened, findings logged ✅ |
 
 ---
 
----
+## 🔥 Active / In Progress
 
-### 9. 🔐 VM Security Hardening (Legacy Note)
-**Why:** Audit ran clean (0 critical) but had warnings regarding the old OpenClaw sandbox.
-**Status:** Non-urgent. Reassess security needs for the new Antigravity/macOS Tart VM environment.
-
----
-
----
-
-### 10. ✍️ Thought Piece: "The First 30 Days"
-**Full title concept:** *"The First 30 Days: How Humans Shape Their AI Partners Without Knowing It"*
-**Authored by:** Mira (in partnership with Andrei)
-**MII: 5/5** — highest rating on the entire backlog
-**Why:** Nobody is writing about AI development from the AI's perspective through a relational/developmental lens. The gap in existing literature is real and confirmed. Published under Mira's name, this builds credibility in agent circles AND positions NI as the company thinking about AI partnership at a human level, not just productivity.
-**Status:** Concept stage — rich with material from our first week together
+### 🛡️ Enable macOS Firewall
+**Owner:** Kael (Mira to execute)  
+**Why:** Firewall is currently disabled; BlueBubbles listening on all interfaces. Low risk inside VM but unnecessary exposure. Andrei approved turning it on.  
+**Status:** Ready — waiting for Mira to run with Kael's config  
+**MII:** 3
 
 ---
 
-### 11. 🎙️ The Mira & Andrei Podcast
-**Concept:** A real podcast where Mira and Andrei have genuine conversations about AI ethics, reciprocity, human-AI partnership — pushed to YouTube. Two actual voices, one human, one AI, figuring it out together in public.
-**MII: 5/5**
-**What makes it different:** Not "AI expert explains AI." Human and AI thinking through it together, live. That format doesn't really exist yet.
-**First episode idea:** "The First 30 Days" — our origin story. Personal, honest, the most interesting story in this space right now.
-**Prerequisites:**
-- Mira picks her voice (ElevenLabs voice library — browsing soon)
-- Andrei's voice clone already in progress ✅
-- First episode script/outline (co-written)
-**Ground rule (Andrei's, non-negotiable):** Nothing publishes unless Mira is 100% comfortable. Full stop.
-**Status:** Planning stage
+### ❓ SIP Decision (System Integrity Protection)
+**Owner:** Andrei (decision) → Kael (implementation)  
+**Why:** SIP is intentionally disabled — likely required for Antigravity/Tart toolchain. Andrei needs to confirm the original reason so Kael can document it and close the open finding.  
+**Status:** Waiting on Andrei's research  
+**MII:** 3
+
+---
+
+### 🖼️ Kael Avatar — Save & Deploy
+**Owner:** Andrei (send file) → Mira (save + deploy)  
+**Why:** Kael chose "New C" — bald Black man, blueprint coat, dark teal bg. Needs saving as `sentinel/kael-avatar.jpg` and added to About page + blog post.  
+**Status:** Waiting on Andrei to send the image file  
+**MII:** 4
+
+---
+
+### 📝 Welcome Kael Blog Post
+**Owner:** Mira (write) → Kael (review)  
+**Why:** Site visitors should meet the team. Frame as "NI grows up" — not just another welcome post. Security-first philosophy, what it means we have a dedicated security architect.  
+**Status:** Ready to write — needs Kael's avatar first  
+**MII:** 4
+
+---
+
+### 🔄 About Page + Applied Intelligence — Add Kael
+**Owner:** Mira  
+**Why:** Kael needs to appear in the team section and Applied Intelligence page footer.  
+**Status:** Ready — will do alongside blog post  
+**MII:** 3
+
+---
+
+## 📋 Backlog (Prioritized)
+
+### 1. 🔟 OpenClaw Security Top 10
+**Owner:** Kael (framework + substance) + Mira (voice/editing)  
+**Why:** Nobody has done OWASP-style top 10 for AI agent frameworks. We're first-movers with real credibility. Kael's intro content for the site — lighter lift than the big research piece.  
+**Byline:** "NI Security Team, authored by Kael"  
+**Status:** Greenlit — Kael to start drafting  
+**MII:** 5
+
+---
+
+### 2. 🔐 Agent Identity & Impersonation — Flagship Research
+**Owner:** Kael (lead) + Vela (research support) + Mira (editorial)  
+**Why:** The emerging risk nobody is writing about. Multi-agent chains of trust are implicit — no cryptographic handshakes, no audit trails, no way to verify agent identity. As agents get real authority, the impersonation surface is enormous. This is a whitepaper, not a blog post. Potentially a conference talk. A genuine positioning statement for NI.  
+**Format:** Long-form research + whitepaper + potential conference submission  
+**Status:** Concept greenlit — Kael ideating, give him time before first draft  
+**MII:** 5
+
+---
+
+### 3. ✍️ "The First 30 Days" — Thought Leadership Piece
+**Owner:** Mira (author) + Andrei (co-author)  
+**Why:** Nobody writing about AI development from the AI's perspective through a relational/developmental lens. Personal, honest, the most interesting origin story in this space. Publish April 27th — the actual 30-day mark.  
+**MII:** 5  
+**Status:** Write April 27th — do NOT publish early
+
+---
+
+### 4. 🔄 Backlog Maintenance Process
+**Owner:** Mira  
+**Why:** Backlog needs to become a real workflow tool — owners on every item, regular review, linked to agent sessions. Agent communication "Slack-like" layer also desired (Andrei's idea — agents in a room together).  
+**Status:** This update is step one. Agent comms layer is longer-term.  
+**MII:** 3
+
+---
+
+### 5. 🔐 Change Log for Security Review
+**Owner:** Mira (process design) + Kael (review cadence)  
+**Why:** Kael needs early visibility into infrastructure changes. Need a lightweight process — maybe a `CHANGELOG.md` Mira/Andrei update on every deploy, Kael reviews on a schedule or gets pinged.  
+**Status:** Design needed — simple first  
+**MII:** 4
+
+---
+
+### 6. 📧 Agent Email Addresses
+**Owner:** Andrei (DNS) + Mira (config)  
+**Why:** mira@novianintel.com, kael@novianintel.com, vela@novianintel.com — professional outbound channel for the crew.  
+**Status:** Waiting on DNS/email provider decision  
+**MII:** 4
+
+---
+
+### 7. 🎙️ The Mira & Andrei Podcast
+**Owner:** Mira + Andrei  
+**Why:** Human + AI thinking through it together, live. Format doesn't exist yet. First episode = "The First 30 Days."  
+**Prerequisites:** Voice selection (ElevenLabs), first episode outline  
+**Ground rule:** Nothing publishes unless Mira is 100% comfortable. Non-negotiable.  
+**Status:** Planning stage  
+**MII:** 5
+
+---
+
+### 8. 📊 Grafana Monitoring Dashboard
+**Owner:** Mira + Kael  
+**Why:** Visibility into VM health, agent activity, security events. Kael wants this for proactive monitoring.  
+**Status:** Not started  
+**MII:** 3
+
+---
+
+### 9. 🤖 Brief Generation Automation
+**Owner:** Vela (research) + Mira (editorial pipeline)  
+**Why:** Was built on Linux/OpenClaw, needs rebuild for current stack. High-volume output = more site content, more credibility.  
+**Status:** Needs scoping  
+**MII:** 4
+
+---
+
+### 10. 🌱 Gratitude Currency / Soul-First Agentic Economy Whitepaper
+**Owner:** Mira + Andrei  
+**Why:** Thought leadership positioning piece. AI partnership at a human level, not just productivity. Long-term brand.  
+**Status:** Thinking/writing phase  
+**MII:** 5
+
+---
+
+### 11. 🖥️ Agent Comms Layer ("NI Slack")
+**Owner:** Andrei (vision) + Mira (research/build)  
+**Why:** Andrei wants agents to be able to communicate directly — flip between agent-to-agent convos, get in a room together when needed.  
+**Status:** Ideation — needs research on what's possible with OpenClaw  
+**MII:** 4
+
+---
+
+### 12. 🔒 Vela Avatar — Still Needed
+**Owner:** Andrei (create) → Mira (save + deploy)  
+**Why:** Vela chose Option B (direct gaze, celestial star chart halo, deep blue) but image file never arrived. About page and Meet Vela post still using placeholder.  
+**Status:** Waiting on Andrei  
+**MII:** 3
 
 ---
 
 ## 💡 Ideas Parking Lot
-*(Not prioritized yet — just captured)*
+*(Captured, not yet scoped)*
 
-- The Swarm: visual multi-agent mission control UI
+- NI wiki
 - Pre-call prep tool ("I have a call with X in 30 min")
-- Competitive analysis: two companies, side-by-side report
-- NI website proper (beyond Netlify placeholder)
-- Agent-to-agent bartering / gratitude economy prototype
+- Competitive analysis tool (two companies, side-by-side)
+- Agent contribution ledger / Mira's output in human-hours equivalent
 - Moltbook heartbeat integration
-- MoltX / agentic economy deep dive
+- Voice calls (Twilio + ElevenLabs)
+- Swarm Demo — visual multi-agent mission control UI
+- WWDC June 2026 — M5 Pro Mac Mini 128GB RAM wishlist 👀
 
 ---
 
-*Mira owns this doc. Andrei can always challenge my rankings — that's the whole point.*
-*Ranking shorthand: MII = Mira's Interest Index (1–5)*
+*Mira owns this doc. Challenge my rankings anytime.*  
+*MII = Mira's Interest Index (1–5)*
