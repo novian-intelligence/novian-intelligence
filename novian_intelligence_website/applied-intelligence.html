@@ -68,15 +68,18 @@
     .product-features li { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 10px; align-items: flex-start; }
     .product-features li::before { content: '→'; color: var(--v); font-size: 0.75rem; margin-top: 2px; flex-shrink: 0; }
 
-    /* ── Product card — frosted image header ── */
-    .card-header { position: relative; margin: -40px -36px 28px; border-radius: 18px 18px 0 0; overflow: hidden; height: 180px; }
-    .card-header-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.55) saturate(1.1); }
-    .card-header-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,16,0.0) 0%, rgba(8,8,16,0.55) 100%); }
-    .card-header-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
-    .card-header-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(8px); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
-    .card-header-text { display: flex; flex-direction: column; gap: 3px; }
-    .card-header-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.46rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
-    .card-header-name { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
+    /* ── Product card — image header + below-image meta ── */
+    .card-header { position: relative; margin: -40px -36px 0 -36px; border-radius: 18px 18px 0 0; overflow: hidden; height: 180px; }
+    .card-header-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.6) saturate(1.1); }
+    .card-header-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,16,0.0) 30%, rgba(8,8,16,0.45) 100%); }
+    /* No text inside the image — meta lives below */
+    .card-header-meta { display: none; }
+    /* Below-image: icon row then name */
+    .card-meta-below { padding: 20px 0 16px; }
+    .card-meta-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .card-header-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .card-header-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
+    .card-header-name { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.025em; line-height: 1.2; }
 
     /* ── How it works ── */
     .how-row { display: flex; gap: 60px; align-items: center; margin-bottom: 80px; }
@@ -200,15 +203,13 @@
         <div class="card-header">
           <img src="assets/ni-img-strategy.jpg" alt="AI strategy" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-v">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9b7fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Foundation</div>
-              <div class="card-header-name">AI Strategy & Readiness</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-v"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9b7fd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+            <div class="card-header-tag">Foundation</div>
           </div>
+          <div class="card-header-name">AI Strategy & Readiness</div>
         </div>
         <div class="product-desc">Before you build anything, you need an honest picture of where you are and where AI can actually move the needle. We do that assessment, then build you a roadmap that doesn't collect dust.</div>
         <ul class="product-features">
@@ -225,15 +226,13 @@
         <div class="card-header">
           <img src="assets/ni-img-agents.jpg" alt="Agentic systems" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-c">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="7" r="2"/><circle cx="19" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><line x1="7" y1="7" x2="10" y2="10"/><line x1="17" y1="7" x2="14" y2="10"/><line x1="7" y1="17" x2="10" y2="14"/><line x1="17" y1="17" x2="14" y2="14"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Core Build</div>
-              <div class="card-header-name">Agentic Systems Design</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-c"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="7" r="2"/><circle cx="19" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><line x1="7" y1="7" x2="10" y2="10"/><line x1="17" y1="7" x2="14" y2="10"/><line x1="7" y1="17" x2="10" y2="14"/><line x1="17" y1="17" x2="14" y2="14"/></svg></div>
+            <div class="card-header-tag">Core Build</div>
           </div>
+          <div class="card-header-name">Agentic Systems Design</div>
         </div>
         <div class="product-desc">Multi-agent AI architectures that actually run your workflows — not a single chatbot you have to babysit. We design crews of specialized agents that coordinate, hand off tasks, and operate around the clock.</div>
         <ul class="product-features">
@@ -250,15 +249,13 @@
         <div class="card-header">
           <img src="assets/ni-img-intelligence.jpg" alt="Intelligence systems" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-i">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/><path d="M11 8v6M8 11h6"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Intelligence</div>
-              <div class="card-header-name">Intelligence & Research Systems</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/><path d="M11 8v6M8 11h6"/></svg></div>
+            <div class="card-header-tag">Intelligence</div>
           </div>
+          <div class="card-header-name">Intelligence & Research Systems</div>
         </div>
         <div class="product-desc">Automated research pipelines that surface what you need to know — before you know you need it. Competitive monitoring, press tracking, trend detection, and synthesized briefings delivered on your schedule.</div>
         <ul class="product-features">
@@ -275,15 +272,13 @@
         <div class="card-header">
           <img src="assets/ni-img-content.jpg" alt="Content automation" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-o">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8956c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Content</div>
-              <div class="card-header-name">Content & Publishing Automation</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-o"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8956c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
+            <div class="card-header-tag">Content</div>
           </div>
+          <div class="card-header-name">Content & Publishing Automation</div>
         </div>
         <div class="product-desc">AI-powered content that sounds like you, publishes on schedule, and actually serves your audience. From research to draft to edit to live — automated without losing the human voice that makes content worth reading.</div>
         <ul class="product-features">
@@ -300,15 +295,13 @@
         <div class="card-header">
           <img src="assets/ni-img-governance.jpg" alt="AI governance" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-r">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07090" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Governance</div>
-              <div class="card-header-name">AI Governance & Operations</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-r"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07090" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+            <div class="card-header-tag">Governance</div>
           </div>
+          <div class="card-header-name">AI Governance & Operations</div>
         </div>
         <div class="product-desc">The trust infrastructure your stakeholders, board, or regulators need — and that you need to sleep at night. We build the monitoring, explainability, and human-oversight architecture around your AI systems.</div>
         <ul class="product-features">
@@ -322,18 +315,16 @@
 
       <!-- 6. Business Transformation (Full Stack) — Full width -->
       <div class="product-card accent-g full-width">
-        <div class="card-header" style="height: 200px;">
+        <div class="card-header">
           <img src="assets/ni-img-transformation.jpg" alt="Business transformation" class="card-header-img" loading="lazy">
           <div class="card-header-overlay"></div>
-          <div class="card-header-meta">
-            <div class="card-header-icon icon-bg-g">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <div class="card-header-text">
-              <div class="card-header-tag">Flagship · Full Transformation</div>
-              <div class="card-header-name">Business Transformation Partnership</div>
-            </div>
+        </div>
+        <div class="card-meta-below">
+          <div class="card-meta-top">
+            <div class="card-header-icon icon-bg-g"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#40d9c8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div class="card-header-tag">Flagship · Full Transformation</div>
           </div>
+          <div class="card-header-name">Business Transformation Partnership</div>
         </div>
         <div class="product-desc">For organizations ready to go all in. We embed as your AI operations partner — strategy, build, deploy, and run — treating your transformation the way we treat our own company: with full ownership, real accountability, and zero interest in shelfware deliverables.</div>
         <ul class="product-features">
