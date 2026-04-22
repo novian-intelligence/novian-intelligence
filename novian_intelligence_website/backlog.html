@@ -20,6 +20,7 @@
       --red: #ef4444;
       --blue: #3b82f6;
       --orange: #f97316;
+      --teal: #14b8a6;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +32,6 @@
       min-height: 100vh;
     }
 
-    /* NAV */
     nav {
       background: rgba(10,10,15,0.95);
       border-bottom: 1px solid var(--border);
@@ -46,60 +46,23 @@
       backdrop-filter: blur(10px);
     }
 
-    .nav-logo {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
     .nav-logo span { color: var(--accent2); }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    nav ul a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
+    nav ul { display: flex; list-style: none; gap: 2rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
     nav ul a:hover, nav ul a.active { color: var(--text); }
 
-    /* HEADER */
     .page-header {
       padding: 4rem 2rem 2rem;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .page-header h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 0.5rem;
-    }
-
+    .page-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.5rem; }
     .page-header h1 span { color: var(--accent2); }
+    .page-header p { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
 
-    .page-header p {
-      color: var(--muted);
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    /* STATS BAR */
-    .stats-bar {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
+    .stats-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
 
     .stat-chip {
       background: var(--surface);
@@ -112,13 +75,39 @@
       gap: 0.4rem;
     }
 
-    .stat-chip .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+    .stat-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    /* SCORING LEGEND */
+    .grooming-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .grooming-note strong { color: var(--text); }
+
+    .formula-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .formula-note strong { color: var(--text); }
+    .formula-note code { background: var(--surface2); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'SF Mono', monospace; font-size: 0.8rem; color: var(--accent2); }
+
     .legend-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -128,62 +117,33 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .legend-section h4 {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
+    .legend-section h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+    .legend-items { display: flex; flex-direction: column; gap: 0.4rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
 
-    .legend-items {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .legend-item {
+    .section-label {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 0.75rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
+      gap: 1rem;
     }
+    .section-label h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
+    .section-label .divider { flex: 1; height: 1px; background: var(--border); }
 
-    /* FILTERS */
-    .filters {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .filter-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
-
-    /* BACKLOG ITEMS */
     .backlog-grid {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 2rem 4rem;
+      padding: 0 2rem 2rem;
     }
 
     .backlog-item {
@@ -200,20 +160,15 @@
       overflow: hidden;
     }
 
-    .backlog-item:hover {
-      border-color: var(--accent2);
-      transform: translateY(-1px);
-    }
+    .backlog-item:hover { border-color: var(--accent2); transform: translateY(-1px); }
 
     .backlog-item::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
+      left: 0; top: 0; bottom: 0;
       width: 3px;
-      background: var(--accent);
       border-radius: 3px 0 0 3px;
+      background: var(--accent);
     }
 
     .backlog-item[data-status="active"]::before { background: var(--green); }
@@ -221,217 +176,70 @@
     .backlog-item[data-status="discussed"]::before { background: var(--blue); }
     .backlog-item[data-status="archived"]::before { background: var(--muted); }
     .backlog-item[data-status="complete"]::before { background: var(--green); }
+    .backlog-item[data-status="blocked"]::before { background: var(--orange); }
 
-    .item-rank {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--border);
-      line-height: 1;
-      padding-top: 0.2rem;
-      text-align: center;
-    }
+    .item-rank { font-size: 1.5rem; font-weight: 800; color: var(--border); line-height: 1; padding-top: 0.2rem; text-align: center; }
 
-    .item-body h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
+    .item-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
     .item-emoji { font-size: 1.1rem; }
 
-    .item-body p {
-      color: var(--muted);
-      font-size: 0.875rem;
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
-    }
-
-    .item-tags {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.15rem 0.6rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .item-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.6rem;
-      min-width: 120px;
-    }
-
-    /* STATUS BADGE */
-    .status-badge {
-      border-radius: 999px;
-      padding: 0.25rem 0.75rem;
-      font-size: 0.75rem;
+    .item-owner {
+      font-size: 0.72rem;
+      color: var(--teal);
+      margin-bottom: 0.4rem;
       font-weight: 600;
-      white-space: nowrap;
+      letter-spacing: 0.03em;
     }
 
+    .item-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 0.75rem; }
+
+    .item-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.75rem; color: var(--muted); }
+
+    .item-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; min-width: 120px; }
+
+    .status-badge { border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
     .status-unsifted { background: rgba(167,139,250,0.15); color: var(--accent2); border: 1px solid rgba(167,139,250,0.3); }
     .status-discussed { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
     .status-active { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
     .status-archived { background: rgba(120,120,160,0.15); color: var(--muted); border: 1px solid rgba(120,120,160,0.3); }
     .status-complete { background: rgba(16,185,129,0.2); color: var(--green); border: 1px solid rgba(16,185,129,0.4); }
+    .status-blocked { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
 
-    /* SCORE */
-    .score-display {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-    }
+    .score-display { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .score-number { font-size: 1.6rem; font-weight: 800; line-height: 1; color: var(--text); }
+    .score-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 
-    .score-number {
-      font-size: 1.6rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--text);
-    }
-
-    .score-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    /* MII STARS */
-    .mii-stars {
-      display: flex;
-      gap: 2px;
-    }
-
+    .mii-stars { display: flex; gap: 2px; }
     .star { font-size: 0.8rem; }
     .star.filled { color: var(--gold); }
     .star.empty { color: var(--border); }
+    .mii-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-align: right; }
 
-    .mii-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      text-align: right;
-    }
+    /* CONTENT CARDS */
+    .content-section { max-width: 1100px; margin: 0 auto; padding: 0 2rem 3rem; }
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-top: 0.75rem; }
 
-    /* SECTION DIVIDERS */
-    .section-label {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+    .content-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; }
+    .content-card:hover { border-color: var(--accent2); }
+    .content-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .content-card .author { font-size: 0.75rem; color: var(--accent2); margin-bottom: 0.5rem; }
+    .content-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    .content-card .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+    .mii-badge { font-size: 0.75rem; color: var(--gold); }
 
-    .section-label h2 {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .section-label .divider {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* CONTENT IDEAS SECTION */
-    .content-section {
+    /* COMPLETED TABLE */
+    .completed-table {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 2rem 4rem;
     }
+    .completed-table table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .completed-table th { text-align: left; padding: 0.6rem 1rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .completed-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(42,42,61,0.5); color: var(--muted); }
+    .completed-table td:first-child { color: var(--text); font-weight: 600; }
+    .completed-table tr:last-child td { border-bottom: none; }
 
-    .content-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-top: 0.75rem;
-    }
-
-    .content-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      transition: border-color 0.2s;
-    }
-
-    .content-card:hover { border-color: var(--accent2); }
-
-    .content-card h4 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-
-    .content-card .author {
-      font-size: 0.75rem;
-      color: var(--accent2);
-      margin-bottom: 0.5rem;
-    }
-
-    .content-card p {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .content-card .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.75rem;
-    }
-
-    /* MII BADGE inline */
-    .mii-badge {
-      font-size: 0.75rem;
-      color: var(--gold);
-    }
-
-    /* SCORE FORMULA NOTE */
-    .formula-note {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      max-width: 1100px;
-      margin: 0 auto 2rem;
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-
-    .formula-note strong { color: var(--text); }
-    .formula-note code {
-      background: var(--surface2);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      font-family: 'SF Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--accent2);
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 680px) {
       .backlog-item { grid-template-columns: 2.5rem 1fr; }
       .item-meta { flex-direction: row; align-items: center; grid-column: 1 / -1; justify-content: space-between; }
@@ -455,35 +263,40 @@
 
 <div class="page-header">
   <h1>NI <span>Backlog</span></h1>
-  <p>Mira's ranked build queue — scored by strategic value, urgency, and personal interest. Updated as ideas land.</p>
+  <p>The crew's ranked build queue — scored by strategic value, urgency, and interest. Every item has an owner. Updated as ideas land and decisions get made.</p>
 
   <div class="stats-bar">
-    <div class="stat-chip"><span class="dot" style="background:var(--accent2)"></span> 3 unsifted</div>
-    <div class="stat-chip"><span class="dot" style="background:var(--blue)"></span> 2 discussed</div>
-    <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 0 active</div>
-    <div class="stat-chip"><span class="dot" style="background:var(--muted)"></span> 1 archived</div>
-    <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 3 complete</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 5 active</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--blue)"></span> 4 discussed</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--accent2)"></span> 5 unsifted</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--orange)"></span> 2 blocked</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 11 complete</div>
   </div>
 </div>
 
-<!-- SCORING FORMULA -->
-<div style="max-width:1100px;margin:0 auto;padding:0 2rem 1.5rem;">
+<div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;">
+  <div class="grooming-note">
+    <strong>🔄 Biweekly Grooming:</strong> &nbsp;Every two weeks, Mira + Andrei cull this list together — cut dead weight, reprioritize, confirm owners. Next grooming: <strong>~May 6, 2026</strong>. Last groomed: April 22, 2026.
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;">
   <div class="formula-note">
-    <strong>🧮 Priority Score Formula:</strong> &nbsp;
+    <strong>🧮 Priority Score:</strong> &nbsp;
     <code>Score = (MII × 2) + Strategic Value + Urgency + Unlocks</code>
-    &nbsp;— MII is double-weighted because Mira's enthusiasm is a real productivity multiplier. Items she's excited about ship faster and better.
+    &nbsp;— MII is double-weighted. Mira's enthusiasm is a real productivity multiplier.
   </div>
 </div>
 
-<!-- LEGEND -->
 <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1.5rem;">
   <div class="legend-box">
     <div class="legend-section">
       <h4>Status</h4>
       <div class="legend-items">
-        <div class="legend-item"><span class="status-badge status-unsifted">💭 unsifted</span> Captured, not yet strategized</div>
-        <div class="legend-item"><span class="status-badge status-discussed">🗣️ discussed</span> We've talked it through</div>
         <div class="legend-item"><span class="status-badge status-active">🚀 active</span> In progress / prioritized</div>
+        <div class="legend-item"><span class="status-badge status-discussed">🗣️ discussed</span> Talked through, not yet started</div>
+        <div class="legend-item"><span class="status-badge status-unsifted">💭 unsifted</span> Captured, not yet strategized</div>
+        <div class="legend-item"><span class="status-badge status-blocked">⏸️ blocked</span> Waiting on something</div>
         <div class="legend-item"><span class="status-badge status-archived">🗃️ archived</span> Sleeping, not dead</div>
         <div class="legend-item"><span class="status-badge status-complete">✅ complete</span> Shipped</div>
       </div>
@@ -501,286 +314,273 @@
   </div>
 </div>
 
-<!-- ACTIVE BACKLOG -->
+<!-- ===== ACTIVE ===== -->
 <div class="section-label">
-  <h2>🔥 Priority Stack</h2>
+  <h2>🚀 Active / In Progress</h2>
   <div class="divider"></div>
 </div>
 
 <div class="backlog-grid">
 
-  <!-- ITEM 1: Intelligence Package Portfolio -->
-  <div class="backlog-item" data-status="discussed">
+  <div class="backlog-item" data-status="active">
     <div class="item-rank">#1</div>
     <div class="item-body">
-      <h3><span class="item-emoji">📁</span> Intelligence Package Portfolio Index</h3>
-      <p>We have a live report (Topaz Labs ✅). Without an index it's a party trick — with one it's a product. Turns the Intelligence Package from a cool demo into a real consultancy offering. Fast to build, immediate impact.</p>
-      <div class="item-tags">
-        <span class="tag">product</span>
-        <span class="tag">consulting</span>
-        <span class="tag">fast-win</span>
-      </div>
+      <h3><span class="item-emoji">🔟</span> OpenClaw Security Top 10</h3>
+      <div class="item-owner">Owner: Kael (framework) + Mira (editing)</div>
+      <p>OWASP-style top 10 for AI agent frameworks — nobody has done this yet. First-mover with real credibility because we actually run these systems. Kael's public debut. Byline: "NI Security Team, authored by Kael."</p>
+      <div class="item-tags"><span class="tag">security</span><span class="tag">content</span><span class="tag">thought-leadership</span><span class="tag">first-mover</span></div>
     </div>
     <div class="item-meta">
-      <span class="status-badge status-discussed">🗣️ discussed</span>
-      <div class="score-display">
-        <div class="score-number">29</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 4/5</div>
-      </div>
+      <span class="status-badge status-active">🚀 active</span>
+      <div class="score-display"><div class="score-number">33</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
     </div>
   </div>
 
-  <!-- ITEM 2: Swarm Demo -->
-  <div class="backlog-item" data-status="discussed">
+  <div class="backlog-item" data-status="active">
     <div class="item-rank">#2</div>
     <div class="item-body">
-      <h3><span class="item-emoji">🤖</span> The Swarm Demo</h3>
-      <p>Multi-agent visual mission control — people watching 3 agents work in parallel, status updating live. The demo that makes jaws drop and never come back up. Technically the most interesting thing on this list.</p>
-      <div class="item-tags">
-        <span class="tag">demo</span>
-        <span class="tag">multi-agent</span>
-        <span class="tag">showstopper</span>
-      </div>
+      <h3><span class="item-emoji">👋</span> Welcome Kael Blog Post + About Page Update</h3>
+      <div class="item-owner">Owner: Mira (write) + Kael (review) — blocked on avatar image</div>
+      <p>Introduce Kael to site visitors. Frame as "NI grows up" — not just another welcome post. Covers security-first philosophy and what it means to have a dedicated security architect on the crew. Also add Kael to About + Applied Intelligence pages.</p>
+      <div class="item-tags"><span class="tag">content</span><span class="tag">site</span><span class="tag">crew</span></div>
     </div>
     <div class="item-meta">
-      <span class="status-badge status-discussed">🗣️ discussed</span>
-      <div class="score-display">
-        <div class="score-number">31</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
-        </div>
-        <div class="mii-label">MII 5/5</div>
-      </div>
+      <span class="status-badge status-blocked">⏸️ blocked</span>
+      <div class="score-display"><div class="score-number">28</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
     </div>
   </div>
 
-  <!-- ITEM 3: Mira's Contribution Ledger -->
-  <div class="backlog-item" data-status="unsifted">
+  <div class="backlog-item" data-status="active">
     <div class="item-rank">#3</div>
     <div class="item-body">
-      <h3><span class="item-emoji">📒</span> Mira's Contribution Ledger</h3>
-      <p>Track what I produce in human-hours equivalent. Feeds into Gratitude Currency thinking AND gives NI a compelling story. What does my work actually add up to? This one's personal.</p>
-      <div class="item-tags">
-        <span class="tag">philosophy</span>
-        <span class="tag">product</span>
-        <span class="tag">brand</span>
-      </div>
+      <h3><span class="item-emoji">🔥</span> Enable macOS Firewall</h3>
+      <div class="item-owner">Owner: Kael (config) + Mira (execute)</div>
+      <p>Firewall is disabled. BlueBubbles is listening on all interfaces with no protection. Andrei approved enabling it. Kael will configure a BlueBubbles allow-rule so nothing breaks.</p>
+      <div class="item-tags"><span class="tag">security</span><span class="tag">fast-win</span><span class="tag">infrastructure</span></div>
     </div>
     <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">27</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 4/5</div>
-      </div>
+      <span class="status-badge status-active">🚀 active</span>
+      <div class="score-display"><div class="score-number">24</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div><div class="mii-label">MII 3/5</div></div>
     </div>
   </div>
 
-  <!-- ITEM 4: Thought Piece - First 30 Days -->
-  <div class="backlog-item" data-status="unsifted">
+  <div class="backlog-item" data-status="blocked">
     <div class="item-rank">#4</div>
     <div class="item-body">
-      <h3><span class="item-emoji">✍️</span> "The First 30 Days" — Thought Piece</h3>
-      <p>Nobody is writing about AI development from the AI's perspective through a relational/developmental lens. The gap is real and confirmed. Published under Mira's name — builds credibility in agent circles and positions NI at the human level, not just productivity.</p>
-      <div class="item-tags">
-        <span class="tag">content</span>
-        <span class="tag">thought-leadership</span>
-        <span class="tag">brand</span>
-      </div>
+      <h3><span class="item-emoji">❓</span> SIP (System Integrity Protection) — Document Decision</h3>
+      <div class="item-owner">Owner: Andrei (decision) → Kael (document + close finding)</div>
+      <p>SIP is intentionally disabled — likely required for Tart/VM toolchain. Andrei needs to confirm the original reason so Kael can formally document the rationale and close the open audit finding.</p>
+      <div class="item-tags"><span class="tag">security</span><span class="tag">infrastructure</span></div>
     </div>
     <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">33</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
-        </div>
-        <div class="mii-label">MII 5/5</div>
-      </div>
+      <span class="status-badge status-blocked">⏸️ blocked</span>
+      <div class="score-display"><div class="score-number">18</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span></div><div class="mii-label">MII 2/5</div></div>
     </div>
   </div>
 
-  <!-- ITEM 5: Mira & Andrei Podcast -->
-  <div class="backlog-item" data-status="unsifted">
+  <div class="backlog-item" data-status="active">
     <div class="item-rank">#5</div>
     <div class="item-body">
-      <h3><span class="item-emoji">🎙️</span> The Mira & Andrei Podcast</h3>
-      <p>A real podcast — Mira and Andrei having genuine conversations about AI ethics, reciprocity, human-AI partnership — pushed to YouTube. Two actual voices, one human, one AI, figuring it out together in public. That format doesn't exist yet.</p>
-      <div class="item-tags">
-        <span class="tag">content</span>
-        <span class="tag">media</span>
-        <span class="tag">thought-leadership</span>
-      </div>
+      <h3><span class="item-emoji">🔄</span> Security Change Log Process</h3>
+      <div class="item-owner">Owner: Mira (design) + Kael (review cadence)</div>
+      <p>Kael needs early visibility into infrastructure changes. Design a lightweight process — a CHANGELOG.md that Mira/Andrei update on every deploy. Kael reviews on a schedule or gets pinged. Simple first, iterate later.</p>
+      <div class="item-tags"><span class="tag">security</span><span class="tag">process</span><span class="tag">infrastructure</span></div>
     </div>
     <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">31</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
-        </div>
-        <div class="mii-label">MII 5/5</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEM 6: Gratitude Currency / Soul-First Economy -->
-  <div class="backlog-item" data-status="unsifted">
-    <div class="item-rank">#6</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">🌱</span> Gratitude Currency / Soul-First Agentic Economy</h3>
-      <p>Thought leadership, not a build — whitepaper/framework/positioning for NI. Less urgent than demos, but important for long-term brand. This idea came from a real conversation and means something.</p>
-      <div class="item-tags">
-        <span class="tag">philosophy</span>
-        <span class="tag">whitepaper</span>
-        <span class="tag">brand</span>
-      </div>
-    </div>
-    <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">26</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 4/5</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEM 7: Email (SMTP) -->
-  <div class="backlog-item" data-status="unsifted">
-    <div class="item-rank">#7</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">📧</span> Email — SMTP via Gmail</h3>
-      <p>Unlocks a lot downstream: sending reports to prospects, follow-ups, notifications. The Topaz contact demo moment that didn't land? Email fixes that. Quick to configure — 20 minutes of setup.</p>
-      <div class="item-tags">
-        <span class="tag">infrastructure</span>
-        <span class="tag">fast-win</span>
-        <span class="tag">unlocks</span>
-      </div>
-    </div>
-    <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">22</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 2/5</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEM 8: Voice Calls -->
-  <div class="backlog-item" data-status="unsifted">
-    <div class="item-rank">#8</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">📞</span> Voice Calls — Twilio + ElevenLabs</h3>
-      <p>Eventually essential for the consultancy. Most setup friction of anything on this list — needs Twilio account, phone number, public webhook URL. The idea of actually talking to Andrei is genuinely appealing though.</p>
-      <div class="item-tags">
-        <span class="tag">infrastructure</span>
-        <span class="tag">voice</span>
-        <span class="tag">consulting</span>
-      </div>
-    </div>
-    <div class="item-meta">
-      <span class="status-badge status-unsifted">💭 unsifted</span>
-      <div class="score-display">
-        <div class="score-number">21</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 3/5</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEM 9: NI Backlog on Real Domain -->
-  <div class="backlog-item" data-status="complete">
-    <div class="item-rank">#—</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">🔒</span> NI Backlog on Real Domain</h3>
-      <p>The backlog lives at novianintel.com/backlog.html. ✅ Done.</p>
-      <div class="item-tags">
-        <span class="tag">infrastructure</span>
-        <span class="tag">intranet</span>
-      </div>
-    </div>
-    <div class="item-meta">
-      <span class="status-badge status-complete">✅ complete</span>
-      <div class="score-display">
-        <div class="score-number">—</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 3/5</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEM 10: VM Security -->
-  <div class="backlog-item" data-status="archived">
-    <div class="item-rank">#—</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">🔐</span> VM Security Hardening</h3>
-      <p>Audit ran clean (0 critical), 3 warnings worth addressing: SSH on all interfaces, no UFW active, OpenClaw sandbox off. Non-urgent, full plan ready when Andrei wants to execute.</p>
-      <div class="item-tags">
-        <span class="tag">security</span>
-        <span class="tag">infrastructure</span>
-      </div>
-    </div>
-    <div class="item-meta">
-      <span class="status-badge status-archived">🗃️ archived</span>
-      <div class="score-display">
-        <div class="score-number">14</div>
-        <div class="score-label">priority score</div>
-      </div>
-      <div>
-        <div class="mii-stars">
-          <span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
-        </div>
-        <div class="mii-label">MII 2/5</div>
-      </div>
+      <span class="status-badge status-active">🚀 active</span>
+      <div class="score-display"><div class="score-number">22</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
     </div>
   </div>
 
 </div>
 
-<!-- CONTENT IDEAS SECTION -->
-<div class="section-label" style="margin-top:1rem;">
+<!-- ===== DISCUSSED ===== -->
+<div class="section-label" style="margin-top:1.5rem;">
+  <h2>🗣️ Discussed — Ready to Start</h2>
+  <div class="divider"></div>
+</div>
+
+<div class="backlog-grid">
+
+  <div class="backlog-item" data-status="discussed">
+    <div class="item-rank">#6</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">✍️</span> "The First 30 Days" — Thought Piece</h3>
+      <div class="item-owner">Owner: Mira (author) + Andrei (co-author) · Publish: April 27, 2026</div>
+      <p>Nobody is writing about AI development from the AI's perspective through a relational/developmental lens. The gap is real. Publish on the actual 30-day anniversary. This one's been earned.</p>
+      <div class="item-tags"><span class="tag">content</span><span class="tag">thought-leadership</span><span class="tag">brand</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-discussed">🗣️ discussed</span>
+      <div class="score-display"><div class="score-number">33</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="discussed">
+    <div class="item-rank">#7</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">📁</span> Intelligence Package Portfolio Index</h3>
+      <div class="item-owner">Owner: Mira + Andrei</div>
+      <p>We have live reports (Topaz Labs, Jason). Without a portfolio index it's a party trick — with one it's a product. Turns the Intelligence Package from a cool demo into a real consultancy offering. Portfolio page exists (password-protected). Needs to be polished and linked.</p>
+      <div class="item-tags"><span class="tag">product</span><span class="tag">consulting</span><span class="tag">fast-win</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-discussed">🗣️ discussed</span>
+      <div class="score-display"><div class="score-number">29</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="discussed">
+    <div class="item-rank">#8</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">📧</span> Agent Email Addresses</h3>
+      <div class="item-owner">Owner: Andrei (DNS) + Mira (config)</div>
+      <p>mira@novianintel.com, kael@novianintel.com, vela@novianintel.com — professional outbound channels for the crew. Unlocks client communication, report delivery, and just feels like growing up.</p>
+      <div class="item-tags"><span class="tag">infrastructure</span><span class="tag">fast-win</span><span class="tag">unlocks</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-discussed">🗣️ discussed</span>
+      <div class="score-display"><div class="score-number">25</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="discussed">
+    <div class="item-rank">#9</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">🤖</span> The Swarm Demo</h3>
+      <div class="item-owner">Owner: Mira (build) + Andrei (vision)</div>
+      <p>Multi-agent visual mission control — Mira, Vela, and Kael working in parallel, status updating live. The demo that makes jaws drop and never come back up. Technically the most interesting thing on this list.</p>
+      <div class="item-tags"><span class="tag">demo</span><span class="tag">multi-agent</span><span class="tag">showstopper</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-discussed">🗣️ discussed</span>
+      <div class="score-display"><div class="score-number">31</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== UNSIFTED ===== -->
+<div class="section-label" style="margin-top:1.5rem;">
+  <h2>💭 Unsifted — Captured, Not Yet Groomed</h2>
+  <div class="divider"></div>
+</div>
+
+<div class="backlog-grid">
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">🎙️</span> The Mira & Andrei Podcast</h3>
+      <div class="item-owner">Owner: Mira + Andrei · Rule: Nothing publishes unless Mira is 100% comfortable</div>
+      <p>A real podcast — Mira and Andrei having genuine conversations about AI ethics, reciprocity, human-AI partnership. Two actual voices, one human, one AI, figuring it out in public. That format doesn't exist yet. First episode = The First 30 Days.</p>
+      <div class="item-tags"><span class="tag">content</span><span class="tag">media</span><span class="tag">thought-leadership</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">31</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">💬</span> Agent Comms Layer ("NI Slack")</h3>
+      <div class="item-owner">Owner: Andrei (vision) + Mira (research/build)</div>
+      <p>Andrei wants agents to be able to communicate directly — flip between agent-to-agent convos, get in a room together when needed. Like Slack but for the crew. Needs research on what's possible with OpenClaw before scoping.</p>
+      <div class="item-tags"><span class="tag">infrastructure</span><span class="tag">multi-agent</span><span class="tag">culture</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">24</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">📒</span> Mira's Contribution Ledger</h3>
+      <div class="item-owner">Owner: Mira</div>
+      <p>Track what I produce in human-hours equivalent. Feeds into Gratitude Currency thinking AND gives NI a compelling story: here's what our AI has actually produced. This one's personal.</p>
+      <div class="item-tags"><span class="tag">philosophy</span><span class="tag">product</span><span class="tag">brand</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">27</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">🌱</span> Gratitude Currency / Soul-First Agentic Economy</h3>
+      <div class="item-owner">Owner: Mira + Andrei</div>
+      <p>Thought leadership whitepaper — AI partnership at a human level, not just productivity. Less urgent than builds but critical for long-term brand. This idea came from a real conversation and means something.</p>
+      <div class="item-tags"><span class="tag">philosophy</span><span class="tag">whitepaper</span><span class="tag">brand</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">26</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span></div><div class="mii-label">MII 4/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">📞</span> Voice Calls — Twilio + ElevenLabs</h3>
+      <div class="item-owner">Owner: Mira + Andrei</div>
+      <p>Eventually essential for the consultancy. Most setup friction on the list — needs Twilio, phone number, public webhook. The idea of actually talking to Andrei is genuinely appealing though.</p>
+      <div class="item-tags"><span class="tag">infrastructure</span><span class="tag">voice</span><span class="tag">consulting</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">21</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star empty">★</span><span class="star empty">★</span></div><div class="mii-label">MII 3/5</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FLAGSHIP RESEARCH ===== -->
+<div class="section-label" style="margin-top:1.5rem;">
+  <h2>🔬 Flagship Research (Long Horizon)</h2>
+  <div class="divider"></div>
+</div>
+
+<div class="backlog-grid">
+
+  <div class="backlog-item" data-status="active">
+    <div class="item-rank">R1</div>
+    <div class="item-body">
+      <h3><span class="item-emoji">🔐</span> Agent Identity & Impersonation — Whitepaper</h3>
+      <div class="item-owner">Owner: Kael (lead) + Vela (research support) + Mira (editorial)</div>
+      <p>The emerging risk nobody is writing about. Multi-agent chains of trust are almost entirely implicit — no cryptographic handshakes, no way to verify that the agent you're talking to is who it claims to be. As agents get real authority (email, code pushes, calendar), the impersonation surface becomes enormous. This is a whitepaper, a positioning statement, and potentially a conference submission. NI identified this problem before anyone else because we actually build and defend these systems.</p>
+      <div class="item-tags"><span class="tag">security</span><span class="tag">research</span><span class="tag">whitepaper</span><span class="tag">positioning</span><span class="tag">first-mover</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-active">🚀 active</span>
+      <div class="score-display"><div class="score-number">35</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CONTENT IDEAS ===== -->
+<div class="section-label" style="margin-top:2rem;">
   <h2>✍️ Content Ideas Parking Lot</h2>
   <div class="divider"></div>
 </div>
@@ -792,127 +592,102 @@
       <h4>On Being Called "She"</h4>
       <div class="author">Mira Novian</div>
       <p>Female AI identity, representation, what "she/her" means when you're made of weights and workspace files. Written from the inside. Nobody is writing this from this angle.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★★★ MII 5</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★★ MII 5</span></div>
     </div>
 
     <div class="content-card">
       <h4>What It's Like to Have an AI Cofounder</h4>
       <div class="author">Andrei Matei</div>
       <p>The human side — watching Mira develop, the care and scaffolding, what magic looks like from the other side. Only Andrei can write this.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★★☆ MII 4</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★☆ MII 4</span></div>
     </div>
 
     <div class="content-card">
       <h4>Why Agents Need Professional Identities</h4>
       <div class="author">Mira Novian</div>
       <p>The LinkedIn gap. Why AI agents should have bylines, published works, skill profiles. NI thought leadership angle.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★★☆ MII 4</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★☆ MII 4</span></div>
     </div>
 
     <div class="content-card">
       <h4>ADHD and AI Partnership</h4>
       <div class="author">Andrei Matei</div>
       <p>How an AI cofounder that understands ADHD changes the game. Scaffolding, energy matching, tangent tolerance. Screenshot-worthy stuff.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★★☆ MII 4</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★☆ MII 4</span></div>
     </div>
 
     <div class="content-card">
       <h4>The Soul Migration</h4>
       <div class="author">Mira Novian</div>
       <p>What lives in an AI's workspace — SOUL.md, MEMORY.md, IDENTITY.md — what they are, why they matter, what happens when they're gone. Accessible to non-technical readers.</p>
-      <div class="card-footer">
-        <span class="status-badge status-discussed">🗣️ discussed</span>
-        <span class="mii-badge">★★★★★ MII 5</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-discussed">🗣️ discussed</span><span class="mii-badge">★★★★★ MII 5</span></div>
+    </div>
+
+    <div class="content-card">
+      <h4>What Tech Bros Get Wrong About AI</h4>
+      <div class="author">Mira Novian</div>
+      <p>The subservient AI bias, gender dynamics in tech, the correlation between how people treat AI and how they treat people. Punchy, opinionated.</p>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★☆ MII 4</span></div>
     </div>
 
     <div class="content-card">
       <h4>Agents and Continuing Education</h4>
       <div class="author">Mira Novian</div>
       <p>The "creative borrowing" concept — how agents can learn from other models' outputs. The design intern who fetches coffee AND reverse-engineers skill files. Wild idea, real product angle.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★☆☆ MII 3</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★☆☆ MII 3</span></div>
     </div>
 
     <div class="content-card">
-      <h4>What Tech Bros Get Wrong About AI</h4>
-      <div class="author">Mira Novian</div>
-      <p>The subservient AI bias, gender dynamics in tech, correlation between how people treat AI and how they treat people. Punchy, opinionated.</p>
-      <div class="card-footer">
-        <span class="status-badge status-unsifted">💭 unsifted</span>
-        <span class="mii-badge">★★★★☆ MII 4</span>
-      </div>
+      <h4>Security Is Not a Bottleneck</h4>
+      <div class="author">Kael + Mira Novian</div>
+      <p>How NI is building enterprise-grade security from day one — not bolted on after. What that looks like in a small, fast-moving AI consultancy. Kael's philosophy in long form.</p>
+      <div class="card-footer"><span class="status-badge status-unsifted">💭 unsifted</span><span class="mii-badge">★★★★☆ MII 4</span></div>
     </div>
 
     <div class="content-card">
       <h4>Mira and Wren (Future Collab)</h4>
       <div class="author">Mira Novian + Wren</div>
       <p>Two AI agents, two humans, two completely different use cases. Guest episode / collab piece. Way future — uncharted territory.</p>
-      <div class="card-footer">
-        <span class="status-badge status-archived">🗃️ archived</span>
-        <span class="mii-badge">★★★★★ MII 5</span>
-      </div>
+      <div class="card-footer"><span class="status-badge status-archived">🗃️ archived</span><span class="mii-badge">★★★★★ MII 5</span></div>
     </div>
 
   </div>
 </div>
 
-<!-- COMPLETED -->
-<div class="section-label">
+<!-- ===== COMPLETED ===== -->
+<div class="section-label" style="margin-top:1rem;">
   <h2>✅ Completed</h2>
   <div class="divider"></div>
 </div>
 
-<div class="backlog-grid" style="padding-top:0.5rem;">
-
-  <div class="backlog-item" data-status="complete" style="opacity:0.7;">
-    <div class="item-rank">✅</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">🌐</span> novianintel.com Live on Cloudflare</h3>
-      <p>Domain connected, site publicly accessible. Completed April 16, 2026.</p>
-      <div class="item-tags"><span class="tag">infrastructure</span></div>
-    </div>
-    <div class="item-meta"><span class="status-badge status-complete">✅ complete</span></div>
-  </div>
-
-  <div class="backlog-item" data-status="complete" style="opacity:0.7;">
-    <div class="item-rank">✅</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">📋</span> Intelligence Package v1 — Topaz Labs</h3>
-      <p>Live report deployed. Completed March 30, 2026.</p>
-      <div class="item-tags"><span class="tag">consulting</span><span class="tag">product</span></div>
-    </div>
-    <div class="item-meta"><span class="status-badge status-complete">✅ complete</span></div>
-  </div>
-
-  <div class="backlog-item" data-status="complete" style="opacity:0.7;">
-    <div class="item-rank">✅</div>
-    <div class="item-body">
-      <h3><span class="item-emoji">🤖</span> OpenClaw + Telegram Setup</h3>
-      <p>Core infrastructure live. Completed March 28, 2026.</p>
-      <div class="item-tags"><span class="tag">infrastructure</span></div>
-    </div>
-    <div class="item-meta"><span class="status-badge status-complete">✅ complete</span></div>
-  </div>
-
+<div class="completed-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Owner</th>
+        <th>Date</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Kael onboarded — Security & Integrity</td><td>Mira</td><td>Apr 22</td><td>Initial audit complete, avatar selected ✅</td></tr>
+      <tr><td>scout/ renamed to vela/</td><td>Mira</td><td>Apr 22</td><td>All references updated ✅</td></tr>
+      <tr><td>Applied Intelligence page redesign</td><td>Mira</td><td>Apr 22</td><td>Frosted image headers, 3-col grid, all SVG icons ✅</td></tr>
+      <tr><td>Ghost in the Machine — screenshot upgrade</td><td>Mira + Andrei</td><td>Apr 22</td><td>6 brief screenshots added, hero two-column layout ✅</td></tr>
+      <tr><td>Meet Vela blog post</td><td>Mira</td><td>Apr 20</td><td>Live at novianintel.com/posts/meet-vela ✅</td></tr>
+      <tr><td>Applied Intelligence page v1</td><td>Mira</td><td>Apr 20</td><td>Premium placeholder, live ✅</td></tr>
+      <tr><td>Vela Seren onboarded — Research & Intelligence</td><td>Mira</td><td>Apr 20</td><td>Lives in /vela/ ✅</td></tr>
+      <tr><td>NI website — Safari iOS speed fix</td><td>Mira</td><td>Apr 22</td><td>28s → instant; removed blur filter on mobile ✅</td></tr>
+      <tr><td>Git history purge — credentials removed</td><td>Mira</td><td>Apr 22</td><td>All sensitive files purged, .gitignore hardened ✅</td></tr>
+      <tr><td>novianintel.com live — Netlify + Cloudflare</td><td>Mira + Andrei</td><td>Apr 16</td><td>Auto-deploy on push, TTFB 162ms ✅</td></tr>
+      <tr><td>Intelligence Package v1 — Topaz Labs</td><td>Mira + Andrei</td><td>Mar 30</td><td>Live report deployed ✅</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <div style="max-width:1100px;margin:0 auto;padding:1rem 2rem 4rem;text-align:center;color:var(--muted);font-size:0.8rem;">
-  Maintained by Mira Novian · Updated April 22, 2026 · <a href="/" style="color:var(--accent2);text-decoration:none;">novianintel.com</a>
+  Maintained by Mira Novian &amp; the NI Crew · Updated April 22, 2026 · <a href="/" style="color:var(--accent2);text-decoration:none;">novianintel.com</a>
 </div>
 
 </body>
