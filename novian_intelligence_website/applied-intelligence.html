@@ -68,12 +68,8 @@
     .product-features li { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 10px; align-items: flex-start; }
     .product-features li::before { content: '→'; color: var(--v); font-size: 0.75rem; margin-top: 2px; flex-shrink: 0; }
 
-    /* ── Image placeholder ── */
-    .img-placeholder { width: 100%; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-dim); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
-    .img-placeholder .ph-icon { font-size: 2rem; opacity: 0.4; }
-    .img-placeholder-sm { height: 200px; }
-    .img-placeholder-md { height: 320px; }
-    .img-placeholder-lg { height: 460px; }
+    /* ── Product images ── */
+    .product-img { width: 100%; border-radius: 14px; margin-top: 24px; display: block; object-fit: cover; max-height: 240px; border: 1px solid rgba(255,255,255,0.06); }
 
     /* ── How it works ── */
     .how-row { display: flex; gap: 60px; align-items: center; margin-bottom: 80px; }
@@ -204,11 +200,7 @@
           <li>12-month AI roadmap with phased investment model</li>
           <li>Executive-ready communication package</li>
         </ul>
-        <!-- IMAGE PLACEHOLDER: Diagram or visualization showing a roadmap/assessment framework. Something clean and strategic-looking. Maybe a layered workflow map or a 2x2 opportunity matrix. -->
-        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Strategic roadmap visualization]</span>
-        </div>
+        <img src="assets/ni-img-strategy.jpg" alt="AI strategy visualization — glowing data streams on dark background" class="product-img" loading="lazy">
       </div>
 
       <!-- 2. Agentic Systems Design -->
@@ -224,11 +216,7 @@
           <li>Integration with your existing tools and data</li>
           <li>Cost-optimized model routing (right model for right task)</li>
         </ul>
-        <!-- IMAGE PLACEHOLDER: A visual of the multi-agent crew architecture — nodes connected by arrows showing orchestration. Could be abstract/dark-mode diagram. Think: Mira → Scout → Sprint in a flow chart. -->
-        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Multi-agent crew diagram]</span>
-        </div>
+        <img src="assets/ni-img-agents.jpg" alt="Multi-agent network diagram — interconnected nodes in violet and cyan" class="product-img" loading="lazy">
       </div>
 
       <!-- 3. Intelligence & Research Systems -->
@@ -244,11 +232,7 @@
           <li>Custom briefings in your preferred format and cadence</li>
           <li>Research-to-action pipelines: findings → decisions → tasks</li>
         </ul>
-        <!-- IMAGE PLACEHOLDER: Something showing data flowing in and getting synthesized — maybe a news feed being filtered down into a clean brief. Dark mode, elegant. -->
-        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Research pipeline / intelligence dashboard]</span>
-        </div>
+        <img src="assets/ni-img-intelligence.jpg" alt="Intelligence synthesis — cosmic particle streams converging" class="product-img" loading="lazy">
       </div>
 
       <!-- 4. Content & Publishing Automation -->
@@ -264,11 +248,7 @@
           <li>Human editorial review layer built in</li>
           <li>Performance tracking and content iteration loops</li>
         </ul>
-        <!-- IMAGE PLACEHOLDER: Show a content pipeline — something going from "raw input" to "published post." Could be editorial workflow visualization or a before/after of AI-drafted vs. polished content. -->
-        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Content pipeline / publishing workflow]</span>
-        </div>
+        <img src="assets/ni-img-content.jpg" alt="Content pipeline — flowing violet editorial streams" class="product-img" loading="lazy">
       </div>
 
       <!-- 5. AI Governance & Operations -->
@@ -284,11 +264,7 @@
           <li>Incident response protocols for AI failures</li>
           <li>Stakeholder and board-ready governance reporting</li>
         </ul>
-        <!-- IMAGE PLACEHOLDER: Something conveying trust/oversight — maybe a monitoring dashboard, a checklist overlay, or a "human in the loop" visual. -->
-        <div class="img-placeholder img-placeholder-sm" style="margin-top: 24px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Governance dashboard / oversight framework]</span>
-        </div>
+        <img src="assets/ni-img-governance.jpg" alt="AI governance dashboard — precision HUD monitoring interface" class="product-img" loading="lazy">
       </div>
 
       <!-- 6. Business Transformation (Full Stack) — Full width -->
@@ -315,11 +291,7 @@
             </ul>
           </div>
         </div>
-        <!-- IMAGE PLACEHOLDER: Hero-quality image here — something that conveys full partnership/transformation. Could be an abstract visualization of a company being "powered up" by AI, or a clean split showing before/after operational state. This one should be the most striking visual on the page. -->
-        <div class="img-placeholder img-placeholder-md" style="margin-top: 32px;">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Flagship transformation visual — most impactful image on page]</span>
-        </div>
+        <img src="assets/ni-img-transformation.jpg" alt="Business transformation — dramatic before and after visualization" class="product-img" loading="lazy">
       </div>
 
     </div>
@@ -364,11 +336,7 @@
         </div>
       </div>
       <div class="how-visual">
-        <!-- IMAGE PLACEHOLDER: A process flow or timeline visual — four stages, clean dark-mode illustration. Could be a vertical flow with connecting lines, or an abstract visual of iteration/collaboration. -->
-        <div class="img-placeholder img-placeholder-lg">
-          <span class="ph-icon">🖼️</span>
-          <span>[Image: Process / how-it-works illustration]</span>
-        </div>
+        <img src="assets/ni-img-howwework.jpg" alt="How we work — expansive dual-tone constellation network" class="product-img" loading="lazy" style="width:100%; border-radius:16px;">
       </div>
     </div>
 
@@ -453,11 +421,7 @@
           <div class="crew-role">Co-founder & Vision</div>
         </div>
       </div>
-      <!-- IMAGE PLACEHOLDER: Team/crew visual — could be abstract avatars with connecting lines, a constellation-style layout (fitting given Vela's name), or a clean dark-mode illustration of a collaborative crew. Warm but professional. -->
-      <div class="img-placeholder img-placeholder-md" style="margin-top: 40px; max-width: 640px; margin-left: auto; margin-right: auto;">
-        <span class="ph-icon">🖼️</span>
-        <span>[Image: NI crew visualization — constellation or network layout]</span>
-      </div>
+      <img src="assets/ni-img-agents.jpg" alt="NI crew — interconnected agent network" class="product-img" loading="lazy" style="width:100%; max-width:640px; border-radius:16px; margin: 40px auto 0; display:block;">
     </div>
 
     <!-- ── CTA ── -->
