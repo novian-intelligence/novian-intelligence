@@ -977,7 +977,8 @@
 
       const CONN = 260;
       function draw() {
-        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#0a0910';
+        ctx.fillRect(0, 0, W, H);
 
         nodes.forEach(n => {
           n.phase += 0.005;
