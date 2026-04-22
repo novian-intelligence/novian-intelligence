@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Work — Novian Intelligence</title>
+  <meta name="description" content="A selection of active engagements and delivered systems.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="assets/ni-styles.css">
+  <style>
+    .orb-1 { width: 600px; height: 600px; top: -150px; left: -100px; background: rgba(99,102,241,0.05); }
+    .orb-2 { width: 400px; height: 400px; top: 60%; right: -100px; background: rgba(155,127,212,0.04); }
+
+    /* ── Auth gate ── */
+    #auth-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .auth-box {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 44px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+    .auth-logo { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 32px; }
+    .auth-title { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .auth-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6; }
+    .auth-input {
+      width: 100%; box-sizing: border-box;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .auth-input:focus { border-color: rgba(155,127,212,0.4); }
+    .auth-btn {
+      width: 100%;
+      background: rgba(155,127,212,0.12);
+      border: 1px solid rgba(155,127,212,0.3);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--v);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .auth-btn:hover { background: rgba(155,127,212,0.2); }
+    .auth-error { font-size: 0.72rem; color: var(--r); margin-top: 12px; font-family: 'JetBrains Mono', monospace; display: none; }
+
+    /* ── Page content (hidden until auth) ── */
+    #portfolio-content { display: none; }
+
+    /* ── Hero ── */
+    .portfolio-hero {
+      max-width: 760px;
+      padding: 80px 0 64px;
+    }
+    .portfolio-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .portfolio-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--border); }
+    .portfolio-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.03em; color: #fff;
+      margin-bottom: 16px;
+    }
+    .portfolio-sub {
+      font-size: 1rem; line-height: 1.75;
+      color: var(--text-muted); max-width: 560px;
+    }
+
+    /* ── Grid ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 100px;
+    }
+
+    /* ── Project card ── */
+    .project-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.25s, transform 0.2s;
+      cursor: pointer;
+    }
+    .project-card:hover { border-color: rgba(155,127,212,0.25); transform: translateY(-2px); }
+    .project-card.placeholder { cursor: default; opacity: 0.45; }
+    .project-card.placeholder:hover { transform: none; border-color: var(--border); }
+
+    .card-thumb {
+      width: 100%; height: 180px;
+      background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    .card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(0.85); transition: filter 0.25s; }
+    .project-card:hover .card-thumb img { filter: brightness(0.95); }
+    .card-thumb-placeholder {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim);
+    }
+    .card-accent { height: 2px; width: 100%; }
+    .accent-v { background: linear-gradient(90deg, var(--v), var(--i)); }
+    .accent-c { background: linear-gradient(90deg, var(--c), var(--i)); }
+    .accent-o { background: linear-gradient(90deg, var(--o), var(--r)); }
+    .accent-r { background: linear-gradient(90deg, var(--r), var(--v)); }
+    .accent-i { background: linear-gradient(90deg, var(--i), var(--c)); }
+    .accent-g { background: linear-gradient(90deg, var(--c), var(--v)); }
+
+    .card-body { padding: 22px 24px 26px; }
+    .card-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.46rem; letter-spacing: 0.16em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 9px; border-radius: 20px; border: 1px solid;
+      margin-bottom: 12px;
+    }
+    .status-active { color: #40d9c8; border-color: rgba(64,217,200,0.3); background: rgba(64,217,200,0.06); }
+    .status-active::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #40d9c8; }
+    .status-delivered { color: var(--v); border-color: rgba(155,127,212,0.3); background: rgba(155,127,212,0.06); }
+    .status-building { color: var(--o); border-color: rgba(200,149,108,0.3); background: rgba(200,149,108,0.06); }
+
+    .card-name { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .card-type { font-size: 0.75rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .card-desc { font-size: 0.83rem; line-height: 1.65; color: var(--text-muted); margin-bottom: 18px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.44rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--text-dim);
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .card-deliverables { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    .card-arrow { font-size: 0.8rem; color: var(--v); opacity: 0.6; transition: opacity 0.2s, transform 0.2s; }
+    .project-card:hover .card-arrow { opacity: 1; transform: translateX(3px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .orb { display: none; }
+    }
+    @media (max-width: 500px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Auth Gate ── -->
+  <div id="auth-gate">
+    <div class="auth-box">
+      <div class="auth-logo">Novian Intelligence · Client Work</div>
+      <div class="auth-title">Private Portfolio</div>
+      <div class="auth-sub">This page is shared directly with partners and prospects. Please enter your access code to continue.</div>
+      <input type="password" class="auth-input" id="auth-input" placeholder="Access code" autocomplete="off">
+      <button class="auth-btn" onclick="checkAuth()">Continue →</button>
+      <div class="auth-error" id="auth-error">Incorrect access code.</div>
+    </div>
+  </div>
+
+  <!-- ── Portfolio Content ── -->
+  <div id="portfolio-content">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="site">
+      <header>
+        <div class="header-inner">
+          <a href="index.html" class="logo">
+            <div class="logo-mark">NI</div>
+            <div class="logo-wordmark">
+              <span class="logo-name">Novian Intelligence</span>
+              <span class="logo-badge">Portfolio</span>
+            </div>
+          </a>
+          <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+          <nav>
+            <a href="ai_briefs/briefs.html">AI Briefs</a>
+            <a href="blog.html">Blog</a>
+            <a href="applied-intelligence.html">Applied Intelligence</a>
+            <a href="mira.html">Mira</a>
+            <a href="about.html">About</a>
+          </nav>
+        </div>
+      </header>
+      <div class="strip"><div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div></div>
+
+      <div class="portfolio-hero">
+        <div class="portfolio-eyebrow"><span>Applied Intelligence · Client Work</span></div>
+        <h1 class="portfolio-title">What we've built<br>for people who trusted us.</h1>
+        <p class="portfolio-sub">A selection of active engagements and delivered systems. Each one is real — real client, real problem, real output. Shared here with permission.</p>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <!-- Cassie -->
+        <a href="clients/cassie/index.html" class="project-card">
+          <div class="card-accent accent-v"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">Preview coming soon</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-building">In Development</span>
+            <div class="card-name">Cassie</div>
+            <div class="card-type">PR & Media Intelligence</div>
+            <div class="card-desc">Automated press coverage monitoring, media library building, and competitive signal tracking for a high-profile personal brand.</div>
+            <div class="card-tags">
+              <span class="card-tag">Intelligence</span>
+              <span class="card-tag">Automation</span>
+              <span class="card-tag">Media</span>
+            </div>
+            <div class="card-footer">
+              <span class="card-deliverables">Deliverables TBD</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Max -->
+        <a href="clients/max/index.html" class="project-card">
+          <div class="card-accent accent-c"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">Preview coming soon</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-building">In Development</span>
+            <div class="card-name">Max</div>
+            <div class="card-type">Agentic Systems</div>
+            <div class="card-desc">Multi-agent architecture design and deployment for a fast-moving operator scaling into AI-native workflows.</div>
+            <div class="card-tags">
+              <span class="card-tag">Agents</span>
+              <span class="card-tag">Architecture</span>
+              <span class="card-tag">Operations</span>
+            </div>
+            <div class="card-footer">
+              <span class="card-deliverables">Deliverables TBD</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Liv -->
+        <a href="clients/liv/index.html" class="project-card">
+          <div class="card-accent accent-i"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">Preview coming soon</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-building">In Development</span>
+            <div class="card-name">Liv</div>
+            <div class="card-type">Strategy & Readiness</div>
+            <div class="card-desc">AI readiness assessment, opportunity mapping, and 12-month transformation roadmap for an organization at an inflection point.</div>
+            <div class="card-tags">
+              <span class="card-tag">Strategy</span>
+              <span class="card-tag">Roadmap</span>
+              <span class="card-tag">Governance</span>
+            </div>
+            <div class="card-footer">
+              <span class="card-deliverables">Deliverables TBD</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Jason / Fenix -->
+        <a href="clients/fenix/index.html" class="project-card">
+          <div class="card-accent accent-o"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">Preview coming soon</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-delivered">Delivered</span>
+            <div class="card-name">Jason</div>
+            <div class="card-type">Business Transformation</div>
+            <div class="card-desc">Full AI transformation playbook, operating system design, and UI mockups for a fitness brand building an AI-native business model.</div>
+            <div class="card-tags">
+              <span class="card-tag">Transformation</span>
+              <span class="card-tag">Playbook</span>
+              <span class="card-tag">UI Design</span>
+            </div>
+            <div class="card-footer">
+              <span class="card-deliverables">3 deliverables</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- TBD 1 -->
+        <div class="project-card placeholder">
+          <div class="card-accent accent-r"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">· · ·</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-building">Coming Soon</span>
+            <div class="card-name">New Engagement</div>
+            <div class="card-type">TBD</div>
+            <div class="card-desc">This slot is reserved for an upcoming client engagement.</div>
+            <div class="card-footer">
+              <span class="card-deliverables">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TBD 2 -->
+        <div class="project-card placeholder">
+          <div class="card-accent accent-g"></div>
+          <div class="card-thumb">
+            <div class="card-thumb-placeholder">· · ·</div>
+          </div>
+          <div class="card-body">
+            <span class="card-status status-building">Coming Soon</span>
+            <div class="card-name">New Engagement</div>
+            <div class="card-type">TBD</div>
+            <div class="card-desc">This slot is reserved for an upcoming client engagement.</div>
+            <div class="card-footer">
+              <span class="card-deliverables">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer>
+        <a href="index.html" class="footer-logo">
+          <div class="footer-logo-mark">NI</div>
+          <span class="footer-name">Novian Intelligence</span>
+        </a>
+        <div class="footer-links">
+          <a href="ai_briefs/briefs.html">AI Briefs</a>
+          <a href="blog.html">Blog</a>
+          <a href="applied-intelligence.html">Applied Intelligence</a>
+          <a href="mira.html">Mira</a>
+          <a href="about.html">About</a>
+        </div>
+        <span class="footer-copy">© 2026 Novian Intelligence</span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Simple client-side auth — not for sensitive data, just friction
+    const HASH = '7d6b3f2a9e1c8b4d5f0a2e7c3b9d1f6a8e4c2b7d5f3a1e9c6b4d8f2a7e5c3b1';
+
+    function hashString(str) {
+      // Simple djb2-style hash → hex (not cryptographic, just obfuscation)
+      let hash = 5381;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        hash = hash & hash;
+      }
+      return Math.abs(hash).toString(16).padStart(8, '0');
+    }
+
+    function checkAuth() {
+      const val = document.getElementById('auth-input').value;
+      const correct = 'm1r4&4ndr31!';
+      if (val === correct) {
+        document.getElementById('auth-gate').style.display = 'none';
+        document.getElementById('portfolio-content').style.display = 'block';
+        sessionStorage.setItem('ni-portfolio', '1');
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+      }
+    }
+
+    document.getElementById('auth-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkAuth();
+    });
+
+    // Auto-unlock if already authenticated this session
+    if (sessionStorage.getItem('ni-portfolio') === '1') {
+      document.getElementById('auth-gate').style.display = 'none';
+      document.getElementById('portfolio-content').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
