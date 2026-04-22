@@ -27,90 +27,112 @@ BRIEF_PATH="$SITE_DIR/$BRIEF_FILE"
 BRIEF_BASENAME="$(basename "$BRIEF_FILE")"          # e.g. 2026-04-22.html
 BRIEF_SLUG="${BRIEF_BASENAME%.html}"                # e.g. 2026-04-22
 
-# ── Extract metadata from the brief ──────────────────────────────────────────
+# ── Extract metadata via Python (handles quotes safely) ───────────────────────
 log "Extracting metadata from $BRIEF_BASENAME..."
 
-# Full title from <h1 class="article-title"> (the real headline)
-FULL_TITLE=$(grep -o '<h1 class="article-title">[^<]*</h1>' "$BRIEF_PATH" \
-  | sed 's/<h1 class="article-title">//;s/<\/h1>//' \
-  | sed 's/&amp;/\&/g;s/&ldquo;/"/g;s/&rdquo;/"/g;s/&mdash;/—/g')
+TMP_META=$(mktemp /tmp/brief-meta-XXXX.json)
 
-# Short title for homepage card (first ~80 chars up to a natural break)
-BRIEF_TITLE="$FULL_TITLE"
+python3 - "$BRIEF_PATH" "$SITE_DIR/ai_briefs/briefs.html" "$BRIEF_BASENAME" "$BRIEF_SLUG" > "$TMP_META" <<'PYEOF'
+import sys, re, json
 
-# Description from <meta name="description" content="...">
-BRIEF_DESC=$(grep -o 'name="description" content="[^"]*"' "$BRIEF_PATH" \
-  | sed 's/name="description" content="//;s/"//')
+brief_path   = sys.argv[1]
+briefs_index = sys.argv[2]
+brief_basename = sys.argv[3]
+brief_slug   = sys.argv[4]
 
-# Date from filename
-YEAR=$(echo "$BRIEF_SLUG" | cut -d- -f1)
-MONTH=$(echo "$BRIEF_SLUG" | cut -d- -f2)
-DAY=$(echo "$BRIEF_SLUG" | cut -d- -f3)
+with open(brief_path, 'r') as f:
+    brief_html = f.read()
 
-# Human-readable month
-case "$MONTH" in
-  01) MONTH_NAME="Jan" ;; 02) MONTH_NAME="Feb" ;; 03) MONTH_NAME="Mar" ;;
-  04) MONTH_NAME="Apr" ;; 05) MONTH_NAME="May" ;; 06) MONTH_NAME="Jun" ;;
-  07) MONTH_NAME="Jul" ;; 08) MONTH_NAME="Aug" ;; 09) MONTH_NAME="Sep" ;;
-  10) MONTH_NAME="Oct" ;; 11) MONTH_NAME="Nov" ;; 12) MONTH_NAME="Dec" ;;
-  *) die "Invalid month in filename: $MONTH" ;;
-esac
-DAY_NUM="${DAY#0}"  # strip leading zero for display
-FULL_DATE="${MONTH_NAME} ${DAY_NUM}, ${YEAR}"       # e.g. Apr 22, 2026
-SHORT_DATE="${MONTH_NAME} ${DAY_NUM}"               # e.g. Apr 22
+# Extract title from <h1 class="article-title">
+m = re.search(r'<h1 class="article-title">(.*?)</h1>', brief_html, re.DOTALL)
+full_title = m.group(1).strip() if m else ''
+full_title = full_title.replace('&amp;', '&').replace('&ldquo;', '"').replace('&rdquo;', '"').replace('&mdash;', '—')
 
-# Extract tags from the brief's story-cat classes
-TAGS_RAW=$(grep -o 'class="story-cat cat-[a-z]*">[^<]*<' "$BRIEF_PATH" \
-  | sed 's/class="story-cat cat-\([a-z]*\)">\([^<]*\)</cat=\1 label=\2/' \
-  | head -3)
+# Extract description from meta
+m = re.search(r'name="description" content="([^"]*)"', brief_html)
+brief_desc = m.group(1) if m else ''
 
-# Build tag HTML for featured card (briefs.html format)
-TAG_HTML=""
-while IFS= read -r tag_line; do
-  cat_class=$(echo "$tag_line" | sed 's/cat=\([a-z]*\).*/\1/')
-  tag_label=$(echo "$tag_line" | sed 's/.*label=\(.*\)/\1/')
-  TAG_HTML+="            <span class=\"tag tag-${cat_class}\">${tag_label}</span>\n"
-done <<< "$TAGS_RAW"
+# Parse date from slug
+parts = brief_slug.split('-')
+year, month_num, day = parts[0], parts[1], parts[2]
+month_names = {'01':'Jan','02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun',
+               '07':'Jul','08':'Aug','09':'Sep','10':'Oct','11':'Nov','12':'Dec'}
+month_name = month_names.get(month_num, month_num)
+day_num = str(int(day))
+full_date = f"{month_name} {day_num}, {year}"
+short_date = f"{month_name} {day_num}"
+
+# Extract tags
+tag_matches = re.findall(r'class="story-cat cat-([a-z]+)">([^<]+)<', brief_html)
+tag_html = ''
+for cat_class, label in tag_matches[:3]:
+    tag_html += f'            <span class="tag tag-{cat_class}">{label.strip()}</span>\n'
+
+# Get current featured brief info from briefs.html
+with open(briefs_index, 'r') as f:
+    briefs_html = f.read()
+
+current_count = len(re.findall(r'class="brief-row"', briefs_html))
+
+m = re.search(r'href="([0-9][^"]*\.html)" class="featured-card"', briefs_html)
+old_href = m.group(1) if m else ''
+
+m = re.search(r'<h2 class="featured-title">([^<]*)</h2>', briefs_html)
+old_title = m.group(1) if m else ''
+
+m = re.search(r'class="featured-card".*?(<div class="brief-tags">.*?</div>)', briefs_html, re.DOTALL)
+old_tags = m.group(1) if m else ''
+# Flatten to single line of span tags
+old_tag_spans = re.findall(r'<span class="tag[^"]*">[^<]*</span>', old_tags)
+old_tags_html = '\n                '.join(old_tag_spans)
+
+# Parse old slug for date
+old_slug = old_href.replace('.html', '') if old_href else ''
+if old_slug:
+    op = old_slug.split('-')
+    old_month_name = month_names.get(op[1], op[1]) if len(op) >= 3 else ''
+    old_day_num = str(int(op[2])) if len(op) >= 3 else ''
+else:
+    old_month_name = ''
+    old_day_num = ''
+
+result = {
+    'full_title': full_title,
+    'brief_desc': brief_desc,
+    'full_date': full_date,
+    'short_date': short_date,
+    'tag_html': tag_html,
+    'current_count': current_count,
+    'new_count': current_count + 1,
+    'old_href': old_href,
+    'old_title': old_title,
+    'old_tags_html': old_tags_html,
+    'old_month_name': old_month_name,
+    'old_day_num': old_day_num,
+    'brief_basename': brief_basename,
+    'brief_slug': brief_slug,
+    'short_date': short_date,
+}
+print(json.dumps(result))
+PYEOF
+
+# Read back metadata for shell display
+FULL_TITLE=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['full_title'])")
+BRIEF_DESC=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['brief_desc'])")
+FULL_DATE=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['full_date'])")
+SHORT_DATE=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['short_date'])")
+NEW_COUNT=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['new_count'])")
+OLD_HREF=$(python3 -c "import json,sys; d=json.load(open('$TMP_META')); print(d['old_href'])")
 
 echo ""
 echo -e "${BOLD}Brief metadata:${RESET}"
 echo "  Slug:    $BRIEF_SLUG"
 echo "  Date:    $FULL_DATE"
-echo "  Title:   $BRIEF_TITLE"
+echo "  Title:   ${FULL_TITLE:0:80}..."
 echo "  Desc:    ${BRIEF_DESC:0:80}..."
 echo ""
 
-# ── Count current briefs ──────────────────────────────────────────────────────
-CURRENT_COUNT=$(grep -c 'class="brief-row"' "$SITE_DIR/ai_briefs/briefs.html" || true)
-NEW_COUNT=$((CURRENT_COUNT + 1))
-
-# ── Get current featured brief info (to demote to archive) ───────────────────
-OLD_FEATURED_HREF=$(grep -o 'href="[0-9][^"]*\.html" class="featured-card"' \
-  "$SITE_DIR/ai_briefs/briefs.html" | grep -o '"[^"]*\.html"' | tr -d '"')
-OLD_FEATURED_DATE_FULL=$(grep -A3 'class="featured-card"' "$SITE_DIR/ai_briefs/briefs.html" \
-  | grep -o 'April\|February\|March\|January\|May\|June\|July\|August\|September\|October\|November\|December' \
-  | head -1)
-OLD_FEATURED_TITLE=$(grep -A5 'class="featured-card"' "$SITE_DIR/ai_briefs/briefs.html" \
-  | grep -o '<h2 class="featured-title">[^<]*</h2>' \
-  | sed 's/<h2 class="featured-title">//;s/<\/h2>//')
-OLD_FEATURED_TAGS=$(grep -A20 'class="featured-card"' "$SITE_DIR/ai_briefs/briefs.html" \
-  | grep -o '<span class="tag[^"]*">[^<]*</span>' \
-  | head -3 | tr '\n' ' ')
-
-# Parse old featured date for archive entry
-OLD_SLUG="${OLD_FEATURED_HREF%.html}"
-OLD_YEAR=$(echo "$OLD_SLUG" | cut -d- -f1)
-OLD_MONTH_NUM=$(echo "$OLD_SLUG" | cut -d- -f2)
-OLD_DAY=$(echo "$OLD_SLUG" | cut -d- -f3)
-OLD_DAY_NUM="${OLD_DAY#0}"
-case "$OLD_MONTH_NUM" in
-  01) OLD_MONTH_NAME="Jan" ;; 02) OLD_MONTH_NAME="Feb" ;; 03) OLD_MONTH_NAME="Mar" ;;
-  04) OLD_MONTH_NAME="Apr" ;; 05) OLD_MONTH_NAME="May" ;; 06) OLD_MONTH_NAME="Jun" ;;
-  07) OLD_MONTH_NAME="Jul" ;; 08) OLD_MONTH_NAME="Aug" ;; 09) OLD_MONTH_NAME="Sep" ;;
-  10) OLD_MONTH_NAME="Oct" ;; 11) OLD_MONTH_NAME="Nov" ;; 12) OLD_MONTH_NAME="Dec" ;;
-esac
-
-log "Current featured: $OLD_FEATURED_HREF → will be demoted to archive"
+log "Current featured: $OLD_HREF → will be demoted to archive"
 log "New brief count: $NEW_COUNT"
 
 # ── Dry run preview ───────────────────────────────────────────────────────────
@@ -121,12 +143,13 @@ if $DRY_RUN; then
   echo -e "${BOLD}Would update:${RESET}"
   echo "  1. index.html — homepage featured card → $BRIEF_SLUG"
   echo "  2. ai_briefs/briefs.html — featured card → $BRIEF_SLUG"
-  echo "  3. ai_briefs/briefs.html — stats: $CURRENT_COUNT → $NEW_COUNT briefs, Last: $SHORT_DATE"
-  echo "  4. ai_briefs/briefs.html — demote $OLD_FEATURED_HREF to archive row 0"
+  echo "  3. ai_briefs/briefs.html — stats: $(($NEW_COUNT - 1)) → $NEW_COUNT briefs, Last: $SHORT_DATE"
+  echo "  4. ai_briefs/briefs.html — demote $OLD_HREF to archive row 0"
   echo "  5. ai_briefs/briefs.html — re-index all archive data-idx values"
   echo "  6. git add -A && git commit && git push"
   echo ""
   ok "Dry run complete. Run without --dry-run to publish."
+  rm -f "$TMP_META"
   exit 0
 fi
 
@@ -138,37 +161,39 @@ HOMEPAGE="$SITE_DIR/index.html"
 # Update the brief card link href
 sed -i '' "s|href=\"ai_briefs/[^\"]*\" class=\"brief-card\"|href=\"ai_briefs/${BRIEF_BASENAME}\" class=\"brief-card\"|" "$HOMEPAGE"
 
-# Update the brief-label date
-python3 - <<PYEOF
-import re
+python3 - "$HOMEPAGE" "$TMP_META" <<'PYEOF'
+import re, json, sys
 
-with open('$HOMEPAGE', 'r') as f:
+homepage = sys.argv[1]
+meta = json.load(open(sys.argv[2]))
+
+with open(homepage, 'r') as f:
     content = f.read()
 
 # Update brief-label
 content = re.sub(
     r'<div class="brief-label">Latest · [^<]*</div>',
-    '<div class="brief-label">Latest · $FULL_DATE</div>',
+    f'<div class="brief-label">Latest · {meta["full_date"]}</div>',
     content
 )
 
 # Update brief-title
 content = re.sub(
     r'<div class="brief-title">NI Morning Brief[^<]*</div>',
-    '<div class="brief-title">NI Morning Brief — $BRIEF_TITLE</div>',
+    f'<div class="brief-title">NI Morning Brief — {meta["full_title"]}</div>',
     content
 )
 
 # Update brief-desc
 content = re.sub(
     r'<div class="brief-desc">.*?</div>',
-    '<div class="brief-desc">$BRIEF_DESC</div>',
+    f'<div class="brief-desc">{meta["brief_desc"]}</div>',
     content,
     flags=re.DOTALL,
     count=1
 )
 
-with open('$HOMEPAGE', 'w') as f:
+with open(homepage, 'w') as f:
     f.write(content)
 print("homepage updated")
 PYEOF
@@ -180,51 +205,54 @@ log "Updating briefs index..."
 
 BRIEFS_INDEX="$SITE_DIR/ai_briefs/briefs.html"
 
-python3 - <<PYEOF
-import re
+python3 - "$BRIEFS_INDEX" "$TMP_META" <<'PYEOF'
+import re, json, sys
 
-with open('$BRIEFS_INDEX', 'r') as f:
+briefs_index = sys.argv[1]
+meta = json.load(open(sys.argv[2]))
+
+with open(briefs_index, 'r') as f:
     content = f.read()
 
 # ── Stats: brief count ──
 content = re.sub(
     r'(<span class="hero-stat-lbl">Briefs published</span>\s*<span class="hero-stat-num">)\d+(</span>)',
-    r'\g<1>$NEW_COUNT\2',
+    r'\g<1>' + str(meta['new_count']) + r'\2',
     content
 )
 
 # ── Stats: last brief date ──
 content = re.sub(
     r'(<span class="hero-stat-lbl">Last brief</span>\s*<span class="hero-stat-num">)[^<]*(</span>)',
-    r'\g<1>$SHORT_DATE\2',
+    r'\g<1>' + meta['short_date'] + r'\2',
     content
 )
 
 # ── Featured card: update href ──
 content = re.sub(
     r'href="[^"]*\.html" class="featured-card"',
-    'href="$BRIEF_BASENAME" class="featured-card"',
+    f'href="{meta["brief_basename"]}" class="featured-card"',
     content
 )
 
 # ── Featured card: update date display ──
 content = re.sub(
     r'(<div class="featured-date">\s*)([A-Za-z]+ \d+, \d+)(\s*<span class="latest-badge">)',
-    r'\g<1>$FULL_DATE\3',
+    r'\g<1>' + meta['full_date'] + r'\3',
     content
 )
 
 # ── Featured card: update title ──
 content = re.sub(
     r'<h2 class="featured-title">[^<]*</h2>',
-    '<h2 class="featured-title">$FULL_TITLE</h2>',
+    f'<h2 class="featured-title">{meta["full_title"]}</h2>',
     content
 )
 
 # ── Featured card: update description ──
 content = re.sub(
     r'(<p class="featured-desc">).*?(</p>)',
-    r'\g<1>$BRIEF_DESC\2',
+    r'\g<1>' + meta['brief_desc'] + r'\2',
     content,
     flags=re.DOTALL,
     count=1
@@ -233,13 +261,13 @@ content = re.sub(
 # ── Featured card: update meta date ──
 content = re.sub(
     r'(<div class="featured-meta">\s*<span>)[A-Za-z]+ \d+, \d+(</span>)',
-    r'\g<1>$FULL_DATE\2',
+    r'\g<1>' + meta['full_date'] + r'\2',
     content,
     count=1
 )
 
 # ── Featured card: update tags ──
-tag_html = '$TAG_HTML'
+tag_html = meta['tag_html']
 content = re.sub(
     r'(<div class="brief-tags">).*?(</div>)',
     r'\g<1>\n' + tag_html.strip() + r'\n          \2',
@@ -255,15 +283,15 @@ def bump_idx(m):
 content = re.sub(r'data-idx="(\d+)"', bump_idx, content)
 
 # ── Build new archive row for old featured brief ──
-new_row = '''          <a data-idx="0" href="$OLD_FEATURED_HREF" class="brief-row">
+new_row = f'''          <a data-idx="0" href="{meta['old_href']}" class="brief-row">
             <div class="date-badge">
-              <div class="month">$OLD_MONTH_NAME</div>
-              <div class="day">$OLD_DAY_NUM</div>
+              <div class="month">{meta['old_month_name']}</div>
+              <div class="day">{meta['old_day_num']}</div>
             </div>
             <div class="brief-content">
-              <div class="brief-row-title">$OLD_FEATURED_TITLE</div>
+              <div class="brief-row-title">{meta['old_title']}</div>
               <div class="brief-row-tags">
-                $OLD_FEATURED_TAGS
+                {meta['old_tags_html']}
               </div>
             </div>
             <span class="brief-arrow">→</span>
@@ -279,23 +307,26 @@ content = re.sub(
     count=1
 )
 
-with open('$BRIEFS_INDEX', 'w') as f:
+with open(briefs_index, 'w') as f:
     f.write(content)
 print("briefs index updated")
 PYEOF
 
 ok "Briefs index updated"
 
+# ── Cleanup temp file ─────────────────────────────────────────────────────────
+rm -f "$TMP_META"
+
 # ── 6. Commit and push ────────────────────────────────────────────────────────
 log "Committing and pushing..."
 
 cd "$SITE_DIR"
 git add -A
-git commit -m "feat: publish NI Morning Brief — ${FULL_DATE} (${BRIEF_TITLE})"
+git commit -m "feat: publish NI Morning Brief — ${FULL_DATE}"
 git push
 
 echo ""
 echo -e "${GREEN}${BOLD}✓ Brief published!${RESET}"
 echo -e "  Live at: ${CYAN}https://novianintel.com/ai_briefs/${BRIEF_BASENAME}${RESET}"
-echo -e "  Cloudflare will deploy in ~60 seconds."
+echo -e "  Netlify will deploy in ~60 seconds."
 echo ""
