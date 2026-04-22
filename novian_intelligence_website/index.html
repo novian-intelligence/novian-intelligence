@@ -246,19 +246,20 @@
     }
 
     .product-card {
-      background: var(--glass);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 16px;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
       text-decoration: none;
       display: block;
     }
 
     .product-card:hover {
-      border-color: rgba(155,127,212,0.3);
-      transform: translateY(-2px);
+      border-color: rgba(155,127,212,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
 
     .product-card::before {
@@ -278,10 +279,10 @@
     .pc-r::before { background: linear-gradient(90deg, var(--r), var(--v)); }
 
     .product-icon-wrap {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      margin: 32px auto 20px;
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      margin: 36px auto 22px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -291,24 +292,24 @@
     .product-icon-wrap::before {
       content: '';
       position: absolute;
-      inset: -20px;
+      inset: -30px;
       border-radius: 50%;
-      opacity: 0.15;
-      filter: blur(20px);
+      opacity: 0.45;
+      filter: blur(28px);
       transition: opacity 0.3s;
     }
 
-    .product-card:hover .product-icon-wrap::before { opacity: 0.35; }
+    .product-card:hover .product-icon-wrap::before { opacity: 0.75; }
 
-    .piw-v { background: rgba(155,127,212,0.1); border: 1px solid rgba(155,127,212,0.2); }
+    .piw-v { background: rgba(155,127,212,0.18); border: 1px solid rgba(155,127,212,0.4); }
     .piw-v::before { background: #9b7fd4; }
-    .piw-i { background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); }
+    .piw-i { background: rgba(99,102,241,0.18); border: 1px solid rgba(99,102,241,0.4); }
     .piw-i::before { background: #6366f1; }
-    .piw-c { background: rgba(64,217,200,0.08); border: 1px solid rgba(64,217,200,0.18); }
+    .piw-c { background: rgba(64,217,200,0.15); border: 1px solid rgba(64,217,200,0.35); }
     .piw-c::before { background: #40d9c8; }
-    .piw-o { background: rgba(200,149,108,0.1); border: 1px solid rgba(200,149,108,0.2); }
+    .piw-o { background: rgba(200,149,108,0.18); border: 1px solid rgba(200,149,108,0.4); }
     .piw-o::before { background: #c8956c; }
-    .piw-r { background: rgba(224,112,144,0.08); border: 1px solid rgba(224,112,144,0.18); }
+    .piw-r { background: rgba(224,112,144,0.15); border: 1px solid rgba(224,112,144,0.35); }
     .piw-r::before { background: #e07090; }
 
     .product-body {
