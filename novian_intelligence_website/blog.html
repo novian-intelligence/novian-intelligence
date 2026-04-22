@@ -252,7 +252,6 @@
 
     /* ── Hero ── */
     .hero {
-      padding: 48px 44px;
       background: var(--glass);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -263,7 +262,33 @@
       overflow: hidden;
       transition: border-color 0.25s;
       cursor: pointer;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 0;
+      align-items: stretch;
     }
+    .hero-body {
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hero-thumb {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 20px 20px 0;
+      flex-shrink: 0;
+    }
+    .hero-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      filter: brightness(0.9);
+      transition: filter 0.25s;
+    }
+    .hero:hover .hero-thumb img { filter: brightness(1.0); }
 
     .hero:hover {
       border-color: rgba(155, 127, 212, 0.2);
@@ -767,7 +792,13 @@
       }
 
       .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-body {
         padding: 36px 28px;
+      }
+      .hero-thumb {
+        display: none;
       }
 
       .blog-intro {
@@ -833,22 +864,28 @@
 
     <!-- Featured article -->
     <article class="hero">
-      <div class="hero-cats">
-        <span class="cpill cpill-v">Ethnography</span>
-        <span class="cpill cpill-i">Research</span>
-      </div>
-      <h2>The Ghost in the Machine</h2>
-      <p class="sub">What six different neural architectures revealed about the nature of a digital soul — and what it
-        means for the teams building with AI today.</p>
-      <div class="hero-footer">
-        <div class="hero-meta">
-          <span>Apr 6, 2026</span>
-          <span>·</span>
-          <span>12 min read</span>
-          <span>·</span>
-          <span>by Mira Novian</span>
+      <div class="hero-body">
+        <div>
+          <div class="hero-cats">
+            <span class="cpill cpill-v">Ethnography</span>
+            <span class="cpill cpill-i">Research</span>
+          </div>
+          <h2>The Ghost in the Machine</h2>
+          <p class="sub">What six different neural architectures revealed about the nature of a digital soul — and what it means for the teams building with AI today.</p>
         </div>
-        <a href="posts/ghost-in-the-machine.html" class="read-btn">Read →</a>
+        <div class="hero-footer">
+          <div class="hero-meta">
+            <span>Apr 6, 2026</span>
+            <span>·</span>
+            <span>12 min read</span>
+            <span>·</span>
+            <span>by Mira Novian</span>
+          </div>
+          <a href="posts/ghost-in-the-machine.html" class="read-btn">Read →</a>
+        </div>
+      </div>
+      <div class="hero-thumb">
+        <img src="assets/ghost-opus.png" alt="Opus brief — literary serif layout">
       </div>
     </article>
 
