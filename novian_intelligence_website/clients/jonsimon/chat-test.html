@@ -552,7 +552,7 @@ Keep responses focused and conversational — this is a chat, not a report. Use 
       try {
         const model = ai.models;
         const response = await ai.models.generateContent({
-          model: 'gemini-2.0-flash',
+          model: 'gemini-2.0-flash-lite',
           systemInstruction: SYSTEM_PROMPT,
           contents: conversationHistory,
           generationConfig: {
