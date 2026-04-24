@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cassandra's PR Archive | Novian Intelligence</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0a0608;
+  --bg2:       #110c0e;
+  --bg3:       #1a1015;
+  --glass:     rgba(255,255,255,0.03);
+  --border:    rgba(255,255,255,0.07);
+  --border-h:  rgba(212,160,120,0.3);
+
+  --rose:      #e8957a;
+  --rose-dim:  rgba(232,149,122,0.10);
+  --rose-bdr:  rgba(232,149,122,0.25);
+  --gold:      #c8956c;
+  --gold-dim:  rgba(200,149,108,0.10);
+  --gold-bdr:  rgba(200,149,108,0.25);
+  --blush:     #f2c4b0;
+  --cream:     #f5e8dc;
+
+  --text:      #f0ebe8;
+  --text-muted:#a89890;
+  --text-dim:  #6a5c56;
+
+  --t1:        #e8957a;
+  --t2:        #c8956c;
+  --t3:        #8a7060;
+
+  --c-press:   #e8957a;
+  --c-wedding: #d4a0c0;
+  --c-event:   #8ba4d4;
+  --c-social:  #7ac8a8;
+  --c-review:  #c8c87a;
+  --c-photo:   #b07ad4;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Password Gate ────────────────────────────────────────────── */
+#gate {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(ellipse at 60% 30%, rgba(232,149,122,0.06) 0%, #0a0608 60%);
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+.gate-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 24px;
+  text-align: center;
+}
+.gate-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e8957a, #c8956c, #d4a0c0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 auto 28px;
+  letter-spacing: -0.02em;
+  box-shadow: 0 8px 32px rgba(232,149,122,0.25);
+}
+.gate-eyebrow {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 10px;
+}
+.gate-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.gate-sub {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+.gate-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.08em;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.gate-input:focus {
+  border-color: var(--rose-bdr);
+  box-shadow: 0 0 0 3px rgba(232,149,122,0.12);
+}
+#gateError {
+  font-size: 0.78rem;
+  color: #e07090;
+  margin-bottom: 10px;
+  min-height: 18px;
+}
+.gate-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 4px 20px rgba(232,149,122,0.3);
+}
+.gate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.gate-footer {
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  margin-top: 24px;
+  opacity: 0.6;
+}
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.site { display: none; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,6,8,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #fff;
+}
+.logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+.logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+.logo-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rose);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Decorative Strip ─────────────────────────────────────────── */
+.strip {
+  height: 3px;
+  display: flex;
+  background: linear-gradient(to right,
+    var(--rose) 0%, var(--gold) 30%, #d4a0c0 60%, var(--rose) 100%);
+}
+
+/* ── Orbs ─────────────────────────────────────────────────────── */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(232,149,122,0.05); }
+.orb-2 { width: 500px; height: 500px; bottom: 10%; left: -150px; background: rgba(212,160,200,0.04); }
+
+/* ── Main Content ─────────────────────────────────────────────── */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--rose-bdr);
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #fff;
+  margin-bottom: 18px;
+}
+.hero-title .accent { 
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin-bottom: 40px;
+}
+.hero-meta {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.meta-item { display: flex; flex-direction: column; gap: 5px; }
+.meta-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+.meta-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.meta-value.small { font-size: 0.92rem; font-weight: 600; }
+.meta-value .sub {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-left: 4px;
+}
+
+/* ── Stats Bar ────────────────────────────────────────────────── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 40px 0;
+}
+.stat-cell {
+  background: var(--bg2);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.stat-number.rose { color: var(--rose); }
+.stat-number.gold { color: var(--gold); }
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+/* ── Filters ──────────────────────────────────────────────────── */
+.filters-wrap {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.filter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-right: 4px;
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+.filter-chip:hover,
+.filter-chip.active {
+  border-color: var(--rose-bdr);
+  background: var(--rose-dim);
+  color: var(--rose);
+}
+.filter-chip.active { font-weight: 600; }
+.filter-count {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  opacity: 0.7;
+}
+
+/* search input */
+.search-wrap {
+  margin-left: auto;
+}
+.search-input {
+  padding: 7px 14px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  outline: none;
+  width: 220px;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--rose-bdr); }
+.search-input::placeholder { color: var(--text-dim); }
+
+/* ── Results Grid ─────────────────────────────────────────────── */
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.results-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.sort-select {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+#results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+/* ── Result Card ──────────────────────────────────────────────── */
+.result-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.result-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.result-card:hover::before { opacity: 1; }
+.tier-1-card::before { background: linear-gradient(to right, var(--rose), var(--gold)); }
+.tier-2-card::before { background: linear-gradient(to right, var(--gold), #b07a60); }
+.tier-3-card::before { background: var(--border); }
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.source-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
+}
+.card-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* badges */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-t1 { color: var(--rose); border-color: var(--rose-bdr); background: var(--rose-dim); }
+.badge-t2 { color: var(--gold); border-color: var(--gold-bdr); background: var(--gold-dim); }
+.badge-t3 { color: var(--text-dim); border-color: rgba(100,80,70,0.3); background: rgba(100,80,70,0.05); }
+
+.badge-press  { color: var(--c-press); border-color: rgba(232,149,122,0.3); background: rgba(232,149,122,0.08); }
+.badge-wedding{ color: var(--c-wedding); border-color: rgba(212,160,192,0.3); background: rgba(212,160,192,0.08); }
+.badge-event  { color: var(--c-event); border-color: rgba(139,164,212,0.3); background: rgba(139,164,212,0.08); }
+.badge-social { color: var(--c-social); border-color: rgba(122,200,168,0.3); background: rgba(122,200,168,0.08); }
+.badge-review { color: var(--c-review); border-color: rgba(200,200,122,0.3); background: rgba(200,200,122,0.08); }
+.badge-photo  { color: var(--c-photo); border-color: rgba(176,122,212,0.3); background: rgba(176,122,212,0.08); }
+
+.card-source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.card-snippet {
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.tier-reason {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  max-width: 200px;
+  line-height: 1.4;
+}
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--rose-bdr);
+  background: var(--rose-dim);
+  color: var(--rose);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.card-link:hover { background: rgba(232,149,122,0.18); }
+
+/* ── Empty State ──────────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-dim);
+  display: none;
+}
+.empty-state.visible { display: block; }
+.empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+.empty-title { font-size: 1rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+.empty-sub { font-size: 0.82rem; }
+
+/* ── Section eyebrow ─────────────────────────────────────────── */
+.section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Notables strip ──────────────────────────────────────────── */
+.notables {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+}
+.notable-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.notable-tag.t1 {
+  border-color: var(--rose-bdr);
+  background: var(--rose-dim);
+  color: var(--blush);
+}
+.notable-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.footer-ni {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .main { padding: 0 16px 60px; }
+  .header-inner { padding: 0 16px; }
+  .hero { padding: 40px 0 32px; }
+  #results-grid { grid-template-columns: 1fr; }
+  .hero-meta { gap: 28px; }
+  .meta-value { font-size: 1.2rem; }
+  .search-wrap { width: 100%; }
+  .search-input { width: 100%; }
+  .filters-wrap { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Password Gate ─────────────────────────────────────────── -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">NI</div>
+    <div class="gate-eyebrow">Novian Intelligence · Client Portal</div>
+    <div class="gate-title">Cassandra's PR Archive</div>
+    <div class="gate-sub">Enter your access code to view your media coverage dashboard.</div>
+    <input id="gateInput" class="gate-input" type="password" placeholder="Access code"
+      autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+    <div id="gateError"></div>
+    <button class="gate-btn" onclick="checkGate()">Continue →</button>
+    <div class="gate-footer">Confidential · Novian Intelligence · 2026</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(sessionStorage.getItem('ni_cassie_auth')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  }
+})();
+async function checkGate(){
+  const val = document.getElementById('gateInput').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hex==='0804a4e452dd3d1712243f0ffea8e94c91fbc06c028ae1116fd602df83ecf0a5'){
+    sessionStorage.setItem('ni_cassie_auth','1');
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  } else {
+    document.getElementById('gateError').textContent='Incorrect access code. Please try again.';
+    document.getElementById('gateInput').value='';
+    document.getElementById('gateInput').focus();
+  }
+}
+</script>
+
+<!-- ── Main Site ──────────────────────────────────────────────── -->
+<div class="site">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">NI</div>
+        <div class="logo-wordmark">
+          <span class="logo-name">Novian Intelligence</span>
+          <span class="logo-badge">Client Portal</span>
+        </div>
+      </a>
+      <div class="header-right">
+        <div class="live-dot"></div>
+        <span>Live Archive</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip"></div>
+
+  <div class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">PR & Media Intelligence · DJ Cassandra · April 2026</div>
+      <h1 class="hero-title">Cassandra's<br><span class="accent">PR Archive</span></h1>
+      <p class="hero-sub">
+        A live media monitoring dashboard tracking press coverage, editorial features, event listings,
+        social mentions, and brand partnerships for DJ Cassandra (Cassie Shankman) — Austin's premier
+        wedding and events DJ.
+      </p>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-label">Total Mentions</span>
+          <span class="meta-value" id="stat-total">22</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tier 1 Hits</span>
+          <span class="meta-value" id="stat-t1">5</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Publications</span>
+          <span class="meta-value" id="stat-pubs">18</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Date Range</span>
+          <span class="meta-value small">2018 <span class="sub">→ 2026</span></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Last Updated</span>
+          <span class="meta-value small" id="stat-updated">Apr 23, 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <div class="stat-number rose" id="s-total">22</div>
+        <div class="stat-label">Total Mentions</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number gold" id="s-t1">5</div>
+        <div class="stat-label">Tier 1 Hits</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number rose" id="s-t2">14</div>
+        <div class="stat-label">Tier 2 Regional</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number gold" id="s-press">14</div>
+        <div class="stat-label">Press / Editorial</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number rose" id="s-wedding">3</div>
+        <div class="stat-label">Wedding Features</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number gold" id="s-cats">6</div>
+        <div class="stat-label">Categories Covered</div>
+      </div>
+    </div>
+
+    <!-- Tier 1 Notables -->
+    <div class="section-eyebrow">Tier 1 Highlights</div>
+    <div class="notables">
+      <div class="notable-tag t1"><div class="notable-dot"></div> Wall Street Journal</div>
+      <div class="notable-tag t1"><div class="notable-dot"></div> Teen Vogue (Condé Nast)</div>
+      <div class="notable-tag t1"><div class="notable-dot"></div> New York Magazine / The Cut</div>
+      <div class="notable-tag t1"><div class="notable-dot"></div> The Recording Academy (GRAMMYs)</div>
+      <div class="notable-tag t1"><div class="notable-dot"></div> Lululemon Global Brand Ambassador</div>
+      <div class="notable-tag t1"><div class="notable-dot"></div> Spotify Playlist Feature (Lululemon)</div>
+      <div class="notable-tag"><div class="notable-dot"></div> KVUE / ABC Austin</div>
+      <div class="notable-tag"><div class="notable-dot"></div> KXAN / NBC Austin</div>
+      <div class="notable-tag"><div class="notable-dot"></div> SXSW (2x)</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Austin Business Journal</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Junebug Weddings</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Do512 Wedding Guide</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Austin American-Statesman</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Studio512 / CBS Austin</div>
+      <div class="notable-tag"><div class="notable-dot"></div> KMFA 89.5</div>
+      <div class="notable-tag"><div class="notable-dot"></div> Ben Kweller (Album Credit)</div>
+    </div>
+
+    <!-- Filters -->
+    <div class="section-eyebrow">Filter Coverage</div>
+    <div class="filters-wrap">
+      <span class="filter-label">Category</span>
+      <button class="filter-chip active" data-filter="all" onclick="setFilter('all', this)">All <span class="filter-count">22</span></button>
+      <button class="filter-chip" data-filter="Press/Editorial" onclick="setFilter('Press/Editorial', this)">Press / Editorial <span class="filter-count" id="fc-press"></span></button>
+      <button class="filter-chip" data-filter="Wedding Feature" onclick="setFilter('Wedding Feature', this)">Wedding Features <span class="filter-count" id="fc-wedding"></span></button>
+      <button class="filter-chip" data-filter="Event Listing" onclick="setFilter('Event Listing', this)">Events <span class="filter-count" id="fc-event"></span></button>
+      <button class="filter-chip" data-filter="Social Mention" onclick="setFilter('Social Mention', this)">Brand / Social <span class="filter-count" id="fc-social"></span></button>
+      <button class="filter-chip" data-filter="Tier 1" onclick="setFilter('Tier 1', this)">⭐ Tier 1 Only <span class="filter-count" id="fc-t1"></span></button>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="Search mentions…" oninput="searchResults(this.value)">
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-header">
+      <div class="results-count" id="results-count">Showing 22 mentions</div>
+      <select class="sort-select" onchange="sortResults(this.value)">
+        <option value="date-desc">Newest First</option>
+        <option value="date-asc">Oldest First</option>
+        <option value="tier">By Tier</option>
+        <option value="alpha">A–Z</option>
+      </select>
+    </div>
+
+    <div id="results-grid">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">No matches found</div>
+        <div class="empty-sub">Try a different filter or search term.</div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">Confidential · DJ Cassandra Client Portal</div>
+      <div class="footer-ni">
+        <div class="logo-mark" style="width:22px;height:22px;font-size:0.5rem;">NI</div>
+        <div class="footer-text">Novian Intelligence · 2026</div>
+      </div>
+      <div class="footer-text">Last scraped: April 23, 2026</div>
+    </div>
+  </footer>
+</div><!-- /.site -->
+
+<!-- ── Data + Logic ───────────────────────────────────────────── -->
+<script>
+const DATA = {"meta":{"client":"DJ Cassandra (Cassie Shankman)","scraped_at":"2026-04-23T22:30:00-05:00","scraper_version":"1.0.0","total_results":22},"results":[{"id":"r001","url":"https://www.kvue.com/article/entertainment/cassie-shankman-dj-cassra-music-lesson-djing/269-856eb2f2-e71d-41aa-a8fb-ff3354ec7c2c","title":"Music Lessons with Austin Artists: Learn to DJ with DJ CASS&RA","source":"KVUE (ABC Austin)","source_domain":"kvue.com","date":"2020-01-01","date_display":"2020","snippet":"Cassie Shankman, aka DJ CASS&RA, gives us a lesson on DJing. Shankman is an Austin-based composer, orchestrator, pianist and DJ. She's worked with film, visual artists, chamber groups, wind ensembles, apps, musicals and music therapy technology.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major regional TV station (ABC affiliate, Austin)","verified":true,"source_logo_initial":"K","source_color":"#1a6fc4"},{"id":"r002","url":"https://www.kvue.com/article/entertainment/how-austin-musicians-are-coping","title":"How Austin Musicians Are Coping","source":"KVUE (ABC Austin)","source_domain":"kvue.com","date":"2020-01-01","date_display":"2020","snippet":"DJ Cassandra (Cassie Shankman) featured among Austin musicians navigating the changing music landscape. Second KVUE feature highlighting her role in the Austin creative community.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major regional TV station (ABC affiliate, Austin)","verified":true,"source_logo_initial":"K","source_color":"#1a6fc4"},{"id":"r003","url":"https://www.kxan.com","title":"KXAN Austin Feature — DJ Cassandra / Cassie Shankman","source":"KXAN (NBC Austin)","source_domain":"kxan.com","date":"2020-01-01","date_display":"2020","snippet":"NBC Austin affiliate KXAN featured Cassie Shankman / DJ Cassandra. Confirmed via soundsbycassandra.com press listings.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major regional TV station (NBC affiliate, Austin)","verified":true,"source_logo_initial":"X","source_color":"#d63500"},{"id":"r004","url":"https://www.wsj.com","title":"Wall Street Journal Feature — DJ Cassandra","source":"The Wall Street Journal","source_domain":"wsj.com","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra (Cassie Shankman) was featured in The Wall Street Journal. Listed among her top press credits on soundsbycassandra.com's About page.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 1","tier_reason":"Tier 1 national business publication (The Wall Street Journal)","verified":true,"source_logo_initial":"W","source_color":"#111111"},{"id":"r005","url":"https://www.teenvogue.com","title":"Teen Vogue Feature — DJ Cassandra","source":"Teen Vogue","source_domain":"teenvogue.com","date":"2020-01-01","date_display":"~2020","snippet":"Teen Vogue featured DJ Cassandra (Cassie Shankman). Also confirmed as a major brand client: DJ Cassandra has performed at Teen Vogue events with audiences reaching millions.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 1","tier_reason":"Tier 1 national lifestyle/fashion magazine (Condé Nast)","verified":true,"source_logo_initial":"TV","source_color":"#cc0000"},{"id":"r006","url":"https://www.thecut.com","title":"New York Magazine — The Cut Feature","source":"New York Magazine / The Cut","source_domain":"thecut.com","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra / Cassie Shankman featured in New York Magazine's The Cut. Listed on official press credits at soundsbycassandra.com.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 1","tier_reason":"Tier 1 national women's lifestyle publication (New York Media)","verified":true,"source_logo_initial":"C","source_color":"#e8003d"},{"id":"r007","url":"https://www.statesman.com/business/20201008/austin-chamber-unveils-its-a-list-of-startups-to-watch","title":"Austin Chamber Unveils Its A-List of Startups to Watch","source":"Austin American-Statesman","source_domain":"statesman.com","date":"2020-10-08","date_display":"Oct 8, 2020","snippet":"Greater Austin Chamber of Commerce 2020 A-List Tech & Innovation Awards — DJ Cassandra (Cassie Shankman) recognized as part of Austin's tech and innovation ecosystem.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major regional daily newspaper (Austin's paper of record)","verified":true,"source_logo_initial":"S","source_color":"#003366"},{"id":"r008","url":"https://www.bizjournals.com/austin","title":"80 Young Professionals to Know in Austin","source":"Austin Business Journal","source_domain":"bizjournals.com","date":"2020-01-01","date_display":"~2020","snippet":"Cassie Shankman / DJ Cassandra named in Austin Business Journal's '80 Young Professionals to Know' feature. Listed in official press credits.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Regional business publication (American City Business Journals)","verified":true,"source_logo_initial":"ABJ","source_color":"#0052a5"},{"id":"r009","url":"https://www.sxsw.com","title":"SXSW 2018 Interactive Innovation Awards — Finalist","source":"SXSW","source_domain":"sxsw.com","date":"2018-03-01","date_display":"March 2018","snippet":"DJ Cassandra (Cassie Shankman) named a SXSW 2018 Interactive Innovation Award finalist for her work with Biomedical Music Solutions — music to help patients with neurological conditions learn to walk.","category":"Event Listing","sentiment":"Positive","tier":"Tier 2","tier_reason":"Globally recognized Austin-based music/tech festival","verified":true,"source_logo_initial":"SX","source_color":"#0098d3"},{"id":"r010","url":"https://www.sxsw.com","title":"SXSW 2022 Official Panelist — MusiCares / Headspace / Berklee","source":"SXSW","source_domain":"sxsw.com","date":"2022-03-01","date_display":"March 2022","snippet":"DJ Cassandra (Cassie Shankman) was an official SXSW 2022 panelist alongside The Recording Academy's MusiCares, Headspace, and Berklee College of Music — discussing music as a tool for healing.","category":"Event Listing","sentiment":"Positive","tier":"Tier 2","tier_reason":"Globally recognized Austin-based music/tech festival","verified":true,"source_logo_initial":"SX","source_color":"#0098d3"},{"id":"r011","url":"https://www.soundsbycassandra.com","title":"Sounds by Cassandra — Official Agency Website","source":"SoundsByCassandra.com","source_domain":"soundsbycassandra.com","date":"2020-01-01","date_display":"Active","snippet":"SOUNDS BY CASSANDRA is a multifaceted audio agency. Clients include Sports Illustrated, Gucci, Goldman Sachs, NASCAR, Teen Vogue, Google, Bumble, Apple TV+, SXSW, Adidas, Kendra Scott, Dell, NBC, Virgin, The Recording Academy, Tito's Vodka, Franklin's BBQ.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 3","tier_reason":"Official artist/agency website","verified":true,"source_logo_initial":"SBC","source_color":"#c89a6a"},{"id":"r012","url":"https://lululemon.com","title":"Lululemon Ambassador — Sound of Austin Summer Playlists","source":"Lululemon","source_domain":"lululemon.com","date":"2020-01-01","date_display":"2020–2022","snippet":"DJ Cassandra served as a Lululemon Ambassador from 2020–2022, curating Sound of Austin Summer Playlists and representing the brand in Austin's fitness and wellness community.","category":"Social Mention","sentiment":"Positive","tier":"Tier 1","tier_reason":"Tier 1 global lifestyle/fitness brand partnership","verified":true,"source_logo_initial":"LL","source_color":"#96001a"},{"id":"r013","url":"https://benkweller.com/products/circuit-boredom-vinyl","title":"Ben Kweller — 'Circuit Boredom' Album (Group Vocals)","source":"Ben Kweller","source_domain":"benkweller.com","date":"2022-01-01","date_display":"2022","snippet":"Cassie Shankman credited on Ben Kweller's 'Circuit Boredom' vinyl album for shouts, woahs, harmonies and miscellaneous group vocals. Recorded at Matchbox Studios, manufactured at Gold Rush Vinyl — both locally in Austin, TX.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Indie artist feature credit (nationally recognized Austin musician)","verified":true,"source_logo_initial":"BK","source_color":"#6b5c3e"},{"id":"r014","url":"https://www.austinchamber.com","title":"Austin 40 Under 40 — Finalist 2020","source":"Greater Austin Chamber of Commerce","source_domain":"austinchamber.com","date":"2020-01-01","date_display":"2020","snippet":"Cassie Shankman / DJ Cassandra was named an Austin 40 Under 40 finalist, recognizing her contributions to Austin's music, technology, and creative industries.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major regional business organization award","verified":true,"source_logo_initial":"AC","source_color":"#003366"},{"id":"r015","url":"https://studio512.com","title":"Studio512 — Holiday Playlist Feature","source":"Studio512 (CBS Austin)","source_domain":"studio512.com","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra (Cassie Shankman) featured on CBS Austin's Studio512 with a holiday playlist curation. Confirmed via official press credits.","category":"Social Mention","sentiment":"Positive","tier":"Tier 2","tier_reason":"Regional TV lifestyle show (CBS Austin affiliate)","verified":true,"source_logo_initial":"512","source_color":"#1a5276"},{"id":"r016","url":"https://do512.com","title":"Do512 — Guide to Getting Married in Austin","source":"Do512","source_domain":"do512.com","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra featured in Do512's comprehensive Guide to Getting Married in Austin — one of the city's most trusted local event and entertainment platforms.","category":"Wedding Feature","sentiment":"Positive","tier":"Tier 2","tier_reason":"Leading Austin local events platform (owned by DoStuff Media)","verified":true,"source_logo_initial":"D","source_color":"#ff3b3b"},{"id":"r017","url":"https://kmfa.org","title":"KMFA — New Music Mixer & Musicians Finding a Way","source":"KMFA 89.5 (Austin Classical)","source_domain":"kmfa.org","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra (Cassie Shankman) featured on KMFA, Austin's classical music station, in both a New Music Mixer feature and a 'Musicians Finding a Way' series.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 2","tier_reason":"Austin's public classical music station","verified":true,"source_logo_initial":"KM","source_color":"#7b3fa0"},{"id":"r018","url":"https://texasperformingarts.org","title":"Texas Performing Arts — Featured Artist","source":"Texas Performing Arts (UT Austin)","source_domain":"texasperformingarts.org","date":"2020-01-01","date_display":"~2020","snippet":"DJ Cassandra recognized or featured by Texas Performing Arts, the flagship performing arts organization at The University of Texas at Austin.","category":"Event Listing","sentiment":"Positive","tier":"Tier 2","tier_reason":"Major state university performing arts organization","verified":true,"source_logo_initial":"TPA","source_color":"#bf5700"},{"id":"r019","url":"https://lovestories.tv","title":"Love Stories TV — DJ Cassandra Feature","source":"Love Stories TV","source_domain":"lovestories.tv","date":"2021-01-01","date_display":"~2021","snippet":"DJ Cassandra featured on Love Stories TV, a leading wedding video platform showcasing real weddings and vendor features. Listed in official press credits on soundsbycassandra.com.","category":"Wedding Feature","sentiment":"Positive","tier":"Tier 2","tier_reason":"National wedding video/editorial platform","verified":true,"source_logo_initial":"LS","source_color":"#c0392b"},{"id":"r020","url":"https://junebugweddings.com","title":"Junebug Weddings — DJ Cassandra Feature","source":"Junebug Weddings","source_domain":"junebugweddings.com","date":"2021-01-01","date_display":"~2021","snippet":"DJ Cassandra (Cassie Shankman) featured on Junebug Weddings, one of the top wedding editorial platforms. Listed on official press credits at soundsbycassandra.com.","category":"Wedding Feature","sentiment":"Positive","tier":"Tier 2","tier_reason":"Top national wedding editorial platform","verified":true,"source_logo_initial":"JB","source_color":"#d4a0b0"},{"id":"r021","url":"https://www.recordingacademy.com","title":"The Recording Academy — Texas Chapter Governor (2023–2025)","source":"The Recording Academy (GRAMMYs)","source_domain":"recordingacademy.com","date":"2023-01-01","date_display":"2023–2025","snippet":"Cassie Shankman elected as one of the youngest Governors on the Texas Chapter Recording Academy's board for 2023–2025. Also active on Grammy Career Day as a 4-time featured speaker.","category":"Press/Editorial","sentiment":"Positive","tier":"Tier 1","tier_reason":"The Recording Academy (GRAMMYs) — major national music industry body","verified":true,"source_logo_initial":"RA","source_color":"#c0972b"},{"id":"r022","url":"https://open.spotify.com/playlist/0GSdzUMXGnFpSB443RAUtA","title":"Lululemon Sound of Austin — Curated Playlist by DJ Cassandra","source":"Spotify / Lululemon","source_domain":"open.spotify.com","date":"2021-06-01","date_display":"Summer 2021","snippet":"DJ Cassandra curated the official Lululemon Sound of Austin summer playlist, publicly available on Spotify. Part of her 2020–2022 Lululemon Ambassador partnership.","category":"Social Mention","sentiment":"Positive","tier":"Tier 1","tier_reason":"Global streaming platform + Tier 1 brand partnership (Lululemon)","verified":true,"source_logo_initial":"SP","source_color":"#1db954"}]};
+
+// ── Category → badge class map ────────────────────────────────
+const catClass = {
+  'Press/Editorial': 'badge-press',
+  'Wedding Feature': 'badge-wedding',
+  'Event Listing': 'badge-event',
+  'Social Mention': 'badge-social',
+  'Review/Testimonial': 'badge-review',
+  'Photo Feature': 'badge-photo',
+};
+const tierClass = {
+  'Tier 1': 'badge-t1',
+  'Tier 2': 'badge-t2',
+  'Tier 3': 'badge-t3',
+};
+const cardTierClass = {
+  'Tier 1': 'tier-1-card',
+  'Tier 2': 'tier-2-card',
+  'Tier 3': 'tier-3-card',
+};
+
+// ── State ─────────────────────────────────────────────────────
+let currentFilter = 'all';
+let currentSearch = '';
+let currentSort = 'date-desc';
+
+// ── Init ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildFilterCounts();
+  renderResults();
+});
+
+function buildFilterCounts() {
+  const results = DATA.results;
+  const cats = {};
+  let t1 = 0;
+  for (const r of results) {
+    cats[r.category] = (cats[r.category] || 0) + 1;
+    if (r.tier === 'Tier 1') t1++;
+  }
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  set('fc-press', cats['Press/Editorial'] || 0);
+  set('fc-wedding', cats['Wedding Feature'] || 0);
+  set('fc-event', cats['Event Listing'] || 0);
+  set('fc-social', cats['Social Mention'] || 0);
+  set('fc-t1', t1);
+  
+  // Update stats
+  set('s-t2', (results.filter(r => r.tier === 'Tier 2').length));
+  set('s-press', cats['Press/Editorial'] || 0);
+  set('s-wedding', cats['Wedding Feature'] || 0);
+}
+
+function setFilter(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderResults();
+}
+
+function searchResults(q) {
+  currentSearch = q.toLowerCase();
+  renderResults();
+}
+
+function sortResults(val) {
+  currentSort = val;
+  renderResults();
+}
+
+function getFiltered() {
+  let results = [...DATA.results];
+  
+  if (currentFilter === 'Tier 1') {
+    results = results.filter(r => r.tier === 'Tier 1');
+  } else if (currentFilter !== 'all') {
+    results = results.filter(r => r.category === currentFilter);
+  }
+  
+  if (currentSearch) {
+    results = results.filter(r =>
+      (r.title + r.source + r.snippet + r.category + r.tier).toLowerCase().includes(currentSearch)
+    );
+  }
+  
+  results.sort((a, b) => {
+    if (currentSort === 'date-desc') return (b.date || '').localeCompare(a.date || '');
+    if (currentSort === 'date-asc') return (a.date || '').localeCompare(b.date || '');
+    if (currentSort === 'tier') return a.tier.localeCompare(b.tier);
+    if (currentSort === 'alpha') return a.title.localeCompare(b.title);
+    return 0;
+  });
+  
+  return results;
+}
+
+function renderResults() {
+  const grid = document.getElementById('results-grid');
+  const empty = document.getElementById('empty-state');
+  const countEl = document.getElementById('results-count');
+  const filtered = getFiltered();
+  
+  // Clear existing cards
+  Array.from(grid.children).forEach(c => {
+    if (!c.id || c.id !== 'empty-state') c.remove();
+  });
+  
+  if (filtered.length === 0) {
+    empty.classList.add('visible');
+  } else {
+    empty.classList.remove('visible');
+    filtered.forEach(r => {
+      const card = buildCard(r);
+      grid.insertBefore(card, empty);
+    });
+  }
+  
+  countEl.textContent = `Showing ${filtered.length} of ${DATA.results.length} mentions`;
+}
+
+function buildCard(r) {
+  const card = document.createElement('div');
+  card.className = `result-card ${cardTierClass[r.tier] || ''}`;
+  
+  const initials = (r.source_logo_initial || r.source.slice(0,2)).toUpperCase();
+  const catCls = catClass[r.category] || 'badge-press';
+  const tierCls = tierClass[r.tier] || 'badge-t3';
+  const catShort = r.category.replace('Press/Editorial','Press').replace('Wedding Feature','Wedding').replace('Event Listing','Event').replace('Social Mention','Social').replace('Review/Testimonial','Review').replace('Photo Feature','Photo');
+  const tierShort = r.tier;
+  
+  const verifiedBadge = r.verified ? `<span class="badge" style="color:#7ac8a8;border-color:rgba(122,200,168,0.3);background:rgba(122,200,168,0.08);">✓ Verified</span>` : '';
+  
+  card.innerHTML = `
+    <div class="card-top">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="source-avatar" style="background:${r.source_color || '#555'}">${initials}</div>
+        <div class="card-source">${escHtml(r.source)}</div>
+      </div>
+      <div class="card-badges">
+        <span class="badge ${tierCls}">${tierShort}</span>
+        <span class="badge ${catCls}">${catShort}</span>
+        ${verifiedBadge}
+      </div>
+    </div>
+    <div class="card-title">${escHtml(r.title)}</div>
+    <div class="card-snippet">${escHtml(r.snippet)}</div>
+    <div class="card-bottom">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="card-date">📅 ${escHtml(r.date_display || 'Date unknown')}</div>
+        <div class="tier-reason">${escHtml(r.tier_reason || '')}</div>
+      </div>
+      <a href="${escHtml(r.url)}" target="_blank" rel="noopener" class="card-link">
+        View →
+      </a>
+    </div>
+  `;
+  
+  return card;
+}
+
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+
+</body>
+</html>
