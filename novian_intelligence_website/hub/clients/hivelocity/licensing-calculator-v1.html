@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hivelocity — Windows & SQL Licensing Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0d1117;
+      --surf:    #131923;
+      --surf-up: #192030;
+      --bdr:     rgba(255,255,255,.07);
+      --bdr-m:   rgba(255,255,255,.13);
+      --red:     #e31f3d;
+      --red-dim: rgba(227,31,61,.11);
+      --red-bdr: rgba(227,31,61,.35);
+      --blue-dim: rgba(77,142,240,.1);
+      --blue-bdr: rgba(77,142,240,.28);
+      --blue-tx:  #7aabff;
+      --green:   #23c55e;
+      --grn-dim: rgba(35,197,94,.08);
+      --grn-bdr: rgba(35,197,94,.25);
+      --amb-dim: rgba(245,158,11,.08);
+      --amb-bdr: rgba(245,158,11,.25);
+      --amb-tx:  #fbbf24;
+      --tx:  #edf0f8;
+      --tx-s: rgba(237,240,248,.55);
+      --tx-m: rgba(237,240,248,.28);
+      --mono: 'JetBrains Mono','Courier New',monospace;
+      --sans: 'DM Sans','Segoe UI',sans-serif;
+      --disp: 'Syne','Nunito Sans',sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--tx); min-height: 100vh; }
+
+    /* ── Layout ── */
+    .hdr { border-bottom: 1px solid var(--bdr); padding: 18px 22px 15px; }
+    .hdr-in { max-width: 960px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+    .logo { width: 32px; height: 32px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #fff; font-family: var(--disp); flex-shrink: 0; }
+    h1 { font-size: 17px; font-weight: 800; color: var(--tx); font-family: var(--disp); letter-spacing: -.02em; }
+    .sub { font-size: 11px; color: var(--tx-m); margin-top: 1px; }
+    .body { max-width: 960px; margin: 0 auto; padding: 14px 18px 40px; }
+    .layout { display: flex; gap: 14px; align-items: flex-start; }
+    .left  { flex: 1.1; min-width: 0; }
+    .right { flex: 0.9; position: sticky; top: 14px; min-width: 0; }
+    @media (max-width: 620px) {
+      .layout { flex-direction: column-reverse; }
+      .right  { position: relative; top: 0; }
+    }
+
+    /* ── Section ── */
+    .sec { background: var(--surf); border: 1px solid var(--bdr); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .sec-lbl { padding: 10px 18px 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--tx-m); border-bottom: 1px solid var(--bdr); }
+    .sec-body { padding: 4px 18px 14px; }
+
+    /* ── Row / Label ── */
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--bdr); }
+    .row.last { border-bottom: none; }
+    .lbl { flex: 1; }
+    .lbl-t { font-size: 13px; font-weight: 600; color: var(--tx); }
+    .lbl-s { font-size: 11px; color: var(--tx-m); margin-top: 2px; }
+
+    /* ── Stepper ── */
+    .step-wrap { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+    .sbtn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--bdr); background: var(--surf-up); color: var(--tx); font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
+    .sbtn:hover:not(:disabled) { opacity: .8; }
+    .sbtn:disabled { opacity: .3; cursor: not-allowed; }
+    .sval { font-size: 16px; font-weight: 700; color: var(--tx); min-width: 32px; text-align: center; font-family: var(--mono); }
+
+    /* ── Toggle ── */
+    .tog { width: 42px; height: 23px; border-radius: 12px; cursor: pointer; position: relative; background: var(--surf-up); border: 1px solid var(--bdr); transition: all .18s ease; flex-shrink: 0; }
+    .tog.on { background: var(--red); border-color: var(--red-bdr); }
+    .tog-thumb { width: 17px; height: 17px; border-radius: 9px; background: #fff; position: absolute; top: 2px; left: 2px; transition: left .18s ease; }
+    .tog.on .tog-thumb { left: 21px; }
+
+    /* ── Pills / Core grid ── */
+    .pills { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--bdr); }
+    .pills.nb { border-bottom: none; padding-bottom: 0; }
+    .pill { padding: 5px 11px; border-radius: 7px; border: 1px solid var(--bdr); background: transparent; color: var(--tx-s); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: all .12s; }
+    .pill:hover { opacity: .8; }
+    .pill.on { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+    .core-row { border-bottom: 1px solid var(--bdr); padding-bottom: 8px; }
+    .mini-lbl { font-size: 11px; font-weight: 700; color: var(--tx-m); letter-spacing: .07em; text-transform: uppercase; margin: 10px 0 5px; }
+    .cores { display: flex; flex-wrap: wrap; gap: 4px; }
+    .cbtn { padding: 4px 9px; border-radius: 6px; border: 1px solid var(--bdr); background: transparent; color: var(--tx-s); font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--mono); transition: all .12s; }
+    .cbtn:hover { opacity: .8; }
+    .cbtn.on { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+
+    /* ── Banner ── */
+    .banner { border-radius: 7px; padding: 8px 11px; font-size: 12px; line-height: 1.55; margin-top: 8px; }
+    .b-info { background: var(--blue-dim); border: 1px solid var(--blue-bdr); color: var(--blue-tx); }
+    .b-warn { background: var(--amb-dim);  border: 1px solid var(--amb-bdr);  color: var(--amb-tx); }
+    .b-tip  { background: var(--grn-dim);  border: 1px solid var(--grn-bdr);  color: var(--green); }
+
+    /* ── Line items ── */
+    .li { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--bdr); gap: 8px; }
+    .li.last { border-bottom: none; }
+    .li-lbl { font-size: 12px; font-weight: 600; color: var(--tx); }
+    .li-det { font-size: 10px; color: var(--tx-m); margin-top: 1px; font-family: var(--mono); }
+    .li-amt { font-size: 14px; font-weight: 700; color: var(--tx); font-family: var(--mono); flex-shrink: 0; }
+    .li-mo  { font-size: 10px; color: var(--tx-m); font-weight: 400; }
+
+    /* ── Results hero ── */
+    .hero { background: var(--red-dim); border: 1px solid var(--red-bdr); border-radius: 12px; padding: 18px 18px 14px; margin-bottom: 10px; }
+    .hero-lbl { font-size: 10px; font-weight: 700; color: var(--tx-m); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 6px; }
+    .hero-num { font-family: var(--mono); font-size: 38px; font-weight: 700; color: var(--red); letter-spacing: -.03em; line-height: 1; }
+    .hero-mo  { font-size: 13px; color: var(--tx-m); font-weight: 400; }
+    .hero-yr  { font-size: 11px; color: var(--tx-m); font-family: var(--mono); margin-top: 4px; }
+    .hero-save { margin-top: 10px; padding: 6px 9px; background: var(--grn-dim); border: 1px solid var(--grn-bdr); border-radius: 6px; font-size: 11px; color: var(--green); font-weight: 600; }
+
+    /* ── Compare cards ── */
+    .cmp { display: flex; gap: 8px; margin-bottom: 10px; }
+    .cmp-card { flex: 1; position: relative; background: var(--surf); border: 1px solid var(--bdr); border-radius: 10px; padding: 12px 12px 10px; }
+    .cmp-card.win { background: var(--red-dim); border-color: var(--red); }
+    .best { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff; padding: 2px 9px; border-radius: 20px; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+    .cmp-lbl  { font-size: 11px; font-weight: 700; color: var(--tx-s); margin-bottom: 1px; }
+    .cmp-sub  { font-size: 10px; color: var(--tx-m); margin-bottom: 4px; }
+    .cmp-cost { font-size: 20px; font-weight: 700; color: var(--tx); font-family: var(--mono); letter-spacing: -.02em; }
+    .cmp-mo   { font-size: 10px; color: var(--tx-m); font-weight: 400; }
+    .cmp-pc   { font-size: 10px; color: var(--tx-m); font-family: var(--mono); margin-top: 2px; }
+    .cmp-card.win .cmp-lbl  { color: var(--red); margin-top: 4px; }
+    .cmp-card.win .cmp-cost { color: var(--red); }
+
+    /* ── Breakdown box ── */
+    .bkdown { background: var(--surf); border: 1px solid var(--bdr); border-radius: 10px; padding: 10px 14px; margin-top: 10px; }
+    .bk-lbl { font-size: 10px; font-weight: 700; color: var(--tx-m); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 4px; }
+    .bk-tot { display: flex; justify-content: space-between; align-items: center; padding-top: 9px; margin-top: 2px; border-top: 1px solid var(--bdr-m); }
+    .bk-tot-lbl { font-size: 11px; font-weight: 700; color: var(--tx-s); text-transform: uppercase; letter-spacing: .05em; }
+    .bk-tot-amt { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--red); }
+    .bk-tot-mo  { font-size: 10px; color: var(--tx-m); font-weight: 400; }
+
+    /* ── Copy button ── */
+    .copy-btn { width: 100%; margin-top: 8px; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--bdr); background: var(--surf); color: var(--tx-s); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: all .18s; display: block; text-align: center; }
+    .copy-btn.done { border-color: var(--grn-bdr); background: var(--grn-dim); color: var(--green); }
+    .copy-btn:hover { opacity: .8; }
+
+    /* ── Learning accordion ── */
+    .learn-btn { width: 100%; padding: 11px 16px; border: 1px solid var(--bdr); background: var(--surf); color: var(--tx-s); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: var(--sans); }
+    .learn-btn.closed { border-radius: 10px; }
+    .learn-btn.open   { border-radius: 10px 10px 0 0; }
+    .learn-btn:hover  { opacity: .8; }
+    .chev { display: inline-block; font-size: 10px; transition: transform .2s; }
+    .chev.r { transform: rotate(180deg); }
+    .learn-body { background: var(--surf); border: 1px solid var(--bdr); border-top: none; border-radius: 0 0 10px 10px; padding: 14px 18px; font-size: 12px; line-height: 1.7; color: var(--tx-s); }
+    .learn-body p { margin-bottom: 10px; }
+    .learn-body p:last-child { margin-bottom: 0; }
+
+    /* ── Footer ── */
+    .ft { text-align: center; font-size: 10px; color: var(--tx-m); line-height: 1.7; padding-bottom: 8px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ── Constants ──────────────────────────────────────────────────────────────
+
+const PRICING = {
+  winStandard: 3.0,   winDatacenter: 20.0,  rdsCal: 8.0,
+  sqlWeb: 7.5,        sqlStandard: 90.0,    sqlEnterprise: 330.0,
+  sqlMinCores: 4,     winMinCores: 8,
+  vpsBase: 24.0,      vpsAdditionalPerCore: 3.0, vpsBaseCores: 8
+};
+
+const SQL_ED = [
+  { key: "none",       label: "None" },
+  { key: "web",        label: "SQL Web",        rate: 7.5   },
+  { key: "standard",   label: "SQL Standard",   rate: 90.0  },
+  { key: "enterprise", label: "SQL Enterprise", rate: 330.0 }
+];
+
+const CORES = [8, 10, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 72, 80, 96, 128];
+
+const LIMITS = {
+  numHosts: [1, 50],   numVMs: [1, 100],  numVPS: [1, 50],
+  vpsVCPUs: [1, 64],   rdsUsers: [1, 500],
+  sqlInstances: [1, 20], sqlCoresPerInstance: [4, 64]
+};
+
+// ── State ──────────────────────────────────────────────────────────────────
+
+let S = {
+  mode: "dedicated", numHosts: 1, coresPerHost: 16, hostOS: "linux", numVMs: 4,
+  numVPS: 1, vpsVCPUs: 8, needRDS: false, rdsUsers: 10,
+  sqlEdition: "none", sqlCoresPerInstance: 4, sqlInstances: 1,
+  showLearn: false, copied: false
+};
+
+// ── Formatters ─────────────────────────────────────────────────────────────
+
+const fmt  = v => v.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 });
+const fmtX = v => v.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// ── Compute ────────────────────────────────────────────────────────────────
+
+function compute(s) {
+  if (s.mode === "vps") {
+    const vpsCostPer = s.vpsVCPUs <= PRICING.vpsBaseCores
+      ? PRICING.vpsBase
+      : PRICING.vpsBase + (s.vpsVCPUs - PRICING.vpsBaseCores) * PRICING.vpsAdditionalPerCore;
+    const vpsTotal   = vpsCostPer * s.numVPS;
+    const rdsCost    = s.needRDS ? s.rdsUsers * PRICING.rdsCal : 0;
+    const sqlEd      = SQL_ED.find(e => e.key === s.sqlEdition);
+    const sqlRate    = sqlEd?.rate || 0;
+    const effSqlCores = Math.max(s.sqlCoresPerInstance, PRICING.sqlMinCores);
+    const sqlCostPer = sqlRate * effSqlCores;
+    const sqlTotal   = s.sqlEdition !== "none" ? sqlCostPer * s.sqlInstances : 0;
+    return { mode: "vps", vpsCostPer, vpsTotal, rdsCost, sqlTotal, sqlCostPer, effSqlCores, sqlRate, total: vpsTotal + rdsCost + sqlTotal };
+  }
+
+  const effCores = Math.max(s.coresPerHost, PRICING.winMinCores);
+  const totalOSEs = s.hostOS === "windows" ? s.numVMs + 1 : s.numVMs;
+  const stdSets   = Math.ceil(totalOSEs / 2);
+  const stdTotal  = stdSets * effCores * PRICING.winStandard * s.numHosts;
+  const dcTotal   = effCores * PRICING.winDatacenter * s.numHosts;
+  const stdEffPC  = stdSets * PRICING.winStandard;
+  const dcEffPC   = PRICING.winDatacenter;
+  const winRec    = stdTotal <= dcTotal ? "standard" : "datacenter";
+  const winSave   = Math.abs(stdTotal - dcTotal);
+
+  const oseOff = s.hostOS === "windows" ? 1 : 0;
+  let breakeven = 0;
+  for (let v = 1; v <= 200; v++) {
+    if (Math.ceil((v + oseOff) / 2) * PRICING.winStandard >= PRICING.winDatacenter) { breakeven = v; break; }
+  }
+
+  const rdsCost    = s.needRDS ? s.rdsUsers * PRICING.rdsCal * s.numHosts : 0;
+  const sqlEd      = SQL_ED.find(e => e.key === s.sqlEdition);
+  const sqlRate    = sqlEd?.rate || 0;
+  const effSqlCores = Math.max(s.sqlCoresPerInstance, PRICING.sqlMinCores);
+  const sqlCostPer = sqlRate * effSqlCores;
+  const sqlTotal   = s.sqlEdition !== "none" ? sqlCostPer * s.sqlInstances : 0;
+  const totStd     = stdTotal + rdsCost + sqlTotal;
+  const totDc      = dcTotal  + rdsCost + sqlTotal;
+
+  return { mode: "dedicated", effCores, stdSets, stdTotal, dcTotal, stdEffPC, dcEffPC, winRec, winSave, breakeven, rdsCost, sqlTotal, sqlCostPer, effSqlCores, sqlRate, totStd, totDc };
+}
+
+// ── HTML component builders ────────────────────────────────────────────────
+
+function section(lbl, content) {
+  return `<div class="sec"><div class="sec-lbl">${lbl}</div><div class="sec-body">${content}</div></div>`;
+}
+
+function row(labelT, labelS, ctrl, last) {
+  return `<div class="row${last ? ' last' : ''}">
+    <div class="lbl"><div class="lbl-t">${labelT}</div>${labelS ? `<div class="lbl-s">${labelS}</div>` : ''}</div>
+    ${ctrl}
+  </div>`;
+}
+
+function stepper(labelT, labelS, val, field, step, last) {
+  const [lo, hi] = LIMITS[field] || [0, 999];
+  return row(labelT, labelS,
+    `<div class="step-wrap">
+      <button class="sbtn" data-action="step" data-field="${field}" data-step="-${step}"${val <= lo ? ' disabled' : ''}>−</button>
+      <span class="sval">${val}</span>
+      <button class="sbtn" data-action="step" data-field="${field}" data-step="${step}"${val >= hi ? ' disabled' : ''}>+</button>
+    </div>`,
+    last
+  );
+}
+
+function toggle(labelT, labelS, val, field, last) {
+  return row(labelT, labelS,
+    `<div class="tog${val ? ' on' : ''}" data-action="toggle" data-field="${field}"><div class="tog-thumb"></div></div>`,
+    last
+  );
+}
+
+function pills(opts, cur, action, nb) {
+  const btns = opts.map(o =>
+    `<button class="pill${o.key === cur ? ' on' : ''}" data-action="${action}" data-value="${o.key}">${o.label}</button>`
+  ).join('');
+  return `<div class="pills${nb ? ' nb' : ''}">${btns}</div>`;
+}
+
+function coreGrid(cur) {
+  const btns = CORES.map(v =>
+    `<button class="cbtn${v === cur ? ' on' : ''}" data-action="set-num" data-field="coresPerHost" data-value="${v}">${v}</button>`
+  ).join('');
+  return `<div class="core-row"><div class="mini-lbl">Physical cores per host</div><div class="cores">${btns}</div></div>`;
+}
+
+function banner(html, type) {
+  return `<div class="banner b-${type || 'info'}">${html}</div>`;
+}
+
+function lineItem(lbl, det, amt, last) {
+  return `<div class="li${last ? ' last' : ''}">
+    <div><div class="li-lbl">${lbl}</div>${det ? `<div class="li-det">${det}</div>` : ''}</div>
+    <div class="li-amt">${fmt(amt)}<span class="li-mo">/mo</span></div>
+  </div>`;
+}
+
+// ── Main build ─────────────────────────────────────────────────────────────
+
+function build(s, c) {
+  const best   = s.mode === "vps" ? c.total : (c.winRec === "standard" ? c.totStd : c.totDc);
+  const sqlEdObj = SQL_ED.find(e => e.key === s.sqlEdition);
+
+  // ──── LEFT PANEL ────
+
+  const deploySection = section("Deployment",
+    pills([{key:"dedicated",label:"Dedicated / Bare Metal"},{key:"vps",label:"VPS Instance"}], s.mode, "set-mode", true) +
+    banner(s.mode === "dedicated"
+      ? "<strong>Dedicated:</strong> You manage the hypervisor. License covers physical host cores. Standard = 2 VMs/stack, Datacenter = unlimited VMs."
+      : "<strong>VPS:</strong> Hivelocity-managed Windows. Flat $24/mo per instance (up to 8 vCPU), then +$3/vCPU.")
+  );
+
+  const infraSection = s.mode === "dedicated"
+    ? section("Infrastructure",
+        stepper("Physical hosts", "Number of bare-metal servers", s.numHosts, "numHosts", 1, false) +
+        coreGrid(s.coresPerHost) +
+        `<div style="padding-top:8px;padding-bottom:4px;border-bottom:1px solid var(--bdr)">
+          <div class="mini-lbl">Host OS</div>
+          ${pills([{key:"linux",label:"Linux / KVM / VMware"},{key:"windows",label:"Windows / Hyper-V"}], s.hostOS, "set-hostos", true)}
+        </div>` +
+        stepper(
+          "Windows VMs per host",
+          s.hostOS === "windows" ? "Host OS uses 1 OSE — affects Standard stacking" : "Each VM = 1 Operating System Environment (OSE)",
+          s.numVMs, "numVMs", 1, true
+        ) +
+        (s.hostOS === "windows" ? banner("Windows host OS consumes 1 of the 2 OSEs per Standard stack. Datacenter breaks even sooner.", "warn") : "")
+      )
+    : section("VPS Configuration",
+        stepper("VPS instances", "", s.numVPS, "numVPS", 1, false) +
+        stepper("vCPUs per instance", "Base $24/mo covers up to 8 vCPU, then +$3/vCPU", s.vpsVCPUs, "vpsVCPUs", 1, true)
+      );
+
+  const rdsSection = section("Remote Desktop Services",
+    toggle("Need RDS CALs?", "Required for interactive RDP user sessions", s.needRDS, "needRDS", !s.needRDS) +
+    (s.needRDS
+      ? stepper(
+          "Concurrent RDS users",
+          `$${PRICING.rdsCal}/user/mo${s.mode === "dedicated" && s.numHosts > 1 ? ` × ${s.numHosts} hosts` : ""}`,
+          s.rdsUsers, "rdsUsers", 1, true
+        )
+      : "") +
+    banner("RDS CALs are separate from the Windows OS license. Only needed when users connect via RDP for interactive sessions — not required for headless service VMs.")
+  );
+
+  const sqlSection = section("SQL Server",
+    `<div style="padding-top:8px;padding-bottom:4px;${s.sqlEdition !== "none" ? "border-bottom:1px solid var(--bdr)" : ""}">
+      ${pills(SQL_ED, s.sqlEdition, "set-sql", true)}
+    </div>` +
+    (s.sqlEdition !== "none"
+      ? stepper("SQL instances", "VMs running SQL Server", s.sqlInstances, "sqlInstances", 1, false) +
+        stepper("vCores per SQL instance", `4-core minimum · ${fmtX(sqlEdObj?.rate || 0)}/core/mo`, s.sqlCoresPerInstance, "sqlCoresPerInstance", 2, true) +
+        banner(`SQL licensed per virtual core on the VM. Per instance: ${c.effSqlCores} cores × ${fmtX(sqlEdObj?.rate || 0)}/core = <strong>${fmt(c.sqlCostPer)}/mo</strong>`)
+      : "")
+  );
+
+  const learnSection = `
+    <div style="margin-bottom:10px">
+      <button class="learn-btn ${s.showLearn ? 'open' : 'closed'}" data-action="learn">
+        <span>📘 How Windows / SPLA Licensing Works</span>
+        <span class="chev${s.showLearn ? ' r' : ''}">▾</span>
+      </button>
+      ${s.showLearn ? `<div class="learn-body">
+        <p><strong style="color:var(--tx)">SPLA</strong> (Services Provider License Agreement) is the monthly model hosters use. Pay per-core, per-month — no upfront purchase required.</p>
+        <p><strong style="color:var(--red)">Windows Standard ($3/core/mo):</strong> Covers 2 VMs (OSEs) per license set. Need 6 VMs? Buy 3 sets = 3× the per-core rate. Windows host OS consumes 1 OSE from the first set.</p>
+        <p><strong style="color:var(--red)">Windows Datacenter ($20/core/mo):</strong> Unlimited VMs. One license set covers the host and every VM. Cheaper once you exceed ~13–14 VMs per host.</p>
+        <p><strong style="color:var(--blue-tx)">RDS CALs ($8/user/mo):</strong> Separate from the OS license. Required only for interactive RDP sessions — not needed for headless service VMs.</p>
+        <p><strong style="color:var(--blue-tx)">SQL Server:</strong> Licensed per vCore on the VM (min 4 cores). Web ($7.50/core — public-facing only), Standard ($90/core), Enterprise ($330/core — AlwaysOn AG, unlimited scale).</p>
+      </div>` : ''}
+    </div>
+  `;
+
+  const footer = `<div class="ft">Built by the Hivelocity SE Team · Pricing reflects current SPLA rates<br>Always confirm with billing for formal quotes</div>`;
+
+  const left = `<div class="left">${deploySection}${infraSection}${rdsSection}${sqlSection}${learnSection}${footer}</div>`;
+
+  // ──── RIGHT PANEL ────
+
+  const heroLabel = s.mode === "dedicated"
+    ? `Recommended · Windows ${c.winRec === "standard" ? "Standard" : "Datacenter"}`
+    : "VPS Total";
+
+  const hero = `<div class="hero">
+    <div class="hero-lbl">${heroLabel}</div>
+    <div class="hero-num">${fmt(best)}<span class="hero-mo">/mo</span></div>
+    <div class="hero-yr">${fmt(best * 12)}/yr</div>
+    ${s.mode === "dedicated" && c.winSave > 0
+      ? `<div class="hero-save">Saves ${fmt(c.winSave)}/mo vs ${c.winRec === "standard" ? "Datacenter" : "Standard"}</div>`
+      : ""}
+  </div>`;
+
+  let compare = "";
+  if (s.mode === "dedicated") {
+    const cards = [
+      { key: "standard",   label: "Standard",   sub: `${c.stdSets}× set/host`, cost: c.stdTotal, perCore: c.stdEffPC },
+      { key: "datacenter", label: "Datacenter", sub: "∞ VMs/host",             cost: c.dcTotal,  perCore: c.dcEffPC  }
+    ].map(opt => {
+      const win = c.winRec === opt.key;
+      return `<div class="cmp-card${win ? ' win' : ''}">
+        ${win ? '<div class="best">★ Best Value</div>' : ''}
+        <div class="cmp-lbl">${opt.label}</div>
+        <div class="cmp-sub">${opt.sub}</div>
+        <div class="cmp-cost">${fmt(opt.cost)}<span class="cmp-mo">/mo</span></div>
+        <div class="cmp-pc">${fmtX(opt.perCore)}/core eff.</div>
+      </div>`;
+    }).join('');
+    compare = `<div class="cmp">${cards}</div>`;
+  }
+
+  const breakevenTip = s.mode === "dedicated" ? banner(
+    `<strong>Breakeven:</strong> Datacenter cheaper at ${c.breakeven}+ VMs/host. You're at ${s.numVMs} VM${s.numVMs !== 1 ? "s" : ""}.` +
+    (s.numVMs < c.breakeven
+      ? ` Standard saves ${fmt(c.winSave)}/mo right now.`
+      : " Datacenter is the right call."),
+    "tip"
+  ) : "";
+
+  // Build line items
+  let items = "";
+  const noRDS = !s.needRDS, noSQL = s.sqlEdition === "none";
+
+  if (s.mode === "dedicated") {
+    const winLbl = c.winRec === "standard" ? "Windows Standard" : "Windows Datacenter";
+    const winDet = c.winRec === "standard"
+      ? `${c.stdSets} sets × ${c.effCores}c × $${PRICING.winStandard} × ${s.numHosts}h`
+      : `${c.effCores}c × $${PRICING.winDatacenter} × ${s.numHosts}h`;
+    const winAmt = c.winRec === "standard" ? c.stdTotal : c.dcTotal;
+    items += lineItem(winLbl, winDet, winAmt, noRDS && noSQL);
+    if (!noRDS) items += lineItem("RDS CALs", `${s.rdsUsers} users × $${PRICING.rdsCal}${s.numHosts > 1 ? ` × ${s.numHosts}h` : ""}`, c.rdsCost, noSQL);
+    if (!noSQL) items += lineItem(sqlEdObj?.label, `${s.sqlInstances}× ${c.effSqlCores}c × ${fmtX(sqlEdObj?.rate || 0)}`, c.sqlTotal, true);
+  } else {
+    const vpsDet = `${fmt(c.vpsCostPer)}/inst${s.vpsVCPUs > 8 ? ` (base + ${s.vpsVCPUs - 8} extra vCPUs)` : ""}`;
+    items += lineItem(`Windows VPS (${s.numVPS}× @ ${s.vpsVCPUs} vCPU)`, vpsDet, c.vpsTotal, noRDS && noSQL);
+    if (!noRDS) items += lineItem("RDS CALs", `${s.rdsUsers} users × $${PRICING.rdsCal}`, c.rdsCost, noSQL);
+    if (!noSQL) items += lineItem(sqlEdObj?.label, `${s.sqlInstances}× ${c.effSqlCores}c × ${fmtX(sqlEdObj?.rate || 0)}`, c.sqlTotal, true);
+  }
+
+  const breakdown = `<div class="bkdown">
+    <div class="bk-lbl">Monthly breakdown</div>
+    ${items}
+    <div class="bk-tot">
+      <div class="bk-tot-lbl">Total</div>
+      <div class="bk-tot-amt">${fmt(best)}<span class="bk-tot-mo">/mo</span></div>
+    </div>
+  </div>`;
+
+  const copyBtn = `<button class="copy-btn${s.copied ? ' done' : ''}" data-action="copy">
+    ${s.copied ? "✓ Copied to clipboard!" : "📋 Copy Summary"}
+  </button>`;
+
+  const right = `<div class="right">${hero}${compare}${breakevenTip}${breakdown}${copyBtn}</div>`;
+
+  // ──── FULL PAGE ────
+  return `
+    <div class="hdr">
+      <div class="hdr-in">
+        <div class="logo">H</div>
+        <div>
+          <h1>Windows & SQL Licensing Calculator</h1>
+          <div class="sub">Hivelocity SPLA Pricing · April 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="layout">${left}${right}</div>
+    </div>
+  `;
+}
+
+// ── Copy to clipboard ──────────────────────────────────────────────────────
+
+function doCopy() {
+  const c      = compute(S);
+  const best   = S.mode === "vps" ? c.total : (c.winRec === "standard" ? c.totStd : c.totDc);
+  const sqlEdObj = SQL_ED.find(e => e.key === S.sqlEdition);
+
+  let txt = `Hivelocity Windows & SQL Licensing Estimate\nGenerated: ${new Date().toLocaleDateString()}\n\n`;
+  txt += `Mode: ${S.mode === "dedicated" ? "Dedicated Server" : "VPS Instance"}\n`;
+  if (S.mode === "dedicated") {
+    txt += `Hosts: ${S.numHosts} × ${S.coresPerHost} cores (${S.hostOS === "windows" ? "Windows/Hyper-V" : "Linux/KVM"})\n`;
+    txt += `VMs: ${S.numVMs} per host\nRecommendation: Windows ${c.winRec === "standard" ? "Standard" : "Datacenter"}\n`;
+  } else {
+    txt += `VPS: ${S.numVPS} instance(s) × ${S.vpsVCPUs} vCPU each\n`;
+  }
+  if (S.needRDS) txt += `RDS CALs: ${S.rdsUsers} users\n`;
+  if (S.sqlEdition !== "none") txt += `SQL: ${sqlEdObj?.label} × ${c.effSqlCores} cores × ${S.sqlInstances} instance(s)\n`;
+  txt += `\n─────────────────────────────\nTotal: ${fmt(best)}/mo\nAnnual: ${fmt(best * 12)}/yr\n\nPricing: Hivelocity SPLA rates as of April 2026\n`;
+
+  try { navigator.clipboard.writeText(txt); } catch (e) {}
+  S.copied = true;
+  render();
+  setTimeout(() => { S.copied = false; render(); }, 2000);
+}
+
+// ── Render & event wiring ──────────────────────────────────────────────────
+
+function render() {
+  document.getElementById('app').innerHTML = build(S, compute(S));
+}
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-action]');
+  if (!el || el.disabled) return;
+
+  const { action, field, value, step } = el.dataset;
+
+  switch (action) {
+    case 'set-mode':   S.mode       = value;  break;
+    case 'set-hostos': S.hostOS     = value;  break;
+    case 'set-sql':    S.sqlEdition = value;  break;
+    case 'set-num':    S[field]     = parseFloat(value); break;
+    case 'step': {
+      const d = parseFloat(step);
+      const [lo, hi] = LIMITS[field] || [0, 999];
+      S[field] = Math.min(hi, Math.max(lo, S[field] + d));
+      break;
+    }
+    case 'toggle': S[field] = !S[field]; break;
+    case 'learn':  S.showLearn = !S.showLearn; break;
+    case 'copy':   doCopy(); return;
+    default: return;
+  }
+
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

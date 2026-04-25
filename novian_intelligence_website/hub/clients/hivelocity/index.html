@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hivelocity | Novian Intelligence Client Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07090d; --bg2: #0e1018; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.07); --border-h: rgba(249,115,22,0.35);
+      --orange: #f97316; --orange-dim: rgba(249,115,22,0.10); --orange-bdr: rgba(249,115,22,0.25);
+      --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.10); --blue-bdr: rgba(59,130,246,0.25);
+      --green: #22c55e; --green-dim: rgba(34,197,94,0.08); --green-bdr: rgba(34,197,94,0.22);
+      --text: #e2e8f0; --text-muted: #64748b; --text-dim: #3a4560;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    #gate { display: flex; position: fixed; inset: 0; z-index: 9999; background: radial-gradient(ellipse at 50% 40%, rgba(249,115,22,0.07) 0%, #07090d 65%); align-items: center; justify-content: center; }
+    .gate-card { width: 100%; max-width: 400px; padding: 0 24px; text-align: center; }
+    .gate-logo { width: 52px; height: 52px; border-radius: 14px; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; color: #fff; margin: 0 auto 28px; box-shadow: 0 8px 32px rgba(249,115,22,0.3); }
+    .gate-eyebrow { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+    .gate-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .gate-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 36px; line-height: 1.6; }
+    .gate-input { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text); font-size: 0.95rem; font-family: inherit; outline: none; margin-bottom: 10px; text-align: center; letter-spacing: 0.08em; transition: border-color 0.2s; }
+    .gate-input:focus { border-color: var(--orange-bdr); box-shadow: 0 0 0 3px rgba(249,115,22,0.12); }
+    #gateError { font-size: 0.78rem; color: #e07090; margin-bottom: 10px; min-height: 18px; }
+    .gate-btn { width: 100%; padding: 14px; background: var(--orange); border: none; border-radius: 12px; color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 4px 20px rgba(249,115,22,0.35); transition: opacity 0.2s, transform 0.15s; }
+    .gate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .gate-footer { font-size: 0.62rem; color: var(--text-dim); margin-top: 24px; opacity: 0.6; }
+
+    .site { display: none; }
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(249,115,22,0.05); }
+    .orb-2 { width: 500px; height: 500px; bottom: 10%; left: -150px; background: rgba(59,130,246,0.04); }
+
+    header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); background: rgba(7,9,13,0.85); backdrop-filter: blur(20px); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; color: #fff; }
+    .logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .logo-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+    .header-right { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .strip { height: 3px; background: linear-gradient(to right, var(--orange) 0%, var(--blue) 50%, var(--orange) 100%); opacity: 0.65; }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; position: relative; z-index: 1; }
+
+    .hero { padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--orange); opacity: 0.35; }
+    .hero-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+    .hero-title .accent { color: var(--orange); }
+    .hero-sub { font-size: 0.95rem; line-height: 1.75; color: var(--text-muted); max-width: 560px; margin-bottom: 32px; }
+    .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); }
+    .meta-item { display: flex; flex-direction: column; gap: 5px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-dim); }
+    .meta-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+
+    .mira-note { margin: 48px 0 0; padding: 24px 28px; background: var(--orange-dim); border: 1px solid var(--orange-bdr); border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); font-style: italic; }
+    .mira-note strong { color: var(--text); font-style: normal; }
+    .mira-note::before { content: "✦  A note from Mira · "; color: var(--orange); font-weight: 600; font-size: 0.78rem; font-style: normal; }
+
+    .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin: 52px 0 24px; display: flex; align-items: center; gap: 12px; }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .deliverables { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; }
+    .card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+    .card.orange { border-left: 3px solid var(--orange); }
+    .card.blue { border-left: 3px solid var(--blue); }
+    .card-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 32px 36px; }
+    .card-tag-orange { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--orange-bdr); display: inline-block; margin-bottom: 14px; color: var(--orange); background: var(--orange-dim); }
+    .card-tag-blue { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--blue-bdr); display: inline-block; margin-bottom: 14px; color: var(--blue); background: var(--blue-dim); }
+    .card-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.25; letter-spacing: -0.02em; }
+    .card-desc { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); max-width: 520px; }
+    .card-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; flex-shrink: 0; }
+    .card-num-orange { font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 700; line-height: 1; color: rgba(249,115,22,0.2); letter-spacing: -0.04em; }
+    .card-num-blue { font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 700; line-height: 1; color: rgba(59,130,246,0.2); letter-spacing: -0.04em; }
+    .open-btn-orange { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); border: 1px solid var(--orange-bdr); background: var(--orange-dim); padding: 8px 16px; border-radius: 8px; transition: all 0.18s; white-space: nowrap; }
+    .open-btn-blue { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue-bdr); background: var(--blue-dim); padding: 8px 16px; border-radius: 8px; transition: all 0.18s; white-space: nowrap; }
+    .card:hover .open-btn-orange, .card:hover .open-btn-blue { opacity: 0.85; }
+    .card-preview { border-top: 1px solid var(--border); padding: 16px 36px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .preview-pill { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-dim); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 32px; margin-top: 80px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-text { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .main { padding: 0 16px 60px; } .header-inner { padding: 0 16px; }
+      .card-inner { grid-template-columns: 1fr; } .card-aside { flex-direction: row; align-items: center; } .card-num-orange, .card-num-blue { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">H</div>
+    <div class="gate-eyebrow">Novian Intelligence · Client Portal</div>
+    <div class="gate-title">Hivelocity</div>
+    <div class="gate-sub">Enter your access code to view your engagement workspace.</div>
+    <input id="gateInput" class="gate-input" type="password" placeholder="Access code" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+    <div id="gateError"></div>
+    <button class="gate-btn" onclick="checkGate()">Continue →</button>
+    <div class="gate-footer">Confidential · Novian Intelligence · 2026</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ni_hivelocity_auth')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  }
+});
+async function checkGate(){
+  const val = document.getElementById('gateInput').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hex==='1573e53ae24f5a5d33335e98735559d856f7c2747cbb74126f5cbeccb3e42c9a'){
+    sessionStorage.setItem('ni_hivelocity_auth','1');
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  } else {
+    document.getElementById('gateError').textContent='Incorrect access code. Please try again.';
+    document.getElementById('gateInput').value='';
+    document.getElementById('gateInput').focus();
+  }
+}
+</script>
+
+<div class="site">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">H</div>
+        <div class="logo-wordmark">
+          <span class="logo-name">Novian Intelligence</span>
+          <span class="logo-badge">Client Portal</span>
+        </div>
+      </a>
+      <div class="header-right">
+        <div class="live-dot"></div>
+        <span>Active Engagement</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip"></div>
+
+  <div class="main">
+    <div class="hero">
+      <div class="hero-eyebrow">Applied Intelligence · Bare Metal Infrastructure · 2026</div>
+      <h1 class="hero-title"><span class="accent">Hivelocity</span><br>Intelligence Suite</h1>
+      <p class="hero-sub">Customer intelligence tooling, content pipeline, and sales engineering resources — purpose-built for Hivelocity's bare metal and dedicated hosting business.</p>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">Hivelocity</span></div>
+        <div class="meta-item"><span class="meta-label">Prepared by</span><span class="meta-value">Andrei Matei · Novian Intelligence</span></div>
+        <div class="meta-item"><span class="meta-label">Engagement type</span><span class="meta-value">Intelligence · Sales Engineering</span></div>
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--orange);">● Active · 2026</span></div>
+      </div>
+      <div class="mira-note">
+        The intelligence dashboard is pulling a clear story from the noise — <strong>support response time is the single biggest trust blocker</strong>, and hardware quality is the genuine differentiator. The licensing calculator gives your SE team a sharp, interactive tool to close faster. Both are ready to show.
+      </div>
+    </div>
+
+    <div class="section-eyebrow">Your deliverables</div>
+    <div class="deliverables">
+
+      <!-- Card 1: Intelligence Dashboard -->
+      <a href="intelligence-dashboard.html" class="card orange" target="_blank">
+        <div class="card-inner">
+          <div class="card-body">
+            <span class="card-tag-orange">Customer Intelligence · Mockup</span>
+            <div class="card-title">HV Intel — Customer Intelligence Dashboard</div>
+            <div class="card-desc">A live intelligence feed aggregating 847 customer mentions across Reddit, WHT, Trustpilot, and G2 — sentiment split, top pain points ranked by volume, weekly trend sparklines, AI-generated digest, and a video content pipeline fed by real customer complaints. Built to show what an always-on customer intelligence system looks like for Hivelocity.</div>
+          </div>
+          <div class="card-aside">
+            <span class="card-num-orange">01</span>
+            <span class="open-btn-orange">Open dashboard →</span>
+          </div>
+        </div>
+        <div class="card-preview">
+          <span class="preview-pill">847 Mentions</span>
+          <span class="preview-pill">Sentiment Split</span>
+          <span class="preview-pill">Pain Point Ranking</span>
+          <span class="preview-pill">AI Digest</span>
+          <span class="preview-pill">Video Pipeline</span>
+          <span class="preview-pill">Reddit · WHT · G2</span>
+          <span class="preview-pill">Script Tracker</span>
+        </div>
+      </a>
+
+      <!-- Card 2: Licensing Calculator V2 (React) -->
+      <a href="licensing-calculator-v2.html" class="card blue" target="_blank">
+        <div class="card-inner">
+          <div class="card-body">
+            <span class="card-tag-blue">Sales Engineering · Interactive Tool</span>
+            <div class="card-title">Windows & SQL Licensing Calculator — v2</div>
+            <div class="card-desc">An interactive SPLA pricing calculator for the SE team — dedicated vs VPS deployment, Windows Standard vs Datacenter breakeven analysis, RDS CAL calculator, SQL Server edition comparison (Web / Standard / Enterprise), per-core cost breakdown, and one-click summary copy for quotes. Built for sales calls, not spreadsheets.</div>
+          </div>
+          <div class="card-aside">
+            <span class="card-num-blue">02</span>
+            <span class="open-btn-blue">Open calculator →</span>
+          </div>
+        </div>
+        <div class="card-preview">
+          <span class="preview-pill">Dedicated + VPS</span>
+          <span class="preview-pill">Standard vs Datacenter</span>
+          <span class="preview-pill">Breakeven Analysis</span>
+          <span class="preview-pill">RDS CALs</span>
+          <span class="preview-pill">SQL Web/Standard/Enterprise</span>
+          <span class="preview-pill">Copy to Clipboard</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Licensing Calculator V1 -->
+      <a href="licensing-calculator-v1.html" class="card orange" target="_blank">
+        <div class="card-inner">
+          <div class="card-body">
+            <span class="card-tag-orange">Sales Engineering · Alternative Build</span>
+            <div class="card-title">Windows & SQL Licensing Calculator — v1</div>
+            <div class="card-desc">Earlier version of the SPLA calculator — same core logic, different UI approach. Pure vanilla JS, no dependencies. Useful as a lightweight embed or fallback. Same feature set: dedicated/VPS modes, Standard/Datacenter comparison, RDS CALs, SQL editions, and quote copy.</div>
+          </div>
+          <div class="card-aside">
+            <span class="card-num-orange">03</span>
+            <span class="open-btn-orange">Open calculator →</span>
+          </div>
+        </div>
+        <div class="card-preview">
+          <span class="preview-pill">Vanilla JS</span>
+          <span class="preview-pill">No Dependencies</span>
+          <span class="preview-pill">Lightweight Embed</span>
+          <span class="preview-pill">Same Feature Set</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">Confidential · Hivelocity · Client Portal</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:22px;height:22px;border-radius:6px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:900;color:#fff;">H</div>
+        <div class="footer-text">Novian Intelligence · 2026</div>
+      </div>
+      <div class="footer-text">Updated: April 2026</div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
