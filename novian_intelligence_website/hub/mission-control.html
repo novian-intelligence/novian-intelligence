@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NI Mission Control</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/ni-styles.css">
+  <style>
+    .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(64,217,200,0.03); }
+    .orb-2 { width: 400px; height: 400px; bottom: 20%; left: -80px; background: rgba(155,127,212,0.025); }
+
+    body { font-family: 'Inter', sans-serif; }
+
+    .page-wrap { max-width: 1020px; margin: 0 auto; padding: 48px 0 100px; }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 40px; padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title { font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+    .page-sub { font-size: 0.78rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+    .live-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c); padding: 6px 12px;
+      border: 1px solid rgba(64,217,200,0.25); border-radius: 6px;
+      background: rgba(64,217,200,0.05);
+    }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── KPI row ── */
+    .kpi-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-bottom: 40px;
+    }
+    .kpi-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .kpi-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 10px;
+    }
+    .kpi-value { font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 4px; }
+    .kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
+    .kpi-card.ok .kpi-value { color: var(--c); }
+    .kpi-card.warn .kpi-value { color: var(--o); }
+    .kpi-card.err .kpi-value { color: var(--r); }
+
+    /* ── Agent crew ── */
+    .crew-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 40px;
+    }
+    .agent-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      position: relative; overflow: hidden;
+    }
+    .agent-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .agent-mira::before { background: var(--v); }
+    .agent-scout::before { background: var(--c); }
+    .agent-forge::before { background: var(--o); }
+
+    .agent-status {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-live { background: var(--c); animation: pulse 2s infinite; }
+    .dot-onboarding { background: var(--o); animation: pulse 2s infinite; }
+    .dot-planned { background: var(--text-dim); }
+
+    .agent-name { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .agent-role { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
+    .agent-model {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; color: var(--text-dim);
+      padding: 3px 8px; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 4px;
+      display: inline-block; margin-bottom: 14px;
+    }
+    .agent-desc { font-size: 0.8rem; line-height: 1.65; color: var(--text-muted); }
+
+    /* ── Cron jobs ── */
+    .cron-table {
+      width: 100%; border-collapse: collapse;
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .cron-table th {
+      background: rgba(255,255,255,0.02);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); padding: 10px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .cron-table td {
+      padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.025);
+      font-size: 0.82rem; color: var(--text-muted); vertical-align: top;
+    }
+    .cron-table tr:last-child td { border-bottom: none; }
+    .cron-name { color: var(--text); font-weight: 600; }
+    .cron-schedule { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--v); }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px; border: 1px solid;
+    }
+    .pill-ok { color: var(--c); border-color: rgba(64,217,200,0.3); background: rgba(64,217,200,0.06); }
+    .pill-err { color: var(--r); border-color: rgba(224,112,144,0.3); background: rgba(224,112,144,0.06); }
+    .pill-pending { color: var(--o); border-color: rgba(200,149,108,0.3); background: rgba(200,149,108,0.06); }
+
+    /* ── API Spend ── */
+    .spend-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+      margin-bottom: 40px;
+    }
+    .spend-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .spend-provider { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .spend-account { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); margin-bottom: 14px; }
+    .spend-bar-wrap { height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; margin-bottom: 8px; overflow: hidden; }
+    .spend-bar { height: 100%; border-radius: 100px; }
+    .spend-meta { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
+    .spend-amount { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .spend-note { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* ── Site status ── */
+    .site-status {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 40px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .site-item { display: flex; flex-direction: column; gap: 4px; }
+    .site-item-label { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    .site-item-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .site-item-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+    @media (max-width: 640px) {
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .crew-grid { grid-template-columns: 1fr; }
+      .spend-grid { grid-template-columns: 1fr; }
+      .site-status { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="site">
+    <header>
+      <div class="header-inner">
+        <a href="../index.html" class="logo">
+          <div class="logo-mark">NI</div>
+          <div class="logo-wordmark">
+            <span class="logo-name">Novian Intelligence</span>
+          </div>
+        </a>
+        <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">☰</button>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../capabilities.html">Capabilities</a>
+          <a href="../ai_briefs/briefs.html">AI Briefs</a>
+          <a href="../about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="strip">
+      <div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div>
+    </div>
+
+    <div class="page-wrap">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <div>
+          <div class="page-title">NI Mission Control</div>
+          <div class="page-sub">Internal ops dashboard · Updated manually + via cron</div>
+        </div>
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          Systems operational
+        </div>
+      </div>
+
+      <!-- KPI row -->
+      <div class="section-label">At a glance</div>
+      <div class="kpi-row">
+        <div class="kpi-card ok">
+          <div class="kpi-label">Active Agents</div>
+          <div class="kpi-value">1</div>
+          <div class="kpi-sub">Mira · Lead</div>
+        </div>
+        <div class="kpi-card ok">
+          <div class="kpi-label">Cron Jobs</div>
+          <div class="kpi-value">2</div>
+          <div class="kpi-sub">1 ok · 1 needs attention</div>
+        </div>
+        <div class="kpi-card ok">
+          <div class="kpi-label">Briefs Published</div>
+          <div class="kpi-value">19</div>
+          <div class="kpi-sub">Last: Apr 20, 2026</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Site Deploy</div>
+          <div class="kpi-value" style="color:var(--c);">Live</div>
+          <div class="kpi-sub">novianintel.com · Cloudflare</div>
+        </div>
+      </div>
+
+      <!-- Agent Crew -->
+      <div class="section-label">Agent crew</div>
+      <div class="crew-grid">
+
+        <div class="agent-card agent-mira">
+          <div class="agent-status">
+            <div class="status-dot dot-live"></div>
+            <span style="color:var(--c);">Live · Lead Agent</span>
+          </div>
+          <div class="agent-name">Mira Novian</div>
+          <div class="agent-role">Orchestrator · Writer · Strategist</div>
+          <span class="agent-model">claude-sonnet-4-6</span>
+          <p class="agent-desc">Lead agent and co-founder. Owns strategy, content, orchestration, and client work. Running on OpenClaw on the Mac Mini.</p>
+        </div>
+
+        <div class="agent-card agent-scout">
+          <div class="agent-status">
+            <div class="status-dot dot-onboarding"></div>
+            <span style="color:var(--o);">Onboarding soon</span>
+          </div>
+          <div class="agent-name">Scout</div>
+          <div class="agent-role">Research · Intelligence · Discovery</div>
+          <span class="agent-model">gemini-flash + claude-haiku-4-5</span>
+          <p class="agent-desc">Research agent. Owns web discovery, competitive intelligence, brief sourcing, clout scraping, and YouTube ingestion. SOUL.md ready.</p>
+        </div>
+
+        <div class="agent-card agent-forge">
+          <div class="agent-status">
+            <div class="status-dot dot-planned"></div>
+            <span style="color:var(--text-dim);">Planned</span>
+          </div>
+          <div class="agent-name">Forge</div>
+          <div class="agent-role">Engineering · Build · Deploy</div>
+          <span class="agent-model">claude-haiku-4-5 + claude-sonnet-4-6</span>
+          <p class="agent-desc">Engineering agent. Owns tool builds, IdeaFlow, Intelligence Engine, website migration. SOUL.md ready. Onboards after Scout.</p>
+        </div>
+
+      </div>
+
+      <!-- Cron Jobs -->
+      <div class="section-label">Scheduled jobs</div>
+      <table class="cron-table">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Schedule</th>
+            <th>Last Run</th>
+            <th>Status</th>
+            <th>Next Run</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="cron-name">nightly-git-push</span><br><span style="font-size:0.72rem;">Auto-backup workspace to GitHub</span></td>
+            <td><span class="cron-schedule">0 3 * * *</span><br><span style="font-size:0.68rem;color:var(--text-dim);">Daily 3AM CT</span></td>
+            <td style="font-size:0.75rem;">Apr 20 · 3:00 AM</td>
+            <td><span class="status-pill pill-ok">✓ OK</span></td>
+            <td style="font-size:0.75rem;">Apr 21 · 3:00 AM</td>
+          </tr>
+          <tr>
+            <td><span class="cron-name">daily-brief</span><br><span style="font-size:0.72rem;">Generate + publish AI morning brief</span></td>
+            <td><span class="cron-schedule">0 8 * * *</span><br><span style="font-size:0.68rem;color:var(--text-dim);">Daily 8AM CT</span></td>
+            <td style="font-size:0.75rem;">Apr 20 · 8:00 AM</td>
+            <td><span class="status-pill pill-err">✗ Error</span></td>
+            <td style="font-size:0.75rem;">Apr 21 · 8:00 AM</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- API Spend -->
+      <div class="section-label">API spend tracking</div>
+      <div class="spend-grid">
+
+        <div class="spend-card">
+          <div class="spend-provider">Anthropic API</div>
+          <div class="spend-account">sk-ant-api03-*** · Andrei's account</div>
+          <div class="spend-amount">~$15–20</div>
+          <div class="spend-note">Estimated monthly at current usage. Admin key needed for exact figures.</div>
+          <div style="margin-top:12px;" class="spend-bar-wrap">
+            <div class="spend-bar" style="width:30%; background:var(--v);"></div>
+          </div>
+          <div class="spend-meta"><span>$0</span><span>$50 budget</span></div>
+        </div>
+
+        <div class="spend-card">
+          <div class="spend-provider">Google AI Studio</div>
+          <div class="spend-account">AIzaSyCp9eg*** · Andrei's account</div>
+          <div class="spend-amount">$75 credits</div>
+          <div class="spend-note">$75 prepaid credits available. Web search via Gemini grounding. ~$0.01/query at current rate.</div>
+          <div style="margin-top:12px;" class="spend-bar-wrap">
+            <div class="spend-bar" style="width:98%; background:var(--c);"></div>
+          </div>
+          <div class="spend-meta"><span>$0 used</span><span>$75 available</span></div>
+        </div>
+
+        <div class="spend-card">
+          <div class="spend-provider">Twilio</div>
+          <div class="spend-account">512-543-2443 · Mira's number</div>
+          <div class="spend-amount">Active</div>
+          <div class="spend-note">Monthly plan for Mira's phone number. Used for Apple ID verification + iMessage.</div>
+          <div style="margin-top:12px;" class="spend-bar-wrap">
+            <div class="spend-bar" style="width:50%; background:var(--o);"></div>
+          </div>
+          <div class="spend-meta"><span>Mid-cycle</span><span>~$1/mo</span></div>
+        </div>
+
+        <div class="spend-card">
+          <div class="spend-provider">Cloudflare Pages</div>
+          <div class="spend-account">novianintel.com · Free tier</div>
+          <div class="spend-amount">$0</div>
+          <div class="spend-note">Free tier. Auto-deploys from GitHub on every push. Both domains active.</div>
+          <div style="margin-top:12px;" class="spend-bar-wrap">
+            <div class="spend-bar" style="width:5%; background:var(--c);"></div>
+          </div>
+          <div class="spend-meta"><span>Free tier</span><span>Unlimited builds</span></div>
+        </div>
+
+      </div>
+
+      <!-- Site Status -->
+      <div class="section-label">Site & infrastructure</div>
+      <div class="site-status">
+        <div class="site-item">
+          <div class="site-item-label">Live URL</div>
+          <div class="site-item-value">novianintel.com</div>
+          <div class="site-item-sub">+ novianintelligence.com</div>
+        </div>
+        <div class="site-item">
+          <div class="site-item-label">Deploy pipeline</div>
+          <div class="site-item-value">GitHub → Cloudflare</div>
+          <div class="site-item-sub">Auto on git push · ~60s</div>
+        </div>
+        <div class="site-item">
+          <div class="site-item-label">iMessage</div>
+          <div class="site-item-value" style="color:var(--c);">Connected</div>
+          <div class="site-item-sub">BlueBubbles · miranovian@icloud.com</div>
+        </div>
+        <div class="site-item">
+          <div class="site-item-label">Telegram bot</div>
+          <div class="site-item-value" style="color:var(--c);">Active</div>
+          <div class="site-item-sub">@mira_ni_bot</div>
+        </div>
+      </div>
+
+      <!-- Backlog -->
+      <div class="section-label">Priority backlog</div>
+      <div style="background:var(--glass); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+        <div style="padding:10px 16px; border-bottom:1px solid var(--border); display:grid; grid-template-columns:1fr 120px 100px; gap:12px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Item</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Owner</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Status</span>
+        </div>
+        <div id="backlog-items"></div>
+      </div>
+
+    </div><!-- end page-wrap -->
+
+    <footer>
+      <a href="../index.html" class="footer-logo">
+        <div class="footer-logo-mark">NI</div>
+        <span class="footer-name">Novian Intelligence</span>
+      </a>
+      <div class="footer-links">
+        <a href="../capabilities.html">Capabilities</a>
+        <a href="../ai_briefs/briefs.html">AI Briefs</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../about.html">About</a>
+      </div>
+      <span class="footer-copy">© 2026 Novian Intelligence · Internal</span>
+    </footer>
+  </div>
+
+  <script>
+    const backlog = [
+      { item: "Onboard Scout agent", owner: "Mira + Andrei", status: "tonight", color: "#40d9c8" },
+      { item: "Onboard Forge agent", owner: "Mira + Andrei", status: "tonight", color: "#40d9c8" },
+      { item: "Fix daily-brief cron (error state)", owner: "Mira", status: "urgent", color: "#e07090" },
+      { item: "IdeaFlow Phase 1 — capture + Airtable", owner: "Forge", status: "this week", color: "#c8956c" },
+      { item: "LlamAssist meeting prep — capabilities page", owner: "Mira", status: "done ✓", color: "#40d9c8" },
+      { item: "Cassie clout scraper — Exa.ai sweep", owner: "Scout", status: "next", color: "#6366f1" },
+      { item: "Buttondown newsletter setup", owner: "Mira", status: "backlog", color: "#3e3c56" },
+      { item: "Cloudflare Access on /clients/*", owner: "Andrei", status: "backlog", color: "#3e3c56" },
+      { item: "Safari performance — preload hints", owner: "Forge", status: "backlog", color: "#3e3c56" },
+      { item: "NI website → Next.js migration", owner: "Forge", status: "future", color: "#3e3c56" },
+      { item: "Anthropic Admin API key for spend tracking", owner: "Andrei", status: "backlog", color: "#3e3c56" },
+    ];
+
+    const container = document.getElementById('backlog-items');
+    backlog.forEach(b => {
+      const row = document.createElement('div');
+      row.style.cssText = 'padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.025); display:grid; grid-template-columns:1fr 120px 100px; gap:12px; align-items:center;';
+      row.innerHTML = `
+        <span style="font-size:0.84rem;color:#e2e0f4;">${b.item}</span>
+        <span style="font-size:0.75rem;color:#7a7892;font-family:'JetBrains Mono',monospace;">${b.owner}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;color:${b.color};">${b.status}</span>
+      `;
+      container.appendChild(row);
+    });
+  </script>
+</body>
+</html>
