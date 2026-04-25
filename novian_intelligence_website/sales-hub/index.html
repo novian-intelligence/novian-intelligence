@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales & Marketing Hub | Novian Intelligence</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #07070f;
+      --bg2:       #0f0f1c;
+      --glass:     rgba(255,255,255,0.03);
+      --border:    rgba(255,255,255,0.07);
+      --border-h:  rgba(155,127,212,0.3);
+
+      --v:         #9b7fd4;
+      --v-dim:     rgba(155,127,212,0.10);
+      --v-bdr:     rgba(155,127,212,0.25);
+      --i:         #6366f1;
+      --i-dim:     rgba(99,102,241,0.10);
+      --i-bdr:     rgba(99,102,241,0.25);
+      --c:         #40d9c8;
+      --c-dim:     rgba(64,217,200,0.08);
+      --c-bdr:     rgba(64,217,200,0.22);
+      --gold:      #f0c040;
+      --gold-dim:  rgba(240,192,64,0.08);
+      --gold-bdr:  rgba(240,192,64,0.22);
+      --green:     #10b981;
+      --green-dim: rgba(16,185,129,0.08);
+      --green-bdr: rgba(16,185,129,0.22);
+
+      --text:      #e2e0f4;
+      --text-muted:#7a7892;
+      --text-dim:  #4e4c6a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(100px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 { width: 600px; height: 600px; top: -100px; right: -100px; background: rgba(155,127,212,0.05); }
+    .orb-2 { width: 500px; height: 500px; bottom: 10%; left: -150px; background: rgba(64,217,200,0.03); }
+
+    /* ── Header ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,7,15,0.85);
+      backdrop-filter: blur(20px);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: conic-gradient(from 135deg,#9b7fd4,#6366f1,#40d9c8,#c8956c,#9b7fd4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 800; color: #fff;
+    }
+    .logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .logo-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-dim);
+    }
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--v); }
+
+    /* ── Strip ── */
+    .strip {
+      height: 2px;
+      background: conic-gradient(from 90deg,#9b7fd4,#6366f1,#40d9c8,#c8956c,#9b7fd4);
+      background: linear-gradient(to right, var(--v) 0%, var(--i) 25%, var(--c) 50%, var(--gold) 75%, var(--v) 100%);
+      opacity: 0.65;
+    }
+
+    /* ── Main ── */
+    .main {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 32px 80px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 56px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--v); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 32px; height: 1px;
+      background: var(--v); opacity: 0.35;
+    }
+    .hero-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.03em; color: #fff; margin-bottom: 16px;
+    }
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--v), var(--c));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 0.95rem; line-height: 1.75;
+      color: var(--text-muted); max-width: 560px;
+    }
+
+    /* ── Section eyebrow ── */
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-dim); margin: 52px 0 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Card grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px; border: 1px solid;
+      display: inline-block; margin-bottom: 4px; width: fit-content;
+    }
+    .card-title {
+      font-size: 1.05rem; font-weight: 700; color: #fff;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .card-desc { font-size: 0.84rem; line-height: 1.7; color: var(--text-muted); flex: 1; }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 12px; border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .card-status { }
+    .card-arrow { font-size: 0.9rem; }
+
+    /* Color variants */
+    .card-v::before { background: linear-gradient(to right, var(--v), var(--i)); }
+    .card-c::before { background: linear-gradient(to right, var(--c), var(--i)); }
+    .card-gold::before { background: linear-gradient(to right, var(--gold), var(--c)); }
+    .card-green::before { background: linear-gradient(to right, var(--green), var(--c)); }
+    .card-i::before { background: linear-gradient(to right, var(--i), var(--v)); }
+
+    .tag-v { color: var(--v); border-color: var(--v-bdr); background: var(--v-dim); }
+    .tag-c { color: var(--c); border-color: var(--c-bdr); background: var(--c-dim); }
+    .tag-gold { color: var(--gold); border-color: var(--gold-bdr); background: var(--gold-dim); }
+    .tag-green { color: var(--green); border-color: var(--green-bdr); background: var(--green-dim); }
+    .tag-i { color: var(--i); border-color: var(--i-bdr); background: var(--i-dim); }
+
+    .status-live { color: var(--green); }
+    .status-building { color: var(--gold); }
+    .status-planned { color: var(--text-dim); }
+
+    /* placeholder cards */
+    .card.placeholder { opacity: 0.5; cursor: default; }
+    .card.placeholder:hover { transform: none; border-color: var(--border); }
+
+    /* ── Client examples strip ── */
+    .clients-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .client-chip {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+      text-decoration: none; display: flex; align-items: center; gap: 14px;
+      transition: border-color 0.2s, transform 0.18s;
+    }
+    .client-chip:hover { border-color: var(--border-h); transform: translateY(-1px); }
+    .client-avatar {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .client-name { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .client-type { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 32px; margin-top: 80px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);
+    }
+
+    @media (max-width: 768px) {
+      .main { padding: 0 16px 60px; }
+      .header-inner { padding: 0 16px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .clients-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">NI</div>
+      <div class="logo-wordmark">
+        <span class="logo-name">Novian Intelligence</span>
+        <span class="logo-badge">Sales & Marketing Hub</span>
+      </div>
+    </a>
+    <a href="../hub/" class="back-link">← NI Hub</a>
+  </div>
+</header>
+
+<div class="strip"></div>
+
+<div class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">Internal · Sales & Marketing · Novian Intelligence</div>
+    <h1 class="hero-title">Everything we use<br>to <span class="accent">sell and scale.</span></h1>
+    <p class="hero-sub">
+      All NI sales collateral, engagement frameworks, client materials, and marketing assets in one place. 
+      For the crew's eyes — and for walking clients through what working with us actually looks like.
+    </p>
+  </div>
+
+  <!-- Engagement & Process -->
+  <div class="section-eyebrow">Engagement frameworks</div>
+  <div class="card-grid">
+
+    <a href="../ni-engagement-roadmap.html" class="card card-v" target="_blank">
+      <div class="card-icon" style="background:var(--v-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h10M3 16h13" stroke="#9b7fd4" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="18" cy="16" r="2.5" stroke="#9b7fd4" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-v">Process · Live</span>
+      <div class="card-title">NI Engagement Roadmap</div>
+      <div class="card-desc">The full client journey from first conversation to production deployment. Every phase, every milestone, every handoff — what clients can expect and when.</div>
+      <div class="card-footer">
+        <span class="card-status status-live">● Live</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a href="../capabilities.html" class="card card-c" target="_blank">
+      <div class="card-icon" style="background:var(--c-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="2" y="2" width="8" height="8" rx="2" stroke="#40d9c8" stroke-width="1.5"/>
+          <rect x="12" y="2" width="8" height="8" rx="2" stroke="#40d9c8" stroke-width="1.5"/>
+          <rect x="2" y="12" width="8" height="8" rx="2" stroke="#40d9c8" stroke-width="1.5"/>
+          <rect x="12" y="12" width="8" height="8" rx="2" stroke="#40d9c8" stroke-width="1.5" opacity="0.4"/>
+          <line x1="16" y1="14" x2="16" y2="18" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="14" y1="16" x2="18" y2="16" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-c">Capabilities · Live</span>
+      <div class="card-title">What We Bring</div>
+      <div class="card-desc">NI's full capability set — every practice area, every tool, every skill we bring to a partnership. The "why us" document for prospects and new clients.</div>
+      <div class="card-footer">
+        <span class="card-status status-live">● Live</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <div class="card card-gold placeholder">
+      <div class="card-icon" style="background:var(--gold-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="3" y="3" width="16" height="16" rx="2" stroke="#f0c040" stroke-width="1.5"/>
+          <path d="M7 8h8M7 12h5" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-gold">Pitch Deck · Coming</span>
+      <div class="card-title">NI Pitch Deck</div>
+      <div class="card-desc">The full investor and client pitch — mission, market, approach, team, and proof points. Interactive version coming soon.</div>
+      <div class="card-footer">
+        <span class="card-status status-building">◐ Building</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="card card-i placeholder">
+      <div class="card-icon" style="background:var(--i-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <circle cx="11" cy="11" r="8" stroke="#6366f1" stroke-width="1.5"/>
+          <path d="M11 7v4l3 3" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-i">Pricing · Coming</span>
+      <div class="card-title">Engagement Pricing</div>
+      <div class="card-desc">Tier structure, scope definitions, retainer vs. project pricing, and the rationale behind each. For the sales conversation.</div>
+      <div class="card-footer">
+        <span class="card-status status-planned">○ Planned</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Client Portals -->
+  <div class="section-eyebrow">Active client portals</div>
+  <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:20px; line-height:1.7;">Live deliverable hubs for each active engagement. Each portal is password-protected for direct client sharing.</p>
+  <div class="clients-row">
+
+    <a href="../clients/cassie/" class="client-chip" target="_blank">
+      <div class="client-avatar" style="background:linear-gradient(135deg,#e8957a,#c8956c,#d4a0c0);">SC</div>
+      <div>
+        <div class="client-name">Sounds by Cassandra</div>
+        <div class="client-type">Business Transformation · POC</div>
+      </div>
+    </a>
+
+    <a href="../clients/fenix/" class="client-chip" target="_blank">
+      <div class="client-avatar" style="background:linear-gradient(135deg,#f97316,#c8956c);">FP</div>
+      <div>
+        <div class="client-name">Fenix Post Tension</div>
+        <div class="client-type">Business Transformation · POC</div>
+      </div>
+    </a>
+
+    <a href="../clients/jonsimon/" class="client-chip" target="_blank">
+      <div class="client-avatar" style="background:linear-gradient(135deg,#6366f1,#9b7fd4);">JS</div>
+      <div>
+        <div class="client-name">Jon Simon</div>
+        <div class="client-type">Sales OS · POC</div>
+      </div>
+    </a>
+
+    <a href="../clients/nea/" class="client-chip" target="_blank">
+      <div class="client-avatar" style="background:linear-gradient(135deg,#40d9c8,#6366f1);">NN</div>
+      <div>
+        <div class="client-name">Dr. Nea North</div>
+        <div class="client-type">Research Brief · Academic</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Marketing assets -->
+  <div class="section-eyebrow">Marketing & brand</div>
+  <div class="card-grid">
+
+    <a href="/" class="card card-v" target="_blank">
+      <div class="card-icon" style="background:var(--v-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="2" y="4" width="18" height="14" rx="2" stroke="#9b7fd4" stroke-width="1.5"/>
+          <path d="M2 8h18" stroke="#9b7fd4" stroke-width="1.5"/>
+          <circle cx="5.5" cy="6" r="1" fill="#9b7fd4"/>
+          <circle cx="8.5" cy="6" r="1" fill="#9b7fd4"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-v">Website · Live</span>
+      <div class="card-title">novianintel.com</div>
+      <div class="card-desc">The public face of NI — briefs, blog, about, applied intelligence, and Mira's page. The thing clients see before they see us.</div>
+      <div class="card-footer">
+        <span class="card-status status-live">● Live</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a href="../ai_briefs/briefs.html" class="card card-c" target="_blank">
+      <div class="card-icon" style="background:var(--c-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M4 5h14M4 9h14M4 13h8" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="17" cy="17" r="3" stroke="#40d9c8" stroke-width="1.5"/>
+          <path d="M19.5 19.5l-1.5-1.5" stroke="#40d9c8" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-c">Content · Live</span>
+      <div class="card-title">NI Morning Briefs</div>
+      <div class="card-desc">22 published briefs covering AI strategy, infrastructure, and geopolitics. The content engine that proves NI's point of view daily.</div>
+      <div class="card-footer">
+        <span class="card-status status-live">● 22 published</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <div class="card card-gold placeholder">
+      <div class="card-icon" style="background:var(--gold-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 3L13.5 8.5L19.5 9.3L15.25 13.4L16.3 19.3L11 16.5L5.7 19.3L6.75 13.4L2.5 9.3L8.5 8.5L11 3Z" stroke="#f0c040" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-gold">Case Studies · Coming</span>
+      <div class="card-title">Published Case Studies</div>
+      <div class="card-desc">Fenix, Cassie, Jon Simon — anonymized and polished for public consumption. Coming once we have outcomes to report.</div>
+      <div class="card-footer">
+        <span class="card-status status-building">◐ Building</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="card card-green placeholder">
+      <div class="card-icon" style="background:var(--green-dim);">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 2C6.03 2 2 6.03 2 11s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z" stroke="#10b981" stroke-width="1.5"/>
+          <path d="M11 6v5l3 3" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-green">Newsletter · Coming</span>
+      <div class="card-title">NI Weekly</div>
+      <div class="card-desc">Email newsletter version of the morning briefs. The subscriber flywheel for inbound pipeline. Planned for Q2 launch.</div>
+      <div class="card-footer">
+        <span class="card-status status-planned">○ Planned</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /.main -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">Internal · Novian Intelligence · Sales & Marketing Hub</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:22px;height:22px;border-radius:6px;background:conic-gradient(from 135deg,#9b7fd4,#6366f1,#40d9c8,#c8956c,#9b7fd4);display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:800;color:#fff;">NI</div>
+      <div class="footer-text">Novian Intelligence · 2026</div>
+    </div>
+    <div class="footer-text">Updated: April 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

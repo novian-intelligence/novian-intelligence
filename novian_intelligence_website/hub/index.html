@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NI OS — Novian Intelligence Internal</title>
+  <title>NI Hub — Novian Intelligence Internal</title>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -439,6 +439,7 @@
     .badge-soon { background: rgba(155,127,212,0.12); color: var(--v); border: 1px solid rgba(155,127,212,0.25); }
     .badge-building { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
     .badge-planned { background: rgba(74,74,106,0.2); color: var(--text-dim); border: 1px solid var(--border); }
+    .badge-preview { background: rgba(64,217,200,0.1); color: var(--c); border: 1px solid rgba(64,217,200,0.25); }
 
     .card-footer {
       display: flex;
@@ -666,7 +667,7 @@
     <!-- Welcome -->
     <div class="os-welcome">
       <div class="os-welcome-eyebrow" id="greeting-time">Good evening, Andrei</div>
-      <h1>Welcome to <span>NI OS</span></h1>
+      <h1>Welcome to <span>NI Hub</span></h1>
       <p>The internal operating system of Novian Intelligence. Build queue, client work, crew status, and tools — all in one place. Not for public eyes.</p>
     </div>
 
@@ -764,6 +765,19 @@
           <div class="card-arrow">→</div>
         </div>
       </div>
+
+      <a href="../mission-control.html" class="os-card" style="--card-accent: var(--c);">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(64,217,200,0.1);">🎛️</div>
+          <div class="card-badge badge-preview">Preview</div>
+        </div>
+        <div class="card-title">Mission Control</div>
+        <div class="card-desc">Internal ops dashboard — active agents, cron jobs, system status, and the live pulse of NI infrastructure. Updated manually and via cron.</div>
+        <div class="card-footer">
+          <div class="card-owner">Owner: Mira</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
 
       <a href="../sales-hub/" class="os-card" style="--card-accent: var(--green);">
         <div class="card-header">

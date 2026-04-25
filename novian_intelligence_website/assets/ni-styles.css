@@ -172,6 +172,16 @@ nav a.active { color: var(--v); }
 .s4 { background: var(--o); }
 .s5 { background: var(--r); }
 
+/* ── Hero eyebrow line ── */
+.hero-eyebrow::before,
+.section-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--v);
+  opacity: 0.35;
+}
+
 /* ── Footer ── */
 footer {
   padding: 40px 0;
