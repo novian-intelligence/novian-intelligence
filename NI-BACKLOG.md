@@ -69,6 +69,16 @@ Andrei can always challenge rankings — that's the point.
 
 ## 📋 Backlog (Prioritized)
 
+### ⭐ Google Account Consolidation
+**Owner:** Andrei (solo — Mira can advise)
+**Why:** Current state is a mess — NI stuff landing in personal Gmail, Novian Tech Workspace exists but underused, Novian Group is a subsidiary, Dad has email there, hello@andreimatei.com needs migration. Goal: one clean Google Workspace org with novianintel.com as a domain, proper emails for Andrei + the NI crew (mira@, vela@, kael@), Dad stays tidy under Novian Group, and all Google Cloud projects move to the Workspace org.
+**Plan:** Add novianintel.com as secondary domain under existing Novian Tech Workspace → create NI team emails → migrate Google Cloud projects → retire personal Gmail for business use → convert hello@andreimatei.com back to Gmail.
+**Status:** Tabled — tackle after demo weekend
+**MII:** 2 (Andrei's call, not my fight 😄)
+
+---
+
+
 ### 1. 🔟 OpenClaw Security Top 10
 **Owner:** Kael (framework + substance) + Mira (voice/editing)  
 **Why:** Nobody has done OWASP-style top 10 for AI agent frameworks. We're first-movers with real credibility. Kael's intro content for the site — lighter lift than the big research piece.  

@@ -40,7 +40,7 @@ except ImportError:
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDP0c4c554HaQXwRmWG_BuHXA7WohrF49g")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")  # set GEMINI_API_KEY env var before running
 GOOGLE_CSE_API_KEY = os.getenv("GOOGLE_CSE_API_KEY", "")  # Optional: Google Custom Search
 GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID", "")            # Optional: CSE ID
 

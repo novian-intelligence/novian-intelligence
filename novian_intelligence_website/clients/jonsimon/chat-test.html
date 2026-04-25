@@ -419,7 +419,7 @@
   <script type="module">
     import { GoogleGenAI } from "@google/genai";
 
-    const API_KEY = "AIzaSyDP0c4c554HaQXwRmWG_BuHXA7WohrF49g";
+    const API_KEY = window.NI_GEMINI_KEY || ""; // key injected at runtime, not stored in repo
     const ai = new GoogleGenAI({ apiKey: API_KEY });
 
     const SYSTEM_PROMPT = `You are an AI assistant embedded in Jon Simon's Novian Intelligence client portal. You were briefed on Jon's full situation through a 2-hour interview conducted by Andrei Matei of Novian Intelligence.
