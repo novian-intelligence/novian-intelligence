@@ -191,7 +191,7 @@
       const val = document.getElementById('gateInput').value;
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
       const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-      if(hex==='b5aefd19dc20c706383bc97fbddf67035f87bc6c97849ffc97c447821d68f0ab'){
+      if(hex==='90a708e271831e35f033bc640d697d9ce96f12bcf58103b6eb4db8bc4d308ea1'){
         sessionStorage.setItem('ni_fenix_auth','1');
         document.getElementById('gate').style.display='none';
       } else {
