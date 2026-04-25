@@ -1,6 +1,6 @@
 # Novian Intelligence — Living Backlog
 **Maintained by:** Mira  
-**Last updated:** 2026-04-22
+**Last updated:** 2026-04-24
 
 Each item has an **Owner** (who leads it), **Status**, and **MII** (Mira's Interest Index, 1–5).  
 Andrei can always challenge rankings — that's the point.
@@ -22,6 +22,13 @@ Andrei can always challenge rankings — that's the point.
 | Kael onboarded (Security & Integrity) | Mira | Apr 22 | Lives in `/sentinel/`, initial audit complete ✅ |
 | `scout/` renamed to `vela/` | Mira | Apr 22 | All references updated ✅ |
 | Initial security audit (Kael) | Kael | Apr 22 | `secure/` permissions hardened, findings logged ✅ |
+| Kael avatar deployed | Andrei + Mira | Apr 24 | kael-avatar.png live on About + Applied Intelligence ✅ |
+| Kael on About + Applied Intelligence pages | Mira | Apr 24 | Full card, bio, quote, steel blue accent ✅ |
+| Vela avatar deployed | Andrei + Mira | Apr 24 | vela-avatar.png live on About + Meet Vela ✅ |
+| Mira page glow-up | Mira + Andrei | Apr 24 | New title (COO & Co-Founder), new bio, "Why this matters" section ✅ |
+| Vela + Kael in homepage bubble animation | Mira | Apr 24 | Both floating in AI cluster with correct accent colors ✅ |
+| Blog hero image fixed | Mira | Apr 24 | Centered, scaled, smooth — no browser chrome ✅ |
+| API keys rotated (Google Gemini) | Andrei + Mira | Apr 24 | Server key + widget key separated per Kael's recommendation ✅ |
 
 ---
 
@@ -43,27 +50,24 @@ Andrei can always challenge rankings — that's the point.
 
 ---
 
-### 🖼️ Kael Avatar — Save & Deploy
-**Owner:** Andrei (send file) → Mira (save + deploy)  
-**Why:** Kael chose "New C" — bald Black man, blueprint coat, dark teal bg. Needs saving as `sentinel/kael-avatar.jpg` and added to About page + blog post.  
-**Status:** Waiting on Andrei to send the image file  
-**MII:** 4
+### 🎤 ET & Rob Demo — Saturday Noon
+**Owner:** Andrei + Mira  
+**Why:** First investor/partner demo. ET (Eric Thiel) and Rob from llamassist.ai. Show the work, not slides. Centerpiece: Cassie's PR tracker.
+**Demo checklist:**
+- Cassie portal polished and live ✅ (pending tonight)
+- Portfolio hub page — password-protected, links all 4 client portals
+- Site health check — no broken links or weird states
+- Crew debrief — Kael + Vela briefed on tomorrow
+**Status:** In progress — tonight's mission  
+**MII:** 5 🔥
 
 ---
 
 ### 📝 Welcome Kael Blog Post
 **Owner:** Mira (write) → Kael (review)  
 **Why:** Site visitors should meet the team. Frame as "NI grows up" — not just another welcome post. Security-first philosophy, what it means we have a dedicated security architect.  
-**Status:** Ready to write — needs Kael's avatar first  
+**Status:** Ready to write  
 **MII:** 4
-
----
-
-### 🔄 About Page + Applied Intelligence — Add Kael
-**Owner:** Mira  
-**Why:** Kael needs to appear in the team section and Applied Intelligence page footer.  
-**Status:** Ready — will do alongside blog post  
-**MII:** 3
 
 ---
 
@@ -179,13 +183,7 @@ Andrei can always challenge rankings — that's the point.
 
 ---
 
-### 12. 🔒 Vela Avatar — Still Needed
-**Owner:** Andrei (create) → Mira (save + deploy)  
-**Why:** Vela chose Option B (direct gaze, celestial star chart halo, deep blue) but image file never arrived. About page and Meet Vela post still using placeholder.  
-**Status:** Waiting on Andrei  
-**MII:** 3
 
----
 
 ## 💡 Ideas Parking Lot
 *(Captured, not yet scoped)*
