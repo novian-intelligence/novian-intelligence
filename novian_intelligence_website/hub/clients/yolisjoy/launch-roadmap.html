@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)https://yolisjoy.netlify.app/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoli's Joy — Launch Roadmap</title>
+  <link href="./Yoli&#39;s Joy — Launch Roadmap_files/css2" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fdf8f2;
+      --warm-white: #fffcf8;
+      --blush: #f2c4b0;
+      --rose: #d4806a;
+      --deep-rose: #a85b48;
+      --terracotta: #c26b50;
+      --sage: #8fa68e;
+      --sage-light: #c8d8c7;
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --ink: #2c2420;
+      --ink-soft: #5a4a44;
+      --ink-muted: #8a7a74;
+      --shadow: rgba(44,36,32,0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--gold-light);
+      padding: 48px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, var(--blush) 0%, transparent 70%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 10%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .brand-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .header-sub {
+      font-size: 15px;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Progress summary */
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .progress-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--gold-light);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      border-radius: 99px;
+      transition: width 0.5s ease;
+    }
+    .progress-pct {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--rose);
+      min-width: 38px;
+    }
+    .stats-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      border: 1px solid var(--gold-light);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .stat-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ---- MAIN ---- */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Phase blocks */
+    .phase {
+      margin-bottom: 40px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 16px var(--shadow);
+      background: var(--warm-white);
+      border: 1px solid rgba(201,169,110,0.2);
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 28px;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid var(--gold-light);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .phase-header:hover { background: var(--cream); }
+
+    .phase-badge {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      flex-shrink: 0;
+      color: white;
+    }
+    .phase-1 .phase-badge { background: linear-gradient(135deg, var(--rose), var(--terracotta)); }
+    .phase-2 .phase-badge { background: linear-gradient(135deg, var(--gold), #b8934a); }
+    .phase-3 .phase-badge { background: linear-gradient(135deg, var(--sage), #6e8a6d); }
+
+    .phase-meta { flex: 1; }
+    .phase-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .phase-range {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .phase-progress-mini {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      min-width: 80px;
+    }
+    .phase-pct-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--rose);
+    }
+    .phase-1 .phase-pct-label { color: var(--rose); }
+    .phase-2 .phase-pct-label { color: var(--gold); }
+    .phase-3 .phase-pct-label { color: var(--sage); }
+    .mini-track {
+      width: 80px; height: 4px;
+      background: var(--gold-light);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .mini-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.5s ease;
+    }
+    .phase-1 .mini-fill { background: var(--rose); }
+    .phase-2 .mini-fill { background: var(--gold); }
+    .phase-3 .mini-fill { background: var(--sage); }
+
+    .chevron {
+      width: 20px; height: 20px;
+      color: var(--ink-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .phase.open .chevron { transform: rotate(180deg); }
+
+    /* Category sections */
+    .phase-body { display: none; }
+    .phase.open .phase-body { display: block; }
+
+    .category {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(201,169,110,0.12);
+    }
+    .category:last-child { border-bottom: none; }
+
+    .cat-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+
+    .cat-legal    { background: #fce8e8; color: #a83030; }
+    .cat-brand    { background: #fce4d6; color: #a05030; }
+    .cat-finance  { background: #fef3d6; color: #8a6010; }
+    .cat-tech     { background: #e8f0fe; color: #2a5caa; }
+    .cat-marketing{ background: #e8f5e9; color: #2e7d32; }
+    .cat-ops      { background: #f3e8fd; color: #7b1fa2; }
+    .cat-validate { background: #e0f7fa; color: #00696f; }
+
+    /* Tasks */
+    .task-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .task-item:hover { background: var(--cream); }
+
+    .task-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--gold);
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+      transition: all 0.2s;
+      background: white;
+    }
+    .task-item input[type="checkbox"]:checked {
+      background: var(--rose);
+      border-color: var(--rose);
+    }
+    .task-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 5px;
+      width: 5px; height: 8px;
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .task-text { flex: 1; }
+    .task-main {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+      transition: color 0.2s;
+    }
+    .task-note {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-top: 2px;
+      font-weight: 300;
+      line-height: 1.4;
+    }
+    .task-item.done .task-main {
+      color: var(--ink-muted);
+      text-decoration: line-through;
+    }
+
+    .priority-flag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .flag-high { background: #fee2e2; color: #b91c1c; }
+    .flag-med  { background: #fef3c7; color: #92400e; }
+
+    /* Notes section */
+    .notes-area {
+      padding: 20px 28px;
+      background: var(--cream);
+      border-top: 1px solid var(--gold-light);
+    }
+    .notes-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+    }
+    textarea.notes-input {
+      width: 100%;
+      min-height: 60px;
+      border: 1px solid var(--gold-light);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      background: white;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea.notes-input:focus { border-color: var(--rose); }
+    textarea.notes-input::placeholder { color: var(--ink-muted); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 32px 20px 24px; }
+      main { padding: 24px 16px 60px; }
+      .phase-header { padding: 18px 18px; }
+      .category { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand-tag">✦ Yoli's Joy — Launch Roadmap</div>
+    <h1>Your Path to <em>Radiant</em> Launch</h1>
+    <p class="header-sub">Every great thing starts with a first step. This is yours — a living plan to take Yoli's Joy from dream to done, one intentional move at a time.</p>
+
+    <div class="progress-bar-wrap">
+      <span class="progress-label">Overall Progress</span>
+      <div class="progress-track">
+        <div class="progress-fill" id="totalFill" style="width:0%"></div>
+      </div>
+      <span class="progress-pct" id="totalPct">0%</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-pill"><span class="stat-dot" style="background:var(--rose)"></span><span id="stat-done">0 complete</span></div>
+      <div class="stat-pill"><span class="stat-dot" style="background:var(--gold)"></span><span id="stat-remain">69 remaining</span></div>
+      <div class="stat-pill"><span class="stat-dot" style="background:var(--sage)"></span><span id="stat-total">69 total tasks</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==================== PHASE 1 ==================== -->
+  <div class="phase phase-1 open" id="phase1">
+    <div class="phase-header" onclick="togglePhase(&#39;phase1&#39;)">
+      <div class="phase-badge">1</div>
+      <div class="phase-meta">
+        <div class="phase-title">Foundation &amp; Formation</div>
+        <div class="phase-range">Days 1–30 &nbsp;·&nbsp; Build the bones</div>
+      </div>
+      <div class="phase-progress-mini">
+        <span class="phase-pct-label" id="p1pct">0%</span>
+        <div class="mini-track"><div class="mini-fill" id="p1fill" style="width:0%"></div></div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="phase-body">
+
+      <div class="category">
+        <div class="cat-label cat-legal">⚖ Legal &amp; Business Formation</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Choose your business structure (LLC recommended)</div>
+              <div class="task-note">LLC gives liability protection + credibility. File in your home state. Cost: ~$50–300 depending on state.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">File your LLC / business registration</div>
+              <div class="task-note">Use your state's Secretary of State website. Consider a registered agent service (~$50/yr).</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Obtain an EIN (Employer Identification Number)</div>
+              <div class="task-note">Free via IRS.gov. Needed for banking, taxes, and any vendor relationships.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Open a dedicated business checking account</div>
+              <div class="task-note">Keep business + personal finances completely separate from Day 1. Relay, Mercury, or local credit union are good options.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Open a business savings / reserve account</div>
+              <div class="task-note">Target 3 months of projected operating costs as a cushion before you launch.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Register your business name / DBA if different from LLC name</div>
+              <div class="task-note">"Yoli's Joy" may need a DBA (Doing Business As) filing if your LLC has a different legal name.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Check for required local business licenses or permits</div>
+              <div class="task-note">Most municipalities require a general business license even for service businesses. Check city/county requirements.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-finance">$ Finance &amp; Pricing</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Set up simple bookkeeping (Wave free, or QuickBooks Simple Start)</div>
+              <div class="task-note">Track income and expenses from the very first transaction. Don't wait until tax season.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Finalize your 3 service tiers and pricing (Spark / Glow / Radiate)</div>
+              <div class="task-note">Document what's included, your curation fee, and product budget ranges for each tier.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Create a startup budget / 6-month expense forecast</div>
+              <div class="task-note">Include: web hosting, domain, packaging materials, software tools, marketing spend, legal fees.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Set up a payment processor (Stripe or Square)</div>
+              <div class="task-note">Stripe is developer-friendly for future website integration. Square is easier for beginners.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Create a simple invoice template</div>
+              <div class="task-note">Even before your website is live, you need to be able to invoice your first client professionally.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-brand">✦ Brand Identity</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Lock in brand name: "Yoli's Joy" — confirm domain + social handle availability</div>
+              <div class="task-note">Check: yolisjoy.com, @yolisjoy on Instagram, @yolisjoy on TikTok, Facebook, Pinterest.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Purchase your domain (yolisjoy.com or variant)</div>
+              <div class="task-note">Namecheap or Google Domains. Grab .com first, then .co as backup.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Define brand voice &amp; personality (3–5 adjectives)</div>
+              <div class="task-note">E.g.: Warm, intentional, personal, joyful, elevated. Use these to guide all future copy decisions.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Commission or create initial logo + color palette</div>
+              <div class="task-note">Consider Canva Pro for DIY or hire a designer on 99designs / Fiverr for a polished result. Budget: $0–500.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Write your brand story / founder's note</div>
+              <div class="task-note">Why did Yolanda start this? What moment inspired it? This becomes your "About" page and Instagram bio anchor.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Create your brand kit document (fonts, colors, logo variants, usage rules)</div>
+              <div class="task-note">A simple Canva Brand Kit or Notion doc works. Consistency from Day 1 matters.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-tech">⬡ Tech Setup (Phase 1)</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Set up a professional email address (hello@yolisjoy.com)</div>
+              <div class="task-note">Google Workspace ~$6/mo. Don't use Gmail/Yahoo for business communications.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Choose website platform and begin Phase 1 build</div>
+              <div class="task-note">Options: Squarespace (easiest), Webflow (most design-flexible), Framer (beautiful + fast). Build 3–4 pages: Home, Services, About, Contact.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Set up a project management tool (Notion or Trello)</div>
+              <div class="task-note">Use Notion to track clients, orders, gift ideas, vendors, and content. Free tier is enough to start.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Set up a simple CRM or client tracker</div>
+              <div class="task-note">A Notion table or Airtable base tracks: client name, occasion, budget, order status, follow-up date. Free to start.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Create social media accounts (Instagram, Pinterest, Facebook Page)</div>
+              <div class="task-note">Secure the handles even if you're not posting yet. Fill in bio + profile photo.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-validate">◎ Business Validation</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Define your ideal client avatar in detail</div>
+              <div class="task-note">Name her. What does she care about? What occasion is she shopping for? What's her budget? What pain does she feel shopping alone?</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Identify and research 5–8 competitors</div>
+              <div class="task-note">Local gifting services, national concierge gifters, and adjacent players. Document: pricing, positioning, gaps you can fill.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Interview 5 potential clients (friends, family, colleagues) about gifting pain points</div>
+              <div class="task-note">Ask: "What's the hardest part of gift-giving for you?" Their words become your copy.</div>
+            </div>
+            <span class="priority-flag flag-med">Med</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="1">
+            <div class="task-text">
+              <div class="task-main">Complete your first 1–2 pro bono or discounted gift curation orders</div>
+              <div class="task-note">Real experience builds confidence. Get feedback, take photos, collect a testimonial.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="notes-area">
+        <div class="notes-label">📝 Phase 1 Notes</div>
+        <textarea class="notes-input" id="notes1" placeholder="Your thoughts, blockers, ideas for this phase..." oninput="saveNotes(&#39;notes1&#39;)"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== PHASE 2 ==================== -->
+  <div class="phase phase-2" id="phase2">
+    <div class="phase-header" onclick="togglePhase(&#39;phase2&#39;)">
+      <div class="phase-badge">2</div>
+      <div class="phase-meta">
+        <div class="phase-title">Launch &amp; Grow</div>
+        <div class="phase-range">Days 31–60 &nbsp;·&nbsp; Get visible and get clients</div>
+      </div>
+      <div class="phase-progress-mini">
+        <span class="phase-pct-label" id="p2pct">0%</span>
+        <div class="mini-track"><div class="mini-fill" id="p2fill" style="width:0%"></div></div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="phase-body">
+
+      <div class="category">
+        <div class="cat-label cat-tech">⬡ Website &amp; Tech Launch</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Launch Phase 1 website (go live!)</div>
+              <div class="task-note">Home, Services, About, Contact with your intake form. Done is better than perfect.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Add Google Analytics + Google Search Console</div>
+              <div class="task-note">Free. You want to know who's visiting from Day 1. Critical for future SEO tracking.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Build and publish a client intake form</div>
+              <div class="task-note">Collect: recipient name, occasion, relationship, interests, budget, any allergies/restrictions. Use Typeform or your website's form builder.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Set up an email marketing tool (Mailchimp or Flodesk)</div>
+              <div class="task-note">Flodesk has gorgeous templates that match a boutique brand aesthetic. ~$38/mo. Start building your list from Day 1.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Create a lead magnet / freebie to grow email list</div>
+              <div class="task-note">Ideas: "The 5-Question Gifting Guide," "How to Gift Someone Who Has Everything," or a printable occasion checklist.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Set up a scheduling tool (Calendly) for discovery calls</div>
+              <div class="task-note">Link to your website. A 15-min free call is a great conversion tool for Glow + Radiate tiers.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-marketing">◈ Marketing &amp; Content</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Create your content strategy for Instagram + Pinterest</div>
+              <div class="task-note">Plan 3–4 post types: gift reveals, behind-the-scenes curation, client stories (anonymized), gifting tips.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Batch-create first 12 social media posts + schedule them</div>
+              <div class="task-note">Use Later or Buffer. Having 3 weeks of content ready reduces overwhelm enormously.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Publish your first blog post ("Little Ways to Light People Up")</div>
+              <div class="task-note">Topic idea: "5 Gifts for the Friend Going Through Something Hard." Short, warm, shareable.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Send a "soft launch" announcement to your personal network</div>
+              <div class="task-note">Email + text. Don't overthink it — just tell people what you're doing and that you'd love referrals.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Set up Google Business Profile (Google Maps listing)</div>
+              <div class="task-note">Even as a remote service business, this helps local SEO. Free.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Join 2–3 Facebook Groups where your ideal clients gather</div>
+              <div class="task-note">Examples: local moms groups, women in business communities, HR professional groups. Be helpful, not salesy.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Create and test a referral program structure</div>
+              <div class="task-note">Idea: "Refer a friend and get $25 off your next order." Word-of-mouth is your #1 growth channel.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-ops">◇ Sourcing &amp; Operations</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Apply for a Faire wholesale account</div>
+              <div class="task-note">Faire.com — wholesale marketplace with thousands of independent brands. Free net 60 terms available. Must register as a retailer.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Identify 3–5 local artisan / small business vendors</div>
+              <div class="task-note">Candles, ceramics, handmade goods. Support local + differentiate your curation. Austin has incredible makers.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Explore Uncommon Goods, Artifact Uprising, and Printfresh as brand-aligned vendors</div>
+              <div class="task-note">These carry products that feel elevated and personal — perfect for Glow tier and above.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Source branded packaging materials (tissue paper, ribbon, stickers, boxes)</div>
+              <div class="task-note">Noissue.co for eco-friendly custom tissue/stickers. Even simple branded elements elevate the unboxing dramatically.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Create a vendor database / gift sourcing library</div>
+              <div class="task-note">Track: vendor name, product type, price range, lead time, minimum order, quality rating. This becomes your secret weapon for fast curation.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Draft your client service agreement / contract template</div>
+              <div class="task-note">Cover: scope, revisions, cancellation policy, refunds, timeline. Consult a contract template from a gifting/creative business resource or attorney.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-validate">◎ Client Acquisition</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Land your first 3 paying clients (any tier)</div>
+              <div class="task-note">This is the goal for Day 31–60. 3 clients = proof of concept and real testimonials.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Collect written testimonials after each completed order</div>
+              <div class="task-note">Ask immediately while the delight is fresh. A simple 3-question email works: What did you love? How did the recipient react? Would you recommend us?</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="2">
+            <div class="task-text">
+              <div class="task-main">Reach out to 5 potential corporate clients (HR contacts, small business owners)</div>
+              <div class="task-note">Employee appreciation, client gifts, onboarding kits. Corporate is your highest-value channel. Start conversations now.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="notes-area">
+        <div class="notes-label">📝 Phase 2 Notes</div>
+        <textarea class="notes-input" id="notes2" placeholder="Your thoughts, blockers, ideas for this phase..." oninput="saveNotes(&#39;notes2&#39;)"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== PHASE 3 ==================== -->
+  <div class="phase phase-3" id="phase3">
+    <div class="phase-header" onclick="togglePhase(&#39;phase3&#39;)">
+      <div class="phase-badge">3</div>
+      <div class="phase-meta">
+        <div class="phase-title">Scale &amp; Systemize</div>
+        <div class="phase-range">Days 61–90 &nbsp;·&nbsp; Build for what's next</div>
+      </div>
+      <div class="phase-progress-mini">
+        <span class="phase-pct-label" id="p3pct">0%</span>
+        <div class="mini-track"><div class="mini-fill" id="p3fill" style="width:0%"></div></div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="phase-body">
+
+      <div class="category">
+        <div class="cat-label cat-tech">⬡ Tech Roadmap (Phase 2 &amp; 3)</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Design and build the Smart Intake Questionnaire (Phase 2 tech)</div>
+              <div class="task-note">Multi-step form that captures: occasion, relationship, recipient personality, love languages, interests, dietary restrictions, budget. Typeform Pro or custom-built.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Launch Joy Profiles concept — early version</div>
+              <div class="task-note">A saved profile per recipient that auto-populates future orders. Even a simple Airtable-backed system is a differentiator.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Evaluate AI curation assistant tools / vendors</div>
+              <div class="task-note">Research: can you use Claude API or GPT-4 to suggest gift bundles based on intake form responses? Early prototype possible with no-code tools.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Set up automated email sequences (welcome, order confirmation, follow-up)</div>
+              <div class="task-note">Mailchimp or Flodesk automation. Every client should feel hand-held even when you're not typing.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Explore mobile app requirements / timeline for Phase 3 tech</div>
+              <div class="task-note">Document what the app would do: Joy Profiles, order tracking, gift reminders, AI suggestions. Use this as a future investor/grant document.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-marketing">◈ Marketing Momentum</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Publish 3 blog posts (monthly cadence established)</div>
+              <div class="task-note">"Little Ways to Light People Up" — one post per month minimum. Gifting guides, occasion ideas, behind-the-brand stories.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Set up Pinterest SEO strategy (boards + keyword-rich pin descriptions)</div>
+              <div class="task-note">Pinterest is a gifting search engine. Gift ideas, occasions, and aesthetics perform extremely well. Long shelf life vs. Instagram.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Launch your email newsletter (monthly cadence)</div>
+              <div class="task-note">Theme: "The Joy Letter." Feature one gift story, one tip, one behind-the-scenes peek. Keep it warm and personal, not promotional.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Explore local press + podcast opportunities</div>
+              <div class="task-note">Austin Business Journal, local lifestyle blogs, women entrepreneur podcasts. A feature story = credibility + inbound leads.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Launch a seasonal campaign (Mother's Day, end-of-year, etc.)</div>
+              <div class="task-note">Plan campaign 6 weeks before the occasion. Build a landing page, email sequence, and social content around it.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Create a corporate gifting one-pager / deck</div>
+              <div class="task-note">A beautiful PDF for Radiate-tier outreach. Include: what you do, who it's for, sample packages, pricing overview, testimonials.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-ops">◇ Operations &amp; Scalability</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Document your full curation process as an SOP</div>
+              <div class="task-note">Step-by-step: from intake form → sourcing → packaging → delivery → follow-up. If you ever hire help, this is essential.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Evaluate whether you need business insurance (General Liability)</div>
+              <div class="task-note">Especially important before taking on corporate clients. NEXT Insurance offers affordable coverage for small service businesses.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Review pricing — are your margins healthy after 10+ orders?</div>
+              <div class="task-note">Track actual cost of goods + time per order. Adjust curation fees if needed. Your time has real value.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Set revenue targets for Month 3 and Month 6</div>
+              <div class="task-note">Concrete goals: e.g., 10 Spark orders/month, 3 Glow clients, 1 corporate client by Month 6. Make the numbers real.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Identify a fractional bookkeeper or accountant for quarterly reviews</div>
+              <div class="task-note">Even 1 hour/quarter with a professional saves headaches and ensures you're tax-ready.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="cat-label cat-validate">◎ Validation &amp; Growth</div>
+        <div class="task-list">
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Complete 10 total paid orders (cumulative across all tiers)</div>
+              <div class="task-note">10 orders = proof of model. You now have stories, photos, lessons, and confidence for what comes next.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Collect 5+ published testimonials and add to website</div>
+              <div class="task-note">Written quotes, star ratings, and ideally a photo (with permission). Social proof is your #1 conversion tool.</div>
+            </div>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Close your first Radiate (corporate) client</div>
+              <div class="task-note">Even one corporate client validates the high-value tier and generates meaningful revenue. Start outreach in Phase 2.</div>
+            </div>
+            <span class="priority-flag flag-high">High</span>
+          </label>
+          <label class="task-item">
+            <input type="checkbox" data-phase="3">
+            <div class="task-text">
+              <div class="task-main">Write your 90-day retrospective — what worked, what didn't, what's next</div>
+              <div class="task-note">This becomes the foundation of your Month 4–6 plan. Don't skip this. It's the CEO work.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="notes-area">
+        <div class="notes-label">📝 Phase 3 Notes</div>
+        <textarea class="notes-input" id="notes3" placeholder="Your thoughts, blockers, ideas for this phase..." oninput="saveNotes(&#39;notes3&#39;)"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  "Joy is not found — it's curated." &nbsp;✦&nbsp; You've got this, Yolanda.
+</footer>
+
+<script>
+  // Toggle phases
+  function togglePhase(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  // Progress tracking
+  function updateProgress() {
+    const all = document.querySelectorAll('input[type="checkbox"]');
+    const done = document.querySelectorAll('input[type="checkbox"]:checked');
+    const total = all.length;
+    const completed = done.length;
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    document.getElementById('totalFill').style.width = pct + '%';
+    document.getElementById('totalPct').textContent = pct + '%';
+    document.getElementById('stat-done').textContent = completed + ' complete';
+    document.getElementById('stat-remain').textContent = (total - completed) + ' remaining';
+    document.getElementById('stat-total').textContent = total + ' total tasks';
+
+    // Per-phase progress
+    [1, 2, 3].forEach(p => {
+      const phAll = document.querySelectorAll(`input[data-phase="${p}"]`);
+      const phDone = document.querySelectorAll(`input[data-phase="${p}"]:checked`);
+      const phPct = phAll.length > 0 ? Math.round((phDone.length / phAll.length) * 100) : 0;
+      document.getElementById(`p${p}pct`).textContent = phPct + '%';
+      document.getElementById(`p${p}fill`).style.width = phPct + '%';
+    });
+
+    saveState();
+  }
+
+  // Done styling
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      const item = this.closest('.task-item');
+      if (this.checked) item.classList.add('done');
+      else item.classList.remove('done');
+      updateProgress();
+    });
+  });
+
+  // Persist state in localStorage
+  function saveState() {
+    const states = {};
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
+      states[i] = cb.checked;
+    });
+    localStorage.setItem('yolisjoy_tasks', JSON.stringify(states));
+  }
+
+  function loadState() {
+    const saved = localStorage.getItem('yolisjoy_tasks');
+    if (!saved) return;
+    const states = JSON.parse(saved);
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
+      if (states[i]) {
+        cb.checked = true;
+        cb.closest('.task-item').classList.add('done');
+      }
+    });
+  }
+
+  function saveNotes(id) {
+    localStorage.setItem('yolisjoy_' + id, document.getElementById(id).value);
+  }
+
+  function loadNotes() {
+    ['notes1','notes2','notes3'].forEach(id => {
+      const val = localStorage.getItem('yolisjoy_' + id);
+      if (val) document.getElementById(id).value = val;
+    });
+  }
+
+  // Init
+  loadState();
+  loadNotes();
+  updateProgress();
+</script>
+
+
+
+</body></html>
