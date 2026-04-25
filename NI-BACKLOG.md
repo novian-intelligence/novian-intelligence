@@ -69,6 +69,14 @@ Andrei can always challenge rankings — that's the point.
 
 ## 📋 Backlog (Prioritized)
 
+### 📬 Contact Page
+**Owner:** Mira
+**Why:** We have no contact page. Literally none. People reading the site have no clear way to reach us beyond hunting for an email in the footer. Need a dedicated `/contact.html` — simple, on-brand, with a form or at minimum clear contact info for Andrei + NI inquiries.
+**Status:** Backlogged — add after demo weekend
+**MII:** 4
+
+---
+
 ### ⭐ Google Account Consolidation
 **Owner:** Andrei (solo — Mira can advise)
 **Why:** Current state is a mess — NI stuff landing in personal Gmail, Novian Tech Workspace exists but underused, Novian Group is a subsidiary, Dad has email there, hello@andreimatei.com needs migration. Goal: one clean Google Workspace org with novianintel.com as a domain, proper emails for Andrei + the NI crew (mira@, vela@, kael@), Dad stays tidy under Novian Group, and all Google Cloud projects move to the Workspace org.
