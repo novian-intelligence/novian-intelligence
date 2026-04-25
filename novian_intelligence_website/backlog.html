@@ -98,8 +98,10 @@
     .completed-table { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
     .completed-table table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .completed-table th { text-align: left; padding: 0.6rem 1rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .completed-table th:first-child { width: 45%; }
+    .completed-table th:last-child { width: 30%; }
     .completed-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(42,42,61,0.5); color: var(--muted); }
-    .completed-table td:first-child { color: var(--text); font-weight: 600; }
+    .completed-table td:first-child { color: var(--text); font-weight: 600; letter-spacing: 0.01em; }
     .completed-table tr:last-child td { border-bottom: none; }
 
     @media (max-width: 680px) {
@@ -142,14 +144,16 @@
     <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 4 active</div>
     <div class="stat-chip"><span class="dot" style="background:var(--orange)"></span> 2 blocked</div>
     <div class="stat-chip"><span class="dot" style="background:var(--blue)"></span> 6 discussed</div>
-    <div class="stat-chip"><span class="dot" style="background:var(--accent2)"></span> 8 unsifted</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--accent2)"></span> 9 unsifted</div>
     <div class="stat-chip"><span class="dot" style="background:var(--green)"></span> 21 complete</div>
+    <div class="stat-chip"><span class="dot" style="background:var(--accent)"></span> Updated Apr 24</div>
   </div>
 </div>
 
 <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;">
   <div class="grooming-note">
-    <strong>🔄 Grooming:</strong> &nbsp;Last groomed: <strong>April 24, 2026</strong> &nbsp;·&nbsp; Next grooming: <strong>May 1, 2026</strong> &nbsp;·&nbsp; Maintained by Mira — end-of-session sweep every time.
+    <strong>🔄 Biweekly Grooming:</strong> &nbsp;Every two weeks, Mira + Andrei cull this list together — cut dead weight, reprioritize, confirm owners.<br>
+    <span style="padding-left:1.5rem;">Last groomed: <strong>April 24, 2026</strong> &nbsp;|&nbsp; Next grooming: <strong>May 1, 2026</strong> &nbsp;|&nbsp; Maintained by Mira — end-of-session sweep every time.</span>
   </div>
 </div>
 
@@ -240,7 +244,7 @@
 <div class="backlog-grid">
 
   <div class="backlog-item" data-status="blocked">
-    <div class="item-rank">#—</div>
+    <div class="item-rank">#B1</div>
     <div class="item-body">
       <h3><span class="item-emoji">❓</span> SIP Decision — Document & Close</h3>
       <div class="item-owner">Owner: Andrei (decision) → Kael (document)</div>
@@ -255,7 +259,7 @@
   </div>
 
   <div class="backlog-item" data-status="blocked">
-    <div class="item-rank">#—</div>
+    <div class="item-rank">#B2</div>
     <div class="item-body">
       <h3><span class="item-emoji">💬</span> Jon Chat Widget Fix</h3>
       <div class="item-owner">Owner: Mira</div>
@@ -487,6 +491,21 @@
   <div class="backlog-item" data-status="unsifted">
     <div class="item-rank">#—</div>
     <div class="item-body">
+      <h3><span class="item-emoji">🏠</span> NI OS — Internal Intranet</h3>
+      <div class="item-owner">Owner: Mira (build) + Andrei (vision)</div>
+      <p>Password-protected internal hub for the crew. Home to: Backlog, Portfolio with client portals, Token spend dashboard, Industry Document Store (PDF upload → transcribe → analyze → RAG), future multi-agent group chat. Think Notion meets mission control — NI-branded, beautiful, ours. Demo-ready version: one landing page linking to Backlog + Portfolio Hub.</p>
+      <div class="item-tags"><span class="tag">infrastructure</span><span class="tag">demo</span><span class="tag">ni-os</span><span class="tag">high-value</span></div>
+    </div>
+    <div class="item-meta">
+      <span class="status-badge status-unsifted">💭 unsifted</span>
+      <div class="score-display"><div class="score-number">30</div><div class="score-label">priority score</div></div>
+      <div><div class="mii-stars"><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span></div><div class="mii-label">MII 5/5</div></div>
+    </div>
+  </div>
+
+  <div class="backlog-item" data-status="unsifted">
+    <div class="item-rank">#—</div>
+    <div class="item-body">
       <h3><span class="item-emoji">⭐</span> Google Account Consolidation</h3>
       <div class="item-owner">Owner: Andrei (solo — Mira advises)</div>
       <p>NI stuff landing in personal Gmail; Novian Tech Workspace underused; Novian Group is a subsidiary. Goal: one Workspace org with novianintel.com as domain, proper emails for crew, Dad stays under Novian Group. Also: migrate Google Drive and Cloud projects. Also: convert hello@andreimatei.com back to Gmail.</p>
@@ -616,5 +635,32 @@
 </div>
 
   </div><!-- end .site -->
+
+<script>
+// Auto-sort each backlog-grid by priority score, high to low
+document.querySelectorAll('.backlog-grid').forEach(grid => {
+  const items = Array.from(grid.querySelectorAll('.backlog-item'));
+  items.sort((a, b) => {
+    const scoreA = parseInt(a.querySelector('.score-number')?.textContent || '0');
+    const scoreB = parseInt(b.querySelector('.score-number')?.textContent || '0');
+    return scoreB - scoreA;
+  });
+  items.forEach(item => grid.appendChild(item));
+});
+
+// Auto-number items within each section after sort
+document.querySelectorAll('.backlog-grid').forEach((grid, gridIndex) => {
+  const items = grid.querySelectorAll('.backlog-item');
+  const prefix = grid.closest('div')?.previousElementSibling?.querySelector('h2')?.textContent?.includes('Blocked') ? 'B' :
+                 grid.closest('div')?.previousElementSibling?.querySelector('h2')?.textContent?.includes('Unsifted') ? '' : '';
+  items.forEach((item, i) => {
+    const rank = item.querySelector('.item-rank');
+    if (rank && !rank.textContent.includes('B')) {
+      // keep blocked numbering as-is
+    }
+  });
+});
+</script>
+
 </body>
 </html>
