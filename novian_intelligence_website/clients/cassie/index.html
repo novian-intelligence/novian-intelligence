@@ -562,12 +562,12 @@
 </div>
 
 <script>
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
   if(sessionStorage.getItem('ni_cassie_auth')==='1'){
     document.getElementById('gate').style.display='none';
     document.querySelector('.site').style.display='block';
   }
-})();
+});
 async function checkGate(){
   const val = document.getElementById('gateInput').value;
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
