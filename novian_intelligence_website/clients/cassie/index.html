@@ -468,7 +468,7 @@
       text-align: center;
       color: var(--text-dim);
     }
-    .gallery-note .gallery-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+    .gallery-note .gallery-icon { margin-bottom: 16px; display: flex; justify-content: center; }
     .gallery-note .gallery-title { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
     .gallery-note .gallery-sub { font-size: 0.78rem; line-height: 1.6; }
 
@@ -729,7 +729,14 @@ async function checkGate(){
     <div class="section-eyebrow">Visual mockups & assets</div>
 
     <div class="gallery-note" id="gallery-placeholder">
-      <div class="gallery-icon">🎨</div>
+      <div class="gallery-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="22" height="18" rx="2" stroke="#e8957a" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <rect x="10" y="12" width="22" height="18" rx="2" stroke="#c8956c" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M8 10 L16 17 L22 12 L28 20" stroke="#d4a0c0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+          <circle cx="10" cy="10" r="2" fill="#e8957a" opacity="0.8"/>
+        </svg>
+      </div>
       <div class="gallery-title">Mockups & Visual Deliverables</div>
       <div class="gallery-sub">OS mockup screenshots and visual assets will appear here. Upload your images and I'll drop them in the gallery.</div>
     </div>
@@ -748,7 +755,15 @@ async function checkGate(){
     <div class="section-eyebrow">Business interview transcript</div>
 
     <div class="gallery-note">
-      <div class="gallery-icon">🎙️</div>
+      <div class="gallery-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="4" width="12" height="20" rx="6" stroke="#e8957a" stroke-width="1.5" fill="none" opacity="0.8"/>
+          <path d="M8 20 C8 28 32 28 32 20" stroke="#c8956c" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <line x1="20" y1="28" x2="20" y2="35" stroke="#d4a0c0" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <line x1="15" y1="35" x2="25" y2="35" stroke="#d4a0c0" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <circle cx="20" cy="14" r="2" fill="#e8957a" opacity="0.5"/>
+        </svg>
+      </div>
       <div class="gallery-title">Discovery Interview</div>
       <div class="gallery-sub">The 40-minute conversation that started everything. Transcript will be added here so you have a record of every insight, quote, and idea that shaped this engagement.</div>
     </div>

@@ -158,12 +158,12 @@ nav a.active { color: var(--v); }
 
 /* ── Color identity strip ── */
 .strip {
-  height: 2px;
+  height: 3px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   margin: 0;
   overflow: hidden;
-  opacity: 0.65;
+  opacity: 0.9;
 }
 
 .s1 { background: var(--v); }
