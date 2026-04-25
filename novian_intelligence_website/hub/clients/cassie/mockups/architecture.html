@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassandra OS · Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f3ede0;
+  --border: #e4dac4;
+  --border2: #d4c8ac;
+  --gold: #9a7820;
+  --gold2: #b89230;
+  --gold-dim: #c8a45a;
+  --gold-bg: rgba(154,120,32,0.08);
+  --text: #1a1610;
+  --text2: #3a3328;
+  --muted: #6b6356;
+  --muted2: #948977;
+  --green: #5a7d3a;
+  --amber: #b07030;
+  --blue: #3868a8;
+  --purple: #6858a0;
+  --rose: #964060;
+  --teal: #3a7858;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  padding: 36px 24px 56px;
+}
+.icon { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+.page-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.diagram-wrap {
+  max-width: 880px;
+  margin: 0 auto 44px;
+}
+
+svg.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hub-node { cursor: pointer; transition: opacity .2s, transform .2s; }
+.hub-node:hover { opacity: .82; }
+
+.detail-panel {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px 36px;
+  min-height: 240px;
+  box-shadow: 0 4px 20px rgba(80,60,20,0.04);
+}
+.detail-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--muted2);
+  text-transform: uppercase;
+}
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.detail-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--text);
+}
+.detail-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+.detail-sub {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.pages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.page-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border-radius: 7px;
+}
+.page-icon-wrap {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.page-icon-wrap .icon { font-size: 13px; }
+.page-body { flex: 1; min-width: 0; }
+.page-name { font-size: 12.5px; color: var(--text); margin-bottom: 2px; line-height: 1.3; font-weight: 500; }
+.page-type { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5L21 3V16M9 18C9 19.66 7.66 21 6 21C4.34 21 3 19.66 3 18C3 16.34 4.34 15 6 15C7.66 15 9 16.34 9 18ZM21 16C21 17.66 19.66 19 18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16Z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11V12C5 15.87 8.13 19 12 19C15.87 19 19 15.87 19 12V11"/><path d="M12 19V22"/></symbol>
+    <symbol id="i-tent" viewBox="0 0 24 24"><path d="M12 4L21 20H3L12 4Z"/><path d="M12 4V20"/><path d="M9 20L12 14L15 20"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" stroke-linejoin="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12H21M12 3C14.5 6 14.5 18 12 21M12 3C9.5 6 9.5 18 12 21"/></symbol>
+    <symbol id="i-honeycomb" viewBox="0 0 24 24"><path d="M12 3L19 7V15L12 19L5 15V7L12 3Z"/><path d="M9 11L12 9L15 11V14L12 16L9 14Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3L14.5 9.5L21 10.5L16 15.5L17.5 22L12 18.5L6.5 22L8 15.5L3 10.5L9.5 9.5L12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21H21M5 21V13M10 21V8M15 21V11M20 21V5"/></symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7V12L16 14"/></symbol>
+    <symbol id="i-lightning" viewBox="0 0 24 24"><path d="M13 3L4 14H11L10 21L19 10H12L13 3Z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 8L8 3H20V15L15 20L3 8Z"/><circle cx="14" cy="9" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9C5 14 12 22 12 22C12 22 19 14 19 9C19 5 16 2 12 2Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><path d="M3 7L5 4H19L21 7M3 7V19H21V7M3 7H21M9 12H15"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3V8M12 16V21M3 12H8M16 12H21M5.6 5.6L9 9M15 15L18.4 18.4M5.6 18.4L9 15M15 9L18.4 5.6"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M7 9H17M7 12H17M7 15H13"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4H16V11C16 13 14 15 12 15C10 15 8 13 8 11V4Z"/><path d="M8 6H4V8C4 10 6 11 8 11"/><path d="M16 6H20V8C20 10 18 11 16 11"/><path d="M9 18H15V20H9V18ZM12 15V18"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8C3 6.89 3.89 6 5 6H8L10 4H14L16 6H19C20.11 6 21 6.89 21 8V18C21 19.11 20.11 20 19 20H5C3.89 20 3 19.11 3 18V8Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9H21M3 14H21M7 4V20M17 4V20"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6V21H18V7L14 3Z"/><path d="M14 3V7H18M9 12H15M9 15H15M9 18H13"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7L12 13L21 7"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20V18C3 15.79 4.79 14 7 14H11C13.21 14 15 15.79 15 18V20"/><path d="M16 4C17.66 4 19 5.34 19 7C19 8.66 17.66 10 16 10"/><path d="M21 20V18C21 16.27 19.91 14.79 18.36 14.21"/></symbol>
+    <symbol id="i-checklist" viewBox="0 0 24 24"><path d="M4 7L6 9L10 5"/><path d="M4 14L6 16L10 12"/><path d="M14 7H20M14 14H20"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7V17M9 9.5C9 8 10 7 12 7C14 7 15 8 15 9.5C15 11 14 11.5 12 12C10 12.5 9 13 9 14.5C9 16 10 17 12 17C14 17 15 16 15 14.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4C5 3 6 3 6 3H9L11 8L9 10C10 12 12 14 14 15L16 13L21 15V18C21 18 21 19 20 19C13 19 5 11 5 4Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10H21M8 3V7M16 3V7"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17L9 11L13 15L21 7"/><path d="M16 7H21V12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3V5M12 19V21M3 12H5M19 12H21M5.6 5.6L7 7M17 17L18.4 18.4M5.6 18.4L7 17M17 7L18.4 5.6"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M2 12L22 4L18 22L13 13L4 8L2 12Z"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="M3 20L9 8L13 14L16 10L21 20H3Z"/><circle cx="9" cy="6" r="1.5"/></symbol>
+    <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/></symbol>
+    <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6" cy="11" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><circle cx="18" cy="11" r="2"/><path d="M8 17C8 14 10 13 12 13C14 13 16 14 16 17C16 19 14 20 12 20C10 20 8 19 8 17Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="page-header">
+  <div class="page-title">Cassandra OS</div>
+  <div class="page-sub">Notion Architecture · Click any hub to explore</div>
+</div>
+
+<div class="diagram-wrap">
+<svg class="diagram" viewBox="0 0 880 510" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#c8b890" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <!-- Connection lines -->
+  <line x1="440" y1="195" x2="440" y2="115" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="385" y1="225" x2="270" y2="225" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="495" y1="225" x2="610" y2="225" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="405" y1="262" x2="240" y2="345" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="440" y1="265" x2="440" y2="345" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="475" y1="262" x2="640" y2="345" stroke="#e0d6bc" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- CENTER: North Star -->
+  <g class="hub-node" onclick="selectHub('northstar')">
+    <rect x="335" y="195" width="210" height="70" rx="10" fill="#fff8e8" stroke="#9a7820" stroke-width="1.5"/>
+    <text font-family="Cormorant Garamond, serif" font-size="20" fill="#9a7820" x="440" y="222" text-anchor="middle" font-weight="400">North Star</text>
+    <text font-family="DM Mono, monospace" font-size="9" fill="#b89230" x="440" y="242" text-anchor="middle" letter-spacing="1">VISION · GOALS · REVENUE</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#c8a45a" x="440" y="258" text-anchor="middle">Click to explore</text>
+  </g>
+
+  <!-- TOP: Active Projects -->
+  <g class="hub-node" onclick="selectHub('projects')">
+    <rect x="340" y="45" width="200" height="60" rx="10" fill="#f1eef9" stroke="#6858a0" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#6858a0" x="440" y="72" text-anchor="middle" font-weight="500">Active Projects</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#8878b8" x="440" y="90" text-anchor="middle" letter-spacing="0.5">Album · Podcast · Camp · Web</text>
+  </g>
+
+  <!-- LEFT: Idea Capture -->
+  <g class="hub-node" onclick="selectHub('ideas')">
+    <rect x="100" y="195" width="170" height="60" rx="10" fill="#ecf3ee" stroke="#3a7858" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#3a7858" x="185" y="222" text-anchor="middle" font-weight="500">Idea Capture</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#5a8c70" x="185" y="240" text-anchor="middle" letter-spacing="0.5">Replaces 200 open tabs</text>
+  </g>
+
+  <!-- RIGHT: PR & Media -->
+  <g class="hub-node" onclick="selectHub('media')">
+    <rect x="610" y="195" width="170" height="60" rx="10" fill="#fbf0e8" stroke="#b07030" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#b07030" x="695" y="222" text-anchor="middle" font-weight="500">PR & Media</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#c08850" x="695" y="240" text-anchor="middle" letter-spacing="0.5">Press · Photos · Awards</text>
+  </g>
+
+  <!-- BOTTOM LEFT: Team -->
+  <g class="hub-node" onclick="selectHub('team')">
+    <rect x="100" y="345" width="180" height="60" rx="10" fill="#eaf0f8" stroke="#3868a8" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#3868a8" x="190" y="372" text-anchor="middle" font-weight="500">Team & Contractors</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#5a80b8" x="190" y="390" text-anchor="middle" letter-spacing="0.5">The 20-person roster</text>
+  </g>
+
+  <!-- BOTTOM CENTER: Finance -->
+  <g class="hub-node" onclick="selectHub('finance')">
+    <rect x="340" y="345" width="200" height="60" rx="10" fill="#eef3e8" stroke="#5a7d3a" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#5a7d3a" x="440" y="372" text-anchor="middle" font-weight="500">Finance Tracker</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#7a9558" x="440" y="390" text-anchor="middle" letter-spacing="0.5">Revenue · Targets · Cash</text>
+  </g>
+
+  <!-- BOTTOM RIGHT: Life -->
+  <g class="hub-node" onclick="selectHub('life')">
+    <rect x="600" y="345" width="180" height="60" rx="10" fill="#f8ecf0" stroke="#964060" stroke-width="1"/>
+    <text font-family="Outfit, sans-serif" font-size="14" fill="#964060" x="690" y="372" text-anchor="middle" font-weight="500">Life & Wellness</text>
+    <text font-family="DM Mono, monospace" font-size="8" fill="#b06080" x="690" y="390" text-anchor="middle" letter-spacing="0.5">Routines · Trips · Joy</text>
+  </g>
+
+  <!-- Hint -->
+  <text font-family="DM Mono, monospace" font-size="9" fill="#b8a880" x="440" y="490" text-anchor="middle" letter-spacing="1">CLICK ANY HUB TO SEE WHAT LIVES INSIDE IT</text>
+</svg>
+</div>
+
+<div class="detail-panel" id="detail-panel">
+  <div class="detail-empty" id="detail-empty">← Select a hub above</div>
+  <div id="detail-content" style="display:none;"></div>
+</div>
+
+<script>
+const hubs = {
+  northstar: {
+    title: "North Star",
+    tag: "Foundation",
+    tagStyle: "background:rgba(154,120,32,.1);color:#9a7820;border:1px solid #c8a45a;",
+    sub: "The single page Cassie reads when she needs to remember why she's doing this. Updated quarterly. Non-negotiable.",
+    pages: [
+      { icon: "i-star", name: "The Vision Statement", type: "Doc — her real goals in plain language" },
+      { icon: "i-target", name: "Real Goals (the honest version)", type: "Touring artist · $1M · location independence · joy" },
+      { icon: "i-chart", name: "Revenue Targets Dashboard", type: "Linked DB — current vs. target by stream" },
+      { icon: "i-checklist", name: "2026 Priorities (Top 5)", type: "Doc — updated quarterly" },
+      { icon: "i-circle", name: "Quarterly Review Ritual", type: "Template — used every 90 days" },
+    ]
+  },
+  projects: {
+    title: "Active Projects",
+    tag: "Creative Command",
+    tagStyle: "background:rgba(104,88,160,.08);color:#6858a0;border:1px solid #8878b8;",
+    sub: "Every creative and business initiative in one board. Each has its own sub-page with tasks, timelines, and notes. Nothing lives in her head.",
+    pages: [
+      { icon: "i-music", name: "Debut Album", type: "Project — mixing → mastering → promo" },
+      { icon: "i-mic", name: "Podcast", type: "Project — concept, guests, format, launch" },
+      { icon: "i-tent", name: "DJ + Wellness Camp", type: "Project — curriculum, venue, pricing, network" },
+      { icon: "i-play", name: "YouTube Series", type: "Project — format, episodes, production" },
+      { icon: "i-globe", name: "Website Rebuild", type: "Project — linked to Andrei workstream" },
+      { icon: "i-honeycomb", name: "HoneyBook Setup", type: "Project — pipeline, automations, templates" },
+    ]
+  },
+  ideas: {
+    title: "Idea Capture",
+    tag: "Inbox for the Brain",
+    tagStyle: "background:rgba(58,120,88,.08);color:#3a7858;border:1px solid #5a8c70;",
+    sub: "The one place that replaces 200 open Chrome tabs, self-emails, and notes scattered everywhere. Fast capture, smart tagging.",
+    pages: [
+      { icon: "i-lightning", name: "Quick Capture Inbox", type: "Database — dump everything here first" },
+      { icon: "i-tag", name: "Categorized Ideas Board", type: "Filtered — Music / Business / Personal / Content" },
+      { icon: "i-pin", name: "To Review (Weekly)", type: "Filtered view — items not yet processed" },
+      { icon: "i-archive", name: "Archived Ideas", type: "Filtered — processed, dated, kept for reference" },
+      { icon: "i-spark", name: "Inspiration Saves", type: "Gallery — websites, brands, aesthetics she loves" },
+    ]
+  },
+  media: {
+    title: "PR & Media Archive",
+    tag: "Press & Legacy",
+    tagStyle: "background:rgba(176,112,48,.08);color:#b07030;border:1px solid #c08850;",
+    sub: "Every article, podcast, award, photo set, and press mention — searchable and organized. No more tabs open since 2022.",
+    pages: [
+      { icon: "i-news", name: "Press Coverage", type: "Database — title, outlet, date, link, PDF backup" },
+      { icon: "i-trophy", name: "Awards & Recognition", type: "AMA · ACL · Tribeza · Austin Monthly..." },
+      { icon: "i-camera", name: "Photo Archive", type: "Database — by event, year, usage rights" },
+      { icon: "i-film", name: "Video & Performance Archive", type: "ACL sets, brand events, recaps" },
+      { icon: "i-doc", name: "Bio Library", type: "Long · Short · One-liner — always current" },
+      { icon: "i-mail", name: "Press Kit", type: "Template — ready to send, always updated" },
+    ]
+  },
+  team: {
+    title: "Team & Contractors",
+    tag: "People",
+    tagStyle: "background:rgba(56,104,168,.08);color:#3868a8;border:1px solid #5a80b8;",
+    sub: "The path from 100+ scattered contractors to a trusted 20-person team she actually knows and relies on.",
+    pages: [
+      { icon: "i-people", name: "Contractor Roster", type: "Database — name, role, rate, availability, tier" },
+      { icon: "i-star", name: "Preferred Team (Top 20)", type: "Filtered view — her core go-to people" },
+      { icon: "i-checklist", name: "Contractor Onboarding", type: "Template — replaces manual DocuSign" },
+      { icon: "i-money", name: "1099 Tracker", type: "Database — linked to Gusto · annual tax prep" },
+      { icon: "i-phone", name: "Key Contacts", type: "Vendors · planners · venues · labels · press" },
+    ]
+  },
+  finance: {
+    title: "Finance Tracker",
+    tag: "Money Clarity",
+    tagStyle: "background:rgba(90,125,58,.08);color:#5a7d3a;border:1px solid #7a9558;",
+    sub: "Simple visibility layer on top of QuickBooks. A 15-minute Monday ritual that answers: where do I stand?",
+    pages: [
+      { icon: "i-chart", name: "Monday Dashboard", type: "Doc — 15-min weekly ritual · revenue, pipeline, unpaid" },
+      { icon: "i-money", name: "Revenue by Stream", type: "Database — weddings / corporate / consulting / retainers" },
+      { icon: "i-target", name: "2026 Targets", type: "Gross $1M stretch · $350K realistic · current pace" },
+      { icon: "i-calendar", name: "Retainer Pipeline", type: "Database — prospects, status, deal size" },
+      { icon: "i-trend", name: "Quarterly Review", type: "Template — linked to North Star review ritual" },
+    ]
+  },
+  life: {
+    title: "Life & Wellness",
+    tag: "Joy & Structure",
+    tagStyle: "background:rgba(150,64,96,.08);color:#964060;border:1px solid #b06080;",
+    sub: "The part most systems forget. Structure, joy, and something to look forward to — built in. Cassie deserves this.",
+    pages: [
+      { icon: "i-sun", name: "Morning & Evening Rituals", type: "Doc — Cassie's optimized daily routine" },
+      { icon: "i-calendar", name: "Weekly Template", type: "Creative AM · Business PM · one full day off" },
+      { icon: "i-plane", name: "Trip Planner", type: "Database — mini monthly + quarterly vacations" },
+      { icon: "i-mountain", name: "Adventure & Bucket List", type: "Nature spots, travel, new experiences" },
+      { icon: "i-flower", name: "Floral Arranging & Hobbies", type: "Non-music joy, scheduled weekly" },
+      { icon: "i-paw", name: "Naya", type: "Vet records, routines, her perfect daily walk" },
+    ]
+  }
+};
+
+function selectHub(key) {
+  const h = hubs[key];
+  document.getElementById('detail-empty').style.display = 'none';
+  const content = document.getElementById('detail-content');
+  content.style.display = 'block';
+
+  const half = Math.ceil(h.pages.length / 2);
+  const col1 = h.pages.slice(0, half);
+  const col2 = h.pages.slice(half);
+
+  const makeRows = pages => pages.map(p => `
+    <div class="page-row">
+      <div class="page-icon-wrap"><svg class="icon"><use href="#${p.icon}"/></svg></div>
+      <div class="page-body">
+        <div class="page-name">${p.name}</div>
+        <div class="page-type">${p.type}</div>
+      </div>
+    </div>
+  `).join('');
+
+  content.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-title">${h.title}</div>
+      <span class="detail-tag" style="${h.tagStyle}">${h.tag}</span>
+    </div>
+    <p class="detail-sub">${h.sub}</p>
+    <div class="pages-grid">
+      <div>${makeRows(col1)}</div>
+      <div>${makeRows(col2)}</div>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
