@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///Users/andrei/Downloads/max_migration_plan_4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact → PartnerStack Migration | Command Center</title>
+<link href="./Impact → PartnerStack Migration _ Command Center_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b0f;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2330;
+    --border2: #2a3045;
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff6b47;
+    --accent4: #b47fff;
+    --text: #e8eaf0;
+    --text2: #8891a8;
+    --text3: #5a6378;
+    --red: #ff4757;
+    --orange: #ffa040;
+    --green: #47ffb0;
+    --yellow: #ffd447;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,255,71,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,255,71,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0 24px;
+    margin-bottom: 48px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,255,71,0.08);
+    border: 1px solid rgba(232,255,71,0.2);
+    color: var(--accent);
+    padding: 4px 12px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .header-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  h1 span.cross {
+    color: var(--accent3);
+    position: relative;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .deadline-box {
+    background: rgba(255,71,87,0.1);
+    border: 1px solid rgba(255,71,87,0.3);
+    padding: 12px 20px;
+    text-align: center;
+  }
+
+  .deadline-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .deadline-date {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--red);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION HEADERS */
+  .section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+  }
+
+  .section-icon {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .section-tag {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+
+  .tag-critical { color: var(--red); border-color: rgba(255,71,87,0.3); background: rgba(255,71,87,0.06); }
+  .tag-high { color: var(--orange); border-color: rgba(255,160,64,0.3); background: rgba(255,160,64,0.06); }
+  .tag-medium { color: var(--accent2); border-color: rgba(71,200,255,0.3); background: rgba(71,200,255,0.06); }
+  .tag-low { color: var(--green); border-color: rgba(71,255,176,0.3); background: rgba(71,255,176,0.06); }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .card-grid-2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .card-grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .card-grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .card-accent-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .line-yellow { background: var(--accent); }
+  .line-blue { background: var(--accent2); }
+  .line-red { background: var(--red); }
+  .line-purple { background: var(--accent4); }
+  .line-orange { background: var(--orange); }
+  .line-green { background: var(--green); }
+
+  .card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .card p {
+    color: var(--text2);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--red));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 0;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 24px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--bg);
+  }
+
+  .timeline-item.phase-1::before { border-color: var(--accent); }
+  .timeline-item.phase-2::before { border-color: var(--accent2); }
+  .timeline-item.phase-3::before { border-color: var(--orange); }
+  .timeline-item.phase-4::before { border-color: var(--red); }
+  .timeline-item.phase-5::before { border-color: var(--green); }
+
+  .timeline-week {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .phase-1 .timeline-week { color: var(--accent); }
+  .phase-2 .timeline-week { color: var(--accent2); }
+  .phase-3 .timeline-week { color: var(--orange); }
+  .phase-4 .timeline-week { color: var(--red); }
+  .phase-5 .timeline-week { color: var(--green); }
+
+  .timeline-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  /* TASK LISTS */
+  .task-list {
+    list-style: none;
+  }
+
+  .task-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .task-list li:last-child { border-bottom: none; }
+
+  .task-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .task-list li.owner {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .owner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    margin-left: auto;
+  }
+
+  .own-max { color: var(--accent); border: 1px solid rgba(232,255,71,0.2); background: rgba(232,255,71,0.05); }
+  .own-eng { color: var(--accent2); border: 1px solid rgba(71,200,255,0.2); background: rgba(71,200,255,0.05); }
+  .own-ps { color: var(--accent4); border: 1px solid rgba(180,127,255,0.2); background: rgba(180,127,255,0.05); }
+
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* RISK MATRIX */
+  .risk-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    aspect-ratio: 2/1;
+    min-height: 260px;
+  }
+
+  .risk-cell {
+    padding: 16px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .risk-cell-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .risk-item {
+    font-size: 11px;
+    color: var(--text2);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .risk-item::before { content: '◆'; font-size: 6px; flex-shrink: 0; margin-top: 4px; }
+
+  .rc-hl { background: rgba(255,71,87,0.08); } /* High likelihood */
+  .rc-hl .risk-cell-label { color: var(--red); }
+  .rc-hl .risk-item::before { color: var(--red); }
+
+  .rc-ml { background: rgba(255,160,64,0.06); }
+  .rc-ml .risk-cell-label { color: var(--orange); }
+  .rc-ml .risk-item::before { color: var(--orange); }
+
+  .rc-ll { background: rgba(71,200,255,0.05); }
+  .rc-ll .risk-cell-label { color: var(--accent2); }
+  .rc-ll .risk-item::before { color: var(--accent2); }
+
+  .rc-vl { background: rgba(71,255,176,0.04); }
+  .rc-vl .risk-cell-label { color: var(--green); }
+  .rc-vl .risk-item::before { color: var(--green); }
+
+  /* PARTNER TIERS */
+  .partner-tier {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .partner-tier:hover { border-color: var(--border2); }
+
+  .tier-indicator {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .tier-details h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .tier-details p {
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .tier-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+  }
+
+  .tier-badge {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  /* COMM TEMPLATE */
+  .comm-template {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .template-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .template-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  .email-field {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .email-key { color: var(--text3); }
+  .email-val { color: var(--text2); }
+
+  .email-body {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.8;
+    font-family: 'Instrument Serif', serif;
+    font-size: 14px;
+  }
+
+  .email-body .placeholder {
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: rgba(232,255,71,0.08);
+    padding: 0 4px;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text2);
+    transition: border-color 0.2s;
+  }
+
+  .checklist li:hover { border-color: var(--accent); cursor: default; }
+
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border2);
+    flex-shrink: 0;
+    margin-top: 1px;
+    position: relative;
+  }
+
+  .check-box.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .check-box.checked::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  /* AI AUTOMATION CALLOUTS */
+  .ai-callout {
+    background: linear-gradient(135deg, rgba(180,127,255,0.06), rgba(71,200,255,0.04));
+    border: 1px solid rgba(180,127,255,0.2);
+    padding: 20px 24px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-callout::before {
+    content: '✦ AI ASSIST';
+    position: absolute;
+    top: 0; right: 0;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    background: rgba(180,127,255,0.15);
+    color: var(--accent4);
+    padding: 4px 10px;
+  }
+
+  .ai-callout h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent4);
+    margin-bottom: 10px;
+  }
+
+  .ai-callout ul {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+
+  .ai-callout ul li {
+    font-size: 12px;
+    color: var(--text2);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .ai-callout ul li::before {
+    content: '◈';
+    color: var(--accent4);
+    flex-shrink: 0;
+  }
+
+  /* TBD ITEMS */
+  .tbd-box {
+    border: 1px dashed rgba(255,160,64,0.3);
+    background: rgba(255,160,64,0.04);
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+
+  .tbd-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+
+  .tbd-box p {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  /* DATA MAPPING TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .data-table th {
+    background: var(--surface2);
+    color: var(--text3);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border2);
+    font-weight: 500;
+  }
+
+  .data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table tr:hover td { background: var(--surface2); }
+
+  .status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red { background: var(--red); }
+  .dot-blue { background: var(--accent2); }
+
+  /* STAKEHOLDER TABLE */
+  .stakeholder-row {
+    display: grid;
+    grid-template-columns: 160px 120px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .stakeholder-row:first-child {
+    background: var(--surface2);
+    color: var(--text3);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .stakeholder-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .role-badge {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 8px 0 32px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  footer .footer-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  footer .footer-tag span {
+    color: var(--accent);
+  }
+
+  /* NAV */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,11,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    margin-bottom: 40px;
+  }
+
+  .nav-inner {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text3);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
+  .nav-btn.active {
+    color: var(--accent);
+    border-color: rgba(232,255,71,0.3);
+    background: rgba(232,255,71,0.06);
+  }
+
+  /* INLINE INFO ROW */
+  .info-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--text3); }
+  .info-val { color: var(--text2); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(232,255,71,0.04);
+    border: 1px solid rgba(232,255,71,0.15);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+
+  .highlight-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .highlight-box p {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* PRIORITY GRID */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 20px;
+  }
+
+  .prio-cell {
+    padding: 16px;
+    text-align: center;
+  }
+
+  .prio-header {
+    background: var(--surface2);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 8px;
+    text-align: center;
+  }
+
+  .tag-inline {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border: 1px solid;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body style="overscroll-behavior-x: auto;">
+
+<nav class="sticky-nav">
+  <div class="wrapper">
+    <div class="nav-inner">
+      <button class="nav-btn active" onclick="scrollToSection(&#39;overview&#39;)">Overview</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;stakeholders&#39;)">Stakeholders</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;partners&#39;)">Partner Tiers</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;timeline&#39;)">Timeline</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;tracking&#39;)">Tracking Strategy</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;links&#39;)">Link Strategy</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;data&#39;)">Data &amp; Tech</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;comms&#39;)">Comms Plan</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;payments&#39;)">Payments &amp; Finance</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;risks&#39;)">Risk Matrix</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;rollback&#39;)">Rollback Plan</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;kpis&#39;)">KPIs</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;checklist&#39;)">Checklist</button>
+      <button class="nav-btn" onclick="scrollToSection(&#39;automation&#39;)">AI &amp; Automation</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <div>
+        <div class="header-badge">Project Command Center · Active</div>
+        <h1>Impact <span class="cross">→</span> <em>PartnerStack</em><br>Migration</h1>
+        <div class="stats-row">
+          <div class="stat-pill">
+            <div>
+              <div class="stat-num">~2,000</div>
+              <div class="stat-label">Total Partners</div>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <div>
+              <div class="stat-num" style="color:var(--orange)">~100</div>
+              <div class="stat-label">Active Partners</div>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <div>
+              <div class="stat-num" style="color:var(--red)">10</div>
+              <div class="stat-label">Critical Partners</div>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <div>
+              <div class="stat-num" style="color:var(--accent2)">14</div>
+              <div class="stat-label">Days Remaining</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="deadline-box">
+          <div class="deadline-label">Hard Deadline</div>
+          <div class="deadline-date">MAR 31</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Tracking cutoff midnight</div>
+        </div>
+        <div style="font-size:10px;color:var(--text3);text-align:right;">Owner: Max · Stakeholder: Mark (VP)<br>Support: PartnerStack Team + Engineering</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- EXECUTIVE OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-icon">⬡</span>
+      <h2>Executive Overview</h2>
+      <span class="section-tag tag-critical">Critical Priority</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>The Mission</h4>
+      <p>Migrate all revenue-generating affiliate partners from Impact (legacy platform) to PartnerStack before March 31st midnight — when Impact's tracking goes dark. The business cannot lose attribution on active partner traffic. This is not optional. It is not moveable. The window is 14 days.</p>
+    </div>
+
+    <div class="card-grid card-grid-3">
+      <div class="card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>What Success Looks Like</h3>
+        <ul class="task-list">
+          <li>PartnerStack tracking live &amp; validated</li>
+          <li>Top 10 critical partners fully migrated with new links active</li>
+          <li>100 active partners onboarded to PartnerStack</li>
+          <li>Zero payout disruptions — March activity paid correctly</li>
+          <li>Snowflake/Tableau data pipeline intact</li>
+          <li>New partner application form live on PartnerStack</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>The Non-Negotiables</h3>
+        <ul class="task-list">
+          <li>CSV delivered to PartnerStack team — <strong style="color:var(--red)">TOMORROW</strong></li>
+          <li>Critical 10 personally contacted this week</li>
+          <li>New tracking links generated before mass comms go out</li>
+          <li>Engineering has tracking deployed by Week 1 end</li>
+          <li>Partner comms go out no later than Day 5</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>Context &amp; Constraints</h3>
+        <div class="info-row"><span class="info-key">Platform team</span><span class="info-val">PartnerStack CSM assigned, will build commission structures from CSV</span></div>
+        <div class="info-row"><span class="info-key">Engineering</span><span class="info-val">2 engineers, part-time, starting tracking setup next week</span></div>
+        <div class="info-row"><span class="info-key">Max capacity</span><span class="info-val">35–40 hrs/week, running normal operations in parallel</span></div>
+        <div class="info-row"><span class="info-key">Impact read-only</span><span class="info-val">Data accessible for 2 months post-deadline for reporting</span></div>
+        <div class="info-row"><span class="info-key">Partner churn risk</span><span class="info-val">Low — partners have no revenue leverage to resist</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKEHOLDERS -->
+  <section class="section" id="stakeholders">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-icon">◎</span>
+      <h2>Stakeholders &amp; Ownership</h2>
+      <span class="section-tag tag-medium">Internal Map</span>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);overflow:hidden;">
+      <div class="stakeholder-row">
+        <span>Name / Party</span>
+        <span>Role</span>
+        <span>Responsibilities</span>
+        <span>Urgency</span>
+      </div>
+      <div class="stakeholder-row">
+        <span class="stakeholder-name">Max</span>
+        <span><div class="role-badge" style="color:var(--accent);border-color:rgba(232,255,71,0.3);">Project Lead</div></span>
+        <span style="font-size:12px;color:var(--text2);">End-to-end migration ownership. CSV prep, partner comms, PartnerStack config logic, tracking parameter logic, QA.</span>
+        <span><div class="role-badge tag-critical">Owner</div></span>
+      </div>
+      <div class="stakeholder-row">
+        <span class="stakeholder-name">Mark</span>
+        <span><div class="role-badge" style="color:var(--accent4);border-color:rgba(180,127,255,0.3);">VP Strategy/Web</div></span>
+        <span style="font-size:12px;color:var(--text2);">Executive sponsor. Defines success criteria. Must be updated on blockers immediately. KPIs: partner retention, zero volume breaks.</span>
+        <span><div class="role-badge tag-high">Inform Weekly</div></span>
+      </div>
+      <div class="stakeholder-row">
+        <span class="stakeholder-name">Engineering (×2)</span>
+        <span><div class="role-badge" style="color:var(--accent2);border-color:rgba(71,200,255,0.3);">Technical</div></span>
+        <span style="font-size:12px;color:var(--text2);">S2S API/tracking setup, website tag swap (Impact → PS), Snowflake pipeline, tracking parameter/tag logic. Needs to dedicate significantly more time immediately.</span>
+        <span><div class="role-badge tag-critical">Needs Urgency</div></span>
+      </div>
+      <div class="stakeholder-row">
+        <span class="stakeholder-name">PartnerStack CSM</span>
+        <span><div class="role-badge" style="color:var(--accent4);border-color:rgba(180,127,255,0.3);">Platform</div></span>
+        <span style="font-size:12px;color:var(--text2);">Builds commission structures + groups from Max's CSV. Owns migration tooling/runbook. Critical partner for hitting deadline.</span>
+        <span><div class="role-badge tag-critical">Daily Contact</div></span>
+      </div>
+      <div class="stakeholder-row">
+        <span class="stakeholder-name">Finance / Analytics</span>
+        <span><div class="role-badge" style="color:var(--text3);border-color:var(--border2);">Aware</div></span>
+        <span style="font-size:12px;color:var(--text2);">Already aware of migration. March payouts still run through Impact. Tableau/Snowflake reporting continuity is critical dependency.</span>
+        <span><div class="role-badge tag-medium">Keep Informed</div></span>
+      </div>
+    </div>
+
+    <div class="ai-callout" style="margin-top:16px;">
+      <h4>Immediate Action: Engineering Escalation</h4>
+      <ul>
+        <li>Engineering has "just started" and is moving slow — this is the single biggest timeline risk. Max needs to act as PM and formally schedule daily standups with engineering this week to unblock the tracking setup. No tracking = no migration.</li>
+        <li>Consider sending Mark a brief status email now so he's aware of the engineering dependency and can add executive pressure if needed.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PARTNER TIERS -->
+  <section class="section" id="partners">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-icon">◈</span>
+      <h2>Partner Tier Strategy</h2>
+      <span class="section-tag tag-critical">Migration Priority</span>
+    </div>
+
+    <div class="partner-tier" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+      <div class="tier-indicator" style="color:var(--red)">T1</div>
+      <div class="tier-details">
+        <h4>The Critical 10 — White Glove Migration</h4>
+        <p>The absolute must-migrate group. These are the highest-revenue affiliates, personally known to Max (~80% already contacted). They have many active links but are responsive and technically capable. Link changes take 2–3 days for this group. These partners need a personal call or email from Max this week — before mass comms — with dedicated support and direct contact info.</p>
+      </div>
+      <div class="tier-actions">
+        <span class="tier-badge tag-critical">Deadline: Days 1–5</span>
+        <span class="tier-badge" style="color:var(--text2);border-color:var(--border2);">Personal outreach</span>
+        <span class="tier-badge" style="color:var(--text2);border-color:var(--border2);">New links ready before contact</span>
+      </div>
+    </div>
+
+    <div class="partner-tier" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+      <div class="tier-indicator" style="color:var(--orange)">T2</div>
+      <div class="tier-details">
+        <h4>Active 90–150 — Standard Migration</h4>
+        <p>Have sent volume in the past but are lower frequency. Important to preserve. Mix of personal and automated relationships (~20% personal). Mass email communication is appropriate here. May have many links to update — estimate 1.5 weeks for link changes. Key: give them enough lead time and clear instructions. Expect some non-response and follow-up needed.</p>
+      </div>
+      <div class="tier-actions">
+        <span class="tier-badge tag-high">Deadline: Days 3–10</span>
+        <span class="tier-badge" style="color:var(--text2);border-color:var(--border2);">Mass email + follow-up</span>
+      </div>
+    </div>
+
+    <div class="partner-tier" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+      <div class="tier-indicator" style="color:var(--accent2)">T3</div>
+      <div class="tier-details">
+        <h4>Dormant ~1,800 — Passive Migration</h4>
+        <p>Sending clicks/traffic but zero revenue. No immediate deadline pressure — these can be migrated after March 31st using Impact's 2-month read-only window. Include them in mass comms but don't resource-plan around them. Some will self-migrate; many won't. A re-engagement campaign could be a post-migration opportunity.</p>
+      </div>
+      <div class="tier-actions">
+        <span class="tier-badge tag-low">Post April 1st</span>
+        <span class="tier-badge" style="color:var(--text2);border-color:var(--border2);">Batch email only</span>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:16px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-purple"></div>
+        <h3>New Partner Groups Being Created</h3>
+        <ul class="task-list">
+          <li>Affiliates (publishers/content) — existing structure, slightly revised</li>
+          <li>Micro-Influencers — new group with dedicated incentive structure (Max has documentation built)</li>
+          <li>Net-new partners: compensation on ads/acquisition only (no pay-per-lead for new signups)</li>
+          <li>Networks — platforms that aggregate publishers</li>
+        </ul>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ TBD — Max to Provide</div>
+          <p>Micro-influencer documentation/logic needs to be sent to PartnerStack CSM as part of CSV or separate brief so they can build the group structure correctly.</p>
+        </div>
+        <div style="background:rgba(71,255,176,0.05);border:1px solid rgba(71,255,176,0.2);padding:14px 18px;margin-top:12px;">
+          <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">✓ CONFIRMED — Top 10 Documented</div>
+          <p style="font-size:12px;color:var(--text2);">Max has the Top 10 Critical Partners documented. Cross-reference this list against the CSV to confirm each one has accurate commission structures, contact info, and correct group assignment before the CSV goes to the PartnerStack CSM.</p>
+        </div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>Suspended / Problematic Partners</h3>
+        <p style="margin-bottom:12px;">At least one network has been flagged for fraudulent activity and has had their contract suspended (not terminated). They are requesting testing/verification time. Max needs to:</p>
+        <ul class="task-list">
+          <li>Document suspension status clearly in CSV — do NOT onboard to PartnerStack as active</li>
+          <li>Decide: fully terminate or migrate with suspended status?</li>
+          <li>Do not let their "testing" requests delay your timeline</li>
+          <li>Confirm with PartnerStack CSM how to handle suspended partner states</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section" id="timeline">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-icon">◷</span>
+      <h2>Timeline &amp; Milestones</h2>
+      <span class="section-tag tag-critical">14-Day Sprint</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item phase-1" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="timeline-week">Days 1–2 · Mar 10–11 · FOUNDATION</div>
+        <div class="timeline-title">🔥 CSV Completion &amp; PartnerStack Handoff</div>
+        <ul class="task-list">
+          <li><div class="task-row"><span>Complete CSV — add all columns: partner name, email, commission type (CPC / CPA / CPL), contract terms, tier, group assignment, status (active/suspended)</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>QA the CSV — check for duplicates, missing data, correct commission mapping</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Send CSV to PartnerStack CSM — include micro-influencer group logic documentation</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Export raw partner data from Impact — pull full export now before you forget</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Schedule daily standups with engineering team — make this formal and tracked</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Brief Mark (VP) on migration status and engineering timeline dependency</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Document tracking parameter logic for PartnerStack tag structure</span><span class="owner-badge own-max">Max + Eng</span></div></li>
+        </ul>
+        <div class="ai-callout">
+          <h4>Where AI Can Help Right Now</h4>
+          <ul>
+            <li>Upload your raw CSV export and Claude can clean it, find duplicates, fill gaps, and reformat it to match PartnerStack's expected import schema</li>
+            <li>Claude can draft the tracking parameter logic documentation based on your verbal description</li>
+            <li>Claude can draft your Mark status email in 60 seconds</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item phase-2" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="timeline-week">Days 3–5 · Mar 12–14 · COMMUNICATIONS</div>
+        <div class="timeline-title">📣 Partner Outreach Begins — Critical 10 First</div>
+        <ul class="task-list">
+          <li><div class="task-row"><span>Confirm PartnerStack tracking is on track (engineering) — get firm date</span><span class="owner-badge own-eng">Engineering</span></div></li>
+          <li><div class="task-row"><span>Personal outreach to Critical 10 — phone/email, personal tone, give them new links as soon as tracking is up</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Draft and send mass email to T2 partners (90–150) — migration announcement, timeline, action steps</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Batch email to T3 dormant partners — low effort FYI communication</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Submit creative assets request — banner ads, logos, promotional materials for PartnerStack dashboard</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Confirm PartnerStack has built commission structures from CSV and review for accuracy</span><span class="owner-badge own-ps">PS Team</span></div></li>
+        </ul>
+      </div>
+
+      <div class="timeline-item phase-3" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="timeline-week">Days 6–9 · Mar 15–18 · TECHNICAL</div>
+        <div class="timeline-title">⚙️ Tracking Live &amp; Integration QA</div>
+        <ul class="task-list">
+          <li><div class="task-row"><span>PartnerStack tracking deployed and live (server-to-server API)</span><span class="owner-badge own-eng">Engineering</span></div></li>
+          <li><div class="task-row"><span>Validate tracking parameters are passing correctly to Snowflake/Tableau</span><span class="owner-badge own-eng">Eng + Max</span></div></li>
+          <li><div class="task-row"><span>Generate new PartnerStack tracking links for all T1 + T2 partners</span><span class="owner-badge own-ps">PS Team</span></div></li>
+          <li><div class="task-row"><span>Website tag swap: remove Impact tags, install PartnerStack tags on company site</span><span class="owner-badge own-eng">Engineering</span></div></li>
+          <li><div class="task-row"><span>Build + test new partner application form on PartnerStack</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Switch website signup flow from Impact-linked to PartnerStack-linked</span><span class="owner-badge own-eng">Engineering</span></div></li>
+          <li><div class="task-row"><span>Follow up with Critical 10 — confirm new links are live on their end</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Build automated email sequences on PartnerStack (welcome, onboarding)</span><span class="owner-badge own-max">Max</span></div></li>
+        </ul>
+        <div class="tbd-box">
+          <div class="tbd-label">⚠ Key Unknown — Clarify with PartnerStack</div>
+          <p>Confirm: Can PartnerStack generate all new partner tracking links in bulk from the imported partner list, or does each partner need to log in and generate their own? This affects T2 communication timing.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item phase-4" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="timeline-week">Days 10–12 · Mar 19–21 · VALIDATION</div>
+        <div class="timeline-title">✓ Full QA &amp; Migration Verification</div>
+        <ul class="task-list">
+          <li><div class="task-row"><span>Run test conversions through PartnerStack — validate CPC, CPA, CPL all tracking correctly</span><span class="owner-badge own-max">Max + Eng</span></div></li>
+          <li><div class="task-row"><span>Verify all T1 Critical 10 have updated links and conversions are registering</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Follow up with all non-responsive T2 partners — second contact wave</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Confirm Snowflake data pipeline is flowing correctly with real activity data</span><span class="owner-badge own-eng">Engineering</span></div></li>
+          <li><div class="task-row"><span>Audit: count how many active partners are confirmed migrated vs pending</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Escalate any blockers immediately to Mark — do not wait</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Creative assets delivered and live in PartnerStack dashboard</span><span class="owner-badge own-max">Max</span></div></li>
+        </ul>
+      </div>
+
+      <div class="timeline-item phase-5" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="timeline-week">Days 13–14 · Mar 22–31 · BUFFER &amp; CUTOVER</div>
+        <div class="timeline-title">🏁 Final Push, Buffer &amp; March 31 Cutover</div>
+        <ul class="task-list">
+          <li><div class="task-row"><span>All Critical 10 confirmed migrated — zero exceptions</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Final reminder to all remaining T2 partners with hard deadline warning</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Confirm March 31st: Impact tracking sunsets, PartnerStack is sole source of truth</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Snapshot Impact data — export all final reports before cutover</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Confirm payout plan for March activity (still via Impact, paid in May)</span><span class="owner-badge own-max">Max</span></div></li>
+          <li><div class="task-row"><span>Notify Mark: migration complete status report</span><span class="owner-badge own-max">Max</span></div></li>
+        </ul>
+        <div class="ai-callout">
+          <h4>Post-Migration (April+)</h4>
+          <ul>
+            <li>Begin T3 dormant partner migration using Impact 2-month read-only window</li>
+            <li>Launch re-engagement campaign for dormant partners now on PartnerStack</li>
+            <li>Begin onboarding net-new partners exclusively through PartnerStack application form</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACKING STRATEGY -->
+  <section class="section" id="tracking">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-icon">⟳</span>
+      <h2>Tracking Transition Strategy</h2>
+      <span class="section-tag tag-critical">Highest Technical Risk</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>The Single Most Dangerous Part of Any Affiliate Migration</h4>
+      <p>Tracking cutover is where migrations silently fail. A partner's link stops attributing, they don't notice for a week, and suddenly you owe them commissions you can't prove. The decision of <em>how</em> you cut over — hard or dual — has massive downstream consequences for data integrity, partner trust, and finance reconciliation.</p>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-bottom:24px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>❌ Option A — Hard Cutover</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Impact tracking disabled on March 31. PartnerStack goes live the same day. No overlap.</p>
+        <ul class="task-list">
+          <li><strong style="color:var(--red)">Risk:</strong> Any tracking misconfiguration goes undetected until partner revenue drops</li>
+          <li><strong style="color:var(--red)">Risk:</strong> No validation window — you're flying blind on Day 1</li>
+          <li><strong style="color:var(--red)">Risk:</strong> Parameter mismatches in Snowflake/Tableau won't surface until reporting is wrong</li>
+          <li><strong style="color:var(--green)">Upside:</strong> Simpler operationally — one system, one source of truth</li>
+          <li><strong style="color:var(--green)">Upside:</strong> No deduplication headaches between two platforms</li>
+        </ul>
+        <p style="margin-top:12px;font-size:11px;color:var(--text3);">Given the timeline constraints, this may be the reality for March 31 — but mitigate with Wave 0 testing.</p>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-green"></div>
+        <h3>✅ Option B — Dual Tracking (Recommended)</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Both Impact and PartnerStack fire simultaneously for a validation period. Compare attribution in real time.</p>
+        <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;margin-bottom:12px;font-size:11px;line-height:1.9;">
+          <span style="color:var(--accent2);">Affiliate Link → Your Website</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text3);">├──</span> <span style="color:var(--orange);">Impact fires (existing)</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text3);">└──</span> <span style="color:var(--green);">PartnerStack fires (new)</span><br>
+          <span style="color:var(--text3);font-size:10px;margin-top:6px;display:block;">Compare both → validate → cut Impact when PS numbers match</span>
+        </div>
+        <ul class="task-list">
+          <li>Catch parameter mismatches before they cost anyone money</li>
+          <li>Validate Snowflake pipeline is receiving correct PS data</li>
+          <li>Build partner confidence — "we confirmed your links are tracking"</li>
+          <li>Gives Max evidence to show Mark that the migration is working</li>
+        </ul>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ Decision Required — Max + Engineering</div>
+          <p>Given the hard March 31 Impact cutoff, true dual tracking may not be possible for the full deadline window. Minimum viable version: run dual tracking for the Critical 10 partners during Days 6–10 as a validation layer before mass migration. Confirm with engineering if Impact's tracking can stay active in parallel while PS is being tested.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-3">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>Wave 0 — Internal Test (NEW)</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Before ANY partner outreach, run a real internal test wave with 5–10 friendly/internal users who will tolerate bugs and give feedback.</p>
+        <ul class="task-list">
+          <li>Use internal team members or trusted contacts as test "affiliates"</li>
+          <li>Generate test tracking links in PartnerStack</li>
+          <li>Run test conversions (CPC, CPA, CPL) and verify all three hit correctly</li>
+          <li>Confirm data flows through to Snowflake and appears in Tableau</li>
+          <li>Only proceed to Wave 1 outreach after Wave 0 passes</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>Validation Checklist (Per Partner)</h3>
+        <ul class="task-list">
+          <li>New PS link generated and functional</li>
+          <li>Test click registers in PS dashboard</li>
+          <li>Test conversion registers with correct commission type</li>
+          <li>Partner ID appears correctly in Snowflake</li>
+          <li>Commission amount matches contracted rate</li>
+          <li>Partner can see activity in their PS dashboard</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-purple"></div>
+        <h3>Historical Data Decision</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Partners will ask: "Can I see my past performance?" This requires a decision before launch.</p>
+        <div style="background:var(--surface2);border:1px solid var(--border2);padding:12px;margin-bottom:8px;font-size:11px;">
+          <div style="color:var(--orange);margin-bottom:4px;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Option 1 — Start Fresh</div>
+          <p style="color:var(--text2);">PS shows only post-migration data. Partners reference Impact for history during the 2-month window. Simpler but partners may feel data loss.</p>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border2);padding:12px;font-size:11px;">
+          <div style="color:var(--green);margin-bottom:4px;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Option 2 — Export Summary CSV</div>
+          <p style="color:var(--text2);">Export each partner's lifetime stats from Impact and email as a personal performance summary. Low tech, high-touch, appreciated. Recommended for T1.</p>
+        </div>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ Max's Decision</div>
+          <p>Full historical data migration into PS is technically complex and likely out of scope given the timeline. Recommend Option 2 for Critical 10 as a white-glove touch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINK REPLACEMENT STRATEGY -->
+  <section class="section" id="links">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-icon">🔗</span>
+      <h2>Link Replacement Strategy</h2>
+      <span class="section-tag tag-high">Partner Experience Risk</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>The Silent Revenue Leak</h4>
+      <p>Partners don't just have one link in one place. They have old Impact links embedded across dozens of touchpoints — many of which they've forgotten about. After March 31st, those links go dark. Every unupdated link = lost attribution = partner dispute. The plan needs to address not just "tell partners to update" but <em>where</em> links hide and what happens to the old ones.</p>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-bottom:24px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>Where Old Impact Links Are Hiding</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Partners need to audit and update all of these locations:</p>
+        <ul class="task-list">
+          <li><strong>Blog posts &amp; articles</strong> — often dozens, possibly hundreds of embedded links</li>
+          <li><strong>YouTube video descriptions</strong> — old videos stay live indefinitely</li>
+          <li><strong>Email newsletters &amp; sequences</strong> — automated drips may have hardcoded links</li>
+          <li><strong>Coupon &amp; deal sites</strong> — aggregator sites rarely update proactively</li>
+          <li><strong>Paid ad campaigns</strong> — destination URLs in Google/Meta ads</li>
+          <li><strong>Partner landing pages</strong> — dedicated review or promo pages</li>
+          <li><strong>Social media bios &amp; posts</strong> — link-in-bio tools, pinned posts</li>
+          <li><strong>Browser bookmarks / internal tools</strong> — less common but worth noting</li>
+        </ul>
+        <div class="ai-callout" style="margin-top:12px;">
+          <h4>Include a Link Audit Prompt in Partner Email</h4>
+          <ul>
+            <li>Ask partners to search their own content for your brand name + "impact.com" to surface old links</li>
+            <li>Claude can write this as a checklist to attach to the migration email</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>The 301 Redirect Option</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">The gold standard for link migrations: set up server-side redirects so old Impact links automatically forward to new PartnerStack links. This means partners don't <em>have</em> to update — their old links keep working.</p>
+        <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;margin-bottom:12px;font-size:11px;line-height:1.9;">
+          <span style="color:var(--red);">impact.com/affiliate?id=1234</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text3);">→ 301 redirect (your server)</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--green);">partnerstack.com/ref/newid</span>
+        </div>
+        <ul class="task-list">
+          <li><strong style="color:var(--green)">Best case:</strong> Engineering builds a redirect layer — old links never break, attribution continues seamlessly</li>
+          <li><strong style="color:var(--yellow)">Realistic case:</strong> Impact controls the old link domain, so true 301s may not be possible</li>
+          <li><strong style="color:var(--orange)">Minimum:</strong> Confirm with Impact — do old tracking links return a 404 or redirect somewhere after March 31?</li>
+        </ul>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ Engineering Must Clarify</div>
+          <p>What happens to Impact tracking links after March 31st? Do they 404, redirect to homepage, or stay dormant? This determines urgency of partner link updates. If Impact links 404 immediately, partners lose traffic — not just attribution.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+      <div class="card-accent-line line-blue"></div>
+      <h3>Partner ID Mapping Table</h3>
+      <p style="margin-bottom:16px;color:var(--text2);">A simple but critical artifact. Every partner needs a row mapping their Impact ID to their new PartnerStack ID. Without this, support tickets, finance audits, and attribution reconciliation become a nightmare. Build this as part of the CSV process.</p>
+      <div style="background:var(--surface2);border:1px solid var(--border2);overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Impact Partner ID</th>
+              <th>Partner Name</th>
+              <th>PartnerStack ID</th>
+              <th>Tier</th>
+              <th>Link Updated?</th>
+              <th>First PS Conversion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text3);">IMP_001234</td>
+              <td>Partner Name Here</td>
+              <td style="color:var(--green);">PS_004921</td>
+              <td><span class="tag-inline tag-critical">T1</span></td>
+              <td><span class="status-dot"><span class="dot dot-yellow"></span>Pending</span></td>
+              <td style="color:var(--text3);">—</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text3);">IMP_001235</td>
+              <td>Partner Name Here</td>
+              <td style="color:var(--green);">PS_004922</td>
+              <td><span class="tag-inline tag-high">T2</span></td>
+              <td><span class="status-dot"><span class="dot dot-red"></span>Not started</span></td>
+              <td style="color:var(--text3);">—</td>
+            </tr>
+            <tr>
+              <td colspan="6" style="color:var(--text3);font-size:11px;font-style:italic;">← Max populates this from Impact export + PartnerStack import confirmation. PartnerStack CSM should provide PS IDs after import.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ai-callout" style="margin-top:16px;">
+        <h4>AI Can Build This</h4>
+        <ul>
+          <li>Once Max has the Impact export and the PartnerStack import confirmation, Claude can merge the two files and generate this mapping table automatically — no manual matching needed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA & TECHNICAL -->
+  <section class="section" id="data">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-icon">⬢</span>
+      <h2>Data &amp; Technical Migration Plan</h2>
+      <span class="section-tag tag-high">Engineering Dependency</span>
+    </div>
+
+    <h3 style="font-family:&#39;Syne&#39;,sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text2);">DATA MIGRATION MAP</h3>
+    <div style="background:var(--surface);border:1px solid var(--border);overflow-x:auto;margin-bottom:28px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Data Type</th>
+            <th>Lives In Impact?</th>
+            <th>Migrating To PS?</th>
+            <th>Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Partner profiles</strong> (name, email, info)</td>
+            <td>✓ Yes</td>
+            <td>✓ Yes</td>
+            <td>CSV import via PS CSM</td>
+            <td><span class="status-dot"><span class="dot dot-yellow"></span>In Progress</span></td>
+          </tr>
+          <tr>
+            <td><strong>Commission structures</strong> (CPC / CPA / CPL)</td>
+            <td>✓ Yes — messy, mostly custom</td>
+            <td>✓ Yes</td>
+            <td>CSV → PS CSM builds</td>
+            <td><span class="status-dot"><span class="dot dot-yellow"></span>CSV incomplete</span></td>
+          </tr>
+          <tr>
+            <td><strong>Historical payouts</strong></td>
+            <td>✓ Yes</td>
+            <td>Reference only</td>
+            <td>Impact read-only (60 days)</td>
+            <td><span class="status-dot"><span class="dot dot-green"></span>No action needed</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tracking links</strong></td>
+            <td>✓ Yes — embedded on partner sites</td>
+            <td>New links generated in PS</td>
+            <td>PS generates → partners update</td>
+            <td><span class="status-dot"><span class="dot dot-red"></span>Not started</span></td>
+          </tr>
+          <tr>
+            <td><strong>Creative assets</strong></td>
+            <td>✓ Yes</td>
+            <td>✓ Yes + new assets needed</td>
+            <td>Manual upload + creative request (banner ads + landing pages)</td>
+            <td><span class="status-dot"><span class="dot dot-red"></span>Request not submitted</span></td>
+          </tr>
+          <tr>
+            <td><strong>Contract terms</strong></td>
+            <td>✓ Yes</td>
+            <td>✓ Yes — same terms</td>
+            <td>Embedded in PS onboarding flow</td>
+            <td><span class="status-dot"><span class="dot dot-blue"></span>PS handles</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tracking parameters / tags</strong></td>
+            <td>✓ Yes — custom logic</td>
+            <td>✓ Yes — must replicate</td>
+            <td>Max defines logic → Eng + PS build</td>
+            <td><span class="status-dot"><span class="dot dot-red"></span>Logic undocumented</span></td>
+          </tr>
+          <tr>
+            <td><strong>Snowflake pipeline</strong></td>
+            <td>Impact → Snowflake → Tableau</td>
+            <td>PS → Snowflake → Tableau</td>
+            <td>S2S API, engineering builds</td>
+            <td><span class="status-dot"><span class="dot dot-red"></span>Not started</span></td>
+          </tr>
+          <tr>
+            <td><strong>Partner dashboard access</strong></td>
+            <td>✓ Yes — partners use Impact UI</td>
+            <td>✓ Yes — partners use PS UI</td>
+            <td>Partners register/login to PS</td>
+            <td><span class="status-dot"><span class="dot dot-green"></span>95% already have PS accounts</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-grid card-grid-2">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>Technical Integration Stack</h3>
+        <div class="info-row"><span class="info-key">Tracking method</span><span class="info-val">Server-to-Server (S2S) API via PartnerStack</span></div>
+        <div class="info-row"><span class="info-key">Data warehouse</span><span class="info-val">Snowflake — pipeline must be rebuilt for PS</span></div>
+        <div class="info-row"><span class="info-key">Reporting</span><span class="info-val">Tableau — dashboards dependent on Snowflake continuity</span></div>
+        <div class="info-row"><span class="info-key">Website tags</span><span class="info-val">Swap Impact → PartnerStack (engineering owns)</span></div>
+        <div class="info-row"><span class="info-key">Signup flow</span><span class="info-val">Partner application form on PS replaces Impact form</span></div>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">🚨 BLOCKING — Max Must Create This Document</div>
+          <p>Tracking parameter logic does not yet exist as a written document. This maps PS activity data → Snowflake fields → Tableau reporting. Without it, engineering cannot build the pipeline correctly and you risk silent data loss after cutover. Max needs to sit down and write this out — even a rough draft in plain English is enough for engineering to work from. Do this before talking to engineering again. Claude can help structure it: describe the logic verbally, transcribe with Whisper, and Claude will turn it into a proper spec.</p>
+        </div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>CSV — What It Must Include</h3>
+        <ul class="task-list">
+          <li>Partner name (legal/display)</li>
+          <li>Email address (primary contact)</li>
+          <li>Partner type (affiliate / influencer / network)</li>
+          <li>Tier classification (T1 / T2 / T3)</li>
+          <li>Commission type: CPC, CPA, CPL (or combination)</li>
+          <li>Commission rate per type</li>
+          <li>Special/custom deal terms (flag these)</li>
+          <li>Group assignment (affiliate group / influencer group)</li>
+          <li>Status: Active / Suspended / Dormant</li>
+          <li>Payment method (direct deposit — note for PS)</li>
+          <li>Notes field for anything non-standard</li>
+        </ul>
+        <div class="ai-callout" style="margin-top:12px;">
+          <h4>AI Can Help</h4>
+          <ul>
+            <li>Upload your partial CSV and Claude will clean, validate, de-duplicate, and flag missing fields</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:16px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>🎨 Creative Assets Plan</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Known asset types: <strong style="color:var(--text)">banner ads + landing pages</strong>. Creative request needs to be submitted to your design/creative team immediately — typical turnaround is ~1.5 weeks, which barely fits the timeline.</p>
+        <ul class="task-list">
+          <li>Submit creative brief to design team — <strong style="color:var(--orange)">do this today</strong></li>
+          <li>Specify all required banner sizes (standard: 728×90, 300×250, 160×600, 320×50 mobile)</li>
+          <li>Landing page: confirm URL, copy, and CTA before brief goes out</li>
+          <li>Provide brand guidelines and any existing asset library to design team</li>
+        </ul>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ Max Needs to Define</div>
+          <p>Full asset inventory: How many banners? What sizes? How many landing page variants (per partner type? per offer?)? What copy / CTAs? Who on the design team owns this request, and have they been briefed on the March 31 deadline? Assets not being ready by cutover is low-risk for tracking but partners expect a professional-looking dashboard on Day 1.</p>
+        </div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-purple"></div>
+        <h3>📝 New Partner Application Form</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Known fields confirmed by Max. Form needs to be built in PartnerStack and linked from the company website before March 31st.</p>
+        <ul class="task-list">
+          <li>Partner name (individual or company)</li>
+          <li>How they define themselves (publisher / influencer / network / other)</li>
+          <li>Email address</li>
+          <li>How they plan to promote the product</li>
+          <li>Audience type and size</li>
+          <li>Links to their domain(s)</li>
+          <li>Social media handles</li>
+        </ul>
+        <div class="tbd-box" style="margin-top:12px;">
+          <div class="tbd-label">⚠ Max Needs to Finalize</div>
+          <p>Additional questions still to be defined. Consider: monthly traffic/audience size, content categories, geographic focus, previous affiliate experience, preferred promotional format. Also: who reviews and approves applications — manual review or auto-approve? What's the expected turnaround time for approval? This form needs to be complete before any outreach goes out, since some partners will need to re-register.</p>
+        </div>
+        <div class="ai-callout" style="margin-top:12px;">
+          <h4>AI Can Help</h4>
+          <ul>
+            <li>Claude can draft the full application form question set based on Max's goals and partner types — just describe what you need to know about a new partner to approve them</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMS PLAN -->
+  <section class="section" id="comms">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <span class="section-icon">✉</span>
+      <h2>Partner Communication Plan</h2>
+      <span class="section-tag tag-high">Days 3–14</span>
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-bottom:28px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>Wave 1: Critical 10</h3>
+        <div class="info-row"><span class="info-key">Timing</span><span class="info-val">Days 3–4 (as soon as tracking link ready)</span></div>
+        <div class="info-row"><span class="info-key">Channel</span><span class="info-val">Personal email + follow-up call</span></div>
+        <div class="info-row"><span class="info-key">Tone</span><span class="info-val">Personal, warm, relationship-first</span></div>
+        <div class="info-row"><span class="info-key">Include</span><span class="info-val">Their specific new tracking link, deadline, Max's direct contact, offer to help</span></div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>Wave 2: Active 100</h3>
+        <div class="info-row"><span class="info-key">Timing</span><span class="info-val">Day 4–5</span></div>
+        <div class="info-row"><span class="info-key">Channel</span><span class="info-val">Mass email (mail merge)</span></div>
+        <div class="info-row"><span class="info-key">Tone</span><span class="info-val">Professional, clear, action-oriented</span></div>
+        <div class="info-row"><span class="info-key">Include</span><span class="info-val">Hard deadline (Mar 31), login instructions, link update guide, FAQ</span></div>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>Wave 3: Dormant 1,800</h3>
+        <div class="info-row"><span class="info-key">Timing</span><span class="info-val">Day 5–6</span></div>
+        <div class="info-row"><span class="info-key">Channel</span><span class="info-val">Batch email only</span></div>
+        <div class="info-row"><span class="info-key">Tone</span><span class="info-val">Informational — no urgency needed</span></div>
+        <div class="info-row"><span class="info-key">Include</span><span class="info-val">FYI on platform change, invite to re-engage on PartnerStack</span></div>
+      </div>
+    </div>
+
+    <!-- EMAIL TEMPLATES -->
+    <div class="comm-template">
+      <div class="template-label">Email Template A — Critical 10 (Personal)</div>
+      <div class="email-field">
+        <span class="email-key">Subject:</span>
+        <span class="email-val">Important: Your affiliate links are moving to PartnerStack — action needed by March 31</span>
+      </div>
+      <div class="email-field">
+        <span class="email-key">To:</span>
+        <span class="email-val"><span class="placeholder">[Partner First Name]</span></span>
+      </div>
+      <div class="email-body">
+        Hey <span class="placeholder">[First Name]</span>,<br><br>
+        Hope you're doing well. I wanted to reach out personally with some important news — we're migrating our affiliate program from Impact to PartnerStack, and I want to make sure this is a completely seamless transition for you.<br><br>
+        <strong>What's changing:</strong> Your tracking links. Everything else — your commission structure, payment method, and terms — stays exactly the same.<br><br>
+        <strong>Your deadline:</strong> Please update your links by <strong>March 31st</strong>. After that date, the Impact links will stop tracking and you won't want to miss any commissions.<br><br>
+        <strong>Your new PartnerStack tracking link:</strong> <span class="placeholder">[UNIQUE LINK — generate from PS]</span><br><br>
+        Since you already have a PartnerStack account, this should be straightforward. But I'm personally available if you hit any snag — just reply here or text me at <span class="placeholder">[your number]</span>.<br><br>
+        Thank you for being such an important part of what we're building. This platform change will actually give you better reporting and visibility going forward.<br><br>
+        — Max
+      </div>
+    </div>
+
+    <div class="comm-template">
+      <div class="template-label">Email Template B — Active 100 (Mass)</div>
+      <div class="email-field">
+        <span class="email-key">Subject:</span>
+        <span class="email-val">Action required: Migrate your affiliate links to PartnerStack by March 31</span>
+      </div>
+      <div class="email-body">
+        Hi <span class="placeholder">[Partner Name]</span>,<br><br>
+        We have an important platform update to share with you. We are migrating our affiliate program from Impact to <strong>PartnerStack</strong>, effective <strong>March 31st, 2025</strong>.<br><br>
+        <strong>What you need to do (3 steps):</strong><br>
+        1. Log into your PartnerStack account at <span class="placeholder">[link]</span> (or create one — it's free and takes 2 minutes)<br>
+        2. Accept the updated program terms<br>
+        3. Replace your Impact tracking links with your new PartnerStack links<br><br>
+        <strong>Important:</strong> Any Impact links still active after March 31st will stop tracking conversions and you will not receive credit for those referrals.<br><br>
+        Your commission rates, payment method, and all existing terms remain unchanged.<br><br>
+        Questions? Reply to this email and we'll help you immediately.<br><br>
+        Thank you,<br>Max
+      </div>
+    </div>
+
+    <div class="ai-callout">
+      <h4>AI Can Turbocharge Your Communications</h4>
+      <ul>
+        <li><strong>Mail merge personalization:</strong> Upload your partner CSV and Claude can generate individually personalized versions of Template B at scale</li>
+        <li><strong>FAQ document:</strong> Claude can build a full partner FAQ based on common questions (what changes, payment continuity, link update how-to) to attach to your mass email</li>
+        <li><strong>Follow-up sequence:</strong> Claude can write your Day 7 and Day 12 follow-up emails right now so they're ready to send</li>
+        <li><strong>Suggested tool:</strong> Mailchimp, Apollo, or even a simple Gmail + merge for sending to 100–150 partners at scale</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PAYMENTS -->
+  <section class="section" id="payments">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <span class="section-icon">$</span>
+      <h2>Payment &amp; Commission Continuity Plan</h2>
+      <span class="section-tag tag-high">Zero Disruption Goal</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>The 60-Day Lock Window Problem</h4>
+      <p>Your payout window is 60 days. Partners generating activity in March will be paid in May. The tracking cutoff is March 31st. This means March activity is tracked in Impact and must be paid from Impact — even though Impact is "closed." The critical decision: confirm with Impact and PartnerStack whether March payouts can still be processed through Impact post-cutover, or if they need to be manually reconciled and paid outside the platform.</p>
+    </div>
+
+    <div class="card-grid card-grid-2">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-green"></div>
+        <h3>Recommended Payment Continuity Path</h3>
+        <ul class="task-list">
+          <li><strong style="color:var(--green)">February activity:</strong> Already locked. Pay through Impact as planned.</li>
+          <li><strong style="color:var(--yellow)">March activity:</strong> Tracked in Impact until Mar 31. Use Impact's read-only data to reconcile and pay in May — either through Impact's payout system if still functional, or export data and process manually.</li>
+          <li><strong style="color:var(--accent2)">April activity onward:</strong> 100% PartnerStack. New tracking, new payouts.</li>
+          <li>Communicate this payout plan clearly to T1 and T2 partners in comms — they will ask about it.</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>Open Questions — Resolve This Week</h3>
+        <div class="tbd-box" style="margin-top:0;">
+          <div class="tbd-label">⚠ Confirm with Impact</div>
+          <p>Can payouts still be processed in Impact post-March 31st cutover, during the 2-month read-only period? Or is payout functionality also shut off?</p>
+        </div>
+        <div class="tbd-box">
+          <div class="tbd-label">⚠ Confirm with PartnerStack</div>
+          <p>Is there a way to import historical March activity into PartnerStack for unified payout processing, or does it need to stay in Impact?</p>
+        </div>
+        <div class="tbd-box">
+          <div class="tbd-label">⚠ Confirm with Finance</div>
+          <p>Finance needs to know about the split-month scenario (March in Impact, April in PS) for reconciliation. Are they already aware and prepared?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISK MATRIX -->
+  <section class="section" id="risks">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <span class="section-icon">⚠</span>
+      <h2>Risk Matrix</h2>
+      <span class="section-tag tag-critical">Active Threat Assessment</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">
+      <div class="prio-header">High Impact</div>
+      <div class="prio-header" style="background:transparent;border:1px solid var(--border);">Low Impact</div>
+    </div>
+
+    <div class="risk-matrix">
+      <div class="risk-cell rc-hl">
+        <div class="risk-cell-label">🔴 High Likelihood + High Impact</div>
+        <div class="risk-item">Engineering delays PartnerStack tracking setup past week 1 — entire timeline collapses</div>
+        <div class="risk-item">CSV not complete by tomorrow — PartnerStack CSM can't build structures — dominoes fall</div>
+        <div class="risk-item">Critical 10 partners slow to update links — March 31 arrives with broken attribution</div>
+        <div class="risk-item">Tracking parameter logic not documented — Snowflake/Tableau pipeline breaks silently</div>
+      </div>
+      <div class="risk-cell rc-ml">
+        <div class="risk-cell-label">🟠 Low Likelihood + High Impact</div>
+        <div class="risk-item">PartnerStack tracking underreports vs Impact — creates commission disputes with partners</div>
+        <div class="risk-item">March payout processing in Impact post-cutover is unavailable — manual reconciliation required</div>
+        <div class="risk-item">Mass partner communications trigger a wave of confused/upset replies that consume all of Max's time</div>
+      </div>
+      <div class="risk-cell rc-ll">
+        <div class="risk-cell-label">🔵 High Likelihood + Low Impact</div>
+        <div class="risk-item">Some T2 partners don't update links by Mar 31 — they lose some commission credit but business continues</div>
+        <div class="risk-item">Creative assets not ready by cutover — partners can still track, just fewer visual resources</div>
+        <div class="risk-item">Fraudulent network causes distraction with "testing needs" — time cost but manageable</div>
+      </div>
+      <div class="risk-cell rc-vl">
+        <div class="risk-cell-label">🟢 Low Likelihood + Low Impact</div>
+        <div class="risk-item">Dormant partners churn — they're not generating revenue anyway</div>
+        <div class="risk-item">Contract re-sign friction for a small number of T2 partners</div>
+        <div class="risk-item">Internal resistance from Impact champions — Max says this is already resolved politically</div>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:16px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>Mitigation: Top 3 Risks</h3>
+        <ul class="task-list">
+          <li><strong>Engineering speed:</strong> Daily standups start today. Escalate to Mark if they miss week 1 deadline. Have PartnerStack CSM document exactly what engineering needs to implement so there's zero ambiguity.</li>
+          <li><strong>CSV tomorrow:</strong> This is Max's #1 task today. Block everything else. Claude can help QA it in 10 minutes once it's done.</li>
+          <li><strong>Critical 10 links:</strong> Don't wait for "perfect" comms. Send personal emails to Critical 10 the moment you have their new tracking links. Days matter here.</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-purple"></div>
+        <h3>Contingency: If Timeline Slips</h3>
+        <ul class="task-list">
+          <li>If engineering is still not tracking by Day 7: escalate immediately to Mark and request emergency resource allocation.</li>
+          <li>If Critical 10 haven't updated links by Day 10: get on the phone, not email. Every day of delay = lost attribution.</li>
+          <li>If PartnerStack CSM is slow: send daily follow-ups. The CSV was supposed to go two weeks ago — they know it's urgent.</li>
+          <li>Absolute minimum viable migration: Top 10 partners + tracking live = business continuity. Everything else is bonus.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLLBACK PLAN -->
+  <section class="section" id="rollback">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <span class="section-icon">⟲</span>
+      <h2>Rollback Plan</h2>
+      <span class="section-tag tag-high">Break-Glass Scenario</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Hope for the best. Plan for the worst.</h4>
+      <p>Most migrations don't need a rollback. But every migration plan that doesn't have one leaves leadership nervous. Having this written down costs Max 10 minutes and buys enormous confidence. If PartnerStack tracking fails silently after cutover, the business needs a clear, pre-agreed procedure — not a panicked group chat at midnight on March 31st.</p>
+    </div>
+
+    <div class="card-grid card-grid-2">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>🚨 Trigger Conditions</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Execute rollback if ANY of the following occur post-launch:</p>
+        <ul class="task-list">
+          <li>PartnerStack tracking shows zero conversions for 24+ hours when traffic is confirmed active</li>
+          <li>Snowflake pipeline shows no data flowing from PartnerStack</li>
+          <li>2+ Critical 10 partners report attribution discrepancies</li>
+          <li>Commission calculations are materially wrong vs contracted rates</li>
+          <li>PartnerStack platform outage lasting more than 4 hours during business hours</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>Rollback Procedure</h3>
+        <ul class="task-list">
+          <li><strong style="color:var(--accent);">Step 1:</strong> Notify Mark immediately — do not troubleshoot alone</li>
+          <li><strong style="color:var(--accent);">Step 2:</strong> Contact PartnerStack CSM/support — get them on a call within the hour</li>
+          <li><strong style="color:var(--accent);">Step 3:</strong> Confirm with engineering whether Impact tracking can be re-enabled (confirm this is even possible BEFORE March 31)</li>
+          <li><strong style="color:var(--accent);">Step 4:</strong> Send partner communication: "brief technical delay, your Impact links remain active"</li>
+          <li><strong style="color:var(--accent);">Step 5:</strong> Do NOT ask partners to revert their links unless truly necessary — that creates double work</li>
+          <li><strong style="color:var(--accent);">Step 6:</strong> Resume migration after root cause is identified and resolved</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 16px; opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+      <div class="card-accent-line line-purple"></div>
+      <h3>Pre-Rollback Prep (Do Before March 31)</h3>
+      <ul class="task-list" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <li>Confirm with Impact: can tracking be re-enabled after cutover if needed, and for how long?</li>
+        <li>Save all PartnerStack CSM + support contact details somewhere accessible offline</li>
+        <li>Have engineering team available (not on vacation) the week of March 31st</li>
+        <li>Document rollback decision-maker: who has authority to call it — Max alone, or Mark must approve?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- KPIs & ACTIVATION METRICS -->
+  <section class="section" id="kpis">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <span class="section-icon">◎</span>
+      <h2>KPIs &amp; Partner Activation Metrics</h2>
+      <span class="section-tag tag-medium">How You Know It's Working</span>
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-bottom:24px;">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-red"></div>
+        <h3>Wave 1 — Critical 10</h3>
+        <div style="text-align:center;padding:16px 0;">
+          <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:42px;font-weight:800;color:var(--red);line-height:1;">100%</div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Target Activation</div>
+        </div>
+        <ul class="task-list">
+          <li>All 10 have logged into PartnerStack</li>
+          <li>All 10 have generated + activated new links</li>
+          <li>All 10 show at least 1 tracked conversion in PS before March 31</li>
+          <li>Zero unresolved attribution disputes</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-orange"></div>
+        <h3>Wave 2 — Active 100</h3>
+        <div style="text-align:center;padding:16px 0;">
+          <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:42px;font-weight:800;color:var(--orange);line-height:1;">75%</div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Target Activation by Mar 31</div>
+        </div>
+        <ul class="task-list">
+          <li>Account created or confirmed on PS</li>
+          <li>New tracking link generated</li>
+          <li>Terms accepted</li>
+          <li>Remaining 25% followed up in April via Impact read-only data</li>
+        </ul>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>Wave 3 — Dormant 1,800</h3>
+        <div style="text-align:center;padding:16px 0;">
+          <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:42px;font-weight:800;color:var(--accent2);line-height:1;">30%</div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Target Self-Migration (April)</div>
+        </div>
+        <ul class="task-list">
+          <li>Received migration email — opened</li>
+          <li>Self-registered on PartnerStack (auto-approve)</li>
+          <li>Remainder treated as natural attrition — acceptable</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2">
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>Daily Migration Dashboard — Track These</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+          <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;text-align:center;">
+            <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:24px;font-weight:800;color:var(--accent);">—</div>
+            <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Partners Migrated</div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;text-align:center;">
+            <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:24px;font-weight:800;color:var(--orange);">—</div>
+            <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Links Activated</div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;text-align:center;">
+            <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:24px;font-weight:800;color:var(--green);">—</div>
+            <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">First Conversions</div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border2);padding:14px;text-align:center;">
+            <div style="font-family:&#39;Syne&#39;,sans-serif;font-size:24px;font-weight:800;color:var(--red);">—</div>
+            <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Open Issues</div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text3);margin-top:12px;">Track daily in a Google Sheet. Update each morning. Share link with Mark for async visibility — no need for status meetings.</p>
+      </div>
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-green"></div>
+        <h3>Internal Readiness (Lightweight)</h3>
+        <p style="margin-bottom:12px;color:var(--text2);">Max is a team of one — full org training isn't realistic. Focus on the essentials:</p>
+        <ul class="task-list">
+          <li><strong>PartnerStack playbook doc:</strong> 1-pager covering how to generate links, how to check activity, how to handle a partner support question. Claude can draft this.</li>
+          <li><strong>Partner-facing FAQ:</strong> Attach to every migration email. Cuts inbound questions by 60%. Already partially drafted in the Comms section.</li>
+          <li><strong>Finance briefing:</strong> One email to finance confirming the March/April payout split and where to find Impact data for March reconciliation.</li>
+          <li><strong>Mark's weekly update template:</strong> 5-bullet format, takes Max 3 minutes to fill in each Monday.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="section" id="checklist">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <span class="section-icon">✓</span>
+      <h2>Master Tracking Checklist</h2>
+      <span class="section-tag tag-medium">Daily Reference</span>
+    </div>
+
+    <div class="card-grid card-grid-2">
+      <div>
+        <h3 style="font-family:&#39;Syne&#39;,sans-serif;font-size:13px;color:var(--text2);margin-bottom:12px;letter-spacing:0.05em;text-transform:uppercase;">📋 PRE-LAUNCH (Before Tracking is Live)</h3>
+        <ul class="checklist">
+          <li><span class="check-box"></span>CSV complete with all fields (partner info, commission types, tiers, groups)</li>
+          <li><span class="check-box"></span>CSV sent to PartnerStack CSM</li>
+          <li><span class="check-box"></span>Impact full data export downloaded and backed up</li>
+          <li><span class="check-box"></span>Tracking parameter logic documented</li>
+          <li><span class="check-box"></span>Engineering standups scheduled (daily)</li>
+          <li><span class="check-box"></span>PartnerStack account reviewed — commission structures confirmed accurate</li>
+          <li><span class="check-box"></span>Creative assets request submitted</li>
+          <li><span class="check-box"></span>New partner application form designed and drafted</li>
+          <li><span class="check-box"></span>Micro-influencer group logic sent to PS CSM</li>
+          <li><span class="check-box"></span>Payout continuity plan confirmed with Impact + Finance</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-family:&#39;Syne&#39;,sans-serif;font-size:13px;color:var(--text2);margin-bottom:12px;letter-spacing:0.05em;text-transform:uppercase;">🚀 LAUNCH (Once Tracking is Live)</h3>
+        <ul class="checklist">
+          <li><span class="check-box"></span>S2S tracking confirmed live and validated</li>
+          <li><span class="check-box"></span>Test conversions run through PartnerStack (CPC + CPA + CPL)</li>
+          <li><span class="check-box"></span>Snowflake pipeline validated — data flowing to Tableau</li>
+          <li><span class="check-box"></span>Website tags swapped (Impact out, PartnerStack in)</li>
+          <li><span class="check-box"></span>New partner application form live on website</li>
+          <li><span class="check-box"></span>Critical 10 personally contacted with new links</li>
+          <li><span class="check-box"></span>Mass email sent to T2 partners</li>
+          <li><span class="check-box"></span>All Critical 10 confirmed link updates complete</li>
+          <li><span class="check-box"></span>Follow-up sent to non-responsive T2 partners</li>
+          <li><span class="check-box"></span>Final Impact data snapshot exported (Mar 31)</li>
+          <li><span class="check-box"></span>Mark notified: migration complete</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION -->
+  <section class="section" id="automation">
+    <div class="section-header">
+      <span class="section-num">14</span>
+      <span class="section-icon">◈</span>
+      <h2>AI &amp; Automation Opportunities</h2>
+      <span class="section-tag tag-medium">Efficiency Unlocks</span>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Max's Time Is the Scarcest Resource</h4>
+      <p>35–40 hours/week sounds like a lot, but Max is also running a full affiliate program in parallel. Every hour saved through smart tooling or AI assistance is an hour back in the migration. Here's where to focus.</p>
+    </div>
+
+    <div class="card-grid card-grid-2">
+
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-purple"></div>
+        <h3>🤖 Claude — Right Now, Free</h3>
+        <ul class="task-list">
+          <li><strong>CSV QA &amp; Cleanup:</strong> Upload the CSV. Claude finds duplicates, flags missing fields, reformats columns, maps commission logic. What takes Max 3 hours takes Claude 3 minutes.</li>
+          <li><strong>Tracking logic documentation:</strong> Describe it verbally on a voice note, transcribe with Whisper, Claude writes the structured spec doc.</li>
+          <li><strong>All email templates:</strong> Already drafted above. Claude can personalize at scale with a mail merge prompt.</li>
+          <li><strong>Partner FAQ doc:</strong> Claude writes a full FAQ for partners in 2 minutes. Attach to every email wave.</li>
+          <li><strong>Status reports to Mark:</strong> Feed Claude the day's updates, it outputs a clean exec summary.</li>
+          <li><strong>Risk log updates:</strong> Describe what's happening, Claude keeps a running risk register.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-blue"></div>
+        <h3>⚡ PartnerStack Native Automation</h3>
+        <ul class="task-list">
+          <li><strong>Automated welcome emails:</strong> PS has built-in email automation. Set up a triggered welcome sequence for newly onboarded partners — zero manual effort per partner.</li>
+          <li><strong>Automated commission tracking emails:</strong> PS can auto-notify partners of conversions and pending payouts — reduces inbound "did my conversion track?" questions.</li>
+          <li><strong>Partner application auto-approval:</strong> For T3 dormant partners migrating themselves, set up auto-approve rules so Max doesn't review 1,800 applications manually.</li>
+          <li><strong>Group auto-assignment:</strong> PS rules can auto-assign partners to groups based on tags in their profile — reducing manual sorting.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-yellow"></div>
+        <h3>📧 Email at Scale — Under 30 Min</h3>
+        <ul class="task-list">
+          <li><strong>Option A (Simplest):</strong> Gmail + Google Sheets mail merge (free). Upload CSV, draft template, send 100+ personalized emails in minutes.</li>
+          <li><strong>Option B (More powerful):</strong> Mailchimp free tier — handles up to 500 contacts, built-in tracking of opens/clicks so Max knows who read the email and who didn't.</li>
+          <li><strong>Option C (Best):</strong> Apollo.io or Lemlist — supports multi-step email sequences (initial + Day 7 follow-up + Day 12 urgency) running automatically. Max sets it once and walks away.</li>
+          <li><strong>Pro tip:</strong> Build your follow-up sequence now, before you send the first email, so the automation is ready the moment you hit send.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s, transform 0.4s;">
+        <div class="card-accent-line line-green"></div>
+        <h3>📊 Progress Tracking Dashboard</h3>
+        <ul class="task-list">
+          <li>Build a simple Google Sheet: columns for each T1/T2 partner — contacted, confirmed PS account, new link sent, link updated, confirmed tracking.</li>
+          <li>This is your daily status board. Update it each morning. Takes 5 minutes a day and gives you and Mark a live pulse on the migration.</li>
+          <li>Claude can pre-build this spreadsheet template from your CSV — just ask.</li>
+          <li>Color code it: 🔴 Not started / 🟡 In progress / 🟢 Complete. When all T1 rows turn green, you've won.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="ai-callout" style="margin-top:8px;">
+      <h4>The Big Picture: What Andrei + Claude Can Build For Max</h4>
+      <ul>
+        <li><strong>Automated partner outreach sequences</strong> — write all 3 email waves + 2 follow-ups right now so Max just hits send on schedule</li>
+        <li><strong>Partner migration tracker spreadsheet</strong> — pre-built, pre-formatted, ready to go from the CSV</li>
+        <li><strong>Tracking logic spec doc</strong> — from Max's verbal description, Claude writes the formal document engineering needs</li>
+        <li><strong>PartnerStack onboarding automation brief</strong> — tells Max exactly which PS automation flows to set up on Day 1</li>
+        <li><strong>Weekly status report template for Mark</strong> — Max fills in 5 bullets, Claude makes it look like a proper exec update</li>
+        <li><strong>Post-migration re-engagement campaign</strong> — for the 1,800 dormant partners, April is an opportunity not a burden</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Impact → PartnerStack Migration Plan · Generated March 2025 · Confidential</p>
+    <div class="footer-tag">Built with <span>Claude</span> · Andrei &amp; Max</div>
+  </footer>
+
+</div>
+
+<script>
+  function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Animate elements on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.timeline-item, .card, .partner-tier').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(12px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    observer.observe(el);
+  });
+</script>
+
+
+
+</body></html>

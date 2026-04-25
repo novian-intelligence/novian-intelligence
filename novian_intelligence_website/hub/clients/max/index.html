@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max | Novian Intelligence Client Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07070f; --bg2: #0f0f1c; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.07); --border-h: rgba(99,102,241,0.3);
+      --v: #6366f1; --v-dim: rgba(99,102,241,0.10); --v-bdr: rgba(99,102,241,0.25);
+      --c: #40d9c8; --c-dim: rgba(64,217,200,0.08); --c-bdr: rgba(64,217,200,0.22);
+      --text: #e2e0f4; --text-muted: #7a7892; --text-dim: #4e4c6a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    #gate { display: flex; position: fixed; inset: 0; z-index: 9999; background: radial-gradient(ellipse at 60% 30%, rgba(99,102,241,0.06) 0%, #07070f 60%); align-items: center; justify-content: center; }
+    .gate-card { width: 100%; max-width: 400px; padding: 0 24px; text-align: center; }
+    .gate-logo { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, #6366f1, #40d9c8); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: #fff; margin: 0 auto 28px; box-shadow: 0 8px 32px rgba(99,102,241,0.25); }
+    .gate-eyebrow { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--v); margin-bottom: 10px; }
+    .gate-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .gate-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 36px; line-height: 1.6; }
+    .gate-input { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text); font-size: 0.95rem; font-family: inherit; outline: none; margin-bottom: 10px; text-align: center; letter-spacing: 0.08em; transition: border-color 0.2s; }
+    .gate-input:focus { border-color: var(--v-bdr); box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+    #gateError { font-size: 0.78rem; color: #e07090; margin-bottom: 10px; min-height: 18px; }
+    .gate-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--v), var(--c)); border: none; border-radius: 12px; color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 4px 20px rgba(99,102,241,0.3); transition: opacity 0.2s, transform 0.15s; }
+    .gate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .gate-footer { font-size: 0.62rem; color: var(--text-dim); margin-top: 24px; opacity: 0.6; }
+
+    .site { display: none; }
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(99,102,241,0.05); }
+    .orb-2 { width: 500px; height: 500px; bottom: 10%; left: -150px; background: rgba(64,217,200,0.04); }
+
+    header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); background: rgba(7,7,15,0.85); backdrop-filter: blur(20px); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--v), var(--c)); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; color: #fff; }
+    .logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .logo-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+    .header-right { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--v); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .strip { height: 3px; background: linear-gradient(to right, var(--v) 0%, var(--c) 50%, var(--v) 100%); opacity: 0.65; }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; position: relative; z-index: 1; }
+
+    .hero { padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--v); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--v); opacity: 0.35; }
+    .hero-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+    .hero-title .accent { background: linear-gradient(135deg, var(--v), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 0.95rem; line-height: 1.75; color: var(--text-muted); max-width: 560px; margin-bottom: 32px; }
+    .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); }
+    .meta-item { display: flex; flex-direction: column; gap: 5px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-dim); }
+    .meta-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+
+    .mira-note { margin: 48px 0 0; padding: 24px 28px; background: var(--v-dim); border: 1px solid var(--v-bdr); border-left: 3px solid var(--v); border-radius: 0 12px 12px 0; font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); font-style: italic; }
+    .mira-note strong { color: var(--text); font-style: normal; }
+    .mira-note::before { content: "✦  A note from Mira · "; color: var(--v); font-weight: 600; font-size: 0.78rem; font-style: normal; }
+
+    .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin: 52px 0 24px; display: flex; align-items: center; gap: 12px; }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .deliverables { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; cursor: pointer; }
+    .card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+    .card.featured { border-left: 3px solid var(--v); }
+    .card-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 32px 36px; }
+    .card-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid; display: inline-block; margin-bottom: 14px; color: var(--v); border-color: var(--v-bdr); background: var(--v-dim); }
+    .card-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.25; letter-spacing: -0.02em; }
+    .card-desc { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); max-width: 520px; }
+    .card-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; flex-shrink: 0; }
+    .card-num { font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 700; line-height: 1; color: rgba(99,102,241,0.2); letter-spacing: -0.04em; }
+    .open-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v); border: 1px solid var(--v-bdr); background: var(--v-dim); padding: 8px 16px; border-radius: 8px; transition: all 0.18s; white-space: nowrap; }
+    .card:hover .open-btn { opacity: 0.85; }
+    .card-preview { border-top: 1px solid var(--border); padding: 16px 36px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .preview-pill { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-dim); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 32px; margin-top: 80px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-text { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .main { padding: 0 16px 60px; } .header-inner { padding: 0 16px; }
+      .card-inner { grid-template-columns: 1fr; } .card-aside { flex-direction: row; align-items: center; } .card-num { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">NI</div>
+    <div class="gate-eyebrow">Novian Intelligence · Client Portal</div>
+    <div class="gate-title">Max</div>
+    <div class="gate-sub">Enter your access code to view your engagement workspace.</div>
+    <input id="gateInput" class="gate-input" type="password" placeholder="Access code" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+    <div id="gateError"></div>
+    <button class="gate-btn" onclick="checkGate()">Continue →</button>
+    <div class="gate-footer">Confidential · Novian Intelligence · 2026</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ni_max_auth')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  }
+});
+async function checkGate(){
+  const val = document.getElementById('gateInput').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hex==='6a4db1f540a876378670ddd12b89420f5c11cb0ac71f1b0efef2ea9f3badf7fa'){
+    sessionStorage.setItem('ni_max_auth','1');
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  } else {
+    document.getElementById('gateError').textContent='Incorrect access code. Please try again.';
+    document.getElementById('gateInput').value='';
+    document.getElementById('gateInput').focus();
+  }
+}
+</script>
+
+<div class="site">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">NI</div>
+        <div class="logo-wordmark">
+          <span class="logo-name">Novian Intelligence</span>
+          <span class="logo-badge">Client Portal</span>
+        </div>
+      </a>
+      <div class="header-right">
+        <div class="live-dot"></div>
+        <span>Active Engagement</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip"></div>
+
+  <div class="main">
+    <div class="hero">
+      <div class="hero-eyebrow">Applied Intelligence · Partner Migration · 2026</div>
+      <h1 class="hero-title">Max —<br><span class="accent">Impact → PartnerStack</span></h1>
+      <p class="hero-sub">Your migration command center. Everything you need to execute a clean, zero-disruption affiliate platform migration — strategy, templates, checklists, and risk map all in one place.</p>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">Max</span></div>
+        <div class="meta-item"><span class="meta-label">Prepared by</span><span class="meta-value">Andrei Matei · Novian Intelligence</span></div>
+        <div class="meta-item"><span class="meta-label">Engagement type</span><span class="meta-value">Operations · Migration Command</span></div>
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--v);">● Active · 2026</span></div>
+      </div>
+      <div class="mira-note">
+        Max — this is your single source of truth for the migration. <strong>The deadline is real, the risks are documented, and the path is clear.</strong> Engineering velocity is your only true blocker — everything else is in your control. Use the templates, hit the checklist, and reach out if you need anything spun up fast.
+      </div>
+    </div>
+
+    <div class="section-eyebrow">Your deliverables</div>
+    <div class="deliverables">
+
+      <a href="partner-migration.html" class="card featured" target="_blank">
+        <div class="card-inner">
+          <div class="card-body">
+            <span class="card-tag">Migration Command Center</span>
+            <div class="card-title">Impact → PartnerStack Migration Plan</div>
+            <div class="card-desc">The complete migration playbook — mission brief, 14-day timeline, data migration map, partner communication templates, risk register, pre-launch and launch checklists, and AI acceleration opportunities. Built from your interview, specific to your situation.</div>
+          </div>
+          <div class="card-aside">
+            <span class="card-num">01</span>
+            <span class="open-btn">Open document →</span>
+          </div>
+        </div>
+        <div class="card-preview">
+          <span class="preview-pill">14-Day Timeline</span>
+          <span class="preview-pill">Data Migration Map</span>
+          <span class="preview-pill">Email Templates A+B</span>
+          <span class="preview-pill">Risk Register</span>
+          <span class="preview-pill">Pre-Launch Checklist</span>
+          <span class="preview-pill">Launch Checklist</span>
+          <span class="preview-pill">AI Acceleration</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">Confidential · Max · Client Portal</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="logo-mark" style="width:22px;height:22px;font-size:0.5rem;">NI</div>
+        <div class="footer-text">Novian Intelligence · 2026</div>
+      </div>
+      <div class="footer-text">Updated: April 2026</div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
