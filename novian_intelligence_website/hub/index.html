@@ -805,13 +805,13 @@
         </div>
       </div>
 
-      <div class="os-card placeholder" id="library" style="--card-accent: var(--i);">
+      <div class="os-card" id="library" style="--card-accent: var(--i); cursor:pointer;" onclick="document.getElementById('research-modal').style.display='flex'">
         <div class="card-header">
-          <div class="card-icon" style="background: rgba(99,102,241,0.1);">📚</div>
-          <div class="card-badge badge-planned">Planned</div>
+          <div class="card-icon" style="background: rgba(99,102,241,0.1);">🔬</div>
+          <div class="card-badge badge-preview">Preview</div>
         </div>
-        <div class="card-title">NI Library</div>
-        <div class="card-desc">Industry document store. Upload whitepapers and PDFs → auto-transcribe → analyze → ask questions across the entire corpus. Your AI-powered research vault.</div>
+        <div class="card-title">NI Research Hub</div>
+        <div class="card-desc">Video intelligence engine — ingest YouTube/TikTok, auto-transcribe, extract themes, score opportunities. 118 videos processed, 9 ranked opportunities. Click to preview.</div>
         <div class="card-footer">
           <div class="card-owner">Owner: Vela + Mira</div>
           <div class="card-arrow">→</div>
@@ -929,6 +929,17 @@
 
   </div><!-- end os-page -->
 </div><!-- end ni-os -->
+
+<!-- Research Hub modal -->
+<div id="research-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:500; align-items:center; justify-content:center; padding:24px;">
+  <div style="background:var(--surface); border:1px solid var(--border2); border-radius:20px; padding:28px; max-width:900px; width:100%; position:relative;">
+    <button onclick="document.getElementById('research-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:1.2rem;cursor:pointer;">✕</button>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--i);margin-bottom:12px;">NI Research Hub · Product Vision</div>
+    <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:16px;">Video Intelligence — YouTube/TikTok → Opportunities</div>
+    <img src="research-hub-mockup.jpg" alt="NI Research Hub" style="width:100%;border-radius:12px;border:1px solid var(--border);display:block;">
+    <div style="font-size:0.82rem;color:var(--text-dim);margin-top:14px;line-height:1.6;">Ingest any YouTube or TikTok URL → auto-transcribe → extract themes and opportunities → score by market gap. Built for Max, being built for NI.</div>
+  </div>
+</div>
 
 <!-- Portfolio modal -->
 <div id="portfolio-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; align-items:center; justify-content:center;">
