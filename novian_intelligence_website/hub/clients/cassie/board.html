@@ -162,7 +162,7 @@
     }
     .board {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 20px;
       align-items: start;
     }
@@ -335,6 +335,7 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 1300px) { .board { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 1100px) { .board { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 640px) {
       .board { grid-template-columns: 1fr; }
@@ -487,6 +488,27 @@ async function checkGate(){
         </div>
       </div>
 
+      <!-- Column: Backlog / Ideas -->
+      <div class="col" id="col-backlog" data-col="backlog">
+        <div class="col-header">
+          <div class="col-title-row">
+            <div class="col-dot" style="background:#7b8cde;"></div>
+            <span class="col-title">💡 Backlog</span>
+            <span class="col-count" id="count-backlog">0</span>
+          </div>
+          <button class="col-add" title="Add idea" onclick="openColAdd('backlog')">+</button>
+        </div>
+        <div class="col-body" id="body-backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,'backlog')" ondragleave="onDragLeave(event)">
+          <div class="add-card-form" id="form-backlog">
+            <textarea class="add-card-textarea" id="textarea-backlog" placeholder="Future idea or feature..." rows="3"></textarea>
+            <div class="add-card-form-actions">
+              <button class="form-submit" onclick="submitAdd('backlog')">Add card</button>
+              <button class="form-cancel" onclick="closeAdd('backlog')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Column: Done -->
       <div class="col" id="col-done" data-col="done">
         <div class="col-header">
@@ -537,6 +559,7 @@ async function checkGate(){
           <option value="doing">In Progress</option>
           <option value="blocked">Waiting / Blocked</option>
           <option value="done">Done ✓</option>
+          <option value="backlog">💡 Backlog</option>
         </select>
       </div>
       <div class="modal-actions">
@@ -572,6 +595,7 @@ async function checkGate(){
           <option value="doing">In Progress</option>
           <option value="blocked">Waiting / Blocked</option>
           <option value="done">Done ✓</option>
+          <option value="backlog">💡 Backlog</option>
         </select>
       </div>
       <div class="modal-actions">
@@ -621,6 +645,8 @@ const DEFAULT_CARDS = [
   { id: uid(), col: 'todo', phase: 'phase-4', text: 'Notion creative board: album timeline, podcast concept, DJ camp outline' },
   { id: uid(), col: 'todo', phase: 'phase-4', text: 'Block protected creative time on calendar — non-negotiable weekly slots' },
   { id: uid(), col: 'todo', phase: 'phase-4', text: 'Review, celebrate wins, plan Q3 expansion goals 🎉' },
+  // Backlog — Ideas & Future Features
+  { id: uid(), col: 'backlog', phase: 'phase-custom', text: 'QuoteForge — Smart quote calculator: enter client name + event type → auto-calculates rates (by event type), travel, car rental, gear rental, seasonal pricing → generates client-facing email draft ready for review. Cut manual quoting from hours to minutes.' },
 ];
 
 function uid() {
@@ -663,7 +689,7 @@ const PHASE_LABELS = {
 };
 
 function renderAll() {
-  const cols = ['todo','doing','blocked','done'];
+  const cols = ['todo','doing','blocked','done','backlog'];
   cols.forEach(col => {
     const body = document.getElementById('body-' + col);
     // Keep the add form at top
