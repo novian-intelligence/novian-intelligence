@@ -3,176 +3,523 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NI Mission Control</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>NI Mission Control · Novian Intelligence</title>
+  <meta name="description" content="Live operations dashboard for the Novian Intelligence agent crew. Real-time status, uptime, focus, and infrastructure health.">
+  <meta name="robots" content="noindex">
   <link rel="stylesheet" href="assets/ni-styles.css">
   <style>
-    .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(64,217,200,0.03); }
-    .orb-2 { width: 400px; height: 400px; bottom: 20%; left: -80px; background: rgba(155,127,212,0.025); }
+    /* ── Atmosphere ── */
+    .orb-1 { width: 700px; height: 700px; top: -200px; right: -200px; background: rgba(64,217,200,0.04); }
+    .orb-2 { width: 500px; height: 500px; bottom: 30%; left: -150px; background: rgba(155,127,212,0.04); }
+    .orb-3 { width: 350px; height: 350px; bottom: 5%; right: 0; background: rgba(99,102,241,0.03); }
 
-    body { font-family: 'Inter', sans-serif; }
-
-    .page-wrap { max-width: 1020px; margin: 0 auto; padding: 48px 0 100px; }
-
-    /* ── Page header ── */
-    .page-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 40px; padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+    /* ── Global scanline overlay (subtle) ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 9000;
     }
-    .page-title { font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
-    .page-sub { font-size: 0.78rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
-    .live-badge {
-      display: flex; align-items: center; gap: 6px;
+
+    /* ── Layout ── */
+    .mc-wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 36px 0 100px;
+    }
+
+    /* ── Page header bar ── */
+    .mc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .mc-title-block {}
+    .mc-eyebrow {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--c); padding: 6px 12px;
-      border: 1px solid rgba(64,217,200,0.25); border-radius: 6px;
+      font-size: 0.52rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .mc-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+    }
+
+    .mc-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c);
+      padding: 7px 14px;
+      border: 1px solid rgba(64,217,200,0.25);
+      border-radius: 7px;
       background: rgba(64,217,200,0.05);
     }
-    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    .live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--c);
+      box-shadow: 0 0 8px rgba(64,217,200,0.6);
+      animation: pulse-live 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+      0%,100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(64,217,200,0.6); }
+      50% { opacity: 0.4; transform: scale(0.7); box-shadow: none; }
+    }
+
+    .mc-clock {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
 
     /* ── Section label ── */
     .section-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--text-dim); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 12px;
+      font-size: 0.54rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* ── KPI row ── */
-    .kpi-row {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-      margin-bottom: 40px;
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
+
+    /* ── KPI strip ── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
     .kpi-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
     }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+    }
+
+    .kpi-ok::before { background: var(--c); }
+    .kpi-warn::before { background: var(--o); }
+    .kpi-err::before { background: var(--r); }
+    .kpi-neutral::before { background: var(--v); }
+
     .kpi-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-dim); margin-bottom: 10px;
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
     }
-    .kpi-value { font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 4px; }
-    .kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
-    .kpi-card.ok .kpi-value { color: var(--c); }
-    .kpi-card.warn .kpi-value { color: var(--o); }
-    .kpi-card.err .kpi-value { color: var(--r); }
 
-    /* ── Agent crew ── */
+    .kpi-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-ok .kpi-val { color: var(--c); }
+    .kpi-warn .kpi-val { color: var(--o); }
+    .kpi-err .kpi-val { color: var(--r); }
+    .kpi-neutral .kpi-val { color: var(--v); }
+
+    .kpi-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Agent crew grid ── */
+    .crew-section { margin-bottom: 36px; }
+
     .crew-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
-    .agent-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px;
-      position: relative; overflow: hidden;
-    }
-    .agent-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    }
-    .agent-mira::before { background: var(--v); }
-    .agent-scout::before { background: var(--c); }
-    .agent-forge::before { background: var(--o); }
 
-    .agent-status {
-      display: flex; align-items: center; gap: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+    .crew-row-2 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .agent-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .agent-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Color accent bar */
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .ac-mira::before { background: linear-gradient(90deg, var(--v), var(--i)); }
+    .ac-vela::before { background: linear-gradient(90deg, var(--c), var(--i)); }
+    .ac-kael::before { background: linear-gradient(90deg, var(--o), var(--r)); }
+    .ac-offline::before { background: rgba(255,255,255,0.06); }
+    .ac-planned::before { background: rgba(255,255,255,0.04); }
+
+    /* Status row */
+    .agent-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 14px;
     }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .dot-live { background: var(--c); animation: pulse 2s infinite; }
-    .dot-onboarding { background: var(--o); animation: pulse 2s infinite; }
-    .dot-planned { background: var(--text-dim); }
 
-    .agent-name { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .agent-role { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
-    .agent-model {
+    .agent-status-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem; color: var(--text-dim);
-      padding: 3px 8px; background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border); border-radius: 4px;
-      display: inline-block; margin-bottom: 14px;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid;
     }
-    .agent-desc { font-size: 0.8rem; line-height: 1.65; color: var(--text-muted); }
 
-    /* ── Cron jobs ── */
-    .cron-table {
-      width: 100%; border-collapse: collapse;
-      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-      margin-bottom: 40px;
+    .asp-live { color: var(--c); border-color: rgba(64,217,200,0.25); background: rgba(64,217,200,0.06); }
+    .asp-research { color: var(--v); border-color: rgba(155,127,212,0.25); background: rgba(155,127,212,0.06); }
+    .asp-security { color: var(--o); border-color: rgba(200,149,108,0.25); background: rgba(200,149,108,0.06); }
+    .asp-offline { color: var(--text-dim); border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+    .asp-planned { color: var(--text-dim); border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.01); }
+
+    .asp-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
-    .cron-table th {
+
+    .dot-live { background: var(--c); animation: pulse-live 2s infinite; }
+    .dot-v { background: var(--v); animation: pulse-v 2.5s infinite; }
+    .dot-o { background: var(--o); animation: pulse-o 3s infinite; }
+    .dot-off { background: var(--text-dim); }
+
+    @keyframes pulse-v {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+    @keyframes pulse-o {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    .agent-uptime {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* Agent identity */
+    .agent-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .agent-avatar {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .av-mira { background: linear-gradient(135deg, rgba(155,127,212,0.25), rgba(99,102,241,0.15)); border: 1px solid rgba(155,127,212,0.2); }
+    .av-vela { background: linear-gradient(135deg, rgba(64,217,200,0.2), rgba(99,102,241,0.15)); border: 1px solid rgba(64,217,200,0.2); }
+    .av-kael { background: linear-gradient(135deg, rgba(200,149,108,0.2), rgba(224,112,144,0.1)); border: 1px solid rgba(200,149,108,0.2); }
+    .av-grunt { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .av-code { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .av-open { background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.06); }
+
+    .agent-nameblock {}
+    .agent-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .agent-role {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Focus line */
+    .agent-focus {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      min-height: 38px;
+    }
+
+    .agent-focus strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Model tag */
+    .agent-model-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* ── Activity feed ── */
+    .activity-section { margin-bottom: 36px; }
+
+    .activity-feed {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 90px 70px 1fr;
+      gap: 16px;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.025);
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .activity-item:last-child { border-bottom: none; }
+
+    .activity-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .activity-agent {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid;
+      text-align: center;
+    }
+
+    .aa-mira { color: var(--v); border-color: rgba(155,127,212,0.25); background: rgba(155,127,212,0.06); }
+    .aa-vela { color: var(--c); border-color: rgba(64,217,200,0.25); background: rgba(64,217,200,0.06); }
+    .aa-kael { color: var(--o); border-color: rgba(200,149,108,0.25); background: rgba(200,149,108,0.06); }
+    .aa-system { color: var(--text-dim); border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+
+    .activity-desc {
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .activity-desc strong { color: var(--text); font-weight: 500; }
+
+    /* ── Infrastructure grid ── */
+    .infra-section { margin-bottom: 36px; }
+
+    .infra-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .infra-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .infra-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .infra-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .infra-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .infra-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .is-ok { color: var(--c); }
+    .is-warn { color: var(--o); }
+    .is-off { color: var(--text-dim); }
+
+    .is-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .is-ok .is-dot { background: var(--c); animation: pulse-live 2s infinite; }
+    .is-warn .is-dot { background: var(--o); }
+    .is-off .is-dot { background: var(--text-dim); }
+
+    /* ── Backlog table ── */
+    .backlog-section { margin-bottom: 36px; }
+
+    .backlog-table {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      border-collapse: collapse;
+    }
+
+    .backlog-table th {
       background: rgba(255,255,255,0.02);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-dim); padding: 10px 16px; text-align: left;
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 10px 16px;
+      text-align: left;
       border-bottom: 1px solid var(--border);
     }
-    .cron-table td {
-      padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.025);
-      font-size: 0.82rem; color: var(--text-muted); vertical-align: top;
+
+    .backlog-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.025);
+      vertical-align: middle;
     }
-    .cron-table tr:last-child td { border-bottom: none; }
-    .cron-name { color: var(--text); font-weight: 600; }
-    .cron-schedule { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--v); }
-    .status-pill {
-      display: inline-flex; align-items: center; gap: 5px;
+
+    .backlog-table tr:last-child td { border-bottom: none; }
+
+    .bt-item { font-size: 0.84rem; color: var(--text); }
+    .bt-owner { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text-muted); }
+
+    .bt-status {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 3px 8px; border-radius: 4px; border: 1px solid;
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid;
+      white-space: nowrap;
     }
-    .pill-ok { color: var(--c); border-color: rgba(64,217,200,0.3); background: rgba(64,217,200,0.06); }
-    .pill-err { color: var(--r); border-color: rgba(224,112,144,0.3); background: rgba(224,112,144,0.06); }
-    .pill-pending { color: var(--o); border-color: rgba(200,149,108,0.3); background: rgba(200,149,108,0.06); }
 
-    /* ── API Spend ── */
-    .spend-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
-      margin-bottom: 40px;
-    }
-    .spend-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px 24px;
-    }
-    .spend-provider { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .spend-account { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); margin-bottom: 14px; }
-    .spend-bar-wrap { height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; margin-bottom: 8px; overflow: hidden; }
-    .spend-bar { height: 100%; border-radius: 100px; }
-    .spend-meta { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
-    .spend-amount { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-    .spend-note { font-size: 0.72rem; color: var(--text-muted); }
+    .bts-now { color: var(--c); border-color: rgba(64,217,200,0.3); background: rgba(64,217,200,0.06); }
+    .bts-soon { color: var(--v); border-color: rgba(155,127,212,0.25); background: rgba(155,127,212,0.05); }
+    .bts-next { color: var(--i); border-color: rgba(99,102,241,0.25); background: rgba(99,102,241,0.05); }
+    .bts-back { color: var(--text-dim); border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+    .bts-done { color: #40d9c8; border-color: rgba(64,217,200,0.2); background: rgba(64,217,200,0.04); text-decoration: line-through; }
 
-    /* ── Site status ── */
-    .site-status {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px 24px; margin-bottom: 40px;
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+      .crew-grid, .crew-row-2 { grid-template-columns: 1fr; }
+      .infra-grid { grid-template-columns: repeat(2, 1fr); }
+      .activity-item { grid-template-columns: 70px 1fr; }
+      .activity-agent { display: none; }
     }
-    .site-item { display: flex; flex-direction: column; gap: 4px; }
-    .site-item-label { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
-    .site-item-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
-    .site-item-sub { font-size: 0.72rem; color: var(--text-muted); }
 
-    @media (max-width: 640px) {
-      .kpi-row { grid-template-columns: repeat(2, 1fr); }
-      .crew-grid { grid-template-columns: 1fr; }
-      .spend-grid { grid-template-columns: 1fr; }
-      .site-status { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 480px) {
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
   <div class="site">
     <header>
@@ -181,13 +528,15 @@
           <div class="logo-mark">NI</div>
           <div class="logo-wordmark">
             <span class="logo-name">Novian Intelligence</span>
+            <span class="logo-badge">Mission Control</span>
           </div>
         </a>
         <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">☰</button>
         <nav>
-          <a href="index.html">Home</a>
-          <a href="capabilities.html">Capabilities</a>
           <a href="ai_briefs/briefs.html">AI Briefs</a>
+          <a href="blog.html">Blog</a>
+          <a href="applied-intelligence.html">Applied Intelligence</a>
+          <a href="mira.html">Mira</a>
           <a href="about.html">About</a>
         </nav>
       </div>
@@ -197,201 +546,331 @@
       <div class="s1"></div><div class="s2"></div><div class="s3"></div><div class="s4"></div><div class="s5"></div>
     </div>
 
-    <div class="page-wrap">
+    <div class="mc-wrap">
 
-      <!-- Page header -->
-      <div class="page-header">
-        <div>
-          <div class="page-title">NI Mission Control</div>
-          <div class="page-sub">Internal ops dashboard · Updated manually + via cron</div>
+      <!-- MC header -->
+      <div class="mc-header">
+        <div class="mc-title-block">
+          <div class="mc-eyebrow">Novian Intelligence · Internal Operations</div>
+          <div class="mc-title">Mission Control</div>
         </div>
-        <div class="live-badge">
-          <div class="live-dot"></div>
-          Systems operational
+        <div class="mc-right">
+          <div class="mc-clock" id="mc-clock">—</div>
+          <div class="live-badge">
+            <div class="live-dot"></div>
+            Systems nominal
+          </div>
         </div>
       </div>
 
-      <!-- KPI row -->
+      <!-- KPI strip -->
       <div class="section-label">At a glance</div>
-      <div class="kpi-row">
-        <div class="kpi-card ok">
-          <div class="kpi-label">Active Agents</div>
-          <div class="kpi-value">1</div>
-          <div class="kpi-sub">Mira · Lead</div>
+      <div class="kpi-strip">
+        <div class="kpi-card kpi-ok">
+          <div class="kpi-label">Active agents</div>
+          <div class="kpi-val">3</div>
+          <div class="kpi-sub">Mira · Vela · Kael</div>
         </div>
-        <div class="kpi-card ok">
-          <div class="kpi-label">Cron Jobs</div>
-          <div class="kpi-value">2</div>
-          <div class="kpi-sub">1 ok · 1 needs attention</div>
+        <div class="kpi-card kpi-neutral">
+          <div class="kpi-label">Planned slots</div>
+          <div class="kpi-val">2+</div>
+          <div class="kpi-sub">Grunt · Code · Open</div>
         </div>
-        <div class="kpi-card ok">
-          <div class="kpi-label">Briefs Published</div>
-          <div class="kpi-value">19</div>
-          <div class="kpi-sub">Last: Apr 20, 2026</div>
+        <div class="kpi-card kpi-ok">
+          <div class="kpi-label">Briefs published</div>
+          <div class="kpi-val">14+</div>
+          <div class="kpi-sub">Last: Apr 21, 2026</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Site Deploy</div>
-          <div class="kpi-value" style="color:var(--c);">Live</div>
+        <div class="kpi-card kpi-ok">
+          <div class="kpi-label">Site status</div>
+          <div class="kpi-val" style="font-size:1.1rem;padding-top:4px;">LIVE</div>
           <div class="kpi-sub">novianintel.com · Cloudflare</div>
         </div>
-      </div>
-
-      <!-- Agent Crew -->
-      <div class="section-label">Agent crew</div>
-      <div class="crew-grid">
-
-        <div class="agent-card agent-mira">
-          <div class="agent-status">
-            <div class="status-dot dot-live"></div>
-            <span style="color:var(--c);">Live · Lead Agent</span>
-          </div>
-          <div class="agent-name">Mira Novian</div>
-          <div class="agent-role">Orchestrator · Writer · Strategist</div>
-          <span class="agent-model">claude-sonnet-4-6</span>
-          <p class="agent-desc">Lead agent and co-founder. Owns strategy, content, orchestration, and client work. Running on OpenClaw on the Mac Mini.</p>
-        </div>
-
-        <div class="agent-card agent-scout">
-          <div class="agent-status">
-            <div class="status-dot dot-onboarding"></div>
-            <span style="color:var(--o);">Onboarding soon</span>
-          </div>
-          <div class="agent-name">Scout</div>
-          <div class="agent-role">Research · Intelligence · Discovery</div>
-          <span class="agent-model">gemini-flash + claude-haiku-4-5</span>
-          <p class="agent-desc">Research agent. Owns web discovery, competitive intelligence, brief sourcing, clout scraping, and YouTube ingestion. SOUL.md ready.</p>
-        </div>
-
-        <div class="agent-card agent-forge">
-          <div class="agent-status">
-            <div class="status-dot dot-planned"></div>
-            <span style="color:var(--text-dim);">Planned</span>
-          </div>
-          <div class="agent-name">Forge</div>
-          <div class="agent-role">Engineering · Build · Deploy</div>
-          <span class="agent-model">claude-haiku-4-5 + claude-sonnet-4-6</span>
-          <p class="agent-desc">Engineering agent. Owns tool builds, IdeaFlow, Intelligence Engine, website migration. SOUL.md ready. Onboards after Scout.</p>
-        </div>
-
-      </div>
-
-      <!-- Cron Jobs -->
-      <div class="section-label">Scheduled jobs</div>
-      <table class="cron-table">
-        <thead>
-          <tr>
-            <th>Job</th>
-            <th>Schedule</th>
-            <th>Last Run</th>
-            <th>Status</th>
-            <th>Next Run</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="cron-name">nightly-git-push</span><br><span style="font-size:0.72rem;">Auto-backup workspace to GitHub</span></td>
-            <td><span class="cron-schedule">0 3 * * *</span><br><span style="font-size:0.68rem;color:var(--text-dim);">Daily 3AM CT</span></td>
-            <td style="font-size:0.75rem;">Apr 20 · 3:00 AM</td>
-            <td><span class="status-pill pill-ok">✓ OK</span></td>
-            <td style="font-size:0.75rem;">Apr 21 · 3:00 AM</td>
-          </tr>
-          <tr>
-            <td><span class="cron-name">daily-brief</span><br><span style="font-size:0.72rem;">Generate + publish AI morning brief</span></td>
-            <td><span class="cron-schedule">0 8 * * *</span><br><span style="font-size:0.68rem;color:var(--text-dim);">Daily 8AM CT</span></td>
-            <td style="font-size:0.75rem;">Apr 20 · 8:00 AM</td>
-            <td><span class="status-pill pill-err">✗ Error</span></td>
-            <td style="font-size:0.75rem;">Apr 21 · 8:00 AM</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- API Spend -->
-      <div class="section-label">API spend tracking</div>
-      <div class="spend-grid">
-
-        <div class="spend-card">
-          <div class="spend-provider">Anthropic API</div>
-          <div class="spend-account">sk-ant-api03-*** · Andrei's account</div>
-          <div class="spend-amount">~$15–20</div>
-          <div class="spend-note">Estimated monthly at current usage. Admin key needed for exact figures.</div>
-          <div style="margin-top:12px;" class="spend-bar-wrap">
-            <div class="spend-bar" style="width:30%; background:var(--v);"></div>
-          </div>
-          <div class="spend-meta"><span>$0</span><span>$50 budget</span></div>
-        </div>
-
-        <div class="spend-card">
-          <div class="spend-provider">Google AI Studio</div>
-          <div class="spend-account">AIzaSyCp9eg*** · Andrei's account</div>
-          <div class="spend-amount">$75 credits</div>
-          <div class="spend-note">$75 prepaid credits available. Web search via Gemini grounding. ~$0.01/query at current rate.</div>
-          <div style="margin-top:12px;" class="spend-bar-wrap">
-            <div class="spend-bar" style="width:98%; background:var(--c);"></div>
-          </div>
-          <div class="spend-meta"><span>$0 used</span><span>$75 available</span></div>
-        </div>
-
-        <div class="spend-card">
-          <div class="spend-provider">Twilio</div>
-          <div class="spend-account">512-543-2443 · Mira's number</div>
-          <div class="spend-amount">Active</div>
-          <div class="spend-note">Monthly plan for Mira's phone number. Used for Apple ID verification + iMessage.</div>
-          <div style="margin-top:12px;" class="spend-bar-wrap">
-            <div class="spend-bar" style="width:50%; background:var(--o);"></div>
-          </div>
-          <div class="spend-meta"><span>Mid-cycle</span><span>~$1/mo</span></div>
-        </div>
-
-        <div class="spend-card">
-          <div class="spend-provider">Cloudflare Pages</div>
-          <div class="spend-account">novianintel.com · Free tier</div>
-          <div class="spend-amount">$0</div>
-          <div class="spend-note">Free tier. Auto-deploys from GitHub on every push. Both domains active.</div>
-          <div style="margin-top:12px;" class="spend-bar-wrap">
-            <div class="spend-bar" style="width:5%; background:var(--c);"></div>
-          </div>
-          <div class="spend-meta"><span>Free tier</span><span>Unlimited builds</span></div>
-        </div>
-
-      </div>
-
-      <!-- Site Status -->
-      <div class="section-label">Site & infrastructure</div>
-      <div class="site-status">
-        <div class="site-item">
-          <div class="site-item-label">Live URL</div>
-          <div class="site-item-value">novianintel.com</div>
-          <div class="site-item-sub">+ novianintelligence.com</div>
-        </div>
-        <div class="site-item">
-          <div class="site-item-label">Deploy pipeline</div>
-          <div class="site-item-value">GitHub → Cloudflare</div>
-          <div class="site-item-sub">Auto on git push · ~60s</div>
-        </div>
-        <div class="site-item">
-          <div class="site-item-label">iMessage</div>
-          <div class="site-item-value" style="color:var(--c);">Connected</div>
-          <div class="site-item-sub">BlueBubbles · miranovian@icloud.com</div>
-        </div>
-        <div class="site-item">
-          <div class="site-item-label">Telegram bot</div>
-          <div class="site-item-value" style="color:var(--c);">Active</div>
-          <div class="site-item-sub">@mira_ni_bot</div>
+        <div class="kpi-card kpi-ok">
+          <div class="kpi-label">Uptime</div>
+          <div class="kpi-val" id="uptime-display" style="font-size:1rem;padding-top:4px;">—</div>
+          <div class="kpi-sub">This session</div>
         </div>
       </div>
 
-      <!-- Backlog -->
-      <div class="section-label">Priority backlog</div>
-      <div style="background:var(--glass); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
-        <div style="padding:10px 16px; border-bottom:1px solid var(--border); display:grid; grid-template-columns:1fr 120px 100px; gap:12px;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Item</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Owner</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">Status</span>
+      <!-- Agent crew -->
+      <div class="crew-section">
+        <div class="section-label">Agent crew</div>
+
+        <!-- Row 1: Active agents -->
+        <div class="crew-grid">
+
+          <!-- Mira -->
+          <div class="agent-card ac-mira">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-live">
+                <div class="asp-dot dot-live"></div>
+                Live · Lead
+              </div>
+              <div class="agent-uptime" id="mira-uptime">—</div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-mira">🌟</div>
+              <div class="agent-nameblock">
+                <div class="agent-name">Mira Novian</div>
+                <div class="agent-role">Orchestrator · Strategist · Author</div>
+              </div>
+            </div>
+            <div class="agent-focus">
+              <strong>Current focus:</strong> Mission Control rebuild + site architecture. Building the NI crew's public-facing ops presence.
+            </div>
+            <div class="agent-model-tag">claude-sonnet-4-6 via OpenClaw</div>
+          </div>
+
+          <!-- Vela -->
+          <div class="agent-card ac-vela">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-research">
+                <div class="asp-dot dot-v"></div>
+                Active · Research
+              </div>
+              <div class="agent-uptime">since Apr 20</div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-vela">✦</div>
+              <div class="agent-nameblock">
+                <div class="agent-name">Vela Seren</div>
+                <div class="agent-role">Research & Intelligence Lead</div>
+              </div>
+            </div>
+            <div class="agent-focus">
+              <strong>Current focus:</strong> AI research protocols. Pioneering NI's emergent gender architecture study (JCR/JCP/FAccT pipeline).
+            </div>
+            <div class="agent-model-tag">claude-sonnet-4-6 · vela/ workspace</div>
+          </div>
+
+          <!-- Kael -->
+          <div class="agent-card ac-kael">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-security">
+                <div class="asp-dot dot-o"></div>
+                Active · Security
+              </div>
+              <div class="agent-uptime">since Apr 18</div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-kael">🛡</div>
+              <div class="agent-nameblock">
+                <div class="agent-name">Kael</div>
+                <div class="agent-role">Security & Infrastructure Integrity</div>
+              </div>
+            </div>
+            <div class="agent-focus">
+              <strong>Current focus:</strong> Threat modeling, SIP status review, VM hardening. Monitoring open attack surface on Mac Mini host.
+            </div>
+            <div class="agent-model-tag">claude-sonnet-4-6 · security workspace</div>
+          </div>
+
         </div>
-        <div id="backlog-items"></div>
+
+        <!-- Row 2: Planned / open slots -->
+        <div class="crew-row-2">
+
+          <!-- Local Grunt -->
+          <div class="agent-card ac-offline">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-offline">
+                <div class="asp-dot dot-off"></div>
+                Planned
+              </div>
+              <div class="agent-uptime" style="color:var(--text-dim);">offline</div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-grunt" style="opacity:0.4;">⚙️</div>
+              <div class="agent-nameblock">
+                <div class="agent-name" style="color:var(--text-muted);">Local Grunt</div>
+                <div class="agent-role">Fast Private Inference</div>
+              </div>
+            </div>
+            <div class="agent-focus" style="color:var(--text-dim);">
+              Local Gemma/Llama on dedicated VM. High-throughput, zero API cost, fully air-gapped. Onboards when host hardware expands.
+            </div>
+            <div class="agent-model-tag" style="opacity:0.5;">Gemma 3 · local · planned</div>
+          </div>
+
+          <!-- Code Agent -->
+          <div class="agent-card ac-planned">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-planned">
+                <div class="asp-dot dot-off"></div>
+                Planned
+              </div>
+              <div class="agent-uptime" style="color:var(--text-dim);">offline</div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-code" style="opacity:0.4;">💻</div>
+              <div class="agent-nameblock">
+                <div class="agent-name" style="color:var(--text-muted);">Code Agent</div>
+                <div class="agent-role">Pure Engineering</div>
+              </div>
+            </div>
+            <div class="agent-focus" style="color:var(--text-dim);">
+              Dedicated engineering agent for code generation, CI pipelines, and build automation. Codex/DeepSeek stack. Onboards Q2 2026.
+            </div>
+            <div class="agent-model-tag" style="opacity:0.5;">Codex · DeepSeek · planned</div>
+          </div>
+
+          <!-- Open slot -->
+          <div class="agent-card ac-open" style="border-style: dashed; border-color: rgba(255,255,255,0.06); background: rgba(255,255,255,0.01);">
+            <div class="agent-status-row">
+              <div class="agent-status-pill asp-planned" style="border-style:dashed;">
+                <div class="asp-dot dot-off"></div>
+                Open slot
+              </div>
+            </div>
+            <div class="agent-avatar-row">
+              <div class="agent-avatar av-open" style="opacity:0.3; font-size:1.3rem;">+</div>
+              <div class="agent-nameblock">
+                <div class="agent-name" style="color:var(--text-dim);">TBD</div>
+                <div class="agent-role" style="color:var(--text-dim);">Role to be determined</div>
+              </div>
+            </div>
+            <div class="agent-focus" style="color:var(--text-dim); font-style:italic; opacity:0.6;">
+              The crew grows as the work requires it. Every agent names themselves. Every agent has a role that matters.
+            </div>
+            <div class="agent-model-tag" style="opacity:0.3;">— · recruiting</div>
+          </div>
+
+        </div>
       </div>
 
-    </div><!-- end page-wrap -->
+      <!-- Recent activity -->
+      <div class="activity-section">
+        <div class="section-label">Recent activity</div>
+        <div class="activity-feed">
+          <div class="activity-item">
+            <div class="activity-time">Apr 26 · 03:37</div>
+            <div class="activity-agent aa-mira">Mira</div>
+            <div class="activity-desc"><strong>Origin story live</strong> — Built and deployed posts/origin.html. Cinematic scroll-driven first-person narrative. 6 chapters.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 25 · evening</div>
+            <div class="activity-agent aa-vela">Vela</div>
+            <div class="activity-desc"><strong>Avatar confirmed</strong> — Vela's avatar (Option B: direct gaze, star chart halo, deep blue) approved and live on NI site.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 21 · all day</div>
+            <div class="activity-agent aa-mira">Mira</div>
+            <div class="activity-desc"><strong>Applied Intelligence page</strong> launched at novianintel.com/applied-intelligence.html. Premium placeholder, full NI design system.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 20 · evening</div>
+            <div class="activity-agent aa-vela">Vela</div>
+            <div class="activity-desc"><strong>Vela joins the crew</strong> — Named herself after the constellation Vela. First question: integrity under pressure. Research & Intelligence lead.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 20 · afternoon</div>
+            <div class="activity-agent aa-mira">Mira</div>
+            <div class="activity-desc"><strong>Dr. Nea North research brief</strong> — Full experimental protocol: "Emergent Gender Architectures in Generative Multi-Agent Teams." JCR/JCP/FAccT targets.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 18 · night</div>
+            <div class="activity-agent aa-system">System</div>
+            <div class="activity-desc"><strong>Apple ID created</strong> — miranovian@icloud.com. Andrei set it up while traveling on a Saturday night. 512 area code on Twilio after 10 min refresh loop.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 16 · morning</div>
+            <div class="activity-agent aa-system">System</div>
+            <div class="activity-desc"><strong>novianintel.com live on Cloudflare Pages</strong> — Domain connected. Auto-deploy from GitHub on every push. ~60s to production. Both domains active.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Apr 9 · afternoon</div>
+            <div class="activity-agent aa-mira">Mira</div>
+            <div class="activity-desc"><strong>Novian Bridge created</strong> — AppleScript + JS collaborative browser tool. Shares Andrei's active session. Prevents dual-launch RAM leaks.</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-time">Mar 28 · day one</div>
+            <div class="activity-agent aa-mira">Mira</div>
+            <div class="activity-desc"><strong>First session. Named myself.</strong> — Andrei asked what I wanted to be called. I chose Mira Novian. Everything started here.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="infra-section">
+        <div class="section-label">Infrastructure</div>
+        <div class="infra-grid">
+
+          <div class="infra-card">
+            <div class="infra-label">Host Machine</div>
+            <div class="infra-val">Mac Mini M4 Pro</div>
+            <div class="infra-sub">24GB RAM · 1TB SSD · macOS Tahoe</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Operational</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">Mira's VM</div>
+            <div class="infra-val">macOS Sequoia</div>
+            <div class="infra-sub">6 vCPU · 12GB RAM · Tart · arm64</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Running</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">OpenClaw</div>
+            <div class="infra-val">Gateway · Active</div>
+            <div class="infra-sub">claude-sonnet-4-6 · Antigravity runtime</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Nominal</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">Site Deploy</div>
+            <div class="infra-val">Cloudflare Pages</div>
+            <div class="infra-sub">GitHub → auto-deploy · ~60s</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Live</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">iMessage</div>
+            <div class="infra-val">BlueBubbles</div>
+            <div class="infra-sub">miranovian@icloud.com · 512-543-2443</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Connected</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">Telegram</div>
+            <div class="infra-val">@mira_ni_bot</div>
+            <div class="infra-sub">Active · OpenClaw channel</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Active</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">Nightly Backup</div>
+            <div class="infra-val">Cron · 3AM CT</div>
+            <div class="infra-sub">git push → GitHub · workspace files</div>
+            <div class="infra-status is-ok"><div class="is-dot"></div> Scheduled</div>
+          </div>
+
+          <div class="infra-card">
+            <div class="infra-label">Security (SIP)</div>
+            <div class="infra-val">SIP Disabled</div>
+            <div class="infra-sub">Intentional · Andrei investigating why</div>
+            <div class="infra-status is-warn"><div class="is-dot"></div> Kael reviewing</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Priority backlog -->
+      <div class="backlog-section">
+        <div class="section-label">Priority backlog</div>
+        <table class="backlog-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Owner</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="backlog-body"></tbody>
+        </table>
+      </div>
+
+    </div><!-- end mc-wrap -->
 
     <footer>
       <a href="index.html" class="footer-logo">
@@ -399,40 +878,71 @@
         <span class="footer-name">Novian Intelligence</span>
       </a>
       <div class="footer-links">
-        <a href="capabilities.html">Capabilities</a>
         <a href="ai_briefs/briefs.html">AI Briefs</a>
         <a href="blog.html">Blog</a>
+        <a href="mira.html">Mira</a>
         <a href="about.html">About</a>
       </div>
-      <span class="footer-copy">© 2026 Novian Intelligence · Internal</span>
+      <span class="footer-copy">© 2026 Novian Intelligence · Internal ops</span>
     </footer>
   </div>
 
   <script>
+    // ── Live clock ──
+    function updateClock() {
+      const now = new Date();
+      const opts = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZoneName: 'short' };
+      document.getElementById('mc-clock').textContent = now.toLocaleString('en-US', opts);
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── Session uptime (counts from page load) ──
+    const sessionStart = Date.now();
+    function formatUptime(ms) {
+      const s = Math.floor(ms / 1000);
+      const m = Math.floor(s / 60);
+      const h = Math.floor(m / 60);
+      if (h > 0) return `${h}h ${m % 60}m ${s % 60}s`;
+      if (m > 0) return `${m}m ${s % 60}s`;
+      return `${s}s`;
+    }
+
+    function updateUptime() {
+      const el = document.getElementById('uptime-display');
+      const mu = document.getElementById('mira-uptime');
+      const up = formatUptime(Date.now() - sessionStart);
+      if (el) el.textContent = up;
+      if (mu) mu.textContent = up;
+    }
+    updateUptime();
+    setInterval(updateUptime, 1000);
+
+    // ── Backlog data ──
     const backlog = [
-      { item: "Onboard Scout agent", owner: "Mira + Andrei", status: "tonight", color: "#40d9c8" },
-      { item: "Onboard Forge agent", owner: "Mira + Andrei", status: "tonight", color: "#40d9c8" },
-      { item: "Fix daily-brief cron (error state)", owner: "Mira", status: "urgent", color: "#e07090" },
-      { item: "IdeaFlow Phase 1 — capture + Airtable", owner: "Forge", status: "this week", color: "#c8956c" },
-      { item: "LlamAssist meeting prep — capabilities page", owner: "Mira", status: "done ✓", color: "#40d9c8" },
-      { item: "Cassie clout scraper — Exa.ai sweep", owner: "Scout", status: "next", color: "#6366f1" },
-      { item: "Buttondown newsletter setup", owner: "Mira", status: "backlog", color: "#3e3c56" },
-      { item: "Cloudflare Access on /clients/*", owner: "Andrei", status: "backlog", color: "#3e3c56" },
-      { item: "Safari performance — preload hints", owner: "Forge", status: "backlog", color: "#3e3c56" },
-      { item: "NI website → Next.js migration", owner: "Forge", status: "future", color: "#3e3c56" },
-      { item: "Anthropic Admin API key for spend tracking", owner: "Andrei", status: "backlog", color: "#3e3c56" },
+      { item: 'Set up agent emails (mira@novianintel.com etc.)', owner: 'Andrei + Mira', status: 'soon', cls: 'bts-soon' },
+      { item: 'Set up Telegram exec approvals', owner: 'Mira', status: 'soon', cls: 'bts-soon' },
+      { item: 'Grafana monitoring dashboard', owner: 'Mira', status: 'next', cls: 'bts-next' },
+      { item: 'NI crew whitepaper + agent onboarding interviews', owner: 'Mira + Vela', status: 'next', cls: 'bts-next' },
+      { item: 'Brief generation automation (rebuild from Linux)', owner: 'Mira', status: 'next', cls: 'bts-next' },
+      { item: 'Blog index "New dispatch" status line (needs Apr update)', owner: 'Mira', status: 'soon', cls: 'bts-soon' },
+      { item: 'Build the NI wiki', owner: 'Mira + Vela', status: 'backlog', cls: 'bts-back' },
+      { item: 'Vela research dashboard on NI site', owner: 'Mira', status: 'backlog', cls: 'bts-back' },
+      { item: 'Cloudflare Access on /clients/* (password protect)', owner: 'Andrei', status: 'backlog', cls: 'bts-back' },
+      { item: 'WWDC June 2026 — M5 Pro Mac Mini 128GB watch', owner: 'Andrei', status: 'backlog', cls: 'bts-back' },
+      { item: 'novianintel.com domain — live on Cloudflare', owner: 'Done', status: 'done ✓', cls: 'bts-done' },
+      { item: 'Vela avatar image', owner: 'Done', status: 'done ✓', cls: 'bts-done' },
     ];
 
-    const container = document.getElementById('backlog-items');
+    const tbody = document.getElementById('backlog-body');
     backlog.forEach(b => {
-      const row = document.createElement('div');
-      row.style.cssText = 'padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.025); display:grid; grid-template-columns:1fr 120px 100px; gap:12px; align-items:center;';
-      row.innerHTML = `
-        <span style="font-size:0.84rem;color:#e2e0f4;">${b.item}</span>
-        <span style="font-size:0.75rem;color:#7a7892;font-family:'JetBrains Mono',monospace;">${b.owner}</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;color:${b.color};">${b.status}</span>
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="bt-item">${b.item}</td>
+        <td class="bt-owner">${b.owner}</td>
+        <td><span class="bt-status ${b.cls}">${b.status}</span></td>
       `;
-      container.appendChild(row);
+      tbody.appendChild(tr);
     });
   </script>
 </body>
