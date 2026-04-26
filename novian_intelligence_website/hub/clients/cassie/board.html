@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Board · Sounds by Cassandra</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0608;
+      --bg2:       #110c0e;
+      --bg3:       #1a1015;
+      --glass:     rgba(255,255,255,0.03);
+      --border:    rgba(255,255,255,0.07);
+      --border-h:  rgba(212,160,120,0.3);
+      --rose:      #e8957a;
+      --rose-dim:  rgba(232,149,122,0.10);
+      --rose-bdr:  rgba(232,149,122,0.25);
+      --gold:      #c8956c;
+      --gold-dim:  rgba(200,149,108,0.10);
+      --gold-bdr:  rgba(200,149,108,0.25);
+      --blush:     #f2c4b0;
+      --mauve:     #d4a0c0;
+      --mauve-dim: rgba(212,160,192,0.10);
+      --mauve-bdr: rgba(212,160,192,0.25);
+      --green:     #6db88a;
+      --green-dim: rgba(109,184,138,0.10);
+      --green-bdr: rgba(109,184,138,0.25);
+      --text:      #f0ebe8;
+      --text-muted:#a89890;
+      --text-dim:  #6a5c56;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Password Gate ── */
+    #gate {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(ellipse at 60% 30%, rgba(232,149,122,0.06) 0%, #0a0608 60%);
+      align-items: center;
+      justify-content: center;
+    }
+    .gate-card { width: 100%; max-width: 400px; padding: 0 24px; text-align: center; }
+    .gate-logo {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, #e8957a, #c8956c, #d4a0c0);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: #fff;
+      margin: 0 auto 28px; letter-spacing: -0.02em;
+      box-shadow: 0 8px 32px rgba(232,149,122,0.25);
+    }
+    .gate-eyebrow { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 10px; }
+    .gate-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .gate-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 36px; line-height: 1.6; }
+    .gate-input {
+      width: 100%; padding: 14px 18px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; color: var(--text); font-size: 0.95rem;
+      font-family: inherit; outline: none; margin-bottom: 10px;
+      text-align: center; letter-spacing: 0.08em;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .gate-input:focus { border-color: var(--rose-bdr); box-shadow: 0 0 0 3px rgba(232,149,122,0.12); }
+    #gateError { font-size: 0.78rem; color: #e07090; margin-bottom: 10px; min-height: 18px; }
+    .gate-btn {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      border: none; border-radius: 12px; color: #fff;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(232,149,122,0.3);
+    }
+    .gate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .gate-footer { font-size: 0.62rem; color: var(--text-dim); margin-top: 24px; opacity: 0.6; }
+
+    /* ── Layout ── */
+    .site { display: none; }
+
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 500px; height: 500px; top: -100px; right: -100px; background: rgba(232,149,122,0.04); }
+    .orb-2 { width: 400px; height: 400px; bottom: 10%; left: -100px; background: rgba(212,160,192,0.03); }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,6,8,0.9); backdrop-filter: blur(20px);
+    }
+    .header-inner {
+      max-width: 1400px; margin: 0 auto; padding: 0 32px;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 800; color: #fff;
+    }
+    .logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .logo-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+    .header-right { display: flex; align-items: center; gap: 20px; }
+    .back-btn {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--rose); }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .strip { height: 3px; background: linear-gradient(to right, var(--rose) 0%, var(--gold) 30%, var(--mauve) 60%, var(--rose) 100%); }
+
+    /* ── Page header ── */
+    .page-header {
+      max-width: 1400px; margin: 0 auto; padding: 40px 32px 28px;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .page-title-area { display: flex; flex-direction: column; gap: 8px; }
+    .page-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.56rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .page-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--rose); opacity: 0.4; }
+    .page-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; color: #fff; }
+    .page-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+    .add-card-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 10px;
+      background: var(--rose-dim); border: 1px solid var(--rose-bdr);
+      color: var(--rose); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.18s; white-space: nowrap; flex-shrink: 0;
+    }
+    .add-card-btn:hover { background: rgba(232,149,122,0.18); }
+
+    /* ── Board ── */
+    .board-wrap {
+      max-width: 1400px; margin: 0 auto; padding: 0 32px 80px;
+      position: relative; z-index: 1;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── Column ── */
+    .col {
+      border-radius: 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      min-height: 200px;
+    }
+    .col-header {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px;
+    }
+    .col-title-row { display: flex; align-items: center; gap: 10px; }
+    .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .col-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.01em; color: var(--text); }
+    .col-count {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      padding: 2px 8px; border-radius: 100px; color: var(--text-dim);
+    }
+    .col-add {
+      width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-dim); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; line-height: 1; transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .col-add:hover { border-color: var(--rose-bdr); color: var(--rose); background: var(--rose-dim); }
+
+    .col-body {
+      padding: 12px;
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 100px;
+    }
+    .col-body.drag-over { background: rgba(232,149,122,0.04); border-radius: 0 0 16px 16px; }
+
+    /* ── Card ── */
+    .task-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: grab;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+      user-select: none;
+    }
+    .task-card:hover { border-color: var(--border-h); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .task-card.dragging { opacity: 0.4; cursor: grabbing; }
+
+    .card-phase {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.48rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 4px;
+      display: inline-block; margin-bottom: 8px;
+    }
+    .phase-1 { color: var(--rose); background: var(--rose-dim); border: 1px solid var(--rose-bdr); }
+    .phase-2 { color: var(--gold); background: var(--gold-dim); border: 1px solid var(--gold-bdr); }
+    .phase-3 { color: var(--mauve); background: var(--mauve-dim); border: 1px solid var(--mauve-bdr); }
+    .phase-4 { color: var(--green); background: var(--green-dim); border: 1px solid var(--green-bdr); }
+    .phase-custom { color: var(--text-muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+
+    .card-text {
+      font-size: 0.82rem; line-height: 1.5; color: var(--text-muted); font-weight: 500;
+    }
+
+    .card-actions {
+      display: none; position: absolute; top: 8px; right: 8px;
+      gap: 4px;
+    }
+    .task-card:hover .card-actions { display: flex; }
+    .card-action-btn {
+      width: 20px; height: 20px; border-radius: 5px;
+      border: 1px solid var(--border); background: var(--bg2);
+      color: var(--text-dim); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; transition: all 0.15s;
+    }
+    .card-action-btn:hover { border-color: var(--rose-bdr); color: var(--rose); background: var(--rose-dim); }
+    .card-action-btn.delete-btn:hover { border-color: rgba(220,80,80,0.4); color: #e06060; background: rgba(220,80,80,0.1); }
+
+    /* ── Add card inline ── */
+    .add-card-form {
+      display: none; flex-direction: column; gap: 8px;
+      padding: 10px 12px; background: var(--bg3);
+      border: 1px solid var(--rose-bdr); border-radius: 10px;
+      margin-top: 4px;
+    }
+    .add-card-form.open { display: flex; }
+    .add-card-textarea {
+      background: transparent; border: none; outline: none;
+      color: var(--text); font-family: inherit; font-size: 0.82rem;
+      line-height: 1.5; resize: none; min-height: 60px;
+    }
+    .add-card-textarea::placeholder { color: var(--text-dim); }
+    .add-card-form-actions { display: flex; gap: 6px; align-items: center; }
+    .form-submit {
+      padding: 6px 14px; border-radius: 7px;
+      background: var(--rose-dim); border: 1px solid var(--rose-bdr);
+      color: var(--rose); font-size: 0.72rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: all 0.15s;
+    }
+    .form-submit:hover { background: rgba(232,149,122,0.2); }
+    .form-cancel {
+      padding: 6px 10px; border-radius: 7px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-dim); font-size: 0.72rem;
+      cursor: pointer; font-family: inherit; transition: all 0.15s;
+    }
+    .form-cancel:hover { color: var(--text); }
+
+    /* ── Edit modal ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      width: 100%; max-width: 460px; margin: 16px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 18px; padding: 28px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .modal-title { font-size: 1rem; font-weight: 700; color: #fff; }
+    .modal-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+    .modal-textarea {
+      width: 100%; min-height: 80px; padding: 12px 14px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-family: inherit;
+      font-size: 0.85rem; line-height: 1.55; resize: vertical; outline: none;
+      transition: border-color 0.2s;
+    }
+    .modal-textarea:focus { border-color: var(--rose-bdr); }
+    .modal-select {
+      width: 100%; padding: 10px 14px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-family: inherit;
+      font-size: 0.85rem; outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .modal-select:focus { border-color: var(--rose-bdr); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px; }
+    .modal-save {
+      padding: 10px 22px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      border: none; color: #fff; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+    }
+    .modal-save:hover { opacity: 0.85; }
+    .modal-close {
+      padding: 10px 16px; border-radius: 10px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 0.82rem;
+      cursor: pointer; font-family: inherit; transition: all 0.15s;
+    }
+    .modal-close:hover { border-color: var(--border-h); color: var(--text); }
+
+    /* ── Empty state ── */
+    .empty-state {
+      padding: 24px 16px; text-align: center;
+      color: var(--text-dim); font-size: 0.75rem; line-height: 1.6;
+      border: 1px dashed rgba(255,255,255,0.06); border-radius: 8px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { .board { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) {
+      .board { grid-template-columns: 1fr; }
+      .board-wrap { padding: 0 16px 60px; }
+      .page-header { padding: 28px 16px 20px; }
+      .header-inner { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Password Gate ── -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">NI</div>
+    <div class="gate-eyebrow">Novian Intelligence · Client Portal</div>
+    <div class="gate-title">Project Board</div>
+    <div class="gate-sub">Enter your access code to view the project board.</div>
+    <input id="gateInput" class="gate-input" type="password" placeholder="Access code"
+      autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+    <div id="gateError"></div>
+    <button class="gate-btn" onclick="checkGate()">Continue →</button>
+    <div class="gate-footer">Confidential · Sounds by Cassandra · Novian Intelligence · 2026</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ni_cassie_auth')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+    initBoard();
+  }
+});
+async function checkGate(){
+  const val = document.getElementById('gateInput').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hex==='0804a4e452dd3d1712243f0ffea8e94c91fbc06c028ae1116fd602df83ecf0a5'){
+    sessionStorage.setItem('ni_cassie_auth','1');
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+    initBoard();
+  } else {
+    document.getElementById('gateError').textContent='Incorrect access code. Please try again.';
+    document.getElementById('gateInput').value='';
+    document.getElementById('gateInput').focus();
+  }
+}
+</script>
+
+<!-- ── Main Site ── -->
+<div class="site">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">NI</div>
+        <div class="logo-wordmark">
+          <span class="logo-name">Sounds by Cassandra</span>
+          <span class="logo-badge">Project Board</span>
+        </div>
+      </a>
+      <div class="header-right">
+        <a href="index.html" class="back-btn">← Back to portal</a>
+        <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);">
+          <div class="live-dot"></div>
+          <span>Live Board</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip"></div>
+
+  <div class="page-header">
+    <div class="page-title-area">
+      <div class="page-eyebrow">Business Transformation · 90-Day Plan</div>
+      <div class="page-title">Project Board</div>
+      <div class="page-sub">Drag cards between columns. Click + to add tasks. Changes auto-save in your browser.</div>
+    </div>
+    <button class="add-card-btn" onclick="openGlobalAdd()">+ Add Task</button>
+  </div>
+
+  <div class="board-wrap">
+    <div class="board" id="board">
+
+      <!-- Column: Not Started -->
+      <div class="col" id="col-todo" data-col="todo">
+        <div class="col-header">
+          <div class="col-title-row">
+            <div class="col-dot" style="background:#e8957a;"></div>
+            <span class="col-title">Not Started</span>
+            <span class="col-count" id="count-todo">0</span>
+          </div>
+          <button class="col-add" title="Add task" onclick="openColAdd('todo')">+</button>
+        </div>
+        <div class="col-body" id="body-todo" ondragover="onDragOver(event)" ondrop="onDrop(event,'todo')" ondragleave="onDragLeave(event)">
+          <div class="add-card-form" id="form-todo">
+            <textarea class="add-card-textarea" id="textarea-todo" placeholder="What needs to be done?" rows="3"></textarea>
+            <div class="add-card-form-actions">
+              <button class="form-submit" onclick="submitAdd('todo')">Add card</button>
+              <button class="form-cancel" onclick="closeAdd('todo')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column: In Progress -->
+      <div class="col" id="col-doing" data-col="doing">
+        <div class="col-header">
+          <div class="col-title-row">
+            <div class="col-dot" style="background:#c8956c;"></div>
+            <span class="col-title">In Progress</span>
+            <span class="col-count" id="count-doing">0</span>
+          </div>
+          <button class="col-add" title="Add task" onclick="openColAdd('doing')">+</button>
+        </div>
+        <div class="col-body" id="body-doing" ondragover="onDragOver(event)" ondrop="onDrop(event,'doing')" ondragleave="onDragLeave(event)">
+          <div class="add-card-form" id="form-doing">
+            <textarea class="add-card-textarea" id="textarea-doing" placeholder="What's in progress?" rows="3"></textarea>
+            <div class="add-card-form-actions">
+              <button class="form-submit" onclick="submitAdd('doing')">Add card</button>
+              <button class="form-cancel" onclick="closeAdd('doing')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column: Waiting / Blocked -->
+      <div class="col" id="col-blocked" data-col="blocked">
+        <div class="col-header">
+          <div class="col-title-row">
+            <div class="col-dot" style="background:#d4a0c0;"></div>
+            <span class="col-title">Waiting / Blocked</span>
+            <span class="col-count" id="count-blocked">0</span>
+          </div>
+          <button class="col-add" title="Add task" onclick="openColAdd('blocked')">+</button>
+        </div>
+        <div class="col-body" id="body-blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,'blocked')" ondragleave="onDragLeave(event)">
+          <div class="add-card-form" id="form-blocked">
+            <textarea class="add-card-textarea" id="textarea-blocked" placeholder="What's blocked or waiting?" rows="3"></textarea>
+            <div class="add-card-form-actions">
+              <button class="form-submit" onclick="submitAdd('blocked')">Add card</button>
+              <button class="form-cancel" onclick="closeAdd('blocked')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column: Done -->
+      <div class="col" id="col-done" data-col="done">
+        <div class="col-header">
+          <div class="col-title-row">
+            <div class="col-dot" style="background:#6db88a;"></div>
+            <span class="col-title">Done ✓</span>
+            <span class="col-count" id="count-done">0</span>
+          </div>
+          <button class="col-add" title="Add task" onclick="openColAdd('done')">+</button>
+        </div>
+        <div class="col-body" id="body-done" ondragover="onDragOver(event)" ondrop="onDrop(event,'done')" ondragleave="onDragLeave(event)">
+          <div class="add-card-form" id="form-done">
+            <textarea class="add-card-textarea" id="textarea-done" placeholder="What got done?" rows="3"></textarea>
+            <div class="add-card-form-actions">
+              <button class="form-submit" onclick="submitAdd('done')">Add card</button>
+              <button class="form-cancel" onclick="closeAdd('done')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <div class="modal-title">Edit Task</div>
+      <div>
+        <div class="modal-label">Task description</div>
+        <textarea class="modal-textarea" id="modalText"></textarea>
+      </div>
+      <div>
+        <div class="modal-label">Phase / label</div>
+        <select class="modal-select" id="modalPhase">
+          <option value="">— No label —</option>
+          <option value="phase-1">Phase 1 · Stop the Bleeding (Wks 1–2)</option>
+          <option value="phase-2">Phase 2 · Build the Foundation (Wks 3–6)</option>
+          <option value="phase-3">Phase 3 · See Clearly (Wks 7–10)</option>
+          <option value="phase-4">Phase 4 · Build What's Next (Wks 11–13)</option>
+          <option value="phase-custom">Custom</option>
+        </select>
+      </div>
+      <div>
+        <div class="modal-label">Move to column</div>
+        <select class="modal-select" id="modalCol">
+          <option value="todo">Not Started</option>
+          <option value="doing">In Progress</option>
+          <option value="blocked">Waiting / Blocked</option>
+          <option value="done">Done ✓</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-close" onclick="closeModal()">Cancel</button>
+        <button class="modal-save" onclick="saveModal()">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Add Modal -->
+  <div class="modal-overlay" id="globalAddModal">
+    <div class="modal">
+      <div class="modal-title">Add New Task</div>
+      <div>
+        <div class="modal-label">Task description</div>
+        <textarea class="modal-textarea" id="globalText" placeholder="Describe the task..."></textarea>
+      </div>
+      <div>
+        <div class="modal-label">Phase / label</div>
+        <select class="modal-select" id="globalPhase">
+          <option value="">— No label —</option>
+          <option value="phase-1">Phase 1 · Stop the Bleeding (Wks 1–2)</option>
+          <option value="phase-2">Phase 2 · Build the Foundation (Wks 3–6)</option>
+          <option value="phase-3">Phase 3 · See Clearly (Wks 7–10)</option>
+          <option value="phase-4">Phase 4 · Build What's Next (Wks 11–13)</option>
+          <option value="phase-custom">Custom</option>
+        </select>
+      </div>
+      <div>
+        <div class="modal-label">Add to column</div>
+        <select class="modal-select" id="globalCol">
+          <option value="todo">Not Started</option>
+          <option value="doing">In Progress</option>
+          <option value="blocked">Waiting / Blocked</option>
+          <option value="done">Done ✓</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-close" onclick="closeGlobalAdd()">Cancel</button>
+        <button class="modal-save" onclick="submitGlobalAdd()">Add task</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.site -->
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'ni_cassie_board_v1';
+
+const DEFAULT_CARDS = [
+  // Phase 1 — Stop the Bleeding (Weeks 1–2)
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Audit & cancel unused subscriptions (target: save $100+/mo)' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Set up HoneyBook account, brand it, connect Gmail' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Create instant auto-response for new inquiries' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Gmail inbox triage: labels for Inquiries, Active, Pending Payment, VIP' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Build first HoneyBook pipeline (Inquiry → Booked → Complete)' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Set up Calendly for discovery calls, embed in email signature' },
+  { id: uid(), col: 'todo', phase: 'phase-1', text: 'Install Fathom on all future client calls' },
+  // Phase 2 — Build the Foundation (Weeks 3–6)
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Build PandaDoc contract templates (Wedding, Corporate, Consulting, Retainer)' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Connect PandaDoc → HoneyBook → auto-invoice on signing' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Import client history from 2023–present into HoneyBook' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Build automated payment reminder sequence (Day 1, 3, 7, 14)' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Begin QuickBooks Online migration from Xero' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Connect Stripe + Gusto → QBO for auto-reconciliation' },
+  { id: uid(), col: 'todo', phase: 'phase-2', text: 'Interview and hire new bookkeeper or engage Bench' },
+  // Phase 3 — See Clearly (Weeks 7–10)
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Configure QBO P&L dashboard: revenue by event type' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Answer the big question: weddings vs. corporate — which pays more net?' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Expense categorization audit — find and eliminate leakage' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Rationalize contractor roster to preferred 20-person team' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Standardize CC processing fee policy — build into all contracts' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'Set weekly "Monday Dashboard" ritual (15-min financial review)' },
+  { id: uid(), col: 'todo', phase: 'phase-3', text: 'First accurate quarterly tax estimate based on real data' },
+  // Phase 4 — Build What's Next (Weeks 11–13)
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Design & price retainer packages (Annual corporate, Consulting, Artist dev)' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'VIP client re-engagement campaign — pitch retainers to top 10 clients' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Website rebuild brief — booking form, HoneyBook integration, new positioning' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Set up Later for social batching — 2hrs/week replaces daily reactive posting' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Notion creative board: album timeline, podcast concept, DJ camp outline' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Block protected creative time on calendar — non-negotiable weekly slots' },
+  { id: uid(), col: 'todo', phase: 'phase-4', text: 'Review, celebrate wins, plan Q3 expansion goals 🎉' },
+];
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function loadCards() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return null;
+}
+
+function saveCards(cards) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+}
+
+let cards = [];
+let dragId = null;
+let editId = null;
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+function initBoard() {
+  const saved = loadCards();
+  cards = saved || DEFAULT_CARDS.map(c => ({...c}));
+  renderAll();
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────────
+
+const PHASE_LABELS = {
+  'phase-1': 'Phase 1 · Wks 1–2',
+  'phase-2': 'Phase 2 · Wks 3–6',
+  'phase-3': 'Phase 3 · Wks 7–10',
+  'phase-4': 'Phase 4 · Wks 11–13',
+  'phase-custom': 'Custom',
+  '': ''
+};
+
+function renderAll() {
+  const cols = ['todo','doing','blocked','done'];
+  cols.forEach(col => {
+    const body = document.getElementById('body-' + col);
+    // Keep the add form at top
+    const form = document.getElementById('form-' + col);
+    // Remove old cards
+    Array.from(body.querySelectorAll('.task-card')).forEach(el => el.remove());
+    // Render cards
+    const colCards = cards.filter(c => c.col === col);
+    colCards.forEach(card => {
+      const el = makeCardEl(card);
+      body.appendChild(el);
+    });
+    // Empty state
+    let es = body.querySelector('.empty-state');
+    if (colCards.length === 0) {
+      if (!es) {
+        es = document.createElement('div');
+        es.className = 'empty-state';
+        es.textContent = 'Drop cards here or click + to add';
+        body.appendChild(es);
+      }
+    } else {
+      if (es) es.remove();
+    }
+    // Update count
+    document.getElementById('count-' + col).textContent = colCards.length;
+  });
+}
+
+function makeCardEl(card) {
+  const el = document.createElement('div');
+  el.className = 'task-card';
+  el.dataset.id = card.id;
+  el.draggable = true;
+
+  let phaseHtml = '';
+  if (card.phase && PHASE_LABELS[card.phase]) {
+    phaseHtml = `<span class="card-phase ${card.phase}">${PHASE_LABELS[card.phase]}</span><br>`;
+  }
+
+  el.innerHTML = `
+    ${phaseHtml}
+    <div class="card-text">${escHtml(card.text)}</div>
+    <div class="card-actions">
+      <button class="card-action-btn" title="Edit" onclick="openEdit('${card.id}')">✎</button>
+      <button class="card-action-btn delete-btn" title="Delete" onclick="deleteCard('${card.id}')">✕</button>
+    </div>
+  `;
+
+  el.addEventListener('dragstart', e => {
+    dragId = card.id;
+    el.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    dragId = null;
+  });
+
+  return el;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Drag & Drop ───────────────────────────────────────────────────────────────
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+function onDrop(e, col) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragId) return;
+  const card = cards.find(c => c.id === dragId);
+  if (card && card.col !== col) {
+    card.col = col;
+    saveCards(cards);
+    renderAll();
+  }
+}
+
+// ── Add inline ────────────────────────────────────────────────────────────────
+
+function openColAdd(col) {
+  const form = document.getElementById('form-' + col);
+  form.classList.add('open');
+  document.getElementById('textarea-' + col).focus();
+}
+function closeAdd(col) {
+  const form = document.getElementById('form-' + col);
+  form.classList.remove('open');
+  document.getElementById('textarea-' + col).value = '';
+}
+function submitAdd(col) {
+  const ta = document.getElementById('textarea-' + col);
+  const text = ta.value.trim();
+  if (!text) return;
+  cards.push({ id: uid(), col, phase: '', text });
+  saveCards(cards);
+  renderAll();
+  closeAdd(col);
+}
+
+// ── Global Add ────────────────────────────────────────────────────────────────
+
+function openGlobalAdd() {
+  document.getElementById('globalAddModal').classList.add('open');
+  document.getElementById('globalText').focus();
+}
+function closeGlobalAdd() {
+  document.getElementById('globalAddModal').classList.remove('open');
+  document.getElementById('globalText').value = '';
+  document.getElementById('globalPhase').value = '';
+  document.getElementById('globalCol').value = 'todo';
+}
+function submitGlobalAdd() {
+  const text = document.getElementById('globalText').value.trim();
+  if (!text) return;
+  const phase = document.getElementById('globalPhase').value;
+  const col = document.getElementById('globalCol').value;
+  cards.push({ id: uid(), col, phase, text });
+  saveCards(cards);
+  renderAll();
+  closeGlobalAdd();
+}
+
+// ── Edit ──────────────────────────────────────────────────────────────────────
+
+function openEdit(id) {
+  editId = id;
+  const card = cards.find(c => c.id === id);
+  if (!card) return;
+  document.getElementById('modalText').value = card.text;
+  document.getElementById('modalPhase').value = card.phase || '';
+  document.getElementById('modalCol').value = card.col;
+  document.getElementById('editModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+  editId = null;
+}
+function saveModal() {
+  const card = cards.find(c => c.id === editId);
+  if (!card) return closeModal();
+  card.text = document.getElementById('modalText').value.trim() || card.text;
+  card.phase = document.getElementById('modalPhase').value;
+  card.col = document.getElementById('modalCol').value;
+  saveCards(cards);
+  renderAll();
+  closeModal();
+}
+
+// ── Delete ────────────────────────────────────────────────────────────────────
+
+function deleteCard(id) {
+  if (!confirm('Delete this task?')) return;
+  cards = cards.filter(c => c.id !== id);
+  saveCards(cards);
+  renderAll();
+}
+
+// ── Close modals on overlay click ─────────────────────────────────────────────
+
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('globalAddModal').addEventListener('click', function(e) {
+  if (e.target === this) closeGlobalAdd();
+});
+</script>
+
+</body>
+</html>
