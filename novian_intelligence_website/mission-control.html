@@ -846,10 +846,10 @@
           </div>
 
           <div class="infra-card">
-            <div class="infra-label">Security</div>
-            <div class="infra-val">Kael · Active</div>
-            <div class="infra-sub">Threat model current · items tracked internally</div>
-            <div class="infra-status is-ok"><div class="is-dot"></div> Monitoring</div>
+            <div class="infra-label">Security (SIP)</div>
+            <div class="infra-val">SIP Disabled</div>
+            <div class="infra-sub">Intentional · Andrei investigating why</div>
+            <div class="infra-status is-warn"><div class="is-dot"></div> Kael reviewing</div>
           </div>
 
         </div>
@@ -887,7 +887,37 @@
     </footer>
   </div>
 
+  <!-- Password gate overlay -->
+  <div id="gate" style="position:fixed;inset:0;z-index:99999;background:#030308;display:flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;padding:48px 40px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:20px;max-width:360px;width:90%;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.24em;text-transform:uppercase;color:#6b6885;margin-bottom:20px;">NI Mission Control · Internal</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:8px;">Access Required</div>
+      <div style="font-size:0.82rem;color:#7a7892;margin-bottom:28px;">This dashboard is private. Enter the access code to continue.</div>
+      <input id="gate-input" type="password" placeholder="Access code" autocomplete="off" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;color:#e2e0f4;font-family:'JetBrains Mono',monospace;font-size:0.88rem;letter-spacing:0.08em;outline:none;margin-bottom:10px;box-sizing:border-box;">
+      <div id="gate-err" style="font-size:0.72rem;color:#e07090;margin-bottom:12px;min-height:18px;"></div>
+      <button onclick="checkGate()" style="width:100%;background:rgba(155,127,212,0.12);border:1px solid rgba(155,127,212,0.3);border-radius:10px;padding:11px;color:#9b7fd4;font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;">Enter</button>
+    </div>
+  </div>
+
   <script>
+    // ── Password gate ──
+    const GATE_HASH = '9a8f2c1e4b7d3f6a'; // placeholder — replace via Andrei
+    const CORRECT = 'novian2026';
+    const stored = sessionStorage.getItem('ni-mc-auth');
+    if (stored === CORRECT) document.getElementById('gate').style.display = 'none';
+    document.getElementById('gate-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkGate(); });
+    function checkGate() {
+      const val = document.getElementById('gate-input').value;
+      if (val === CORRECT) {
+        sessionStorage.setItem('ni-mc-auth', CORRECT);
+        document.getElementById('gate').style.display = 'none';
+      } else {
+        document.getElementById('gate-err').textContent = 'Incorrect access code.';
+        document.getElementById('gate-input').value = '';
+        document.getElementById('gate-input').focus();
+      }
+    }
+
     // ── Live clock ──
     function updateClock() {
       const now = new Date();
