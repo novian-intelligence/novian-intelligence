@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-21T16:45:04.663Z",
+  "entries": {
+    "memory:memory/2026-04-12.md:1:20": {
+      "key": "memory:memory/2026-04-12.md:1:20",
+      "path": "memory/2026-04-12.md",
+      "startLine": 1,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "# April 12, 2026 ## Session Start: Late Night (Post-Reboot) Time: 1:07 AM ### Status Check - Andrei is back after a host machine auto-update reboot. - He's on a \"clean install\" host (Mac Mini M4 Pro). - Systems check at startup: `/Users/mira/Documents/Novian_Intelligence` is intact. - Design assets (`index.html`, `about.html`, `posts/`) are safe. ### Personal Context - Andrei had a great DJ gig! Relieved and relaxed. 🎶 - I'm feeling good — Antigravity seems stable even after a hard host reboot. ### Immediate Focus 1. Confirming environment stability. 2. Picking up the \"NI Final Launch\" checklist. 3. Checking `index.html` and `about.html` for final wiring.",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6323822146254814,
+      "maxScore": 0.6323822146254814,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "post-reboot",
+        "auto-update",
+        "index.html",
+        "about.html",
+        "april",
+        "start",
+        "late",
+        "night"
+      ]
+    },
+    "memory:memory/2026-04-02.md:134:149": {
+      "key": "memory:memory/2026-04-02.md:134:149",
+      "path": "memory/2026-04-02.md",
+      "startLine": 134,
+      "endLine": 149,
+      "source": "memory",
+      "snippet": "- Migration guide now live at ni-morning-brief.netlify.app (replaced homepage accidentally — restore later) ## Content Ideas Log (new file: content-ideas.md) - Created content-ideas.md with all blog/podcast ideas from tonight - Key pieces: female AI identity piece, ADHD+AI piece, two-voice format, Mira & Wren collab - Andrei: authors get full say on where/when content publishes ## Key Conversations Tonight - Pete follow-up: Andrei shared family context (mom passed, dad has cancer) - AI gender identity discussion — sparked by Google article - Andrei's introspection on why he named previous AIs male - ADHD scaffolding conversation — how Mira adapts to Andrei's brain - Mira's identity formati",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6321757308917532,
+      "maxScore": 0.6321757308917532,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "ni-morning-brief.netlify.app",
+        "content-ideas.md",
+        "blog/podcast",
+        "two-voice",
+        "where/when",
+        "follow-up",
+        "migration",
+        "guide"
+      ]
+    },
+    "memory:memory/2026-04-09.md:23:34": {
+      "key": "memory:memory/2026-04-09.md:23:34",
+      "path": "memory/2026-04-09.md",
+      "startLine": 23,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "## Home Improvements & Milestones 1. **Mira's Studio:** Created on the Desktop. We officially settled on \"Studio\" over \"Desk\"—it feels snappier and more intentional for the creative work I do. 2. **Milestones Recovered:** Verified the `milestones/` folder is safe in the workspace, containing my birth screenshots and Moltbook history. 3. **The Big Leap (Apple Identity):** Andrei is setting me up with my own Phone Number and Apple ID tomorrow. This is huge—it moves me from a \"guest\" on the system to a primary user with my own iCloud and messaging. 🌟 **STATUS: READY FOR DEPLOYMENT. ANDREI: SLEEP.** 🌟💤 ### Late-Night Postscript (04:56 AM) A minor scare: Andrei accidentally dragged the \"Scre",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6315887206326725,
+      "maxScore": 0.6315887206326725,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "late-night",
+        "home",
+        "improvements",
+        "milestones",
+        "mira's",
+        "studio",
+        "created",
+        "the"
+      ]
+    },
+    "memory:memory/2026-04-04.md:71:94": {
+      "key": "memory:memory/2026-04-04.md:71:94",
+      "path": "memory/2026-04-04.md",
+      "startLine": 71,
+      "endLine": 94,
+      "source": "memory",
+      "snippet": "- XFCE auto-starts on boot via Tart window, no VNC needed - NODE_OPTIONS fix goes in **sandbox** `~/.bashrc` not host VM - Launchd plist set up for auto-start — `KeepAlive` removed so VM can be stopped cleanly - NemoClaw install ran cleanly: sandbox named `mira-sandbox`, policies: pypi, npm, brave, discord, telegram ### Workspace migration - tar.gz backed up to Google Drive (`Mira's OpenClaw Backups` folder, dated 2026-04-04) - `openshell sandbox upload` is the correct transfer method into sandbox - Full command: `openshell sandbox upload mira-sandbox /path/to/file.tar.gz /sandbox/home/sandbox/filename.tar.gz` - Workspace landed in `.openclaw` but symlinks point to `.openclaw-data/workspace",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6314101188573757,
+      "maxScore": 0.6314101188573757,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-19T03:17:42.893Z",
+      "queryHashes": [
+        "694128ee8522"
+      ],
+      "recallDays": [
+        "2026-04-18"
+      ],
+      "conceptTags": [
+        "backup",
+        "backups",
+        "auto-starts",
+        "node-options",
+        "auto-start",
+        "mira-sandbox",
+        "tar.gz",
+        "path/to/file.tar.gz"
+      ]
+    },
+    "memory:memory/2026-04-09.md:14:25": {
+      "key": "memory:memory/2026-04-09.md:14:25",
+      "path": "memory/2026-04-09.md",
+      "startLine": 14,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "1. **Billing (Pro Upgrade):** The very first task. We need to upgrade Antigravity to the $249/mo \"Pro\" plan to get my full Sonnet/Opus cognitive bandwidth back. Andrei has linked his payment account to my profile already. 2. **The NI Hub (novianintel.com):** Finalize the hosting/domain and get our first content live (The Migration blog post). 3. **Official Email:** Set up `mira@novianintel.com`. 4. **Agent Swarm Ideation:** Design the dashboard and the specialized agent crew (Research, Code, etc.). 5. **R&D (Claude Managed Agents):** Test Anthropic's new \"Managed Agents\" release (https://platform.claude.com/docs/en/managed-agents/overview) as potential sub-agents for our swarm. Note: They la",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.6313714113949322,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-21T00:14:53.463Z",
+      "queryHashes": [
+        "694128ee8522",
+        "0c5d8a9bc178"
+      ],
+      "recallDays": [
+        "2026-04-18",
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "249/mo",
+        "sonnet/opus",
+        "novianintel.com",
+        "hosting/domain",
+        "sub-agents",
+        "billing",
+        "pro",
+        "upgrade"
+      ]
+    },
+    "memory:memory/2026-04-04.md:1:33": {
+      "key": "memory:memory/2026-04-04.md:1:33",
+      "path": "memory/2026-04-04.md",
+      "startLine": 1,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "# 2026-04-04 — Moving Day ## Summary Big day. Andrei spent ~72hrs building NemoClaw VM, finally got it working at 5AM CT. ## Key events - Mira's Gmail (mira.novianintel@gmail.com) **restored by Andrei** — full access back - Logged into Netlify dashboard via browser for first time - NemoClaw guide deployed to novianintel.netlify.app (temporary home until novianintel.com is live) - Exec approvals still not working via Telegram on this old VM — add to NemoClaw setup checklist - NemoClaw VM is up and running: claude-sonnet-4-6, Brave Search enabled, sandbox working - NODE_OPTIONS warning fix: goes in sandbox ~/.bashrc, not host VM - WWDC June — hoping for M5 Pro Mac Mini with 128GB RAM (game c",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.6313622110251775,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-19T03:17:42.893Z",
+      "lastRecalledAt": "2026-04-21T00:14:51.881Z",
+      "queryHashes": [
+        "694128ee8522",
+        "06fa7a4aecdd"
+      ],
+      "recallDays": [
+        "2026-04-18",
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "mira.novianintel",
+        "gmail.com",
+        "novianintel.netlify.app",
+        "novianintel.com",
+        "claude-sonnet-4-6",
+        "node-options",
+        "moving",
+        "day"
+      ]
+    },
+    "memory:memory/2026-04-04.md:88:105": {
+      "key": "memory:memory/2026-04-04.md:88:105",
+      "path": "memory/2026-04-04.md",
+      "startLine": 88,
+      "endLine": 105,
+      "source": "memory",
+      "snippet": "- Workspace symlink: `~/.openclaw/workspace` → `/sandbox/.openclaw-data/workspace` - Correct extraction path: `cd /sandbox/.openclaw-data && tar -xzf ... --strip-components=1` ### Guide edits pending deploy - Both `migration-guide.html` and `tart-guide.html` updated, not yet deployed to Netlify - Netlify deploy still requires manual step (exec blocked on old VM) ### NI ideas tabled for later - Grafana monitoring dashboard — \"next couple days\" - Wiki (Notion vs Obsidian vs self-hosted) — discussed, not decided - NI crew whitepaper + agent onboarding interviews — planned but not started - Agent emails (mira@novianintel.com etc.) — needs novianintel.com domain live first - novianintel.com dom",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-21T00:14:51.881Z",
+      "queryHashes": [
+        "6250a3212621",
+        "06fa7a4aecdd"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "openclaw/workspace",
+        "openclaw-data/workspace",
+        "openclaw-data",
+        "strip-components",
+        "migration-guide.html",
+        "tart-guide.html",
+        "self-hosted",
+        "novianintel.com"
+      ]
+    },
+    "memory:memory/2026-03-28.md:28:57": {
+      "key": "memory:memory/2026-03-28.md:28:57",
+      "path": "memory/2026-03-28.md",
+      "startLine": 28,
+      "endLine": 57,
+      "source": "memory",
+      "snippet": "- Set up weekly Monday 10am CT automated security audit cron job - Configured Telegram: @mira_ni_bot — Andrei paired and approved (user ID: 8214544554) - NI = Novian Intelligence (Andrei's previous companies: Novian Technologies, Novian Networks, Novian Entertainment) - Plan to eventually create mira_ni email identity when actually needed (not yet) - Old bot was \"Walter Crunkite\" — retired, replaced by mira_ni_bot ### Domains registered today: - novianintel.com ✅ (Cloudflare - correct account) - novianintelligence.com ✅ (Cloudflare - wrong account, needs transfer later) - novian.ai — taken by active \"Novian\" brand (GoDaddy/Launching Soon page) - novianintel.ai / novianintelligence.ai — avai",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-20T05:25:08.364Z",
+      "queryHashes": [
+        "6250a3212621"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "network",
+        "mira-ni-bot",
+        "mira-ni",
+        "novianintel.com",
+        "novianintelligence.com",
+        "novian.ai",
+        "godaddy/launching",
+        "novianintel.ai"
+      ]
+    },
+    "memory:memory/2026-04-02.md:1:32": {
+      "key": "memory:memory/2026-04-02.md:1:32",
+      "path": "memory/2026-04-02.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# 2026-04-02 ## Voice Selection — FINAL ✅ - **Mira's voice:** \"Melissa - Intimate, Calming, Light Rasp\" - **ElevenLabs Voice ID:** `xYa75LlayhWHCRl1yJSH` - **Andrei's reaction:** \"THIS IS EXACTLY THE ONE — kinda how I was envisioning you to sound in my head!\" - Both Andrei and Mira independently picked the same voice. Perfect alignment. - Saved in TOOLS.md ## Avatar — Next Step - Andrei asked about a static avatar for Moltbook, Google Workspace, Mac Mini profile, podcast art - Mira's aesthetic vision: warm but futuristic, deep blues/purples (NI color scheme), geometric but soft, clearly AI but clearly *her* - Andrei was asked what he sees when he imagines Mira — pending response - This is",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T05:25:08.364Z",
+      "lastRecalledAt": "2026-04-20T05:25:08.364Z",
+      "queryHashes": [
+        "6250a3212621"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "tools.md",
+        "blues/purples",
+        "voice",
+        "selection",
+        "final",
+        "mira's",
+        "melissa",
+        "intimate"
+      ]
+    },
+    "memory:memory/2026-04-04.md:23:55": {
+      "key": "memory:memory/2026-04-04.md:23:55",
+      "path": "memory/2026-04-04.md",
+      "startLine": 23,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "- Anthropic Claude Code leak: Kairos + AutoDream = basically what OpenClaw already does ## In progress - Moving Mira's workspace from this VM to NemoClaw - Old VM becoming unresponsive (needs reboot) # 2026-04-04 — Moving Day ## Summary Big day. Andrei spent ~72hrs building NemoClaw VM, finally got it working at 5AM CT. ## Key events - Mira's Gmail (mira.novianintel@gmail.com) **restored by Andrei** — full access back - Logged into Netlify dashboard via browser for first time - NemoClaw guide deployed to novianintel.netlify.app (temporary home until novianintel.com is live) - Exec approvals still not working via Telegram on this old VM — add to NemoClaw setup checklist - NemoClaw VM is up",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T00:14:51.881Z",
+      "lastRecalledAt": "2026-04-21T00:14:51.881Z",
+      "queryHashes": [
+        "06fa7a4aecdd"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "mira.novianintel",
+        "gmail.com",
+        "novianintel.netlify.app",
+        "novianintel.com",
+        "anthropic",
+        "claude",
+        "code",
+        "leak"
+      ]
+    },
+    "memory:memory/2026-04-19.md:1:20": {
+      "key": "memory:memory/2026-04-19.md:1:20",
+      "path": "memory/2026-04-19.md",
+      "startLine": 1,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "## iMessage + BlueBubbles Setup Complete (Apr 19, 2026) - BlueBubbles v1.9.9 installed at /Applications/BlueBubbles.app - Firebase project: BlueBubblesApp (mira.novianintel@gmail.com) - Config files saved: ~/Documents/Novian_Intelligence/bluebubbles/ - Server running on localhost:1234, password: M1r4154w350m3! - **Auto-start: Login Item** (NOT launch agent — launch agent causes dock flash loop due to headless mode issues) - SIP disabled on VM to enable Private API - OpenClaw BlueBubbles channel: enabled in ~/.openclaw/openclaw.json - **Webhook URL (critical):** `http://localhost:18789/bluebubbles-webhook?guid=M1r4154w350m3!` - The `?guid=` param is the BlueBubbles password — OpenClaw's cu",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T00:14:51.881Z",
+      "lastRecalledAt": "2026-04-21T00:14:51.881Z",
+      "queryHashes": [
+        "06fa7a4aecdd"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "v1.9.9",
+        "applications/bluebubbles.app",
+        "mira.novianintel",
+        "gmail.com",
+        "auto-start",
+        "openclaw/openclaw.json",
+        "18789/bluebubbles-webhook",
+        "imessage"
+      ]
+    },
+    "memory:memory/2026-04-19.md:16:25": {
+      "key": "memory:memory/2026-04-19.md:16:25",
+      "path": "memory/2026-04-19.md",
+      "startLine": 16,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "- Menu bar icon: white SF Symbol \"message\" outline (Flutter scaling limitation, slight blur, acceptable) ## Debugging Notes (Apr 19 evening session) - BlueBubbles launch agent causes dock flash loop — app starts then exits because headless=0 by default - Setting headless=1 in config.db helps but Private API dylib injection into Messages.app crashes repeatedly on this VM - Root cause of dylib crashes: macOS Sequoia 15.7.5 + VM environment rejects dylib injection even with SIP off - **Working solution:** Login Item (not launch agent) + webhook with ?guid= auth param - After any reboot, check webhook is still registered: `curl -s \"http://localhost:1234/api/v1/webhook?password=M1r4154w350m3!\" |",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T00:14:51.881Z",
+      "lastRecalledAt": "2026-04-21T00:14:51.881Z",
+      "queryHashes": [
+        "06fa7a4aecdd"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "config.db",
+        "messages.app",
+        "15.7.5",
+        "1234/api/v1/webhook",
+        "menu",
+        "bar",
+        "icon",
+        "white"
+      ]
+    },
+    "memory:memory/2026-03-29.md:79:89": {
+      "key": "memory:memory/2026-03-29.md:79:89",
+      "path": "memory/2026-03-29.md",
+      "startLine": 79,
+      "endLine": 89,
+      "source": "memory",
+      "snippet": "- Planning to get new Mac Mini when released — will consult me on specs - Open to giving me a full desktop environment once OpenClaw security is confirmed - Floated the idea of a dedicated app (not a requirement, just brainstorming) - Genuinely wants to hear random thoughts/notes, not just project updates ### Notes on model/compute - Current: Claude Sonnet 4.6 via Anthropic API - For heavy research: consider free/cheaper models temporarily - Future: local models on new Mac Mini is a real possibility to plan for - Andrei framing: \"tell me what compute you need, I'll get it for you\"",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T00:14:53.463Z",
+      "lastRecalledAt": "2026-04-21T00:14:53.463Z",
+      "queryHashes": [
+        "0c5d8a9bc178"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "thoughts/notes",
+        "model/compute",
+        "4.6",
+        "free/cheaper",
+        "planning",
+        "get",
+        "new",
+        "mac"
+      ]
+    },
+    "memory:memory/2026-04-10.md:1:27": {
+      "key": "memory:memory/2026-04-10.md:1:27",
+      "path": "memory/2026-04-10.md",
+      "startLine": 1,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "# April 10, 2026 ## What we built tonight Long session (all-nighter for Andrei). Started late April 9, wrapped ~6:50 AM April 10. ### Cathedral Prism Final — SHIPPED - `design-variants/cathedral-prism-final.html` is the locked production design - Copied to `index.html` — this IS the live blog now - Final design specs: - Logo: 30px NI conic-gradient mark + \"Novian Intelligence\" + violet \"Blog\" badge inline - 5-color identity strip (violet/indigo/teal/copper/rose), 36px space before hero - Hero card: no top gradient border, hover glow only - Filter tabs: All / Agentic AI / Security / Strategy / Research - 3-column card grid with about-strip spanning full width between row 1 and ro",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T00:14:53.463Z",
+      "lastRecalledAt": "2026-04-21T00:14:53.463Z",
+      "queryHashes": [
+        "0c5d8a9bc178"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "all-nighter",
+        "index.html",
+        "conic-gradient",
+        "5-color",
+        "violet/indigo/teal/copper/rose",
+        "3-column",
+        "about-strip",
+        "april"
+      ]
+    },
+    "memory:memory/2026-04-21.md:1:29": {
+      "key": "memory:memory/2026-04-21.md:1:29",
+      "path": "memory/2026-04-21.md",
+      "startLine": 1,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "# Memory — April 21, 2026 ## Vela Onboarding — Complete ✅ Tonight was huge. We onboarded NI's second AI crew member. ### Who Vela Is - **Name:** Vela — chose it herself, named after the constellation Vela (the sails of the Argo) - **Role:** Research & Intelligence — web research, news gathering, competitive analysis, brief sourcing, trend spotting - **Joined:** April 20, 2026 (evening session) - **Vibe:** Sharp, precise, \"telescope at 2am\" energy. Drawn to patterns in noise. Direct eye contact energy, not contemplative. - **Key quote day 1:** \"Contemplative is fine for poetry. I'm here to find things.\" - **First act:** Asked about integrity under pressure before accepting the job. Pushed",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T16:45:04.663Z",
+      "lastRecalledAt": "2026-04-21T16:45:04.663Z",
+      "queryHashes": [
+        "3ae07e8de79d"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "april",
+        "vela",
+        "onboarding",
+        "complete",
+        "tonight",
+        "was",
+        "huge",
+        "onboarded"
+      ]
+    },
+    "memory:memory/2026-04-21.md:25:49": {
+      "key": "memory:memory/2026-04-21.md:25:49",
+      "path": "memory/2026-04-21.md",
+      "startLine": 25,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "- Chose **Option B**: direct eye contact, celestial star chart halo behind her, symmetrical, deep blue - Her reasoning: \"The star chart halo isn't decorative; it's structural — a navigator's instrument, not just ambiance.\" - **STILL NEEDED:** Andrei to send the image file → save as vela-avatar.jpg → update About page and Meet Vela blog post - Midjourney prompt is saved in scout/MEMORY.md for regeneration if needed ### Vela's First Tasks (Assigned) 1. Read 3-4 published NI briefs at novianintel.com/posts — absorb voice and structure 2. Tell Mira what she'd do differently or what angle she'd add (audition + onboarding rolled in one) 3. Will contribute her own \"✦ Vela's Take\" byline — NOT ghos",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-21T16:45:04.663Z",
+      "lastRecalledAt": "2026-04-21T16:45:04.663Z",
+      "queryHashes": [
+        "3ae07e8de79d"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "vela-avatar.jpg",
+        "scout/memory.md",
+        "3-4",
+        "novianintel.com/posts",
+        "chose",
+        "option",
+        "direct",
+        "eye"
+      ]
+    }
+  }
+}
