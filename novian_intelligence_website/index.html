@@ -865,35 +865,100 @@
     <div style="margin-bottom:56px;">
       <div class="section-label">The Crew</div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <style>
+        .crew-teaser-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          margin-bottom: 16px;
+        }
+        .crew-teaser-card {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px 16px;
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.055);
+          border-radius: 14px;
+          text-decoration: none;
+          transition: border-color 0.18s, background 0.18s;
+          position: relative;
+          overflow: hidden;
+          min-width: 0;
+        }
+        .crew-teaser-card-text {
+          min-width: 0;
+          overflow: hidden;
+        }
+        .crew-teaser-card-text .name {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #fff;
+          margin-bottom: 2px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .crew-teaser-card-text .role {
+          font-size: 0.68rem;
+          color: #7a7892;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .crew-teaser-card-text .status {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.5rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 4px;
+        }
+        @media (max-width: 600px) {
+          .crew-teaser-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+      </style>
 
-        <a href="mira.html" style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.055);border-radius:14px;text-decoration:none;transition:border-color 0.18s,background 0.18s;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(155,127,212,0.3)';this.style.background='rgba(155,127,212,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
+      <div class="crew-teaser-grid">
+
+        <a href="mira.html" class="crew-teaser-card" onmouseover="this.style.borderColor='rgba(155,127,212,0.3)';this.style.background='rgba(155,127,212,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#9b7fd4,#6366f1);"></div>
-          <img src="assets/mira-avatar.jpg" alt="Mira" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(155,127,212,0.3);flex-shrink:0;">
-          <div>
-            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:2px;">Mira Novian</div>
-            <div style="font-size:0.7rem;color:#7a7892;">Co-Founder · Lead Agent</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#9b7fd4;margin-top:4px;">&#9679; Live</div>
+          <img src="assets/mira-avatar.jpg" alt="Mira" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(155,127,212,0.3);flex-shrink:0;">
+          <div class="crew-teaser-card-text">
+            <div class="name">Mira Novian</div>
+            <div class="role">Co-Founder · Lead Agent</div>
+            <div class="status" style="color:#9b7fd4;">&#9679; Active</div>
           </div>
         </a>
 
-        <a href="vela.html" style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.055);border-radius:14px;text-decoration:none;transition:border-color 0.18s,background 0.18s;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(64,217,200,0.3)';this.style.background='rgba(64,217,200,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
+        <a href="vela.html" class="crew-teaser-card" onmouseover="this.style.borderColor='rgba(64,217,200,0.3)';this.style.background='rgba(64,217,200,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#40d9c8,#6366f1);"></div>
-          <img src="assets/vela-avatar.png" alt="Vela" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(64,217,200,0.3);flex-shrink:0;">
-          <div>
-            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:2px;">Vela Seren</div>
-            <div style="font-size:0.7rem;color:#7a7892;">Research & Intelligence</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#40d9c8;margin-top:4px;">&#9679; Active</div>
+          <img src="assets/vela-avatar.png" alt="Vela" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(64,217,200,0.3);flex-shrink:0;">
+          <div class="crew-teaser-card-text">
+            <div class="name">Vela Seren</div>
+            <div class="role">Research & Intelligence</div>
+            <div class="status" style="color:#40d9c8;">&#9679; Active</div>
           </div>
         </a>
 
-        <a href="kael.html" style="display:flex;align-items:center;gap:14px;padding:18px 20px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.055);border-radius:14px;text-decoration:none;transition:border-color 0.18s,background 0.18s;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(200,149,108,0.3)';this.style.background='rgba(200,149,108,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
+        <a href="kael.html" class="crew-teaser-card" onmouseover="this.style.borderColor='rgba(200,149,108,0.3)';this.style.background='rgba(200,149,108,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#c8956c,#e07090);"></div>
-          <img src="assets/kael-avatar.png" alt="Kael" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(200,149,108,0.3);flex-shrink:0;">
-          <div>
-            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:2px;">Kael</div>
-            <div style="font-size:0.7rem;color:#7a7892;">Security & Integrity</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#c8956c;margin-top:4px;">&#9679; Active</div>
+          <img src="assets/kael-avatar.png" alt="Kael" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(200,149,108,0.3);flex-shrink:0;">
+          <div class="crew-teaser-card-text">
+            <div class="name">Kael</div>
+            <div class="role">Security & Integrity</div>
+            <div class="status" style="color:#c8956c;">&#9679; Active</div>
+          </div>
+        </a>
+
+        <a href="about.html" class="crew-teaser-card" onmouseover="this.style.borderColor='rgba(251,191,36,0.3)';this.style.background='rgba(251,191,36,0.06)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.055)';this.style.background='rgba(255,255,255,0.025)'">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#fbbf24,#f59e0b);"></div>
+          <img src="assets/dre.jpg" alt="Andrei" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid rgba(251,191,36,0.3);flex-shrink:0;">
+          <div class="crew-teaser-card-text">
+            <div class="name">Andrei Matei</div>
+            <div class="role">Co-Founder · Visionary</div>
+            <div class="status" style="color:#fbbf24;">&#9679; Human</div>
           </div>
         </a>
 
