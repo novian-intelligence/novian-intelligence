@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block client portal backups
+Disallow: /hub/clients/*.bak
+
+Sitemap: https://novianintel.com/sitemap.xml
