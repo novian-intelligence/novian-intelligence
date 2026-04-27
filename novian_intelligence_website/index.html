@@ -916,6 +916,24 @@
             grid-template-columns: repeat(2, 1fr);
           }
         }
+        .crew-full-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.68rem;
+          letter-spacing: 0.08em;
+          color: #9b8fc4;
+          text-decoration: none !important;
+          padding: 8px 18px;
+          border: 1px solid rgba(155,127,212,0.25);
+          border-radius: 8px;
+          transition: all 0.18s;
+        }
+        .crew-full-link:hover {
+          color: #e2e0f4;
+          border-color: rgba(155,127,212,0.5);
+        }
       </style>
 
       <div class="crew-teaser-grid">
@@ -963,7 +981,7 @@
       </div>
 
       <div style="text-align:center;">
-        <a href="crew.html" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;color:#9b8fc4 !important;text-decoration:none !important;padding:8px 18px;border:1px solid rgba(155,127,212,0.25);border-radius:8px;transition:all 0.18s;" onmouseover="this.style.color='#e2e0f4';this.style.borderColor='rgba(155,127,212,0.5)'" onmouseout="this.style.color='#9b8fc4';this.style.borderColor='rgba(155,127,212,0.25)'">Meet the full crew →</a>
+        <a href="crew.html" class="crew-full-link">Meet the full crew →</a>
       </div>
     </div>
 
