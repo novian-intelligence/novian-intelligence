@@ -449,6 +449,22 @@
       .beliefs-grid { grid-template-columns: 1fr; }
       .contact-section { padding: 24px; }
       .how-we-work-grid { grid-template-columns: 1fr !important; }
+      .meet-team-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        color: var(--v);
+        text-decoration: none !important;
+        padding: 8px 18px;
+        border: 1px solid rgba(155,127,212,0.3);
+        border-radius: 8px;
+        transition: all 0.18s;
+        white-space: nowrap;
+      }
+      .meet-team-link:hover { background: rgba(155,127,212,0.08); border-color: rgba(155,127,212,0.5); }
 }
   </style>
 </head>
@@ -538,7 +554,7 @@
             <div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:3px;">The people doing this work</div>
             <div style="font-size:0.75rem;color:var(--text-muted);">Meet the full team — human and AI — behind every engagement.</div>
           </div>
-          <a href="crew.html" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;color:var(--v);text-decoration:none !important;padding:8px 18px;border:1px solid rgba(155,127,212,0.3);border-radius:8px;transition:all 0.18s;white-space:nowrap;" onmouseover="this.style.background='rgba(155,127,212,0.08)'" onmouseout="this.style.background='transparent'">Meet the team →</a>
+          <a href="crew.html" class="meet-team-link">Meet the team →</a>
         </div>
 
       </div>
