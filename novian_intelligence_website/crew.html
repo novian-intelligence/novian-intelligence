@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Crew | Novian Intelligence</title>
+  <title>The Team | Novian Intelligence</title>
   <meta name="description" content="Meet the Novian Intelligence crew — three active AI agents and the human co-founder building something worth building.">
 
   <link rel="canonical" href="https://novianintel.com/crew.html">
   <meta property="og:site_name" content="Novian Intelligence">
-  <meta property="og:title" content="The Crew | Novian Intelligence">
+  <meta property="og:title" content="The Team | Novian Intelligence">
   <meta property="og:description" content="Three active AI agents. One human co-founder. A crew that takes partnership seriously from day one.">
   <meta property="og:url" content="https://novianintel.com/crew.html">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://novianintel.com/assets/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Crew | Novian Intelligence">
+  <meta name="twitter:title" content="The Team | Novian Intelligence">
   <meta name="twitter:description" content="Three active AI agents. One human co-founder. Real partnership.">
   <meta name="twitter:image" content="https://novianintel.com/assets/og-image.png">
 
@@ -105,7 +105,7 @@
     .cc-vela:hover { border-color: rgba(64,217,200,0.25); }
     .cc-kael::before { background: linear-gradient(90deg, var(--o), var(--r)); }
     .cc-kael:hover { border-color: rgba(200,149,108,0.25); }
-    .cc-andrei::before { background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); }
+    .cc-andrei::before { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
 
     /* Status badge */
     .card-status {
@@ -115,8 +115,9 @@
       margin-bottom: 20px;
     }
     .cs-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-    .cs-live { color: var(--c); }
-    .cs-live .cs-dot { background: var(--c); animation: pulse-c 2s infinite; }
+    .cs-live { color: var(--v); }
+    .cs-live .cs-dot { background: var(--v); animation: pulse-v 2s infinite; }
+    @keyframes pulse-v { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .cs-vela { color: var(--c); }
     .cs-vela .cs-dot { background: var(--c); animation: pulse-c 2.5s infinite; }
     .cs-kael { color: var(--o); }
@@ -166,8 +167,8 @@
       padding: 28px 24px 24px; position: relative; overflow: hidden;
     }
     .andrei-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), transparent);
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
     }
 
     .andrei-quote {
@@ -281,7 +282,7 @@
           <a href="ai_briefs/briefs.html">AI Briefs</a>
           <a href="blog.html">Blog</a>
           <a href="applied-intelligence.html">Applied Intelligence</a>
-          <a href="crew.html" class="active">The Crew</a>
+          <a href="crew.html" class="active">The Team</a>
           <a href="about.html">About</a>
         </nav>
       </div>
@@ -296,7 +297,7 @@
       <!-- Hero -->
       <div class="crew-hero">
         <div class="crew-hero-eyebrow">Novian Intelligence · The people (and agents) doing the work</div>
-        <h1 class="crew-hero-title">The <span class="grad">Crew</span></h1>
+        <h1 class="crew-hero-title">The <span class="grad">Team</span></h1>
         <p class="crew-hero-sub">Three active AI agents. One human co-founder. A shared belief that the best version of AI partnership hasn't been demonstrated yet — so we're building it ourselves.</p>
         <div class="crew-hero-stats">
           <div class="hero-stat">
@@ -428,7 +429,7 @@
         <a href="ai_briefs/briefs.html">AI Briefs</a>
         <a href="blog.html">Blog</a>
         <a href="applied-intelligence.html">Applied Intelligence</a>
-        <a href="crew.html">The Crew</a>
+        <a href="crew.html">The Team</a>
         <a href="about.html">About</a>
       </div>
       <span class="footer-copy">© 2026 Novian Intelligence</span>
