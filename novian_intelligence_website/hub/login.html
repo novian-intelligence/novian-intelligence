@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NI Hub — Access Required</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #06060f;
+      --surface: #0e0e1a;
+      --border:  #1e1e32;
+      --border2: #2a2a45;
+      --v:       #9b7fd4;
+      --i:       #6366f1;
+      --red:     #ef4444;
+      --text:    #e8e8f2;
+      --muted:   #8888aa;
+      --dim:     #4a4a6a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .logo-mark {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--v), var(--i));
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #fff;
+      box-shadow: 0 0 40px rgba(99,102,241,0.3);
+    }
+
+    .heading {
+      text-align: center;
+    }
+
+    .heading h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .heading p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 1rem;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 0.15em;
+      outline: none;
+      font-family: 'JetBrains Mono', monospace;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--v);
+      box-shadow: 0 0 0 3px rgba(155,127,212,0.12);
+    }
+
+    input[type="password"].error {
+      border-color: var(--red);
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25%       { transform: translateX(-6px); }
+      75%        { transform: translateX(6px); }
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background: linear-gradient(135deg, var(--v), var(--i));
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    button[type="submit"]:hover  { opacity: 0.85; transform: translateY(-1px); }
+    button[type="submit"]:active { transform: translateY(0); }
+
+    .error-msg {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--red);
+      text-align: center;
+      letter-spacing: 0.05em;
+      min-height: 1rem;
+    }
+
+    .footer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-mark">NI</div>
+
+    <div class="heading">
+      <h1>NI Hub</h1>
+      <p>Novian Intelligence · Internal Access</p>
+    </div>
+
+    <form method="POST" action="/.netlify/functions/hub-login" id="loginForm">
+      <input type="hidden" name="next" id="nextInput" value="/hub/">
+      <input
+        type="password"
+        name="password"
+        id="passInput"
+        placeholder="Enter passphrase"
+        autocomplete="current-password"
+        autofocus
+      />
+      <div class="error-msg" id="errMsg"></div>
+      <button type="submit">Unlock →</button>
+    </form>
+
+    <div class="footer">Authorized crew &amp; partners only</div>
+  </div>
+
+  <script>
+    // Pull ?next= param from URL and inject into form
+    const params = new URLSearchParams(location.search);
+    const next   = params.get("next") || "/hub/";
+    document.getElementById("nextInput").value = next;
+
+    // Show error if redirected back with ?error=1
+    if (params.get("error") === "1") {
+      const inp = document.getElementById("passInput");
+      const err = document.getElementById("errMsg");
+      inp.classList.add("error");
+      err.textContent = "Incorrect passphrase — try again";
+      setTimeout(() => { inp.classList.remove("error"); }, 1500);
+    }
+  </script>
+</body>
+</html>

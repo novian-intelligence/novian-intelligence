@@ -1013,11 +1013,15 @@
 </div>
 
 <script>
-  const PASSWORD = 'nios2026!';
+  // Password check via SHA-256 hash (plaintext never stored in source)
+  // Hash of hub passphrase — edge function is the real auth gate
+  const PASSWORD_HASH = '9d38f6a24ab94e2887c08526780d19aadc705279c3d0d9ccced3aca98d0c960a';
 
-  function tryUnlock() {
+  async function tryUnlock() {
     const val = document.getElementById('lock-input').value;
-    if (val === PASSWORD) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    if (hex === PASSWORD_HASH) {
       document.getElementById('lock-screen').style.display = 'none';
       document.getElementById('ni-os').classList.add('unlocked');
       sessionStorage.setItem('nios-auth', '1');

@@ -1,5 +1,11 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+# ── Hub auth — edge function protects /hub/* at network level ──────────────────
+[[edge_functions]]
+  path = "/hub/*"
+  function = "hub-auth"
 
 [build.processing]
   skip_processing = false
