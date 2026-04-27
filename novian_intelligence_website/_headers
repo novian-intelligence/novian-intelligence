@@ -1,26 +1,24 @@
-/*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Cache-Control: public, max-age=300, stale-while-revalidate=60
+# Cloudflare Pages cache headers
 
+# HTML pages — short cache, always revalidate
 /*.html
-  Cache-Control: public, max-age=300, stale-while-revalidate=60
+  Cache-Control: public, max-age=0, must-revalidate
 
-/assets/fonts/*
+# Root
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Assets — long cache (content-hashed or rarely change)
+/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/assets/*.css
-  Cache-Control: public, max-age=86400
+# AI briefs — medium cache
+/ai_briefs/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
-/assets/*.jpg
-  Cache-Control: public, max-age=604800
+# Posts — medium cache
+/posts/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
-/assets/*.png
-  Cache-Control: public, max-age=604800
-
-/ai_briefs/*.html
-  Cache-Control: public, max-age=3600
-
-/posts/*.html
-  Cache-Control: public, max-age=3600
+# Fonts loaded via Google Fonts (external, already cached)
+# CSS/JS in assets/ already covered above
