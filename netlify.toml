@@ -1,0 +1,27 @@
+[build]
+  base = "novian_intelligence_website"
+  publish = "novian_intelligence_website"
+  functions = "novian_intelligence_website/netlify/functions"
+  edge_functions = "novian_intelligence_website/netlify/edge-functions"
+
+# ── Hub auth — edge function protects /hub/* at network level ──────────────────
+[[edge_functions]]
+  path = "/hub/*"
+  function = "hub-auth"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
