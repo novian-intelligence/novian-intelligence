@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fenix Post Tension | Business Transformation Strategy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070709;
+  --bg-card: #0D0D12;
+  --bg-elevated: #141420;
+  --amber: #F97316;
+  --amber-dim: rgba(249,115,22,0.15);
+  --amber-border: rgba(249,115,22,0.28);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --blue-border: rgba(59,130,246,0.28);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --red-border: rgba(239,68,68,0.28);
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.1);
+  --green-border: rgba(34,197,94,0.28);
+  --purple: #A855F7;
+  --purple-dim: rgba(168,85,247,0.1);
+  --purple-border: rgba(168,85,247,0.28);
+  --yellow: #EAB308;
+  --yellow-dim: rgba(234,179,8,0.1);
+  --text: #ECEEF2;
+  --muted: #7B7D8C;
+  --faint: #2E2E3A;
+  --border: rgba(255,255,255,0.06);
+  --fd: 'Russo One', sans-serif;
+  --fb: 'Barlow', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+  --r: 8px;
+  --rl: 16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(249,115,22,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,9,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.nav-brand{font-family:var(--fd);font-size:13px;letter-spacing:0.12em;color:var(--amber);text-decoration:none;text-transform:uppercase;}
+.nav-links{display:flex;list-style:none;gap:0;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:8px 10px;transition:color 0.2s;font-family:var(--fm);}
+.nav-links a:hover{color:var(--amber);}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 2rem 80px;overflow:hidden;}
+.hero-glow{position:absolute;top:-100px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(249,115,22,0.07) 0%,transparent 65%);pointer-events:none;}
+.hero-glow2{position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,0.05) 0%,transparent 65%);pointer-events:none;}
+.hero-inner{max-width:1280px;margin:0 auto;width:100%;position:relative;z-index:1;}
+.hero-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;}
+.hero-eyebrow::before{content:'';display:block;width:36px;height:1px;background:var(--amber);}
+.hero-h1{font-family:var(--fd);font-size:clamp(48px,9vw,112px);line-height:0.92;text-transform:uppercase;margin-bottom:1.5rem;}
+.hero-h1 .accent{color:var(--amber);}
+.hero-h1 .sub{display:block;font-size:clamp(20px,3.5vw,44px);color:var(--muted);}
+.hero-desc{font-size:18px;color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:2.5rem;}
+.hero-vitals{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;max-width:750px;margin-bottom:2rem;}
+.vital{background:var(--bg-card);padding:1.25rem 1rem;text-align:center;}
+.vital-v{font-family:var(--fd);font-size:26px;color:var(--amber);display:block;line-height:1;margin-bottom:5px;}
+.vital-l{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:100px;padding:7px 16px;font-family:var(--fm);font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+/* SECTION BASE */
+section{position:relative;z-index:1;padding:96px 2rem;}
+.si{max-width:1280px;margin:0 auto;}
+.slabel{font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:0.75rem;display:flex;align-items:center;gap:10px;}
+.slabel .sn{background:var(--amber-dim);border:1px solid var(--amber-border);color:var(--amber);width:22px;height:22px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.stitle{font-family:var(--fd);font-size:clamp(30px,4.5vw,54px);line-height:1.02;text-transform:uppercase;margin-bottom:1rem;}
+.sdesc{font-size:17px;color:var(--muted);max-width:640px;line-height:1.75;margin-bottom:3rem;}
+.sdesc strong{color:var(--text);}
+
+/* TAGS */
+.tag{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;}
+.t-crit{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);}
+.t-high{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);}
+.t-med{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(234,179,8,0.28);}
+.t-rev{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);}
+.t-ops{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);}
+.t-str{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-border);}
+
+/* AUDIT SECTION */
+#audit{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.pain-card{background:var(--bg);padding:1.75rem;transition:background 0.2s;}
+.pain-card:hover{background:var(--bg-elevated);}
+.pain-card.critical{border-top:2px solid var(--red);}
+.pain-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.9rem;}
+.pain-num{font-family:var(--fm);font-size:11px;color:var(--faint);font-weight:600;flex-shrink:0;padding-top:3px;}
+.pain-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.pain-title{font-weight:700;font-size:15px;margin-bottom:0.5rem;}
+.pain-body{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:0.75rem;}
+.pain-q{font-style:italic;font-size:12.5px;color:var(--muted);border-left:2px solid var(--amber-border);padding-left:10px;margin-top:0.5rem;}
+
+/* THREAT SECTION */
+.threat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+.threat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;position:relative;overflow:hidden;}
+.threat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.tc-red::before{background:var(--red);}
+.tc-amber::before{background:var(--amber);}
+.tc-blue::before{background:var(--blue);}
+.threat-icon{font-size:26px;margin-bottom:1rem;}
+.threat-title{font-weight:700;font-size:15px;margin-bottom:0.5rem;}
+.threat-body{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* WORKFLOW */
+#workflow{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.wf-compare{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;align-items:start;}
+.wf-col{border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.wf-col.before{border-color:var(--red-border);}
+.wf-col.after{border-color:var(--green-border);}
+.wf-head{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.wf-col.before .wf-head{background:var(--red-dim);}
+.wf-col.after .wf-head{background:var(--green-dim);}
+.wf-head-t{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;font-weight:600;}
+.wf-col.before .wf-head-t{color:var(--red);}
+.wf-col.after .wf-head-t{color:var(--green);}
+.wf-steps{padding:1rem;}
+.wf-step{display:flex;align-items:flex-start;gap:10px;padding:0.7rem;border-radius:6px;margin-bottom:3px;}
+.wf-si{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.wf-col.before .wf-si{background:var(--red-dim);}
+.wf-col.after .wf-si{background:var(--green-dim);}
+.wf-st{font-weight:600;font-size:13px;margin-bottom:2px;}
+.wf-sd{font-size:12px;color:var(--muted);line-height:1.5;}
+.stag{font-family:var(--fm);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-top:4px;display:inline-block;}
+.st-m{background:rgba(239,68,68,0.1);color:#EF4444;}
+.st-a{background:rgba(34,197,94,0.1);color:#22C55E;}
+.st-h{background:rgba(59,130,246,0.1);color:#3B82F6;}
+.wf-arrow{display:flex;align-items:flex-start;justify-content:center;padding-top:3.5rem;}
+.arrow-b{background:var(--amber-dim);border:1px solid var(--amber-border);color:var(--amber);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+
+/* SOLUTIONS */
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1.5rem;}
+.sol-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color 0.2s,transform 0.2s;}
+.sol-card:hover{border-color:var(--amber-border);transform:translateY(-2px);}
+.sol-head{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;}
+.sol-icon{width:42px;height:42px;border-radius:var(--r);background:var(--amber-dim);border:1px solid var(--amber-border);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.sol-name{font-weight:700;font-size:15px;margin-bottom:3px;}
+.sol-sub{font-size:12px;color:var(--muted);}
+.sol-body{padding:1.5rem;}
+.sol-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem;}
+.tools-label{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--faint);margin-bottom:6px;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.25rem;}
+.chip{font-family:var(--fm);font-size:10px;padding:3px 9px;border-radius:100px;letter-spacing:0.04em;}
+.ch-s{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border);}
+.ch-c{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);}
+.ch-k{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);}
+.auto-box{background:var(--bg-elevated);border-radius:var(--r);padding:1rem;}
+.auto-lbl{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.auto-list{list-style:none;}
+.auto-list li{font-size:12.5px;color:var(--muted);padding:3px 0 3px 14px;position:relative;line-height:1.5;}
+.auto-list li::before{content:'→';position:absolute;left:0;color:var(--green);font-size:11px;top:4px;}
+
+/* AI EDGE */
+#ai{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem;}
+.ai-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;position:relative;overflow:hidden;}
+.ai-card::after{content:'';position:absolute;top:0;right:0;width:50px;height:50px;background:var(--green-dim);clip-path:polygon(100% 0,0 0,100% 100%);}
+.ai-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:1rem;}
+.ai-ic{width:44px;height:44px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.ai-title{font-weight:700;font-size:15px;margin-bottom:3px;}
+.ai-sub{font-size:12px;color:var(--muted);}
+.ai-body{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+.flow{display:flex;flex-direction:column;gap:3px;}
+.fs{display:flex;align-items:center;gap:8px;font-size:12px;padding:5px 9px;border-radius:5px;background:var(--bg-elevated);}
+.fs.hu{border-left:2px solid var(--blue);}
+.fs.au{border-left:2px solid var(--green);}
+.fs-ic{font-size:13px;width:18px;text-align:center;}
+.fc{width:1px;height:10px;background:var(--faint);margin-left:17px;}
+
+/* STACK */
+#stack{border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.stack-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem;}
+.sc{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.sc-head{padding:0.9rem 1.25rem;background:var(--bg-elevated);border-bottom:1px solid var(--border);font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.sc-head span{font-size:15px;}
+.sc-tools{padding:0.9rem;display:flex;flex-direction:column;gap:6px;}
+.st{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--bg-elevated);border-radius:6px;border:1px solid transparent;transition:border-color 0.2s;}
+.st:hover{border-color:var(--border);}
+.st-em{font-size:17px;width:22px;text-align:center;flex-shrink:0;}
+.st-i{flex:1;}
+.st-n{font-weight:600;font-size:13px;margin-bottom:1px;}
+.st-d{font-size:11px;color:var(--muted);}
+.st-s{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.07em;padding:2px 6px;border-radius:3px;flex-shrink:0;}
+.ss-new{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);}
+.ss-keep{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);}
+.ss-build{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-border);}
+.ss-rep{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);}
+
+/* ROADMAP */
+#roadmap{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.poc-banner{background:linear-gradient(135deg,var(--amber-dim),transparent 60%);border:1px solid var(--amber-border);border-radius:var(--rl);padding:1.5rem 1.75rem;margin-bottom:2.5rem;display:flex;align-items:flex-start;gap:1rem;}
+.poc-ic{font-size:26px;flex-shrink:0;padding-top:2px;}
+.poc-t{font-weight:700;font-size:16px;color:var(--amber);margin-bottom:0.4rem;}
+.poc-b{font-size:13.5px;color:var(--muted);line-height:1.65;}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:var(--rl);overflow:hidden;}
+.ph{background:var(--bg);padding:2rem;}
+.ph-badge{display:flex;align-items:baseline;gap:6px;margin-bottom:1.25rem;}
+.ph-num{font-family:var(--fd);font-size:52px;line-height:1;}
+.ph1 .ph-num{color:var(--amber);}
+.ph2 .ph-num{color:var(--blue);}
+.ph3 .ph-num{color:var(--purple);}
+.ph-lbl{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);}
+.ph-title{font-weight:700;font-size:19px;margin-bottom:0.4rem;}
+.ph-dur{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;}
+.ph1 .ph-dur{color:var(--amber);}
+.ph2 .ph-dur{color:var(--blue);}
+.ph3 .ph-dur{color:var(--purple);}
+.ph-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:1.5rem;}
+.ph-tasks{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:1.5rem;}
+.ph-tasks li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--muted);}
+.ph-tasks li::before{content:'';display:block;width:5px;height:5px;border-radius:50%;margin-top:7px;flex-shrink:0;}
+.ph1 .ph-tasks li::before{background:var(--amber);}
+.ph2 .ph-tasks li::before{background:var(--blue);}
+.ph3 .ph-tasks li::before{background:var(--purple);}
+.ph-cost{padding:1rem;border:1px solid var(--border);border-radius:var(--r);display:flex;justify-content:space-around;}
+.ci{text-align:center;}
+.ci-v{font-family:var(--fm);font-size:13px;font-weight:600;margin-bottom:2px;}
+.ph1 .ci-v{color:var(--amber);}
+.ph2 .ci-v{color:var(--blue);}
+.ph3 .ci-v{color:var(--purple);}
+.ci-l{font-size:10px;color:var(--muted);font-family:var(--fm);text-transform:uppercase;letter-spacing:0.06em;}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.kpi{background:var(--bg-card);padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;transition:background 0.2s;}
+.kpi:hover{background:var(--bg-elevated);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--amber);}
+.kpi-v{font-family:var(--fd);font-size:44px;line-height:1;color:var(--amber);margin-bottom:4px;}
+.kpi-u{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--amber);opacity:0.65;margin-bottom:7px;}
+.kpi-l{font-size:13.5px;color:var(--text);margin-bottom:3px;font-weight:600;}
+.kpi-d{font-size:11.5px;color:var(--muted);font-style:italic;}
+
+/* SUCCESSION */
+#succession{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.succ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.succ-c{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:1.75rem;}
+.succ-ic{font-size:26px;margin-bottom:0.9rem;}
+.succ-t{font-weight:700;font-size:15px;margin-bottom:0.6rem;}
+.succ-b{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* NORTH STAR */
+#northstar{position:relative;overflow:hidden;border-top:1px solid var(--border);}
+#northstar::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(249,115,22,0.06) 0%,transparent 65%);pointer-events:none;}
+.ns-inner{text-align:center;max-width:760px;margin:0 auto;position:relative;z-index:1;}
+.ns-ey{font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;}
+.ns-title{font-family:var(--fd);font-size:clamp(34px,6vw,72px);line-height:1.02;text-transform:uppercase;margin-bottom:1.5rem;}
+.ns-body{font-size:17px;color:var(--muted);line-height:1.8;margin-bottom:2.5rem;}
+.ns-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+.ns-s{text-align:center;}
+.ns-v{font-family:var(--fd);font-size:38px;color:var(--amber);display:block;margin-bottom:4px;}
+.ns-l{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+
+/* FOOTER */
+footer{padding:2rem;border-top:1px solid var(--border);position:relative;z-index:1;}
+.ft{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.ft-brand{font-family:var(--fd);font-size:13px;letter-spacing:0.1em;color:var(--amber);}
+.ft-txt{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:0.05em;}
+
+/* FADE IN */
+.fi{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.fi.v{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{display:none;}
+  section{padding:64px 1.25rem;}
+  .wf-compare{grid-template-columns:1fr;}
+  .wf-arrow{display:none;}
+  .hero-vitals{grid-template-columns:repeat(3,1fr);}
+  .phases{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .hero-vitals{grid-template-columns:repeat(2,1fr);}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .ns-stats{gap:1.5rem;}
+}
+
+/* DIVIDERS */
+.sdiv{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);position:relative;z-index:1;}
+
+/* QUOTE HIGHLIGHT */
+.q-hl{font-style:italic;font-size:20px;color:var(--text);line-height:1.6;border-left:3px solid var(--amber);padding-left:1.5rem;margin:2rem 0;max-width:760px;}
+.q-hl strong{color:var(--amber);}
+
+/* INFO BOX */
+.info-box{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;margin:2rem 0;}
+.ib-t{font-weight:700;font-size:15px;margin-bottom:0.5rem;display:flex;align-items:center;gap:8px;}
+.ib-b{font-size:13px;color:var(--muted);line-height:1.65;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">Fenix Post Tension</a>
+    <ul class="nav-links">
+      <li><a href="#audit">Audit</a></li>
+      <li><a href="#threats">Threats</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#solutions">Solutions</a></li>
+      <li><a href="#ai">AI Edge</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#succession">Succession</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Business Transformation Strategy · 2026 · Prepared by Novian Intelligence</div>
+    <h1 class="hero-h1">
+      <span class="accent">Fenix</span><br>
+      Post<br>
+      <span class="sub">Tension</span>
+    </h1>
+    <p class="hero-desc">A 20-year Central Texas institution with a powerhouse operation and the foundation to become a technology-forward industry leader. This is what transformation looks like.</p>
+    <div class="hero-vitals">
+      <div class="vital"><span class="vital-v">20</span><span class="vital-l">Years in Business</span></div>
+      <div class="vital"><span class="vital-v">~400</span><span class="vital-l">Jobs / Month</span></div>
+      <div class="vital"><span class="vital-v">~25</span><span class="vital-l">Employees</span></div>
+      <div class="vital"><span class="vital-v">80%</span><span class="vital-l">Repeat Business</span></div>
+      <div class="vital"><span class="vital-v">C-TX</span><span class="vital-l">Market Territory</span></div>
+    </div>
+    <div class="hero-badge"><div class="badge-dot"></div>Sonnet 4.6 Analysis · Novian Intelligence POC</div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- AUDIT -->
+<section id="audit">
+  <div class="si">
+    <div class="slabel"><span class="sn">01</span>The Honest Audit</div>
+    <h2 class="stitle">10 Things<br>Breaking the Business</h2>
+    <p class="sdesc">A 60-minute interview surfaced the complete operational picture. The business is <strong>healthy and profitable</strong> — but it is running entirely on tribal knowledge, individual heroics, and manual processes that do not scale, cannot be measured, and will not survive a leadership transition.</p>
+
+    <div class="pain-grid fi">
+
+      <div class="pain-card critical">
+        <div class="pain-top">
+          <span class="pain-num">01</span>
+          <div class="pain-tags"><span class="tag t-crit">Critical</span><span class="tag t-str">Strategic</span></div>
+        </div>
+        <div class="pain-title">The Owner Is the Entire System</div>
+        <div class="pain-body">The father is the sole estimator, sole plan reader, sole pricer, and sole keeper of 20 years of client relationships and pricing agreements. He works from Yahoo email. When he is unavailable, critical decisions cannot be made. When he retires, the institutional knowledge disappears with him.</div>
+        <div class="pain-q">"Some of these clients, since we started the company 20 years ago."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">02</span>
+          <div class="pain-tags"><span class="tag t-high">High</span><span class="tag t-ops">Operational</span></div>
+        </div>
+        <div class="pain-title">No Job Queue Visibility</div>
+        <div class="pain-body">Nobody can see at a glance what jobs are active, what's urgent, what's delayed, or what's coming next. Status requires a phone call to a specific person. There is no single source of truth for job priority across the organization.</div>
+        <div class="pain-q">"What is the most important one right now? There's not really a queue that you can look at."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">03</span>
+          <div class="pain-tags"><span class="tag t-high">High</span><span class="tag t-ops">Operational</span></div>
+        </div>
+        <div class="pain-title">Fragmented Plan Intake</div>
+        <div class="pain-body">Engineering plans arrive by email to 3–4 different personal inboxes — including the owner's Yahoo account. There is no shared inbox, no intake portal, and no visibility into what plans have been received by whom. Plans can and do fall through the cracks.</div>
+        <div class="pain-q">"Sometimes my dad only has access to it... sometimes they'll email someone else. There's two or three, four different points of contact."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">04</span>
+          <div class="pain-tags"><span class="tag t-high">High</span><span class="tag t-ops">Operational</span></div>
+        </div>
+        <div class="pain-title">Paper-Based Inventory Management</div>
+        <div class="pain-body">The warehouse manager Larry tracks all materials inventory and purchase orders from a physical binder with pen and paper. There is no real-time inventory visibility, no connection between job demand and stock levels, and no automated reorder mechanism. Larry is also in his late 60s.</div>
+        <div class="pain-q">"He definitely has some kind of book that he still uses to mark all the orders... there's no one area we can look and track what we have in real time."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">05</span>
+          <div class="pain-tags"><span class="tag t-high">High</span><span class="tag t-ops">Operational</span></div>
+        </div>
+        <div class="pain-title">No Document Management System</div>
+        <div class="pain-body">Job records, contracts, plans, and correspondence are scattered across multiple personal email inboxes and physical binders. There is no centralized, searchable document repository. Looking up a past job requires digging through binders. Historical pricing terms are essentially inaccessible.</div>
+        <div class="pain-q">"Where do job files live?" — "It's on everyone's emails." / "That's a good question. It's in a binder somewhere."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">06</span>
+          <div class="pain-tags"><span class="tag t-high">High</span><span class="tag t-rev">Revenue</span></div>
+        </div>
+        <div class="pain-title">Manual, Unmeasured Estimating</div>
+        <div class="pain-body">The owner manually reads raw PDF plans and physically calculates quantities to generate estimates. The process can take up to a week. The methodology is entirely undocumented. Estimate turnaround is not tracked, meaning there is no baseline to improve against and no competitive data on speed.</div>
+        <div class="pain-q">"It could take like a week, sometimes less... I would have to ask my dad. I'm not really aware of that process in a while."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">07</span>
+          <div class="pain-tags"><span class="tag t-med">Medium</span><span class="tag t-ops">Operational</span></div>
+        </div>
+        <div class="pain-title">No Customer Portal or Status Visibility</div>
+        <div class="pain-body">Builders regularly call just to ask where their house is in the queue. Each status check requires a human to stop what they're doing and look something up. A custom portal was attempted five years ago and failed due to lack of technical integration. The pain point remains completely unaddressed.</div>
+        <div class="pain-q">"It'd be nice if that spreadsheet had its own section... if it had its own login for a builder to see where in the process their house is. Because sometimes they'll call just to know that."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">08</span>
+          <div class="pain-tags"><span class="tag t-med">Medium</span><span class="tag t-rev">Revenue</span></div>
+        </div>
+        <div class="pain-title">Declining Digital Presence</div>
+        <div class="pain-body">Fenix has dropped off the first page of Google despite 20 years of operating history and domain authority. The website is on Wix with a live FAQ entry containing unedited Wix template placeholder text. The blog is abandoned. No analytics are monitored. No review generation strategy exists. Billing email is Gmail.</div>
+        <div class="pain-q">"We used to be first on the first page of Google. Now we're not, which is kind of weird."</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-top">
+          <span class="pain-num">09</span>
+          <div class="pain-tags"><span class="tag t-med">Medium</span><span class="tag t-rev">Revenue</span></div>
+        </div>
+        <div class="pain-title">Zero CRM or Lead Pipeline</div>
+        <div class="pain-body">New leads (~20% of business) arrive via website, referrals, and direct email to different people. There is no CRM, no lead tracking, no follow-up system, and no way to know how many inbound requests are being converted vs. lost. Contact and client history management is a spreadsheet and personal memory.</div>
+        <div class="pain-q">"Do you have a CRM?" — "Nope."</div>
+      </div>
+
+      <div class="pain-card critical">
+        <div class="pain-top">
+          <span class="pain-num">10</span>
+          <div class="pain-tags"><span class="tag t-crit">Critical</span><span class="tag t-str">Strategic</span></div>
+        </div>
+        <div class="pain-title">Zero Process Documentation — Succession Crisis in Slow Motion</div>
+        <div class="pain-body">There is no employee handbook, no SOPs, no training materials, and no documentation of the owner's pricing methodology or estimating process. New hires learn by shadowing. The company's only "manual" is an OSHA guide under a wobbly table. When the owner steps back, decades of knowledge walks out the door.</div>
+        <div class="pain-q">"Seeing what client relations he prioritizes, the pricing he has with them... some of these clients since we started 20 years ago. That's the hardest challenge."</div>
+      </div>
+
+    </div><!-- /pain-grid -->
+
+    <div class="q-hl fi" style="margin-top:3rem;">
+      "If I have to go through my dad each time, <strong>nothing would get done.</strong> So I just have to fucking start doing it."<br>
+      <span style="font-size:14px;color:var(--muted);font-style:normal;margin-top:0.5rem;display:block;">— Jason Cuellar · Business Interview 2026</span>
+    </div>
+
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- THREATS -->
+<section id="threats">
+  <div class="si">
+    <div class="slabel"><span class="sn">02</span>The External Pressure</div>
+    <h2 class="stitle">The Threat<br>Landscape</h2>
+    <p class="sdesc">While Fenix's internal operations are the primary focus, three external forces are actively compressing the window for comfortable inaction. Modernization is not optional — it is a survival strategy.</p>
+
+    <div class="threat-grid fi">
+
+      <div class="threat-card tc-red">
+        <div class="threat-icon">🏢</div>
+        <div class="threat-title">Consolidation by Private Equity</div>
+        <div class="threat-body">Barnes Co — a direct competitor — was acquired by Kodiak Building Partners, which was then acquired by QXO, a massive industry roll-up conglomerate. These acquirors bring capital, technology infrastructure, and process maturity that independent operators cannot match through manual systems. The competitive gap will widen rapidly if Fenix stands still.</div>
+      </div>
+
+      <div class="threat-card tc-amber">
+        <div class="threat-icon">📦</div>
+        <div class="threat-title">Supply Chain & Tariff Volatility</div>
+        <div class="threat-body">Fenix sources strand cable directly from China and other overseas suppliers — a smart margin play. But tariff changes in 2025 have already compressed price-per-foot margins, reducing the competitive undercut that was previously as high as $0.50/ft. Without real-time cost intelligence, pricing decisions are increasingly reactive and vulnerable to margin erosion.</div>
+      </div>
+
+      <div class="threat-card tc-blue">
+        <div class="threat-icon">🔍</div>
+        <div class="threat-title">Lost Digital Visibility</div>
+        <div class="threat-body">Fenix once held first-page Google rankings in Central Texas. That position has eroded. As competitors invest in digital infrastructure and SEO, the gap will compound. For a business where 20% of leads are new and website-generated, recovering and protecting digital visibility is a direct revenue lever — not a marketing vanity project.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- WORKFLOW -->
+<section id="workflow">
+  <div class="si">
+    <div class="slabel"><span class="sn">03</span>The Job Lifecycle</div>
+    <h2 class="stitle">Before<br><span style="color:var(--amber);">vs. After</span></h2>
+    <p class="sdesc">Every job that Fenix runs today follows a chain of phone calls, manual lookups, and personal memory. Here is what that same lifecycle looks like when it runs on modern, connected infrastructure.</p>
+
+    <div class="wf-compare fi">
+
+      <div class="wf-col before">
+        <div class="wf-head">
+          <span style="font-size:16px;">⚠️</span>
+          <span class="wf-head-t">Current State — Today</span>
+        </div>
+        <div class="wf-steps">
+          <div class="wf-step">
+            <div class="wf-si">📧</div>
+            <div>
+              <div class="wf-st">Plan Received by Email</div>
+              <div class="wf-sd">Arrives in 1 of 3–4 personal inboxes — Yahoo, Gmail, mix of individuals. No shared visibility.</div>
+              <span class="stag st-m">Manual · Fragmented</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">👨‍💼</div>
+            <div>
+              <div class="wf-st">Dad Reviews Plan Manually</div>
+              <div class="wf-sd">Owner reads raw PDF, mentally calculates quantities. Undocumented process. Can take up to 1 week.</div>
+              <span class="stag st-m">Manual · Bottleneck</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">📊</div>
+            <div>
+              <div class="wf-st">Estimate Built in Spreadsheet</div>
+              <div class="wf-sd">Carlos or the owner inputs figures into an Excel / Google Sheet. Printed out for records.</div>
+              <span class="stag st-m">Manual · No Tracking</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">📞</div>
+            <div>
+              <div class="wf-st">Job Scheduled by Phone Call</div>
+              <div class="wf-sd">Carlos coordinates with builders by phone. Job added to the shared spreadsheet. No priority ranking.</div>
+              <span class="stag st-m">Phone · No Queue</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">📓</div>
+            <div>
+              <div class="wf-st">Materials Pulled from Binder</div>
+              <div class="wf-sd">Larry references his paper binder. No real-time inventory connection to job queue. Shortages happen.</div>
+              <span class="stag st-m">Paper · No Visibility</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">🚛</div>
+            <div>
+              <div class="wf-st">Driver Gets Text Message</div>
+              <div class="wf-sd">Driver notified individually by text. No digital manifest. Delivery confirmation requires a return text or call.</div>
+              <span class="stag st-m">Manual · Untracked</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">🔧</div>
+            <div>
+              <div class="wf-st">Crew Calls When Done</div>
+              <div class="wf-sd">Contract crew calls Carlos to confirm installation complete. Carlos manually updates the spreadsheet.</div>
+              <span class="stag st-m">Phone · Manual Update</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">💰</div>
+            <div>
+              <div class="wf-st">Invoice Created in QuickBooks</div>
+              <div class="wf-sd">Mom or office admin manually creates invoice in QBO. Outstanding invoices tracked manually.</div>
+              <span class="stag st-m">Manual · Delayed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wf-arrow"><div class="arrow-b">→</div></div>
+
+      <div class="wf-col after">
+        <div class="wf-head">
+          <span style="font-size:16px;">✅</span>
+          <span class="wf-head-t">Future State — After Transformation</span>
+        </div>
+        <div class="wf-steps">
+          <div class="wf-step">
+            <div class="wf-si">🌐</div>
+            <div>
+              <div class="wf-st">Plan Submitted via Portal</div>
+              <div class="wf-sd">Builder uploads plans through a branded Fenix web portal. Auto-routed to the right person. Instant acknowledgment sent.</div>
+              <span class="stag st-a">Automated · Centralized</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">🤖</div>
+            <div>
+              <div class="wf-st">AI Pre-Processes the Plan</div>
+              <div class="wf-sd">AI reads PDF, extracts dimensions, generates a draft takeoff. Owner reviews and approves in minutes, not days.</div>
+              <span class="stag st-a">AI-Assisted · Fast</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">📋</div>
+            <div>
+              <div class="wf-st">Estimate Auto-Generates</div>
+              <div class="wf-sd">System pre-fills estimate from takeoff + pricing templates. Owner clicks approve. Sent to client automatically.</div>
+              <span class="stag st-h">Human Review · Auto-Send</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">🗂️</div>
+            <div>
+              <div class="wf-st">Job Enters Priority Queue</div>
+              <div class="wf-sd">Confirmed job auto-enters the digital queue with builder deadline, priority rank, and all plans attached. Visible to everyone.</div>
+              <span class="stag st-a">Automated · Visible</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">📦</div>
+            <div>
+              <div class="wf-st">Inventory Auto-Reserved</div>
+              <div class="wf-sd">Job requirements deducted from live inventory. Reorder triggered automatically if stock drops below threshold.</div>
+              <span class="stag st-a">Automated · Smart</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">🚛</div>
+            <div>
+              <div class="wf-st">Driver Gets App Notification</div>
+              <div class="wf-sd">Driver receives digital manifest with job details, address, and items. Taps "Delivered" when done. Status auto-updates everywhere.</div>
+              <span class="stag st-a">App-Based · Real-Time</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">✅</div>
+            <div>
+              <div class="wf-st">Crew Completes in App</div>
+              <div class="wf-sd">Contractor crew taps "Installation Complete." Builder sees job status update in their portal in real time. No phone calls needed.</div>
+              <span class="stag st-h">Human Tap · Auto-Broadcast</span>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-si">💰</div>
+            <div>
+              <div class="wf-st">Invoice Auto-Fires in QuickBooks</div>
+              <div class="wf-sd">Job completion triggers automatic invoice creation in QBO. Payment reminders sequence auto-runs. Dashboard shows real-time AR status.</div>
+              <span class="stag st-a">Automated · Tracked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /wf-compare -->
+
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="si">
+    <div class="slabel"><span class="sn">04</span>Proposed Solutions</div>
+    <h2 class="stitle">The Seven<br>Transformation Areas</h2>
+    <p class="sdesc">Each solution area targets a specific cluster of pain points. Solutions are ranked by implementation priority. Every area identifies which tools to use, what gets automated, and where human judgment still belongs.</p>
+
+    <div class="sol-grid fi">
+
+      <!-- 1 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">🗂️</div>
+          <div>
+            <div class="sol-name">Job Management & Queue Visibility</div>
+            <div class="sol-sub">Priority #1 · Highest operational impact</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Replace the shared spreadsheet with a proper job management system purpose-built for contractors and suppliers. Every job gets a digital record with status, priority, deadline, assigned personnel, and attached plans. Anyone in the company can see the queue at a glance.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-s">Buildertrend</span>
+            <span class="chip ch-s">Jobber</span>
+            <span class="chip ch-c">Airtable (POC)</span>
+            <span class="chip ch-c">Notion (POC)</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Job status broadcast to all stakeholders on change</li>
+              <li>Overdue job alerts escalated to Jason automatically</li>
+              <li>Builder receives SMS/email when job moves to "In Production"</li>
+              <li>Driver manifest auto-generated from job record</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">🤖</div>
+          <div>
+            <div class="sol-name">AI-Powered Plan Analysis & Estimating</div>
+            <div class="sol-sub">Priority #2 · The killer differentiator</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">This is the highest-leverage opportunity in the entire transformation. Use AI (Claude API + document processing) to read uploaded PDF plans, extract dimensions, and generate a draft takeoff automatically. The owner's job shifts from doing the calculation to reviewing and approving it — turning a 5-day process into a same-day one.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-c">Custom Build — Claude API</span>
+            <span class="chip ch-s">Buildxact</span>
+            <span class="chip ch-s">PlanSwift</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>AI reads PDF plan → extracts square footage, cable runs, anchor counts</li>
+              <li>Draft estimate pre-populated with current material pricing</li>
+              <li>Owner reviews draft, approves or adjusts — one click to send</li>
+              <li>Estimate history becomes searchable database for future reference</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">📦</div>
+          <div>
+            <div class="sol-name">Inventory Intelligence</div>
+            <div class="sol-sub">Priority #3 · Replace Larry's binder</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Move warehouse inventory from a physical binder to a digital system with real-time visibility. Connect stock levels to the job queue so as jobs are created, materials are automatically reserved. Set intelligent reorder thresholds based on historical demand. QuickBooks Inventory is already available — they just aren't using it.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-k">QuickBooks Inventory (existing)</span>
+            <span class="chip ch-s">inFlow Inventory</span>
+            <span class="chip ch-s">Fishbowl</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Job confirmed → materials auto-reserved in inventory</li>
+              <li>Stock below threshold → purchase order auto-drafted to supplier</li>
+              <li>Monthly demand forecasting from job history prevents shortages</li>
+              <li>Delivery received → inventory updated via simple mobile scan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">🌐</div>
+          <div>
+            <div class="sol-name">Unified Communications & Document Hub</div>
+            <div class="sol-sub">Priority #4 · Kill the Yahoo email</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Migrate the entire team off personal Gmail and Yahoo to Google Workspace with @fenixposttension.com email addresses. Create a shared Google Drive structure for plans, job records, and contracts. Implement Slack for internal team coordination. This is the foundational infrastructure move that makes everything else work.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-s">Google Workspace</span>
+            <span class="chip ch-s">Slack</span>
+            <span class="chip ch-k">Google Drive</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Plans arriving by email auto-filed to correct job folder</li>
+              <li>Slack channels per job type: drivers, warehouse, office, per-builder</li>
+              <li>Google Drive becomes searchable 20-year archive of all job records</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">🏗️</div>
+          <div>
+            <div class="sol-name">Builder Customer Portal</div>
+            <div class="sol-sub">Priority #5 · Stop the status calls</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Build a simple, branded portal where Fenix's builder clients log in and see exactly where their job is in the production queue. Job status updates automatically as the team works. No phone calls to Carlos. No manual lookups. Builders feel informed and in control — without requiring any extra effort from Fenix staff.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-c">Custom Build</span>
+            <span class="chip ch-s">Glide (no-code)</span>
+            <span class="chip ch-s">Softr</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Job moves to "In Production" → builder gets email notification</li>
+              <li>Delivery confirmed → builder gets SMS with photo confirmation</li>
+              <li>Portal replaces ~50% of inbound status call volume</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">🔍</div>
+          <div>
+            <div class="sol-name">Website Rebuild & Digital Presence</div>
+            <div class="sol-sub">Priority #6 · Reclaim Page 1</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Rebuild the Wix site on a modern platform with proper local SEO, Google Analytics, structured data, and a CRM-connected contact form. Establish a Google Business Profile strategy and an automated review collection system. 20 years of reputation deserves a digital presence that matches it.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-c">Custom HTML or Webflow</span>
+            <span class="chip ch-s">Google Analytics 4</span>
+            <span class="chip ch-s">Google Search Console</span>
+            <span class="chip ch-s">HubSpot CRM (free)</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Contact form → CRM lead → auto-routed to correct person</li>
+              <li>Job complete → automated Google review request email</li>
+              <li>Monthly SEO report auto-generated and emailed to Jason</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="sol-card">
+        <div class="sol-head">
+          <div class="sol-icon">📖</div>
+          <div>
+            <div class="sol-name">Knowledge Capture & Documentation</div>
+            <div class="sol-sub">Priority #7 · The long game</div>
+          </div>
+        </div>
+        <div class="sol-body">
+          <div class="sol-desc">Systematically document the owner's estimating methodology, pricing logic, key client relationships, and production processes before that knowledge becomes inaccessible. Use AI-assisted transcription and summarization to capture recorded walkthroughs with the owner. Turn tribal knowledge into queryable, searchable institutional memory.</div>
+          <div class="tools-label">Recommended Tools</div>
+          <div class="chips">
+            <span class="chip ch-s">Notion</span>
+            <span class="chip ch-c">MacWhisper + Claude</span>
+            <span class="chip ch-s">Loom (video SOPs)</span>
+          </div>
+          <div class="auto-box">
+            <div class="auto-lbl">Automation Opportunities</div>
+            <ul class="auto-list">
+              <li>Record the owner reviewing plans → Whisper transcribes → Claude structures into SOP</li>
+              <li>Each job becomes a case study in the knowledge base</li>
+              <li>New employee onboarding built from documented SOPs, not word of mouth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sol-grid -->
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- AI EDGE -->
+<section id="ai">
+  <div class="si">
+    <div class="slabel"><span class="sn">05</span>The AI Advantage</div>
+    <h2 class="stitle">Where AI<br>Rewrites the Rules</h2>
+    <p class="sdesc">These are the workflows where modern AI doesn't just assist — it fundamentally transforms what's possible. Each one was impossible or cost-prohibitive two years ago. Today they can be built and deployed at small-business scale.</p>
+
+    <div class="ai-grid fi">
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">📐</div>
+          <div>
+            <div class="ai-title">Plan-to-Estimate Automation</div>
+            <div class="ai-sub">The single highest-value AI use case</div>
+          </div>
+        </div>
+        <div class="ai-body">Upload a PDF engineering plan. AI reads dimensions, identifies foundation type, counts anchor points, calculates cable runs, and generates a structured material takeoff. Owner reviews and approves. What took days now takes minutes.</div>
+        <div class="flow">
+          <div class="fs hu"><span class="fs-ic">👤</span>Builder uploads PDF plan to portal</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🤖</span>AI extracts dimensions & quantities automatically</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📊</span>Draft estimate pre-populated with live pricing</div>
+          <div class="fc"></div>
+          <div class="fs hu"><span class="fs-ic">👤</span>Owner reviews, adjusts if needed, approves</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📧</span>Estimate sent to client automatically</div>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">📦</div>
+          <div>
+            <div class="ai-title">Predictive Inventory Ordering</div>
+            <div class="ai-sub">Replace Larry's gut instinct with data</div>
+          </div>
+        </div>
+        <div class="ai-body">Feed the job queue, historical demand, and supplier lead times into a forecasting model. The system predicts what materials will be needed 3–4 weeks out and auto-drafts purchase orders before shortages occur. Larry approves with one click instead of having to think it through from memory.</div>
+        <div class="flow">
+          <div class="fs au"><span class="fs-ic">📋</span>Job queue analyzed — upcoming material demand calculated</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📊</span>Current inventory vs projected need compared</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📝</span>Draft PO generated for supplier</div>
+          <div class="fc"></div>
+          <div class="fs hu"><span class="fs-ic">👤</span>Larry reviews and approves in 30 seconds</div>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">⭐</div>
+          <div>
+            <div class="ai-title">Automated Review Generation</div>
+            <div class="ai-sub">80% repeat clients = massive review potential</div>
+          </div>
+        </div>
+        <div class="ai-body">With 80% repeat business and strong existing relationships, Fenix has untapped review equity. An automated post-job sequence — personalized by client name and job details — collects Google reviews without any human effort. An AI agent manages the sequence, handles timing logic, and can even manage a review incentive program end-to-end.</div>
+        <div class="flow">
+          <div class="fs au"><span class="fs-ic">✅</span>Job marked complete → trigger fires</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📧</span>Personalized review request email auto-sent (day 1)</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🔄</span>No response → follow-up at day 5</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🎁</span>Review received → thank-you card auto-triggered</div>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">🧠</div>
+          <div>
+            <div class="ai-title">Owner Knowledge Extraction</div>
+            <div class="ai-sub">Capture 20 years before it walks out</div>
+          </div>
+        </div>
+        <div class="ai-body">Record the owner doing walkthroughs of plans, explaining his pricing logic, and describing his client relationship nuances. MacWhisper transcribes. Claude structures into organized, searchable SOPs and pricing guides. The owner's entire methodology becomes institutional documentation — without ever asking him to "sit down and document things."</div>
+        <div class="flow">
+          <div class="fs hu"><span class="fs-ic">🎙️</span>Owner does a normal plan review — just recorded</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📝</span>MacWhisper transcribes with speaker labels</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🤖</span>Claude structures into SOP, pricing guide, notes</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🗂️</span>Added to searchable Notion knowledge base</div>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">📊</div>
+          <div>
+            <div class="ai-title">Executive Dashboard Intelligence</div>
+            <div class="ai-sub">Jason's single pane of glass</div>
+          </div>
+        </div>
+        <div class="ai-body">A real-time dashboard that shows Jason (and eventually the owner) the key business metrics at a glance: active jobs in queue, deliveries today, outstanding invoices, inventory status, website lead count, and Google review score — all in one place. No more calling people to find out what's happening.</div>
+        <div class="flow">
+          <div class="fs au"><span class="fs-ic">🔄</span>Job management system → live job status feed</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">💰</span>QuickBooks → live AR / invoice status</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📦</span>Inventory system → stock levels & alerts</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🌐</span>Analytics → website leads & Google rank</div>
+          <div class="fc"></div>
+          <div class="fs hu"><span class="fs-ic">👤</span>Jason opens dashboard — full picture in 30 seconds</div>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-ic">💬</div>
+          <div>
+            <div class="ai-title">Bilingual Customer Communications</div>
+            <div class="ai-sub">Scale the Se Habla Español advantage</div>
+          </div>
+        </div>
+        <div class="ai-body">Fenix already advertises bilingual service — a meaningful differentiator in Central Texas. AI can generate customer-facing communications, portal notifications, and status updates in both English and Spanish automatically, without any human translation required. Scale the advantage without scaling the headcount.</div>
+        <div class="flow">
+          <div class="fs au"><span class="fs-ic">🤖</span>Job status update written once in English</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">🌐</span>AI generates Spanish-language version automatically</div>
+          <div class="fc"></div>
+          <div class="fs au"><span class="fs-ic">📱</span>Customer preference detected → correct language sent</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="si">
+    <div class="slabel"><span class="sn">06</span>The Right Tools</div>
+    <h2 class="stitle">Recommended<br>Tech Stack</h2>
+    <p class="sdesc">Lean, integrated, and designed for a business transitioning from paper and spreadsheets. Every tool has a purpose. Every tool talks to the others. Nothing requires a full-time IT staff to maintain.</p>
+
+    <div class="stack-cats fi">
+
+      <div class="sc">
+        <div class="sc-head"><span>🗂️</span>Job & Project Management</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">🏗️</span>
+            <div class="st-i">
+              <div class="st-n">Buildertrend</div>
+              <div class="st-d">Purpose-built for construction suppliers. Job queue, scheduling, client portal, crew management.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+          <div class="st">
+            <span class="st-em">📋</span>
+            <div class="st-i">
+              <div class="st-n">Airtable / Notion</div>
+              <div class="st-d">Phase 1 POC alternative — free, flexible, runs alongside existing spreadsheet.</div>
+            </div>
+            <span class="st-s ss-build">POC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>📧</span>Communications & Docs</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">📬</span>
+            <div class="st-i">
+              <div class="st-n">Google Workspace</div>
+              <div class="st-d">Company email, shared Drive, Docs, Sheets. Replaces Yahoo + personal Gmail accounts.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+          <div class="st">
+            <span class="st-em">💬</span>
+            <div class="st-i">
+              <div class="st-n">Slack</div>
+              <div class="st-d">Internal team chat. Driver room, warehouse room, office room, per-builder channels.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>💰</span>Finance (Already Working)</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">📊</span>
+            <div class="st-i">
+              <div class="st-n">QuickBooks Online</div>
+              <div class="st-d">Keep and expand. Enable Inventory module. Automate invoice triggers from job completion.</div>
+            </div>
+            <span class="st-s ss-keep">Keep + Expand</span>
+          </div>
+          <div class="st">
+            <span class="st-em">👥</span>
+            <div class="st-i">
+              <div class="st-n">ADP</div>
+              <div class="st-d">Payroll is solid. Keep as-is. Ensure QBO sync is properly configured.</div>
+            </div>
+            <span class="st-s ss-keep">Keep</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>📦</span>Inventory Management</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">📦</span>
+            <div class="st-i">
+              <div class="st-n">QuickBooks Inventory</div>
+              <div class="st-d">Already available inside their QBO subscription — just unused. Start here before buying new software.</div>
+            </div>
+            <span class="st-s ss-keep">Already Owned</span>
+          </div>
+          <div class="st">
+            <span class="st-em">🏭</span>
+            <div class="st-i">
+              <div class="st-n">inFlow Inventory</div>
+              <div class="st-d">If QBO Inventory is insufficient — purpose-built for manufacturing/supply businesses.</div>
+            </div>
+            <span class="st-s ss-new">Consider</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>🤖</span>AI & Intelligence</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">🧠</span>
+            <div class="st-i">
+              <div class="st-n">Claude API (Anthropic)</div>
+              <div class="st-d">Powers plan analysis, knowledge capture, estimate generation, and communications AI.</div>
+            </div>
+            <span class="st-s ss-build">Custom Build</span>
+          </div>
+          <div class="st">
+            <span class="st-em">🎙️</span>
+            <div class="st-i">
+              <div class="st-n">MacWhisper</div>
+              <div class="st-d">Transcribes owner recordings for knowledge capture. Already in use by Novian Intelligence.</div>
+            </div>
+            <span class="st-s ss-keep">Available</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>🌐</span>Website & Marketing</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">🏠</span>
+            <div class="st-i">
+              <div class="st-n">Custom HTML / Webflow</div>
+              <div class="st-d">Replace Wix. Proper SEO, analytics, contact form → CRM, fast load times.</div>
+            </div>
+            <span class="st-s ss-rep">Replace Wix</span>
+          </div>
+          <div class="st">
+            <span class="st-em">👥</span>
+            <div class="st-i">
+              <div class="st-n">HubSpot CRM (Free)</div>
+              <div class="st-d">Lead tracking for inbound 20% new business. Free tier is more than enough to start.</div>
+            </div>
+            <span class="st-s ss-new">New · Free</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>📚</span>Knowledge Management</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">🗂️</span>
+            <div class="st-i">
+              <div class="st-n">Notion</div>
+              <div class="st-d">SOPs, pricing guides, client notes, onboarding docs, knowledge base for all operations.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+          <div class="st">
+            <span class="st-em">🎬</span>
+            <div class="st-i">
+              <div class="st-n">Loom</div>
+              <div class="st-d">Video SOPs — owner records plan walkthroughs, process demos. Permanent training library.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span>⚡</span>Automation Glue</div>
+        <div class="sc-tools">
+          <div class="st">
+            <span class="st-em">⚡</span>
+            <div class="st-i">
+              <div class="st-n">Zapier / Make</div>
+              <div class="st-d">Connects systems where native integrations don't exist. Job complete → invoice trigger, etc.</div>
+            </div>
+            <span class="st-s ss-new">New</span>
+          </div>
+          <div class="st">
+            <span class="st-em">📱</span>
+            <div class="st-i">
+              <div class="st-n">Glide / Softr</div>
+              <div class="st-d">No-code portal builder — turns a Google Sheet or Airtable into a builder-facing status app.</div>
+            </div>
+            <span class="st-s ss-build">POC Option</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="si">
+    <div class="slabel"><span class="sn">07</span>The Phased Playbook</div>
+    <h2 class="stitle">How We<br>Get There</h2>
+    <p class="sdesc">Three phases. Each phase runs in parallel with existing systems until the new way is proven — protecting operations and reducing risk. The owner never has to change how he works until Jason can show him the results. Jason leads Phase 1 alone.</p>
+
+    <div class="poc-banner fi">
+      <div class="poc-ic">🔑</div>
+      <div>
+        <div class="poc-t">The Side-by-Side Strategy — How to Win Dad Over</div>
+        <div class="poc-b">Every phase is designed to run simultaneously with the existing system. Nothing gets shut off. Nobody is forced to change. The new system quietly accumulates data, proves its value, and only then replaces the old one. This is how Jason has driven every previous improvement at Fenix — and it's exactly the right approach here. Old system stays live until the new one wins on merit.</div>
+      </div>
+    </div>
+
+    <div class="phases fi">
+
+      <div class="ph ph1">
+        <div class="ph-badge">
+          <span class="ph-num">1</span>
+          <div>
+            <div class="ph-lbl">Phase One</div>
+          </div>
+        </div>
+        <div class="ph-title">Proof of Concept</div>
+        <div class="ph-dur">Weeks 1–6 · Jason Solo</div>
+        <div class="ph-desc">Jason implements alone. All new tools run in parallel with existing systems. The goal is not to change anything yet — it is to build the data foundation and demonstrate tangible value to show the owner.</div>
+        <ul class="ph-tasks">
+          <li>Set up Google Workspace — company emails for Jason + 1 other to start</li>
+          <li>Create shared Google Drive folder structure for incoming plans</li>
+          <li>Build Airtable job tracker — run alongside existing spreadsheet</li>
+          <li>Install Google Analytics on website — start collecting baseline data</li>
+          <li>Claim and optimize Google Business Profile</li>
+          <li>Begin capturing job records digitally in parallel with spreadsheet</li>
+          <li>Enable and configure QuickBooks Inventory module</li>
+          <li>Test AI plan analysis with 3 real historical jobs</li>
+        </ul>
+        <div class="ph-cost">
+          <div class="ci"><div class="ci-v">~$150/mo</div><div class="ci-l">SaaS Costs</div></div>
+          <div class="ci"><div class="ci-v">~40 hrs</div><div class="ci-l">Jason's Time</div></div>
+          <div class="ci"><div class="ci-v">Zero</div><div class="ci-l">Disruption</div></div>
+        </div>
+      </div>
+
+      <div class="ph ph2">
+        <div class="ph-badge">
+          <span class="ph-num">2</span>
+          <div>
+            <div class="ph-lbl">Phase Two</div>
+          </div>
+        </div>
+        <div class="ph-title">Foundation</div>
+        <div class="ph-dur">Months 2–4 · Team Adoption</div>
+        <div class="ph-desc">Expand what Phase 1 proved. Begin onboarding the team. Show the owner the dashboard with real data from Phase 1. Activate core integrations. Replace the spreadsheet with the proper job management system.</div>
+        <ul class="ph-tasks">
+          <li>Migrate all staff to Google Workspace company emails</li>
+          <li>Deploy Slack — driver channel, warehouse channel, office channel</li>
+          <li>Activate Buildertrend (or equivalent) — job queue goes live</li>
+          <li>Driver mobile app replaces text messages for delivery confirmation</li>
+          <li>Inventory system live — Larry's binder becomes secondary</li>
+          <li>Website rebuild — replace Wix, recover Google ranking</li>
+          <li>Basic customer portal v1 — builders can check job status</li>
+          <li>Begin AI-assisted estimating workflow alongside manual process</li>
+        </ul>
+        <div class="ph-cost">
+          <div class="ci"><div class="ci-v">~$600/mo</div><div class="ci-l">SaaS Costs</div></div>
+          <div class="ci"><div class="ci-v">~2 weeks</div><div class="ci-l">Dev Time</div></div>
+          <div class="ci"><div class="ci-v">Low</div><div class="ci-l">Disruption</div></div>
+        </div>
+      </div>
+
+      <div class="ph ph3">
+        <div class="ph-badge">
+          <span class="ph-num">3</span>
+          <div>
+            <div class="ph-lbl">Phase Three</div>
+          </div>
+        </div>
+        <div class="ph-title">Intelligence</div>
+        <div class="ph-dur">Months 5–12 · Full Automation</div>
+        <div class="ph-desc">Full AI integration. Automate the bottlenecks. Build the business intelligence layer. Turn daily operations into measurable, improvable metrics. Begin the succession documentation project.</div>
+        <ul class="ph-tasks">
+          <li>Full AI estimating assistant deployed and in use by owner</li>
+          <li>Automated inventory ordering system live</li>
+          <li>Executive dashboard built — Jason's single pane of glass</li>
+          <li>Review generation automation running</li>
+          <li>Knowledge capture project begins — record owner's expertise</li>
+          <li>Pricing database documented and searchable</li>
+          <li>Client relationship history digitized and organized</li>
+          <li>Succession readiness assessment and planning</li>
+        </ul>
+        <div class="ph-cost">
+          <div class="ci"><div class="ci-v">~$300/mo</div><div class="ci-l">SaaS Costs</div></div>
+          <div class="ci"><div class="ci-v">~4 weeks</div><div class="ci-l">Dev Time</div></div>
+          <div class="ci"><div class="ci-v">Transformative</div><div class="ci-l">Impact</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- KPIs -->
+<section id="impact">
+  <div class="si">
+    <div class="slabel"><span class="sn">08</span>The Numbers</div>
+    <h2 class="stitle">Projected<br><span style="color:var(--amber);">Impact</span></h2>
+    <p class="sdesc">Conservative projections based on industry benchmarks for construction suppliers implementing digital operations and automation. Results compound — early phases unlock later phases.</p>
+
+    <div class="kpi-grid fi">
+      <div class="kpi">
+        <div class="kpi-v">5×</div>
+        <div class="kpi-u">Faster</div>
+        <div class="kpi-l">Estimate Turnaround</div>
+        <div class="kpi-d">From ~1 week to same-day with AI plan analysis</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">80%</div>
+        <div class="kpi-u">Reduction</div>
+        <div class="kpi-l">Status Phone Calls</div>
+        <div class="kpi-d">Builder portal eliminates most inbound status checks</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">~0</div>
+        <div class="kpi-u">Incidents</div>
+        <div class="kpi-l">Inventory Shortages</div>
+        <div class="kpi-d">Predictive ordering eliminates mid-job gaps</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">100%</div>
+        <div class="kpi-u">Visibility</div>
+        <div class="kpi-l">Job Queue Transparency</div>
+        <div class="kpi-d">From "call to find out" to live dashboard for everyone</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">3×</div>
+        <div class="kpi-u">More</div>
+        <div class="kpi-l">Google Reviews</div>
+        <div class="kpi-d">Automated post-job sequence taps 80% repeat client base</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">Pg 1</div>
+        <div class="kpi-u">Target</div>
+        <div class="kpi-l">Google Ranking</div>
+        <div class="kpi-d">Proper SEO + reviews re-establishes local search authority</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">20%</div>
+        <div class="kpi-u">+ Revenue</div>
+        <div class="kpi-l">New Lead Conversion</div>
+        <div class="kpi-d">Faster estimates + CRM follow-up converts more inbounds</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-v">80%</div>
+        <div class="kpi-u">Documented</div>
+        <div class="kpi-l">Owner Knowledge Captured</div>
+        <div class="kpi-d">From 0% documented to a searchable institutional knowledge base</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- SUCCESSION -->
+<section id="succession">
+  <div class="si">
+    <div class="slabel"><span class="sn">09</span>The Hidden Urgency</div>
+    <h2 class="stitle">The Succession<br>Question</h2>
+    <p class="sdesc">Every other transformation area has an operational or financial payoff measured in months. The succession challenge is measured in years — but it is the most consequential risk in the business. The window to capture the owner's knowledge is open right now. It won't be open indefinitely.</p>
+
+    <div class="succ-grid fi">
+
+      <div class="succ-c">
+        <div class="succ-ic">🧠</div>
+        <div class="succ-t">What Walks Out with Him</div>
+        <div class="succ-b">The owner's head holds: 20 years of client-specific pricing agreements, the entire estimating methodology for reading post-tension plans, supplier relationship terms and negotiated rates, quality standards and job review criteria, and the judgment calls that make Fenix competitive. None of it is written down. None of it is transferable in its current form.</div>
+      </div>
+
+      <div class="succ-c">
+        <div class="succ-ic">⚡</div>
+        <div class="succ-t">The Capture Strategy</div>
+        <div class="succ-b">Don't ask the owner to document things — he won't. Instead, record him doing his normal job. Use MacWhisper to transcribe every plan review session. Let Claude structure those transcriptions into SOPs, pricing guides, and client notes. After 3–6 months of casual recording, a comprehensive knowledge base exists — without the owner ever sitting down to "write documentation."</div>
+      </div>
+
+      <div class="succ-c">
+        <div class="succ-ic">📊</div>
+        <div class="succ-t">The Business Intelligence Baseline</div>
+        <div class="succ-b">Whoever takes over this business needs to know: which clients have custom pricing, which jobs are highest margin, which suppliers have best terms, what the seasonal demand patterns look like, and what the real cost structure is. None of that data currently exists in accessible form. Building it now — as a byproduct of normal operations — is the most impactful thing that can be done for long-term business health.</div>
+      </div>
+
+      <div class="succ-c">
+        <div class="succ-ic">🔮</div>
+        <div class="succ-t">The Competitive Reality</div>
+        <div class="succ-b">QXO (which now owns Barnes Co) brings enterprise-grade systems to the Central Texas market. Suncoast is a regional player with scale. Fenix's enduring advantages are relationships, bilingual service, 20 years of trust, and speed. Technology does not replace those advantages — it amplifies them. A modernized Fenix is a far more defensible business than one that relies solely on the owner's personal relationships and memory.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- NORTH STAR -->
+<section id="northstar" style="padding:120px 2rem;">
+  <div class="ns-inner">
+    <div class="ns-ey">The North Star · Fenix Post Tension · 2026–2027</div>
+    <h2 class="ns-title">Built to Last<br><span style="color:var(--amber);">Another 20 Years</span></h2>
+    <p class="ns-body">Fenix Post Tension is a remarkable business — deeply trusted, bilingual, Central Texas rooted, with 20 years of earned relationships and nearly unshakeable repeat business. The goal of this transformation is not to replace what makes it great. It is to build a layer of operational intelligence that protects it, scales it, and hands it to the next generation intact.</p>
+    <p class="ns-body" style="margin-top:-1rem;">When this work is done, Jason can know the status of every job in real time. The owner can estimate twice as many jobs in the same time. Builders never have to call for updates. Larry's successor can manage inventory from a phone. And a new hire can learn the business from documented SOPs instead of standing behind the owner for three months hoping something sticks.</p>
+    <div class="ns-stats">
+      <div class="ns-s"><span class="ns-v">400+</span><span class="ns-l">Jobs / Month · Measurable</span></div>
+      <div class="ns-s"><span class="ns-v">1-day</span><span class="ns-l">Target Estimate Turnaround</span></div>
+      <div class="ns-s"><span class="ns-v">Zero</span><span class="ns-l">Single Points of Failure</span></div>
+      <div class="ns-s"><span class="ns-v">Ready</span><span class="ns-l">For Next Generation Leadership</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <span class="ft-brand">Fenix Post Tension</span>
+    <span class="ft-txt">Business Transformation Strategy · 2026 · Prepared by Novian Intelligence · Sonnet 4.6</span>
+    <span class="ft-txt">Built with Claude · Andrei & Jason</span>
+  </div>
+</footer>
+
+<script>
+// Fade-in on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('v');
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+// Stagger pain cards
+document.querySelectorAll('.pain-card').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.04) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger sol cards
+document.querySelectorAll('.sol-card').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.06) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger ai cards
+document.querySelectorAll('.ai-card').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.05) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger stack cats
+document.querySelectorAll('.sc').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.04) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger phase cards
+document.querySelectorAll('.ph').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.1) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger kpi cards
+document.querySelectorAll('.kpi').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.05) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger succ cards
+document.querySelectorAll('.succ-c').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.07) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+
+// Stagger threat cards
+document.querySelectorAll('.threat-card').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.08) + 's';
+  c.classList.add('fi');
+  obs.observe(c);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jon Simon — Sales OS Playbook · Novian Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #070E1C;
+    --navy-mid:   #0C1830;
+    --navy-card:  #111F3A;
+    --navy-light: #172847;
+    --navy-rim:   #1E3357;
+    --gold:       #F0C040;
+    --gold-dim:   rgba(240,192,64,0.09);
+    --gold-border:rgba(240,192,64,0.22);
+    --gold-glow:  rgba(240,192,64,0.04);
+    --teal:       #26D4CB;
+    --teal-dim:   rgba(38,212,203,0.09);
+    --teal-border:rgba(38,212,203,0.22);
+    --green:      #30D158;
+    --green-dim:  rgba(48,209,88,0.09);
+    --green-border:rgba(48,209,88,0.22);
+    --red:        #FF5F57;
+    --red-dim:    rgba(255,95,87,0.09);
+    --purple:     #BF5AF2;
+    --purple-dim: rgba(191,90,242,0.09);
+    --purple-border:rgba(191,90,242,0.22);
+    --amber:      #FF9F0A;
+    --amber-dim:  rgba(255,159,10,0.09);
+    --text:       #DDE6F5;
+    --text-soft:  #A8B8D0;
+    --text-muted: #607090;
+    --text-dim:   #384D68;
+    --rule:       rgba(255,255,255,0.055);
+    --rule-bright:rgba(255,255,255,0.10);
+    --mono: 'Barlow Condensed', sans-serif;
+    --head: 'Bebas Neue', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--navy);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    background-image:
+      linear-gradient(rgba(240,192,64,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,192,64,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ═══════════════════════════════════════
+     TOP STRIP
+  ═══════════════════════════════════════ */
+  .topstrip {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--teal) 60%, var(--purple) 100%);
+  }
+
+  /* ═══════════════════════════════════════
+     GLOBAL HEADER
+  ═══════════════════════════════════════ */
+  .global-header {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--rule-bright);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 54px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    backdrop-filter: blur(16px);
+  }
+  .gh-left { display: flex; align-items: center; gap: 18px; }
+  .gh-logo {
+    font-family: var(--head);
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+  .gh-sep { width: 1px; height: 28px; background: var(--rule-bright); }
+  .gh-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .gh-right { display: flex; gap: 8px; align-items: center; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+  .badge.gold   { background: var(--gold-dim);   border: 1px solid var(--gold-border);   color: var(--gold); }
+  .badge.teal   { background: var(--teal-dim);   border: 1px solid var(--teal-border);   color: var(--teal); }
+  .badge.ghost  { border: 1px solid var(--rule-bright); color: var(--text-muted); }
+  .badge.green  { background: var(--green-dim);  border: 1px solid var(--green-border);  color: var(--green); }
+  .badge.purple { background: var(--purple-dim); border: 1px solid var(--purple-border); color: var(--purple); }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  .hero {
+    padding: 64px 40px 56px;
+    border-bottom: 1px solid var(--rule-bright);
+    background: linear-gradient(135deg, rgba(240,192,64,0.035) 0%, transparent 55%), var(--navy-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,192,64,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    align-items: start;
+    max-width: 1360px;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--gold); }
+  .hero-title {
+    font-family: var(--head);
+    font-size: clamp(60px, 9vw, 128px);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .hero-title .hl { color: var(--gold); display: block; }
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-top: 10px;
+    margin-bottom: 24px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-soft);
+    max-width: 580px;
+    line-height: 1.65;
+  }
+
+  /* SPEC PANEL */
+  .spec-panel {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(240,192,64,0.06);
+  }
+  .spec-head {
+    background: var(--gold);
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .spec-head-label { font-family: var(--head); font-size: 15px; letter-spacing: 0.1em; color: var(--navy); }
+  .spec-head-date  { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--navy-mid); text-transform: uppercase; }
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-field { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); }
+  .spec-val   { font-family: var(--head); font-size: 17px; letter-spacing: 0.05em; color: var(--text); }
+  .spec-val.gold   { color: var(--gold); }
+  .spec-val.teal   { color: var(--teal); }
+  .spec-val.green  { color: var(--green); }
+  .spec-val.purple { color: var(--purple); }
+
+  /* ═══════════════════════════════════════
+     SECTION NAV TABS
+  ═══════════════════════════════════════ */
+  .section-nav {
+    background: var(--navy-card);
+    border-bottom: 1px solid var(--rule-bright);
+    display: flex;
+    padding: 0 40px;
+    overflow-x: auto;
+    position: sticky;
+    top: 54px;
+    z-index: 150;
+    scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .snav-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    color: var(--text-dim);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: block;
+  }
+  .snav-item:hover { color: var(--text-soft); }
+  .snav-item.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ═══════════════════════════════════════
+     MAIN LAYOUT
+  ═══════════════════════════════════════ */
+  .layout {
+    display: grid;
+    grid-template-columns: 252px 1fr;
+  }
+
+  /* ═══════════════════════════════════════
+     SIDEBAR
+  ═══════════════════════════════════════ */
+  .sidebar {
+    background: var(--navy-mid);
+    border-right: 1px solid var(--rule-bright);
+    padding: 32px 0;
+    position: sticky;
+    top: 109px;
+    height: calc(100vh - 109px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--navy-rim) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--navy-rim); border-radius: 2px; }
+
+  .sb-group-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 20px;
+    margin-bottom: 6px;
+    margin-top: 24px;
+  }
+  .sb-group-label:first-child { margin-top: 0; }
+  .sb-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s;
+    text-decoration: none;
+  }
+  .sb-item:hover { color: var(--text); background: rgba(255,255,255,0.025); }
+  .sb-item.active { color: var(--gold); background: var(--gold-dim); }
+  .sb-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 2px;
+    background: var(--gold);
+  }
+  .sb-item.teal-item.active { color: var(--teal); background: var(--teal-dim); }
+  .sb-item.teal-item.active::before { background: var(--teal); }
+  .sb-mark {
+    width: 5px; height: 5px;
+    border-radius: 1px;
+    transform: rotate(45deg);
+    background: var(--text-dim);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .sb-mark.gold   { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  .sb-mark.teal   { background: var(--teal); }
+  .sb-mark.green  { background: var(--green); }
+  .sb-mark.red    { background: var(--red); }
+  .sb-mark.purple { background: var(--purple); }
+  .sb-mark.amber  { background: var(--amber); }
+
+  /* ═══════════════════════════════════════
+     CONTENT AREA
+  ═══════════════════════════════════════ */
+  .content {
+    padding: 48px 44px;
+    max-width: 1100px;
+  }
+
+  /* SECTION ANCHOR */
+  .section-anchor { scroll-margin-top: 120px; }
+
+  /* PHASE HEADER */
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule-bright);
+  }
+  .phase-num-big {
+    font-family: var(--head);
+    font-size: 52px;
+    line-height: 1;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    min-width: 76px;
+  }
+  .phase-num-big.teal   { color: var(--teal); }
+  .phase-num-big.green  { color: var(--green); }
+  .phase-num-big.purple { color: var(--purple); }
+  .phase-info {}
+  .phase-tag   { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .phase-tag.teal   { color: var(--teal); }
+  .phase-tag.green  { color: var(--green); }
+  .phase-tag.purple { color: var(--purple); }
+  .phase-title { font-family: var(--head); font-size: 28px; letter-spacing: 0.04em; color: var(--text); line-height: 1.05; }
+  .phase-meta  {
+    margin-left: auto;
+    text-align: right;
+  }
+  .phase-meta-val   { font-family: var(--head); font-size: 28px; color: var(--teal); letter-spacing: 0.05em; }
+  .phase-meta-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-top: 2px; }
+
+  /* SECTION SEPARATOR */
+  .section-sep {
+    margin: 56px 0 48px;
+    border: none;
+    border-top: 1px solid var(--rule-bright);
+    position: relative;
+  }
+  .section-sep::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -9px;
+    left: 0;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: var(--navy);
+    padding: 0 12px 0 0;
+  }
+
+  /* ═══════════════════════════════════════
+     MISSION CARDS (2-up grid)
+  ═══════════════════════════════════════ */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .mission-grid.single { grid-template-columns: 1fr; }
+  .mission-grid.three  { grid-template-columns: 1fr 1fr 1fr; }
+
+  .mission-card {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .mission-card:hover {
+    border-color: var(--gold-border);
+    box-shadow: 0 4px 24px rgba(240,192,64,0.06);
+  }
+  .mission-card.accent-gold   { border-top: 3px solid var(--gold); }
+  .mission-card.accent-teal   { border-top: 3px solid var(--teal); }
+  .mission-card.accent-green  { border-top: 3px solid var(--green); }
+  .mission-card.accent-red    { border-top: 3px solid var(--red); }
+  .mission-card.accent-purple { border-top: 3px solid var(--purple); }
+  .mission-card.accent-amber  { border-top: 3px solid var(--amber); }
+
+  .mc-top {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .mc-icon {
+    width: 36px; height: 36px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .mc-icon.gold   { background: var(--gold-dim);   border: 1px solid var(--gold-border); }
+  .mc-icon.teal   { background: var(--teal-dim);   border: 1px solid var(--teal-border); }
+  .mc-icon.green  { background: var(--green-dim);  border: 1px solid var(--green-border); }
+  .mc-icon.red    { background: var(--red-dim);    border: 1px solid rgba(255,95,87,0.22); }
+  .mc-icon.purple { background: var(--purple-dim); border: 1px solid var(--purple-border); }
+  .mc-icon.amber  { background: var(--amber-dim);  border: 1px solid rgba(255,159,10,0.22); }
+
+  .mc-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .mc-tool {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .mc-body { padding: 14px 20px; }
+  .mc-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+
+  .task-list { list-style: none; }
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.4;
+  }
+  .task-row:last-child { border-bottom: none; }
+  .task-box {
+    width: 14px; height: 14px;
+    border: 1px solid var(--rule-bright);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px;
+    border-radius: 1px;
+  }
+  .task-box.done   { border-color: var(--green);  color: var(--green);  background: var(--green-dim); }
+  .task-box.active { border-color: var(--gold);   color: var(--gold);   background: var(--gold-dim); }
+  .task-box.teal   { border-color: var(--teal);   background: var(--teal-dim); }
+
+  .mc-footer {
+    padding: 10px 20px;
+    background: rgba(0,0,0,0.22);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .ftag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ftag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .ftag.gold   { background: var(--gold-dim);   border: 1px solid var(--gold-border);   color: var(--gold); }
+  .ftag.teal   { background: var(--teal-dim);   border: 1px solid var(--teal-border);   color: var(--teal); }
+  .ftag.green  { background: var(--green-dim);  border: 1px solid var(--green-border);  color: var(--green); }
+  .ftag.purple { background: var(--purple-dim); border: 1px solid var(--purple-border); color: var(--purple); }
+  .ftag.amber  { background: var(--amber-dim);  border: 1px solid rgba(255,159,10,0.22); color: var(--amber); }
+  .ftag.ghost  { border: 1px solid var(--rule-bright); color: var(--text-dim); }
+  .mc-impact {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ═══════════════════════════════════════
+     INSIGHT BLOCKS (full-width callouts)
+  ═══════════════════════════════════════ */
+  .insight-block {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .insight-block.teal   { border-left-color: var(--teal); }
+  .insight-block.green  { border-left-color: var(--green); }
+  .insight-block.purple { border-left-color: var(--purple); }
+  .insight-block.red    { border-left-color: var(--red); }
+  .insight-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .insight-block.teal   .insight-label { color: var(--teal); }
+  .insight-block.green  .insight-label { color: var(--green); }
+  .insight-block.purple .insight-label { color: var(--purple); }
+  .insight-block.red    .insight-label { color: var(--red); }
+  .insight-title {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .insight-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+  .insight-body strong { color: var(--text); font-weight: 500; }
+
+  /* ═══════════════════════════════════════
+     DATA TABLE
+  ═══════════════════════════════════════ */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule-bright);
+    text-align: left;
+    background: rgba(0,0,0,0.2);
+  }
+  .data-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--text-soft);
+    font-weight: 300;
+    vertical-align: top;
+  }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+  .data-table td.label-cell {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ═══════════════════════════════════════
+     PIPELINE STAGES (before/after)
+  ═══════════════════════════════════════ */
+  .stage-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .stage-panel {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stage-head {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule-bright);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stage-head-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .stage-head .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .stage-head .dot.red  { background: var(--red); }
+  .stage-head .dot.green { background: var(--green); }
+  .stage-item {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+  }
+  .stage-item:last-child { border-bottom: none; }
+  .stage-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    min-width: 20px;
+  }
+  .stage-name { color: var(--text-soft); font-weight: 400; }
+  .stage-name.dim { color: var(--text-dim); font-style: italic; }
+  .stage-name.bright { color: var(--text); font-weight: 500; }
+  .stage-badge {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .stage-badge.new  { background: var(--teal-dim); border: 1px solid var(--teal-border); color: var(--teal); }
+  .stage-badge.keep { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); }
+
+  /* ═══════════════════════════════════════
+     PROSPECT SEGMENTS TABLE
+  ═══════════════════════════════════════ */
+  .segment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .segment-card {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    padding: 18px;
+  }
+  .seg-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .seg-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .seg-count {
+    font-family: var(--head);
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .seg-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .seg-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+  .seg-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    border: 1px solid var(--rule-bright);
+    color: var(--text-dim);
+  }
+  .seg-tag.hot { border-color: var(--gold-border); color: var(--gold); background: var(--gold-dim); }
+
+  /* ═══════════════════════════════════════
+     CODE / COPY BLOCK
+  ═══════════════════════════════════════ */
+  .copy-block {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: var(--mono);
+  }
+  .copy-block-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--rule-bright);
+    background: rgba(255,255,255,0.03);
+  }
+  .copy-block-title {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .copy-block-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .copy-block-body {
+    padding: 20px 18px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .copy-block-body .cm { color: var(--text-dim); }
+  .copy-block-body .kw { color: var(--teal); }
+  .copy-block-body .str { color: var(--gold); }
+  .copy-block-body .hl { color: var(--text); font-weight: 500; }
+
+  /* ═══════════════════════════════════════
+     PROFILE CARD
+  ═══════════════════════════════════════ */
+  .profile-card {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .profile-head {
+    background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-card) 100%);
+    padding: 32px;
+    border-bottom: 1px solid var(--rule-bright);
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .profile-avatar {
+    width: 72px; height: 72px;
+    border-radius: 4px;
+    background: var(--gold-dim);
+    border: 2px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--head);
+    font-size: 36px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .profile-name-block {}
+  .profile-name {
+    font-family: var(--head);
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .profile-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .profile-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .profile-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 2px;
+    border: 1px solid var(--rule-bright);
+    color: var(--text-dim);
+  }
+  .profile-rows { padding: 0; }
+  .profile-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 28px;
+    border-bottom: 1px solid var(--rule);
+    gap: 20px;
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .pr-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    min-width: 140px;
+  }
+  .pr-value {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-soft);
+  }
+  .pr-value strong { color: var(--text); font-weight: 500; }
+
+  /* ═══════════════════════════════════════
+     COMP / COMMISSION BREAKDOWN
+  ═══════════════════════════════════════ */
+  .comp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .comp-card {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+  }
+  .comp-val {
+    font-family: var(--head);
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .comp-val.teal { color: var(--teal); }
+  .comp-val.green { color: var(--green); }
+  .comp-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .comp-sub {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ═══════════════════════════════════════
+     OUTREACH CADENCE VISUAL
+  ═══════════════════════════════════════ */
+  .cadence-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 28px;
+    overflow-x: auto;
+  }
+  .cadence-step {
+    flex: 1;
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    padding: 16px 14px;
+    position: relative;
+    min-width: 110px;
+  }
+  .cadence-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 14px;
+    z-index: 2;
+    background: var(--navy);
+    padding: 0 2px;
+  }
+  .cadence-step:not(:first-child) { border-left: none; }
+  .cs-day {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .cs-action {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .cs-note {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════
+     TOOL STACK CARDS
+  ═══════════════════════════════════════ */
+  .tool-stack {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .tool-card {
+    background: var(--navy-card);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .tool-emoji {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: center;
+  }
+  .tool-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .tool-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .tool-status {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .tool-status.existing { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); }
+  .tool-status.add      { background: var(--teal-dim); border: 1px solid var(--teal-border); color: var(--teal); }
+  .tool-status.future   { background: var(--purple-dim); border: 1px solid var(--purple-border); color: var(--purple); }
+
+  /* ═══════════════════════════════════════
+     TYPOGRAPHY
+  ═══════════════════════════════════════ */
+  .section-title {
+    font-family: var(--head);
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .sub-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .sub-label.gold   { color: var(--gold); }
+  .sub-label.teal   { color: var(--teal); }
+  .sub-label.green  { color: var(--green); }
+  .sub-label.purple { color: var(--purple); }
+
+  .prose {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    max-width: 780px;
+  }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose em { color: var(--gold); font-style: normal; }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  .doc-footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule-bright);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 60px;
+  }
+  .doc-footer-left {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .doc-footer-right {
+    font-family: var(--head);
+    font-size: 28px;
+    color: var(--gold-border);
+    letter-spacing: 0.08em;
+  }
+</style>
+</head>
+<body>
+
+<div class="topstrip"></div>
+
+<!-- ═══════════════════════════ GLOBAL HEADER ═══════════════════════════ -->
+<header class="global-header">
+  <div class="gh-left">
+    <div class="gh-logo">Novian</div>
+    <div class="gh-sep"></div>
+    <div class="gh-title">Jon Simon · ATX Event Systems · Sales OS Playbook</div>
+  </div>
+  <div class="gh-right">
+    <div class="badge gold">Ver 1.0</div>
+    <div class="badge teal">April 2025</div>
+    <div class="badge ghost">Confidential</div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">Built by Novian Intelligence · For Jon Simon</div>
+      <div class="hero-title">
+        Sales
+        <span class="hl">Operating</span>
+        System
+      </div>
+      <div class="hero-sub">ATX Event Systems · 2025–2026 Transformation Roadmap</div>
+      <div class="hero-desc">A complete, phased action plan for turning a manual, instinct-driven solo sales operation into an AI-augmented pipeline machine — without losing the human touch that closes deals. Jon is already doing the hard work. This playbook shows him how to make it work smarter.</div>
+    </div>
+    <div class="spec-panel">
+      <div class="spec-head">
+        <div class="spec-head-label">Mission Brief</div>
+        <div class="spec-head-date">April 2025</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Company Revenue Target</div>
+        <div class="spec-val gold">$3,000,000</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Jon Income Goal</div>
+        <div class="spec-val">$200,000 / yr</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Base + Variable</div>
+        <div class="spec-val teal">$80K + $120K</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Commission Rate</div>
+        <div class="spec-val">5% → 7.5% off-peak</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Immediate Actions</div>
+        <div class="spec-val green">8 Quick Wins</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">AI Upgrades Mapped</div>
+        <div class="spec-val">14 Total</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-field">Primary Architect</div>
+        <div class="spec-val gold">Andrei · Novian</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ SECTION NAV ═══════════════════════════ -->
+<nav class="section-nav">
+  <a href="#phase01" class="snav-item active">Phase 01 — Immediate</a>
+  <a href="#phase02" class="snav-item">Phase 02 — AI Engine</a>
+  <a href="#phase03" class="snav-item">Phase 03 — Jon OS</a>
+  <a href="#sales-analysis" class="snav-item">Sales Analysis</a>
+  <a href="#hubspot" class="snav-item">HubSpot Overhaul</a>
+  <a href="#outreach" class="snav-item">Outreach Strategy</a>
+  <a href="#tool-stack" class="snav-item">Tool Stack</a>
+  <a href="#project-file" class="snav-item">Claude Project File</a>
+  <a href="#account-doc" class="snav-item">Jon's Account Doc</a>
+</nav>
+
+<!-- ═══════════════════════════ MAIN LAYOUT ═══════════════════════════ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-group-label">Phase 01 · Week 1</div>
+    <a href="#phase01" class="sb-item active">Overview <span class="sb-mark gold"></span></a>
+    <a href="#win-sequences" class="sb-item">HubSpot Sequences <span class="sb-mark gold"></span></a>
+    <a href="#win-transcripts" class="sb-item">Call Transcripts <span class="sb-mark gold"></span></a>
+    <a href="#win-breeze" class="sb-item">Breeze Agent <span class="sb-mark gold"></span></a>
+    <a href="#win-dashboard" class="sb-item">Email Dashboard <span class="sb-mark teal"></span></a>
+    <a href="#win-linkedin" class="sb-item">LinkedIn Push <span class="sb-mark teal"></span></a>
+
+    <div class="sb-group-label">Phase 02 · Month 1–3</div>
+    <a href="#phase02" class="sb-item">Overview <span class="sb-mark teal"></span></a>
+    <a href="#ai-outreach" class="sb-item">Dynamic Outreach Engine</a>
+    <a href="#ai-avatar" class="sb-item">AI Avatar + 11Labs <span class="sb-mark green"></span></a>
+    <a href="#ai-pipeline" class="sb-item">Pipeline Rebuild</a>
+    <a href="#ai-mpi" class="sb-item">MPI Scale Campaign <span class="sb-mark teal"></span></a>
+    <a href="#ai-content" class="sb-item">Content Engine</a>
+
+    <div class="sb-group-label">Phase 03 · Jon OS</div>
+    <a href="#phase03" class="sb-item">Overview <span class="sb-mark green"></span></a>
+    <a href="#second-brain" class="sb-item">Second Brain Setup</a>
+    <a href="#heygen" class="sb-item">HeyGen Video Avatar <span class="sb-mark purple"></span></a>
+    <a href="#voicemail-ai" class="sb-item">Voicemail AI</a>
+
+    <div class="sb-group-label">Deep Dives</div>
+    <a href="#sales-analysis" class="sb-item">Sales Process Analysis</a>
+    <a href="#hubspot" class="sb-item">HubSpot Overhaul</a>
+    <a href="#outreach" class="sb-item">Outreach Strategy</a>
+    <a href="#tool-stack" class="sb-item">Recommended Stack</a>
+
+    <div class="sb-group-label">Setup Files</div>
+    <a href="#project-file" class="sb-item">Claude Project File <span class="sb-mark gold"></span></a>
+    <a href="#account-doc" class="sb-item">Jon's Account Doc <span class="sb-mark gold"></span></a>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- ══════════════════════════════════════════
+         PHASE 01 — IMMEDIATE WINS
+    ══════════════════════════════════════════ -->
+    <div id="phase01" class="section-anchor">
+      <div class="phase-header">
+        <div class="phase-num-big">01</div>
+        <div class="phase-info">
+          <div class="phase-tag">Phase One · This Week</div>
+          <div class="phase-title">Immediate Wins — High Impact, Low Lift</div>
+        </div>
+        <div class="phase-meta">
+          <div class="phase-meta-val">8</div>
+          <div class="phase-meta-label">Actions Available Now</div>
+        </div>
+      </div>
+
+      <div class="prose">
+        Jon is already doing excellent, instinct-driven sales work. The gap is not effort — it's infrastructure. The following eight actions require <strong>no new budget</strong>, no outside help, and in most cases can be activated inside tools he already has access to. Each one directly removes a manual bottleneck that's costing him hours every week.
+      </div>
+
+      <!-- WIN 1: SEQUENCES -->
+      <div id="win-sequences" class="section-anchor">
+        <div class="sub-label gold">Win 01 · Highest Priority</div>
+        <div class="section-title">Activate HubSpot Email Sequences</div>
+        <div class="insight-block">
+          <div class="insight-label">The Gap</div>
+          <div class="insight-title">Jon has 25 hand-crafted templates and zero automated follow-up cadences.</div>
+          <div class="insight-body">Every single follow-up email is written and sent manually. HubSpot Sequences — which are already included in his plan — let him enroll a contact once and have the system automatically send timed, personalized emails on his schedule. This single activation could <strong>triple his outreach throughput</strong> without adding a single hour to his day.</div>
+        </div>
+
+        <div class="mission-grid">
+          <div class="mission-card accent-gold">
+            <div class="mc-top">
+              <div class="mc-icon gold">⚡</div>
+              <div>
+                <div class="mc-title">Build the 3-Touch Cadence</div>
+                <div class="mc-tool">HubSpot → Sequences → Create</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="task-list">
+                <li class="task-row"><div class="task-box active">→</div>Audit and categorize 25 existing templates by vertical (Associations, Corporations, Event Planners, Venues, Win-Backs)</li>
+                <li class="task-row"><div class="task-box"></div>Build 3-touch sequence per vertical: Call → Email Day 1 → Email Day 7 → Breakup Email Day 14</li>
+                <li class="task-row"><div class="task-box"></div>Configure enrollment triggers from Contact/Company view</li>
+                <li class="task-row"><div class="task-box"></div>Test sequence on 10 contacts from TSAE list</li>
+                <li class="task-row"><div class="task-box"></div>Set up Breeze AI to auto-suggest contacts for enrollment</li>
+              </ul>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag gold">P1 · Day 1</span>
+                <span class="ftag ghost">HubSpot</span>
+                <span class="ftag ghost">No Cost</span>
+              </div>
+              <div class="mc-impact">~3 hrs setup</div>
+            </div>
+          </div>
+
+          <div class="mission-card accent-teal">
+            <div class="mc-top">
+              <div class="mc-icon teal">📅</div>
+              <div>
+                <div class="mc-title">Recommended Cadence Structure</div>
+                <div class="mc-tool">Per Prospect Segment</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="cadence-flow" style="flex-direction:column; gap:8px; overflow:visible;">
+                <div style="display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text-muted);">
+                  <span style="color:var(--gold); min-width:52px; letter-spacing:0.1em;">DAY 0</span>
+                  Phone call + voicemail → immediate email same day
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text-muted);">
+                  <span style="color:var(--gold); min-width:52px; letter-spacing:0.1em;">DAY 7</span>
+                  Value-add follow-up — differentiator bullet points
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text-muted);">
+                  <span style="color:var(--gold); min-width:52px; letter-spacing:0.1em;">DAY 14</span>
+                  Breakup email — "Should I try back later?"
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text-muted);">
+                  <span style="color:var(--teal); min-width:52px; letter-spacing:0.1em;">BITE?</span>
+                  Exit sequence → manual nurture at 2-week intervals
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text-muted);">
+                  <span style="color:var(--text-dim); min-width:52px; letter-spacing:0.1em;">NO REPLY</span>
+                  Archive contact. Revisit in 3 months automatically.
+                </div>
+              </div>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag teal">Proven Pattern</span>
+                <span class="ftag ghost">Jon's Current Method</span>
+              </div>
+              <div class="mc-impact">Already working</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" data-label="Win 02">
+
+      <!-- WIN 2: CALL TRANSCRIPTS -->
+      <div id="win-transcripts" class="section-anchor">
+        <div class="sub-label gold">Win 02 · Highest Priority</div>
+        <div class="section-title">Call Transcript Intelligence</div>
+        <div class="insight-block teal">
+          <div class="insight-label">The Gap</div>
+          <div class="insight-title">Jon can pull call recordings but has zero system to extract insights from them.</div>
+          <div class="insight-body">He acknowledged he'd have to <strong>manually re-listen to every call</strong> to remember what was discussed. He hasn't taken notes in meetings because he doesn't have a recorder running. The fix is one install. With call transcription + AI summaries, Jon will <strong>never take notes again</strong> — instead he gets: who said what, action items, objections raised, next steps, and deal risk signals — automatically, after every call.</div>
+        </div>
+
+        <div class="mission-grid">
+          <div class="mission-card accent-teal">
+            <div class="mc-top">
+              <div class="mc-icon teal">🎙️</div>
+              <div>
+                <div class="mc-title">Enable HubSpot AI Transcription</div>
+                <div class="mc-tool">HubSpot → Settings → Calling</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="task-list">
+                <li class="task-row"><div class="task-box"></div>Go to HubSpot → Settings → Calling → verify AI transcription is enabled on the account</li>
+                <li class="task-row"><div class="task-box"></div>Ask GM (administrator) to confirm AI add-on is active</li>
+                <li class="task-row"><div class="task-box"></div>Make a test call through HubSpot app on phone → confirm transcript appears in contact record</li>
+                <li class="task-row"><div class="task-box"></div>Build a Claude prompt to parse the transcript and generate a custom sales summary</li>
+              </ul>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag teal">P1 · Day 1</span>
+                <span class="ftag ghost">Possibly Free</span>
+                <span class="ftag ghost">HubSpot AI</span>
+              </div>
+              <div class="mc-impact">30 min to enable</div>
+            </div>
+          </div>
+
+          <div class="mission-card accent-green">
+            <div class="mc-top">
+              <div class="mc-icon green">🦦</div>
+              <div>
+                <div class="mc-title">Otter.ai for Google Meet Calls</div>
+                <div class="mc-tool">otter.ai — Free Tier Available</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="task-list">
+                <li class="task-row"><div class="task-box"></div>Sign up at otter.ai — free plan covers 300 mins/month</li>
+                <li class="task-row"><div class="task-box"></div>Connect to Google Calendar → auto-joins every Google Meet</li>
+                <li class="task-row"><div class="task-box"></div>After each call: copy transcript → paste into Claude with summary prompt below</li>
+                <li class="task-row"><div class="task-box"></div>Optional: Zapier → auto-log summary as HubSpot note on contact record</li>
+              </ul>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag green">Free to Start</span>
+                <span class="ftag ghost">Otter.ai</span>
+              </div>
+              <div class="mc-impact">~15/mo Pro</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label teal" style="margin-top:4px;">Claude Prompt — Post-Call Summary Template</div>
+        <div class="copy-block">
+          <div class="copy-block-head">
+            <div class="copy-block-title">Sales Call Summary Prompt — Copy into Claude after every call</div>
+            <div class="copy-block-label">Copy This</div>
+          </div>
+          <div class="copy-block-body"><span class="kw">Here is the transcript from a sales call I just completed. Please analyze it and give me:</span>
+
+<span class="hl">1. ONE-LINE SUMMARY</span> — What was this call about in one sentence?
+
+<span class="hl">2. CONTACT PROFILE UPDATES</span> — Any new information I learned about this person or their organization that I should log in HubSpot (role, budget, decision authority, upcoming events, pain points).
+
+<span class="hl">3. KEY SIGNALS</span> — What did they say that indicates buying intent, hesitation, or competition concerns? Flag anything that sounds like "we already have a vendor" or "budget is tight."
+
+<span class="hl">4. ACTION ITEMS</span> — What did I promise to send or do? What do THEY need to do next?
+
+<span class="hl">5. FOLLOW-UP DRAFT</span> — Write a brief follow-up email I can send within 2 hours of this call. Warm, concise, recap what we discussed, and one clear next step.
+
+<span class="hl">6. NEXT TOUCH DATE</span> — Based on what was said, when should I next contact this person and why?
+
+<span class="cm">--- TRANSCRIPT BELOW ---</span>
+[paste transcript here]</div>
+        </div>
+      </div>
+
+      <hr class="section-sep" data-label="Win 03">
+
+      <!-- WIN 3: BREEZE -->
+      <div id="win-breeze" class="section-anchor">
+        <div class="sub-label gold">Win 03 · High Priority</div>
+        <div class="section-title">Activate Breeze Company Research Agent</div>
+        <div class="insight-block">
+          <div class="insight-label">Context — From the Room</div>
+          <div class="insight-title">Josh demonstrated this live — and it's exactly what Jon needs for personalized outreach at scale.</div>
+          <div class="insight-body">Breeze Studio's Company Research Agent <strong>scrapes the internet, news sources, and the CRM</strong> for everything known about a prospect — recent news, awards, events, and activity. Josh's method: run the agent → get the brief → feed to Claude → get two personalized outreach emails in Jon's voice. Jon has Breeze — he just needs admin access unlocked by his GM.</div>
+        </div>
+
+        <div class="mission-grid">
+          <div class="mission-card accent-gold">
+            <div class="mc-top">
+              <div class="mc-icon gold">🔬</div>
+              <div>
+                <div class="mc-title">Get Access + First Run</div>
+                <div class="mc-tool">HubSpot → Breeze → Run Agents</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="task-list">
+                <li class="task-row"><div class="task-box"></div>Ask GM for Breeze Studio admin access (already included in plan)</li>
+                <li class="task-row"><div class="task-box"></div>In HubSpot → click star icon bottom-left → Breeze Studio → Run Agents</li>
+                <li class="task-row"><div class="task-box"></div>Run "Company Research Agent" on your top 20 target accounts</li>
+                <li class="task-row"><div class="task-box"></div>Paste output into Claude with email gen prompt (see below)</li>
+              </ul>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag gold">Needs GM Auth</span>
+                <span class="ftag ghost">Breeze Studio</span>
+              </div>
+              <div class="mc-impact">Already in plan</div>
+            </div>
+          </div>
+
+          <div class="mission-card accent-teal">
+            <div class="mc-top">
+              <div class="mc-icon teal">✉️</div>
+              <div>
+                <div class="mc-title">Breeze → Claude Email Pipeline</div>
+                <div class="mc-tool">Claude + Breeze Research Brief</div>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-desc">The Josh Method — proven in the field. Takes 5 minutes per prospect vs 20 minutes of manual research.</div>
+              <ul class="task-list">
+                <li class="task-row"><div class="task-box"></div>Copy full Breeze research brief for target prospect</li>
+                <li class="task-row"><div class="task-box"></div>Paste into Claude with email prompt (see below)</li>
+                <li class="task-row"><div class="task-box"></div>Get 2 outreach options — pick one, personalize, send</li>
+                <li class="task-row"><div class="task-box"></div>Scale: build a batch workflow for your TSAE 200 list</li>
+              </ul>
+            </div>
+            <div class="mc-footer">
+              <div class="ftag-row">
+                <span class="ftag teal">Josh-Tested</span>
+                <span class="ftag ghost">Claude</span>
+              </div>
+              <div class="mc-impact">5 min / prospect</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-label teal" style="margin-top:4px;">Breeze → Claude Email Generation Prompt</div>
+        <div class="copy-block">
+          <div class="copy-block-head">
+            <div class="copy-block-title">Paste this into Claude after copying a Breeze research brief</div>
+            <div class="copy-block-label">Copy This</div>
+          </div>
+          <div class="copy-block-body"><span class="kw">I am Jon Simon, the sole sales rep at ATX Event Systems — a boutique AV production company in Austin, TX. We specialize in corporate events, conferences, and experiential productions. I am known for being collaborative, responsive, and high-quality (not the cheapest, but worth it).</span>
+
+<span class="kw">Below is a research brief about a prospect I want to reach out to cold for the first time. Please write me TWO outreach emails in my voice:</span>
+
+<span class="hl">Email 1:</span> Short (3–4 lines max). Acknowledge something specific from their recent news or activity. Warm intro to who I am. One clear ask (15-min call, virtual coffee, etc).
+
+<span class="hl">Email 2:</span> Slightly longer. Focus on a specific pain point or event need they likely have. Include 2–3 bullet differentiators about ATX Event Systems. Same warm, non-salesy tone.
+
+<span class="cm">Keep both emails conversational, not corporate. Jon is personable, generous with compliments, and always makes people feel seen. No jargon. Subject line included for each.</span>
+
+<span class="cm">--- BREEZE RESEARCH BRIEF ---</span>
+[paste brief here]</div>
+        </div>
+      </div>
+
+      <hr class="section-sep" data-label="Win 04-08">
+
+      <!-- WIN 4-8: RAPID FIRE -->
+      <div id="win-dashboard" class="section-anchor">
+        <div class="sub-label teal">Wins 04–08 · High Value · Short Timeline</div>
+        <div class="section-title">Five More Quick Activations</div>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-card accent-teal">
+          <div class="mc-top">
+            <div class="mc-icon teal">📊</div>
+            <div>
+              <div class="mc-title">Email Open Alert System</div>
+              <div class="mc-tool">HubSpot + Zapier / Slack</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon currently discovers open tracking data <em>only</em> when he manually pulls up a contact. Build a real-time alert: when someone opens an email, Jon gets a Slack or text notification immediately — giving him the moment of intent to follow up.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Zapier: HubSpot "Email Opened" → Slack DM with contact name + email subject</li>
+              <li class="task-row"><div class="task-box"></div>Or: HubSpot → Workflows → notify via in-app alert</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">P2</span><span class="ftag ghost">Zapier Free</span></div>
+            <div class="mc-impact">~1 hr</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">📋</div>
+            <div>
+              <div class="mc-title">Voicemail Script Library</div>
+              <div class="mc-tool">Claude — One-Time Build</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon improvises every voicemail but has a consistent mental script. Formalize this: build a library of 5–6 tight voicemail scripts (by segment) in Claude, then optionally record them with 11Labs for drop-box delivery.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Record yourself doing your current VM → transcript it → let Claude tighten it</li>
+              <li class="task-row"><div class="task-box"></div>Build variants per segment: event planner, association, corporate, venue</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">P2</span><span class="ftag ghost">Claude</span></div>
+            <div class="mc-impact">2 hrs</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-green">
+          <div class="mc-top">
+            <div class="mc-icon green">📌</div>
+            <div>
+              <div class="mc-title">Sticky Notes → HubSpot Custom Properties</div>
+              <div class="mc-tool">HubSpot → Properties</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon uses HubSpot notes but complains they get buried in the activity feed. Solution: create custom Contact Properties for key relationship context (how we know them, shared background, family, hobbies) that live permanently on the profile — never buried.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Create "Relationship Context" custom property (text field)</li>
+              <li class="task-row"><div class="task-box"></div>Create "Personal Notes" property for connection details</li>
+              <li class="task-row"><div class="task-box"></div>Add to contact sidebar view so it's always visible</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag green">Quick Win</span><span class="ftag ghost">HubSpot</span></div>
+            <div class="mc-impact">30 min</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">🎯</div>
+            <div>
+              <div class="mc-title">Pre-Call Research Prompt</div>
+              <div class="mc-tool">Claude — Use Before Every Warm Call</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon acknowledged he goes into meetings without enough knowledge of the prospect's AV history or event cadence. One Claude prompt before every call turns him into the most prepared person in the room.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Build a pre-call prep prompt for Claude (company name + LinkedIn URL → talk tracks, likely objections, AV needs, competitor relationships)</li>
+              <li class="task-row"><div class="task-box"></div>Use during calls too — live-query Claude for AV technical answers</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">P1</span><span class="ftag ghost">Claude</span></div>
+            <div class="mc-impact">Build once, use forever</div>
+          </div>
+        </div>
+
+        <div id="win-linkedin" class="mission-card accent-teal section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon teal">💼</div>
+            <div>
+              <div class="mc-title">LinkedIn Engagement System</div>
+              <div class="mc-tool">Native LinkedIn + Claude Draft Assist</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon gets 40–50% connection acceptance rates (exceptional). He's posting video content. He needs a system: 1 post/week minimum, scheduled comment engagement on prospects' posts, and Claude-drafted DMs after accepting connections.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Block 30 min every Monday for LinkedIn content + engagement</li>
+              <li class="task-row"><div class="task-box"></div>Use Claude to draft post scripts based on ATX ES differentiators and AV industry news</li>
+              <li class="task-row"><div class="task-box"></div>After any new connection accepts: send Claude-drafted personal DM within 24 hrs</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">P2</span><span class="ftag ghost">Claude</span><span class="ftag ghost">LinkedIn</span></div>
+            <div class="mc-impact">30 min/week</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-amber">
+          <div class="mc-top">
+            <div class="mc-icon amber">📆</div>
+            <div>
+              <div class="mc-title">MPI June Conference Prep</div>
+              <div class="mc-tool">WEC San Antonio — 2,000 Attendees</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon is attending WEC (MPI's national conference) in June in San Antonio. 2,000 attendees — half are event planners. This is a massive opportunity that needs <strong>pre-conference outreach</strong> to warm up meetings before he arrives.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Pull MPI chapter member list — identify who's attending WEC</li>
+              <li class="task-row"><div class="task-box"></div>Claude: draft pre-conference LinkedIn outreach sequence for 50 target attendees</li>
+              <li class="task-row"><div class="task-box"></div>Goal: schedule 10 coffee/drink meetings at the conference in advance</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag amber">June Deadline</span><span class="ftag ghost">MPI</span></div>
+            <div class="mc-impact">High ROI event</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PHASE 02 — AI SALES ENGINE
+    ══════════════════════════════════════════ -->
+    <div id="phase02" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big teal">02</div>
+        <div class="phase-info">
+          <div class="phase-tag teal">Phase Two · Month 1–3</div>
+          <div class="phase-title">AI-Powered Sales Engine</div>
+        </div>
+        <div class="phase-meta">
+          <div class="phase-meta-val" style="color:var(--teal);">14</div>
+          <div class="phase-meta-label">Upgrades · Andrei Assists</div>
+        </div>
+      </div>
+
+      <div class="prose">
+        Phase two is where Jon's operation transforms from <strong>human-powered</strong> to <strong>human-directed, AI-amplified</strong>. Every tool here either removes a repetitive task from Jon's plate or exponentially multiplies the reach of his existing strengths. Andrei will build the complex integrations — Jon's job is to show up, learn the workflows, and use the tools.
+      </div>
+
+      <!-- AI OUTREACH ENGINE -->
+      <div id="ai-outreach" class="section-anchor">
+        <div class="sub-label teal">Upgrade 01</div>
+        <div class="section-title">Dynamic Personalization Engine</div>
+        <div class="insight-block teal">
+          <div class="insight-label">The Upgrade</div>
+          <div class="insight-title">Replace static email templates with living, breathing, auto-personalized outreach.</div>
+          <div class="insight-body">Jon currently manually personalizes each email — subbing in a company name or conference reference. The upgrade: <strong>Breeze research brief → Claude → dynamically personalized email</strong> in Jon's exact tone, referencing real news about the prospect. At scale, this means 30 genuinely personal outreach emails can go out in the time it currently takes to write 3.</div>
+        </div>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-card accent-teal">
+          <div class="mc-top">
+            <div class="mc-icon teal">🤖</div>
+            <div>
+              <div class="mc-title">Batch Personalization Workflow</div>
+              <div class="mc-tool">Breeze + Claude + HubSpot Sequences</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Export target list (TSAE 200, MPI chapter, conference list) as CSV</li>
+              <li class="task-row"><div class="task-box"></div>Run Breeze Company Research on each → export briefs</li>
+              <li class="task-row"><div class="task-box"></div>Batch-process with Claude to generate personalized email body per contact</li>
+              <li class="task-row"><div class="task-box"></div>Upload personalized emails back into HubSpot as sequence templates</li>
+              <li class="task-row"><div class="task-box"></div>Enroll contacts in sequences → automated sends with personal feel</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">Andrei Builds</span><span class="ftag ghost">Month 1</span></div>
+            <div class="mc-impact">30 emails in 30 min</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">📈</div>
+            <div>
+              <div class="mc-title">Email Performance Analyzer</div>
+              <div class="mc-tool">HubSpot Reports + Claude Insights</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Build a HubSpot dashboard that shows Jon: open rate by template, reply rate by segment, best-performing subject lines, and time-of-day performance. Then route that data to Claude for monthly strategic recommendations.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Create custom HubSpot report: Email performance by template + vertical</li>
+              <li class="task-row"><div class="task-box"></div>Track: open %, click %, reply %, meeting booked %</li>
+              <li class="task-row"><div class="task-box"></div>Monthly: export stats → Claude → "Which templates should I retire, improve, or double down on?"</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">Month 1</span><span class="ftag ghost">HubSpot</span></div>
+            <div class="mc-impact">Data-driven iteration</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" data-label="Upgrade 02 — AI Avatar">
+
+      <!-- AI AVATAR -->
+      <div id="ai-avatar" class="section-anchor">
+        <div class="sub-label green">Upgrade 02 · Jon's Personal Superpower</div>
+        <div class="section-title">AI Voice + Video Avatar — Scale Jon Without Cloning Jon</div>
+        <div class="insight-block green">
+          <div class="insight-label">The Opportunity</div>
+          <div class="insight-title">Jon is self-conscious about recording himself — but he just posted a video that his CEO praised. The solution is to remove the discomfort entirely.</div>
+          <div class="insight-body">With an 11Labs voice clone and a HeyGen video avatar, Jon can produce a weekly LinkedIn video, outreach video messages, and even automated voicemail drops — <strong>without ever pressing record again</strong>. He writes (or speaks) the script; the AI delivers it in his face and his voice. This isn't gimmick — this is how the top 1% of salespeople operate in 2025.</div>
+        </div>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-card accent-green">
+          <div class="mc-top">
+            <div class="mc-icon green">🎤</div>
+            <div>
+              <div class="mc-title">11Labs — Jon's Voice Clone</div>
+              <div class="mc-tool">elevenlabs.io — Starter ~$5/mo</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Record a 15-minute audio sample of Jon speaking naturally (not scripted — conversational, as he'd sound on a call)</li>
+              <li class="task-row"><div class="task-box"></div>Upload to 11Labs → Instant Voice Clone → name it "Jon Sales"</li>
+              <li class="task-row"><div class="task-box"></div>Use to: generate voicemail audio drops, LinkedIn video narration, outreach audio snippets</li>
+              <li class="task-row"><div class="task-box"></div>Andrei to build a prompt-to-audio pipeline (text → 11Labs API → audio file ready to send)</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag green">Game Changer</span><span class="ftag ghost">11Labs</span><span class="ftag ghost">~$5/mo</span></div>
+            <div class="mc-impact">Andrei sets up</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-purple">
+          <div class="mc-top">
+            <div class="mc-icon purple">🎥</div>
+            <div>
+              <div class="mc-title">HeyGen — Video Avatar</div>
+              <div class="mc-tool">heygen.com — Creator ~$29/mo</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon types a script → HeyGen renders a video of his avatar delivering it. No camera. No anxiety. No retakes. Pairs perfectly with 11Labs voice for LinkedIn content and Loom-style video outreach.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Record a 2-min reference video for avatar training (natural, front-facing)</li>
+              <li class="task-row"><div class="task-box"></div>Build avatar in HeyGen → pair with 11Labs voice</li>
+              <li class="task-row"><div class="task-box"></div>Weekly workflow: Claude writes LinkedIn script → HeyGen renders → post to LinkedIn</li>
+              <li class="task-row"><div class="task-box"></div>Bonus: personalized 30-sec video openers for cold outreach (unprecedented open rates)</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag purple">Scale Jon</span><span class="ftag ghost">HeyGen</span><span class="ftag ghost">$29/mo</span></div>
+            <div class="mc-impact">Andrei demos + builds</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" data-label="Upgrades 03–06">
+
+      <!-- REMAINING PHASE 2 -->
+      <div id="ai-pipeline" class="section-anchor">
+        <div class="sub-label teal">Upgrades 03–06</div>
+        <div class="section-title">Pipeline, MPI Scale, Content + Associations Focus</div>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">🗂️</div>
+            <div>
+              <div class="mc-title">HubSpot Pipeline Rebuild</div>
+              <div class="mc-tool">Deal Stages Overhaul</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Current stages (Backlog / In Progress / Deferred / Confirmed / Closed) don't map to Jon's actual sales motion. A purpose-built pipeline gives him a real compass.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Redesign stages: Prospect → Outreach Active → Engaged / Warm → RFP Requested → Proposal Sent → Verbal Yes → Closed Won / Lost</li>
+              <li class="task-row"><div class="task-box"></div>Remove Jon's name from deal titles → add "Jon Simon" as Contact Owner field</li>
+              <li class="task-row"><div class="task-box"></div>Assign probability % per stage for pipeline value forecasting</li>
+              <li class="task-row"><div class="task-box"></div>Build report: "Pipeline Value by Stage" — Jon's personal compass</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">Month 1</span><span class="ftag ghost">HubSpot</span></div>
+            <div class="mc-impact">Andrei + Jon</div>
+          </div>
+        </div>
+
+        <div id="ai-mpi" class="mission-card accent-teal section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon teal">🌐</div>
+            <div>
+              <div class="mc-title">MPI National Outreach Campaign</div>
+              <div class="mc-tool">13,000 Member Directory + Claude</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon has access to 13,000 MPI members nationally. His chapter alone has 180. This is the single largest warm prospect database he has — and it's barely been touched. Build a tiered approach: local chapter first, then national for conference relationships.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Export local MPI chapter: 180 members → filter event planners + meeting planners</li>
+              <li class="task-row"><div class="task-box"></div>Run Breeze research on top 40 targets → Claude email batch</li>
+              <li class="task-row"><div class="task-box"></div>Tier 2: national event planners in key Texas cities (Dallas, Houston, San Antonio)</li>
+              <li class="task-row"><div class="task-box"></div>Tier 3: national agency contacts — build relationship before WEC</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">Priority Segment</span><span class="ftag ghost">MPI</span></div>
+            <div class="mc-impact">Largest database</div>
+          </div>
+        </div>
+
+        <div id="ai-content" class="mission-card accent-amber section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon amber">📰</div>
+            <div>
+              <div class="mc-title">Value-Add Content Engine</div>
+              <div class="mc-tool">Claude + ATX ES Blog / LinkedIn</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon identified this gap himself: "I'd love to send 'I thought of you — here's an article' follow-ups." Build a system that makes this automatic: Claude monitors AV industry news, generates a short summary + insight, and suggests which contacts in Jon's CRM it's most relevant for.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Build an "evergreen content library" in Claude: ATX ES differentiators, AV buying tips, event production insights</li>
+              <li class="task-row"><div class="task-box"></div>Monthly: Claude generates 4 industry insight emails Jon can send as "value adds"</li>
+              <li class="task-row"><div class="task-box"></div>CRM integration: tag contacts by industry → auto-match relevant content</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag amber">Month 2</span><span class="ftag ghost">Claude</span></div>
+            <div class="mc-impact">Nurture at scale</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-green">
+          <div class="mc-top">
+            <div class="mc-icon green">🏛️</div>
+            <div>
+              <div class="mc-title">Associations Deep Push</div>
+              <div class="mc-tool">TSAE + AMC Directory + Claude</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon identified associations as <strong>recession-proof and underserved</strong>. The TSAE list has 200 Texas association executives. Association Management Companies (AMCs) are a multiplier — one AMC relationship can unlock 10+ associations.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Process full TSAE 200 list through Breeze → Claude → sequence enroll</li>
+              <li class="task-row"><div class="task-box"></div>Research top 20 Texas AMCs — build targeted outreach for each</li>
+              <li class="task-row"><div class="task-box"></div>Join TSAE as individual member for access to annual conference</li>
+              <li class="task-row"><div class="task-box"></div>Goal: 3 association accounts closed in first year</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag green">Recession-Proof</span><span class="ftag ghost">TSAE</span></div>
+            <div class="mc-impact">High-value segment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PHASE 03 — JON OS
+    ══════════════════════════════════════════ -->
+    <div id="phase03" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big green">03</div>
+        <div class="phase-info">
+          <div class="phase-tag green">Phase Three · Month 3–12</div>
+          <div class="phase-title">Jon OS — Personal Operating System</div>
+        </div>
+        <div class="phase-meta">
+          <div class="phase-meta-val" style="color:var(--green);">∞</div>
+          <div class="phase-meta-label">Long-Term Vision</div>
+        </div>
+      </div>
+
+      <div class="prose">
+        Jon OS is the big picture: a <strong>fully integrated, AI-powered personal command center</strong> that gives Jon a single pane of glass for every prospect, every conversation, every opportunity — across his career and life. This is where Jon stops being one overworked salesperson and starts operating like a small but mighty team. Andrei builds it. Jon uses it.
+      </div>
+
+      <div class="mission-grid">
+        <div id="second-brain" class="mission-card accent-green section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon green">🧠</div>
+            <div>
+              <div class="mc-title">The Second Brain — Single Pane of Glass</div>
+              <div class="mc-tool">Notion + Claude Projects + Zapier</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Every call transcript, email thread, prospect note, and deal update flows into a Notion database. Claude can query it. Jon can ask "What did I discuss with High Velocity last March?" and get the answer in seconds.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Build Notion "Jon's Brain" DB: Contacts, Companies, Calls, Deals, Opportunities</li>
+              <li class="task-row"><div class="task-box"></div>Zapier: HubSpot deal update → Notion entry (synced)</li>
+              <li class="task-row"><div class="task-box"></div>Zapier: Otter call summary → Notion "Calls" database</li>
+              <li class="task-row"><div class="task-box"></div>Claude Projects: load Notion export → Jon can query full history conversationally</li>
+              <li class="task-row"><div class="task-box"></div>Long term: MCP connector for live HubSpot + Notion queries in Claude</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag green">Jon OS Core</span><span class="ftag ghost">Notion</span><span class="ftag ghost">Zapier</span></div>
+            <div class="mc-impact">Andrei architects</div>
+          </div>
+        </div>
+
+        <div id="heygen" class="mission-card accent-purple section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon purple">📡</div>
+            <div>
+              <div class="mc-title">Fully Automated LinkedIn Content Pipeline</div>
+              <div class="mc-tool">Claude → 11Labs → HeyGen → LinkedIn</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">The end state: Jon provides a topic or idea (or Claude selects one from an industry news feed) → Claude writes a 60-second LinkedIn video script → 11Labs generates narration → HeyGen renders the video → Jon approves → posts. One hour of intent, four hours of perceived work. Weekly, automatically.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Build topic queue: AV trends, event production tips, partner spotlights, ATX ES differentiators</li>
+              <li class="task-row"><div class="task-box"></div>Automate script → audio → video render pipeline</li>
+              <li class="task-row"><div class="task-box"></div>Jon reviews + approves → 1-click post to LinkedIn</li>
+              <li class="task-row"><div class="task-box"></div>Track engagement: which topics get most traction with which audience</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag purple">Flagship Build</span><span class="ftag ghost">11Labs</span><span class="ftag ghost">HeyGen</span></div>
+            <div class="mc-impact">Novian portfolio piece</div>
+          </div>
+        </div>
+
+        <div id="voicemail-ai" class="mission-card accent-teal section-anchor">
+          <div class="mc-top">
+            <div class="mc-icon teal">☎️</div>
+            <div>
+              <div class="mc-title">AI Voicemail Drop System</div>
+              <div class="mc-tool">11Labs + HubSpot Integration</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Using Jon's 11Labs voice clone, pre-record 6–8 voicemail scripts by segment. When Jon makes a call and hits voicemail, drop the relevant pre-recorded message with one tap. Saves 3–5 minutes per call, multiplied by 20+ calls/day.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Record voicemail scripts via 11Labs for each segment</li>
+              <li class="task-row"><div class="task-box"></div>Store as audio files accessible from phone</li>
+              <li class="task-row"><div class="task-box"></div>Explore HubSpot voicemail drop integration (Groove, Salesloft approach)</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">Hour-Saver</span><span class="ftag ghost">11Labs</span></div>
+            <div class="mc-impact">5 min/day saved</div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">🧭</div>
+            <div>
+              <div class="mc-title">Weekly Revenue Compass Dashboard</div>
+              <div class="mc-tool">HubSpot + Claude Report Analysis</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <div class="mc-desc">Jon specifically said he wants a "barometer" — a number he can look at each week to know if he's on track. Build a dashboard he checks every Monday morning: pipeline value, weekly outreach count, responses, meetings booked, and an AI-generated "this week's focus" recommendation.</div>
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>HubSpot: build "Jon's Weekly KPI Board" report (pipeline value, touches, replies, meetings, proposals)</li>
+              <li class="task-row"><div class="task-box"></div>Friday: export → Claude → "Here's my week in numbers. What should I focus on next week?"</li>
+              <li class="task-row"><div class="task-box"></div>Goal: Jon has a 5-minute Monday morning ritual that replaces the post-it note</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">Jon's Compass</span><span class="ftag ghost">HubSpot</span></div>
+            <div class="mc-impact">Gives Jon certainty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SALES ANALYSIS
+    ══════════════════════════════════════════ -->
+    <div id="sales-analysis" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big" style="color:var(--purple);">◈</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="color:var(--purple);">Analysis</div>
+          <div class="phase-title">Sales Process — What's Working + What's Not</div>
+        </div>
+      </div>
+
+      <div class="sub-label purple">Strengths — What Jon Already Does Better Than Most</div>
+      <div class="mission-grid three">
+        <div class="insight-block green" style="margin-bottom:0;">
+          <div class="insight-label">Strength</div>
+          <div class="insight-title">10% Cold Email Response Rate</div>
+          <div class="insight-body">Industry average is 2–3%. Jon is already at 10% through strong subject lines, punchy copy, and genuine personalization. <strong>This foundation is exceptional.</strong></div>
+        </div>
+        <div class="insight-block green" style="margin-bottom:0;">
+          <div class="insight-label">Strength</div>
+          <div class="insight-title">40–50% LinkedIn Connection Acceptance</div>
+          <div class="insight-body">Average is 15–25%. Jon's targeting precision and industry presence is already working. This channel is underutilized relative to its performance.</div>
+        </div>
+        <div class="insight-block green" style="margin-bottom:0;">
+          <div class="insight-label">Strength</div>
+          <div class="insight-title">Strong Instinct + Relationship Intelligence</div>
+          <div class="insight-body">Jon knows when to pull back, when to push, how to make people feel seen. This is the 1% skill that AI <em>supports</em> — not replaces. He's the secret weapon.</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;"></div>
+
+      <div class="sub-label red">Gaps — Where AI Plugs In Immediately</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Gap Identified</th>
+            <th>Current State</th>
+            <th>AI Fix</th>
+            <th>Timeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-cell">No automated sequences</td>
+            <td>Every follow-up written manually</td>
+            <td>HubSpot Sequences with Breeze + Claude templates</td>
+            <td>Week 1</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No call transcript intelligence</td>
+            <td>Manually re-listens or relies on memory</td>
+            <td>Otter.ai + Claude summary prompt post every call</td>
+            <td>Week 1</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No performance visibility</td>
+            <td>Can't see which templates perform best</td>
+            <td>HubSpot email analytics dashboard + Claude monthly review</td>
+            <td>Week 2</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No email open alerts</td>
+            <td>Only sees opens by checking manually</td>
+            <td>Zapier → HubSpot open event → Slack/SMS alert</td>
+            <td>Week 2</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No pre-call prep system</td>
+            <td>Goes into meetings cold on prospect knowledge</td>
+            <td>Claude pre-call brief (company + person + AV history)</td>
+            <td>Week 1</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No LinkedIn content cadence</td>
+            <td>Sporadic posting, no consistent presence</td>
+            <td>Weekly AI-generated scripts + HeyGen video avatar</td>
+            <td>Month 2</td>
+          </tr>
+          <tr>
+            <td class="label-cell">Value-add content not sent</td>
+            <td>Templates only — no "thought of you" nurture</td>
+            <td>Claude content engine → CRM-matched distribution</td>
+            <td>Month 2</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No pipeline stage mapping</td>
+            <td>Backlog/In Progress/Deferred/Confirmed/Closed</td>
+            <td>Rebuild to proper B2B AV sales stages with probability</td>
+            <td>Month 1</td>
+          </tr>
+          <tr>
+            <td class="label-cell">Notes getting buried</td>
+            <td>Notes in HubSpot activity feed get hidden</td>
+            <td>Custom Contact Properties for permanent context fields</td>
+            <td>Week 1</td>
+          </tr>
+          <tr>
+            <td class="label-cell">No weekly KPI ritual</td>
+            <td>"I go on instinct" — no numeric barometer</td>
+            <td>Weekly Dashboard + Claude analysis every Friday/Monday</td>
+            <td>Month 1</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- COMPETITOR INTEL -->
+      <div class="sub-label gold" style="margin-top: 8px;">Competitive Landscape Analysis</div>
+      <div class="insight-block">
+        <div class="insight-label">Key Competitive Intelligence</div>
+        <div class="insight-title">The Encore Problem — and How Jon Wins Around It</div>
+        <div class="insight-body">
+          <strong>Encore</strong> (Jon's biggest competitor) wins on venue exclusivity and scale, not quality. They've locked in multi-year agreements at major hotels and convention centers, forcing event planners to use them or pay to break out. The strategic counter:<br><br>
+          <strong>1. Get there first.</strong> Reach out to conference organizers 6–12 months before their event — before they sign the venue contract that locks in Encore. Jon's convention calendar approach is right; it needs to be automated and scaled.<br><br>
+          <strong>2. Capture the disgruntled.</strong> Event planners and corporations who've been burned by Encore's "bare minimum" service are actively looking for alternatives. Position ATX ES's "Roadmap to Success" and white-glove service as the antidote. Monitor LinkedIn for event planners complaining about in-house AV.<br><br>
+          <strong>3. Venue partnerships before Encore gets there.</strong> Parkside Projects (Brazos Hall, 800 Congress) is already in progress. Add 10 more Austin venues. Exclusive or preferred vendor status is exactly how Encore built its moat — Jon can do the same at the boutique level.
+        </div>
+      </div>
+
+      <!-- SEGMENT ANALYSIS -->
+      <div class="sub-label gold" style="margin-top: 28px;">Prospect Universe — What Jon Is Working With</div>
+      <div class="segment-grid">
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">MPI Members</div>
+            <div class="seg-count">13,000</div>
+          </div>
+          <div class="seg-desc">National directory. Local chapter: 180. ~50% are event/meeting planners — Jon's primary buyer. WEC June is the unlock event.</div>
+          <div class="seg-tags"><span class="seg-tag hot">Highest Priority</span><span class="seg-tag">Event Planners</span></div>
+        </div>
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">TSAE Members</div>
+            <div class="seg-count">200</div>
+          </div>
+          <div class="seg-desc">Texas Society of Association Executives. Association events are recession-proof and consistent. Less sexy — very steady revenue.</div>
+          <div class="seg-tags"><span class="seg-tag hot">Recession-Proof</span><span class="seg-tag">Associations</span></div>
+        </div>
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">Austin Conventions</div>
+            <div class="seg-count">240</div>
+          </div>
+          <div class="seg-desc">Definite conferences coming to Austin over 2–3 years. Outreach 3–6 months before = inside the buying window. Jon's best hack.</div>
+          <div class="seg-tags"><span class="seg-tag hot">Time-Sensitive</span><span class="seg-tag">Conferences</span></div>
+        </div>
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">DJ Past Clients</div>
+            <div class="seg-count">172</div>
+          </div>
+          <div class="seg-desc">Organizations Jon DJed for — warm relationship, established trust. Decision makers may have moved but company is still a lead.</div>
+          <div class="seg-tags"><span class="seg-tag">Warm</span><span class="seg-tag">DJ Rolodex</span></div>
+        </div>
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">Event Planners</div>
+            <div class="seg-count">130</div>
+          </div>
+          <div class="seg-desc">Jon's most familiar segment. Strong close rate when in front of them. These are power partners and direct bookers.</div>
+          <div class="seg-tags"><span class="seg-tag hot">High Close Rate</span><span class="seg-tag">Partners</span></div>
+        </div>
+        <div class="segment-card">
+          <div class="seg-top">
+            <div class="seg-name">Target Venues</div>
+            <div class="seg-count">100+</div>
+          </div>
+          <div class="seg-desc">40 in Rolodex, 60–70 within 60 miles yet to be reached. Venue partnerships = inside track on every event they host.</div>
+          <div class="seg-tags"><span class="seg-tag">Partnership Play</span><span class="seg-tag">Venues</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         HUBSPOT OVERHAUL
+    ══════════════════════════════════════════ -->
+    <div id="hubspot" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big" style="color:var(--amber);">⚙</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="color:var(--amber);">HubSpot Deep Dive</div>
+          <div class="phase-title">CRM Overhaul — From Messy to Machine</div>
+        </div>
+      </div>
+
+      <div class="sub-label" style="color:var(--amber);">Pipeline Stage Redesign — Before vs. After</div>
+      <div class="stage-compare">
+        <div class="stage-panel">
+          <div class="stage-head">
+            <div class="dot red"></div>
+            <div class="stage-head-label">Current Stages — Does Not Reflect Reality</div>
+          </div>
+          <div class="stage-item"><div class="stage-num">01</div><div class="stage-name dim">Backlog</div></div>
+          <div class="stage-item"><div class="stage-num">02</div><div class="stage-name dim">In Progress</div></div>
+          <div class="stage-item"><div class="stage-num">03</div><div class="stage-name dim">Deferred</div></div>
+          <div class="stage-item"><div class="stage-num">04</div><div class="stage-name dim">Confirmed</div></div>
+          <div class="stage-item"><div class="stage-num">05</div><div class="stage-name dim">Closed</div></div>
+        </div>
+        <div class="stage-panel">
+          <div class="stage-head">
+            <div class="dot green"></div>
+            <div class="stage-head-label">Recommended Stages — Maps to Jon's Actual Motion</div>
+          </div>
+          <div class="stage-item"><div class="stage-num">01</div><div class="stage-name bright">Prospect</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">02</div><div class="stage-name bright">Outreach Active</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">03</div><div class="stage-name bright">Engaged / Warm</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">04</div><div class="stage-name bright">RFP Requested</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">05</div><div class="stage-name bright">Proposal Sent</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">06</div><div class="stage-name bright">Verbal Yes / Negotiating</div><span class="stage-badge new">New</span></div>
+          <div class="stage-item"><div class="stage-num">07</div><div class="stage-name bright">Closed Won / Lost</div><span class="stage-badge keep">Keep</span></div>
+        </div>
+      </div>
+
+      <div class="sub-label gold">HubSpot Feature Activation Checklist</div>
+      <div class="mission-grid">
+        <div class="mission-card accent-gold">
+          <div class="mc-top">
+            <div class="mc-icon gold">☑️</div>
+            <div>
+              <div class="mc-title">Features to Activate Now</div>
+              <div class="mc-tool">Already in Jon's Plan — Unused</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Sequences (automated multi-step email cadences)</li>
+              <li class="task-row"><div class="task-box"></div>Workflows (trigger-based automations)</li>
+              <li class="task-row"><div class="task-box"></div>AI Call Transcription (verify with GM)</li>
+              <li class="task-row"><div class="task-box"></div>Breeze Studio — Company Research Agent</li>
+              <li class="task-row"><div class="task-box"></div>Deal probability % per stage</li>
+              <li class="task-row"><div class="task-box"></div>Custom Contact Properties (relationship context)</li>
+              <li class="task-row"><div class="task-box"></div>Pipeline reports + dashboards</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag gold">$0 Additional Cost</span></div>
+          </div>
+        </div>
+
+        <div class="mission-card accent-teal">
+          <div class="mc-top">
+            <div class="mc-icon teal">🔗</div>
+            <div>
+              <div class="mc-title">Integrations to Build</div>
+              <div class="mc-tool">Zapier + Otter + Notion</div>
+            </div>
+          </div>
+          <div class="mc-body">
+            <ul class="task-list">
+              <li class="task-row"><div class="task-box"></div>Zapier: Email opened → Slack/SMS notification</li>
+              <li class="task-row"><div class="task-box"></div>Zapier: New deal created → Notion DB entry</li>
+              <li class="task-row"><div class="task-box"></div>Otter.ai: Auto-join Google Meets + export transcript</li>
+              <li class="task-row"><div class="task-box"></div>Zapier: Otter summary → HubSpot contact note</li>
+              <li class="task-row"><div class="task-box"></div>Explore: HubSpot LinkedIn Sales Navigator sync (when budget allows)</li>
+            </ul>
+          </div>
+          <div class="mc-footer">
+            <div class="ftag-row"><span class="ftag teal">Andrei Builds</span><span class="ftag ghost">Zapier Free Tier</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TOOL STACK
+    ══════════════════════════════════════════ -->
+    <div id="tool-stack" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big" style="color:var(--teal);">◆</div>
+        <div class="phase-info">
+          <div class="phase-tag teal">Recommended Stack</div>
+          <div class="phase-title">Jon's Complete AI Tool Stack</div>
+        </div>
+      </div>
+
+      <div class="sub-label gold">Existing Tools — Already Paying For</div>
+      <div class="tool-stack">
+        <div class="tool-card">
+          <div class="tool-emoji">🟠</div>
+          <div>
+            <div class="tool-name">HubSpot</div>
+            <div class="tool-desc">CRM, sequences, analytics, Breeze AI</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">📧</div>
+          <div>
+            <div class="tool-name">Gmail + HubSpot Plugin</div>
+            <div class="tool-desc">Email tracking, template sends</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">💬</div>
+          <div>
+            <div class="tool-name">Slack</div>
+            <div class="tool-desc">Internal comms, alert destination</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">📁</div>
+          <div>
+            <div class="tool-name">Google Drive + Meet</div>
+            <div class="tool-desc">File storage, video calls</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">💼</div>
+          <div>
+            <div class="tool-name">LinkedIn (Free)</div>
+            <div class="tool-desc">Prospecting, content, outreach</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">🤖</div>
+          <div>
+            <div class="tool-name">ChatGPT</div>
+            <div class="tool-desc">Email polish, templates, research</div>
+          </div>
+          <div class="tool-status existing">Existing</div>
+        </div>
+      </div>
+
+      <div class="sub-label teal">Add Now — High ROI, Low Cost</div>
+      <div class="tool-stack">
+        <div class="tool-card">
+          <div class="tool-emoji">🟣</div>
+          <div>
+            <div class="tool-name">Claude (claude.ai)</div>
+            <div class="tool-desc">Primary AI partner — email gen, research, strategy, call summaries, business cases</div>
+          </div>
+          <div class="tool-status add">Add · $20/mo</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">🦦</div>
+          <div>
+            <div class="tool-name">Otter.ai</div>
+            <div class="tool-desc">Google Meet auto-transcription. Free: 300 min/mo. Pro: unlimited.</div>
+          </div>
+          <div class="tool-status add">Add · Free/$15</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">⚡</div>
+          <div>
+            <div class="tool-name">Zapier</div>
+            <div class="tool-desc">Automation glue — HubSpot ↔ Slack ↔ Notion ↔ Otter pipelines</div>
+          </div>
+          <div class="tool-status add">Add · Free tier</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">📹</div>
+          <div>
+            <div class="tool-name">Loom</div>
+            <div class="tool-desc">Video prospecting messages — massive differentiation in cold outreach</div>
+          </div>
+          <div class="tool-status add">Add · $12.5/mo</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">🗒️</div>
+          <div>
+            <div class="tool-name">Notion</div>
+            <div class="tool-desc">Second Brain database — prospects, calls, deals, knowledge base</div>
+          </div>
+          <div class="tool-status add">Add · Free/~$8</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">💼</div>
+          <div>
+            <div class="tool-name">LinkedIn Sales Navigator</div>
+            <div class="tool-desc">Advanced search, HubSpot sync, saved lead lists. Build business case first.</div>
+          </div>
+          <div class="tool-status add">Add · $99/mo</div>
+        </div>
+      </div>
+
+      <div class="sub-label purple">Phase 3 — When Ready</div>
+      <div class="tool-stack">
+        <div class="tool-card">
+          <div class="tool-emoji">🎤</div>
+          <div>
+            <div class="tool-name">11Labs</div>
+            <div class="tool-desc">Jon's voice clone — voicemail drops, LinkedIn narration, scale outreach audio</div>
+          </div>
+          <div class="tool-status future">Phase 3 · $5–22/mo</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">🎥</div>
+          <div>
+            <div class="tool-name">HeyGen</div>
+            <div class="tool-desc">Jon's video avatar — LinkedIn content without ever pressing record</div>
+          </div>
+          <div class="tool-status future">Phase 3 · $29/mo</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-emoji">🔬</div>
+          <div>
+            <div class="tool-name">Clay.com</div>
+            <div class="tool-desc">Advanced prospect enrichment + AI email personalization at scale</div>
+          </div>
+          <div class="tool-status future">Phase 3 · $149/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         OUTREACH STRATEGY
+    ══════════════════════════════════════════ -->
+    <div id="outreach" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big" style="color:var(--gold);">✦</div>
+        <div class="phase-info">
+          <div class="phase-tag gold">Outreach Strategy</div>
+          <div class="phase-title">Cadence, Messaging + Sales Methodology</div>
+        </div>
+      </div>
+
+      <div class="sub-label gold">Optimized Multi-Touch Cadence — AI-Enhanced</div>
+      <div style="background: var(--navy-card); border: 1px solid var(--rule-bright); border-radius: 4px; padding: 24px; margin-bottom: 28px;">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule);">
+            <div style="font-family:var(--head); font-size:18px; color:var(--gold);">DAY 0</div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text); margin-bottom:4px;">Phone Call + Voicemail + Same-Day Email</div>
+              <div style="font-size:12px; font-weight:300; color:var(--text-muted);">Call → leave voicemail (script: "reaching out about your events, sending an email now") → email within 2 hours of call, referencing the voicemail</div>
+            </div>
+            <div style="font-family:var(--mono); font-size:9px; color:var(--teal); text-align:right; letter-spacing:0.1em; text-transform:uppercase;">Breeze + Claude generates email</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule);">
+            <div style="font-family:var(--head); font-size:18px; color:var(--gold);">DAY 7</div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text); margin-bottom:4px;">Value-Add Follow-Up Email</div>
+              <div style="font-size:12px; font-weight:300; color:var(--text-muted);">Not "just checking in" — reference something new. ATX ES differentiators, relevant industry insight, or a relevant event happening. Personalized with Breeze data.</div>
+            </div>
+            <div style="font-family:var(--mono); font-size:9px; color:var(--teal); text-align:right; letter-spacing:0.1em; text-transform:uppercase;">Sequence auto-sends</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule);">
+            <div style="font-family:var(--head); font-size:18px; color:var(--gold);">DAY 14</div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text); margin-bottom:4px;">Breakup Email — The Permission Slip</div>
+              <div style="font-size:12px; font-weight:300; color:var(--text-muted);">"I've reached out a couple times — happy to stop if timing is off or you're locked in elsewhere. Just let me know where you'd like to go from here." Remarkably effective — gives people permission to respond.</div>
+            </div>
+            <div style="font-family:var(--mono); font-size:9px; color:var(--teal); text-align:right; letter-spacing:0.1em; text-transform:uppercase;">Sequence auto-sends</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule);">
+            <div style="font-family:var(--head); font-size:18px; color:var(--teal);">BITE</div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text); margin-bottom:4px;">Any Positive Signal → Move to Active Nurture</div>
+              <div style="font-size:12px; font-weight:300; color:var(--text-muted);">Exit cold sequence. Enter warm nurture: check-ins every 2–4 weeks, content sends, LinkedIn engagement on their posts, event milestone touches (their conference date approaching, etc.).</div>
+            </div>
+            <div style="font-family:var(--mono); font-size:9px; color:var(--gold); text-align:right; letter-spacing:0.1em; text-transform:uppercase;">Jon's instinct takes over</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: center; padding: 12px 0;">
+            <div style="font-family:var(--head); font-size:18px; color:var(--text-dim);">90 DAYS</div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px;">Re-Entry Attempt — Cold Sequence Restart</div>
+              <div style="font-size:12px; font-weight:300; color:var(--text-dim);">Prospects who didn't respond reenter a new cold sequence 90 days later with fresh messaging and (hopefully) a new trigger event to reference from Breeze.</div>
+            </div>
+            <div style="font-family:var(--mono); font-size:9px; color:var(--text-dim); text-align:right; letter-spacing:0.1em; text-transform:uppercase;">Automated</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-block green">
+        <div class="insight-label">Sales Strategy Insight</div>
+        <div class="insight-title">Jon's "Go Wide, Then Go Deep" Instinct Is Correct — He Just Needs Systems to Execute It</div>
+        <div class="insight-body">
+          Jon articulated this perfectly: <em>"I need to cast wide nets so I can field my bites in a more humanistic way."</em> That's exactly right. The AI tools in this playbook handle the wide net — automated sequences, Breeze research, batch personalization. Jon handles the fish that bite — the relationship, the pitch, the close. This is the ideal human-AI split for a boutique relationship-driven sale like AV production.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CLAUDE PROJECT FILE
+    ══════════════════════════════════════════ -->
+    <div id="project-file" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big gold">⬡</div>
+        <div class="phase-info">
+          <div class="phase-tag gold">Setup File</div>
+          <div class="phase-title">Jon's Claude Project Instructions</div>
+        </div>
+      </div>
+
+      <div class="prose">
+        Copy the text block below and paste it into the <strong>Project Instructions</strong> field when creating Jon's Claude Project at <strong>claude.ai → Projects → New Project</strong>. This gives Claude full context on who Jon is, what he does, and how to help him — so he never has to re-explain himself.
+      </div>
+
+      <div class="copy-block">
+        <div class="copy-block-head">
+          <div class="copy-block-title">Claude Project Instructions — Jon Simon / ATX Event Systems</div>
+          <div class="copy-block-label">Paste into Project Instructions</div>
+        </div>
+        <div class="copy-block-body"><span class="hl">WHO I AM</span>
+My name is Jon Simon. I am 45 years old, based in Austin, TX. I am the sole outbound salesperson at ATX Event Systems (ATXES), a boutique AV production company with 16 years in business, ~$5M in equipment, and roughly 400 events/year. I am three months into this role.
+
+Before this, I spent 12 years as a full-time DJ in New York City and Austin. Music and creativity are my greatest passions. I am married (13 years) with two kids (ages 11 and 9). My family comes first — I try to be fully present for them after 5pm and on weekends. I am not highly technical but I am smart, tenacious, intuitive, and a very strong relationship builder.
+
+<span class="hl">MY ROLE AT ATXES</span>
+I am the only outbound salesperson. My job is to:
+- Generate new business opportunities (events ranging $10K–$500K+)
+- Develop strategic partnerships with event venues, planners, agencies, and associations
+- Up-level the average event size and quality (away from $3K weddings, toward $50K+ corporate events and conferences)
+- Target: $3M in new revenue for ATXES annually. Personal income goal: $200K/yr ($80K base + $120K variable)
+- Commission: 5% of gross profit (7.5% off-peak). Off-peak months: June–August, December.
+
+<span class="hl">KEY TOOLS I USE</span>
+HubSpot (CRM, sequences, Breeze AI), Gmail (with HubSpot plugin), Google Voice (calling via HubSpot app), Google Meet, Slack, LinkedIn (free), Claude (primary AI partner), Otter.ai (meeting transcription), Notion (second brain — in progress), Zapier (automation glue).
+
+<span class="hl">MY PROSPECT SEGMENTS</span>
+1. Event Planners (freelance + in-house) — high close rate, power partners
+2. Associations — recession-proof, TSAE (200 contacts), MPI (13K nationally, my chapter 180)
+3. Corporate Events / Conferences — highest value, hardest to break into (Encore competition)
+4. Venues — partnership play (preferred/exclusive vendor status)
+5. AMCs (Association Management Companies) — multiplier: 1 AMC = 10+ associations
+6. Experiential/event producers — project-by-project opportunities
+
+<span class="hl">MY COMPETITIVE LANDSCAPE</span>
+Main competitors: Encore (venue-locked, dominant at large hotels/conference centers), Freeman, Marquis, Inspire. My differentiation: white-glove service, fast response times, creative problem-solving, patented "Roadmap to Success" project management workflow, and genuine partnership vs. order-taking. We are NOT the cheapest. We are the best experience.
+
+<span class="hl">MY CURRENT CHALLENGES</span>
+- No automated outreach (sequences not yet active)
+- No call transcript analysis system
+- No weekly KPI dashboard or performance compass
+- Manual personalization of every email
+- Breeze AI underutilized (admin access pending)
+- Pipeline stages don't reflect actual sales motion
+- No LinkedIn content cadence
+
+<span class="hl">HOW I LIKE TO WORK WITH AI</span>
+- I respond best to direct, concise answers. Don't over-explain.
+- If I'm asking for an email, draft it immediately — don't ask me a bunch of qualifying questions first.
+- I prefer punchy, human-sounding copy over corporate-speak.
+- If I paste a call transcript, give me: summary, key signals, action items, and a follow-up email draft.
+- Help me build business cases when I need to justify tools or expenses to my CEO.
+- If I ask what to prioritize, factor in my family commitments — I can't be working until midnight every night.
+
+<span class="hl">ATXES KEY FACTS</span>
+- 20 full-time employees. HQ in Austin, TX.
+- 400 events/year — mostly Texas, some national
+- Studio facility with 15×40ft LED wall, robotic cameras, motion sensors
+- Patented "Roadmap to Success" project management workflow
+- Fast turnaround on renderings (tech-enabled)
+- Key internal contacts: CEO (overall), GM (HubSpot admin, IT), Ashley (marketing), 2 Account Managers (handle proposals + quotes), Project Managers (on-site execution, can earn commission)
+- Inbound leads go to Account Managers — Jon is purely outbound
+
+<span class="hl">PERSONAL CONTEXT FOR AI</span>
+I am big on intentionality, law of attraction, and positivity. I meditate when I can. I'm building my confidence in a new role — encouragement and momentum matter to me. When I'm stuck or overwhelmed, I respond well to a structured, simple next step rather than a wall of options.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         JON'S MASTER ACCOUNT DOC
+    ══════════════════════════════════════════ -->
+    <div id="account-doc" class="section-anchor" style="margin-top: 60px;">
+      <div class="phase-header">
+        <div class="phase-num-big gold">●</div>
+        <div class="phase-info">
+          <div class="phase-tag gold">Master Account File</div>
+          <div class="phase-title">Jon Simon — Personal Profile + Settings</div>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-head">
+          <div class="profile-avatar">JS</div>
+          <div class="profile-name-block">
+            <div class="profile-name">Jon Simon</div>
+            <div class="profile-role">Sales Engineer · ATX Event Systems · Austin, TX</div>
+            <div class="profile-tags">
+              <span class="profile-tag">DJ · 12 years</span>
+              <span class="profile-tag">NY → Austin</span>
+              <span class="profile-tag">Events Industry</span>
+              <span class="profile-tag">HubSpot</span>
+              <span class="profile-tag">Music Lover</span>
+              <span class="profile-tag">Law of Attraction</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-rows">
+          <div class="profile-row">
+            <div class="pr-label">Full Name</div>
+            <div class="pr-value">Jon Simon</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Age</div>
+            <div class="pr-value">45</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Location</div>
+            <div class="pr-value">Austin, Texas</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Role</div>
+            <div class="pr-value"><strong>Sole Outbound Salesperson</strong> — ATX Event Systems</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Company</div>
+            <div class="pr-value">ATX Event Systems (ATXES) — Boutique AV Production, Austin TX, 16 yrs in business</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Time in Role</div>
+            <div class="pr-value">~3 months (as of April 2025)</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Background</div>
+            <div class="pr-value">Full-time DJ for 12 years — NYC then Austin. Deep relationships in Austin events ecosystem. Known for being personable, high-energy, and generous with his time.</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Family</div>
+            <div class="pr-value">Married 13 years. Two kids, ages 11 and 9. Family is the priority — unavailable most evenings and weekends.</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Personal Values</div>
+            <div class="pr-value">Intentionality · Law of Attraction · Positivity · Meditation · Work hard / play hard · Creativity · Music</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Greatest Strengths</div>
+            <div class="pr-value">Intuition with people · Knowing when to push vs. pull back · Output and professionalism · Genuine warmth and ability to make people feel valued</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Technical Comfort</div>
+            <div class="pr-value">Not highly technical — needs step-by-step guidance for new tools. Willing to learn if the value is clear. Not comfortable with complex integrations on his own.</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Communication Style Preference</div>
+            <div class="pr-value">Direct, concise, warm. No corporate-speak. Responds well to encouragement. Prefers one clear next step over a list of 10 options.</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Primary Goal (2025)</div>
+            <div class="pr-value"><strong>$200,000 total income</strong> ($80K base + $120K variable) · <strong>$3M in net new revenue</strong> for ATXES · Build 5+ strategic venue/agency partnerships</div>
+          </div>
+          <div class="profile-row">
+            <div class="pr-label">Novian Support Lead</div>
+            <div class="pr-value">Andrei — primary architect, builder, and accountability partner for all tools and integrations</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMP BREAKDOWN -->
+      <div class="sub-label gold">Compensation Model</div>
+      <div class="comp-row">
+        <div class="comp-card">
+          <div class="comp-val">$80K</div>
+          <div class="comp-label">Base Salary</div>
+          <div class="comp-sub">Guaranteed annual base</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-val teal">$120K</div>
+          <div class="comp-label">Variable Target</div>
+          <div class="comp-sub">5% gross profit commission · 7.5% off-peak</div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-val green">$200K</div>
+          <div class="comp-label">Total Income Goal</div>
+          <div class="comp-sub">Year 1 realistic: ~$120K. Year 2+: $200K+</div>
+        </div>
+      </div>
+
+      <div class="insight-block" style="margin-top: 8px;">
+        <div class="insight-label">Math Check</div>
+        <div class="insight-title">To hit $120K in commissions at 5% GP: Jon needs ~$2.4M in closed gross profit annually.</div>
+        <div class="insight-body">
+          At an average deal of $40K with ~40% GP = $16K GP per event. To hit $2.4M GP → Jon needs to close roughly <strong>150 events</strong>, or more realistically a smaller number of <strong>larger deals</strong>. Two $500K conference deals = $400K GP = $20K commission — in two deals. <strong>This is why Jon is right to chase conferences and corporate events over $3K weddings.</strong> Off-peak commission boost (7.5%) is a meaningful lever — actively targeting June–August and December deals could add $15–20K to annual variable.
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+      <div class="doc-footer-left">
+        Novian Intelligence — Built for Jon Simon · ATX Event Systems<br>
+        Architect: Andrei · April 2025 · Version 1.0<br>
+        Confidential — For Internal Use + Novian Portfolio (Redacted)
+      </div>
+      <div class="doc-footer-right">Novian</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Active sidebar highlight on scroll
+  const sections = document.querySelectorAll('.section-anchor');
+  const sbItems = document.querySelectorAll('.sb-item');
+  const snavItems = document.querySelectorAll('.snav-item');
+
+  const observerOpts = { rootMargin: '-120px 0px -60% 0px', threshold: 0 };
+
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sbItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+        snavItems.forEach(item => {
+          const mainSections = ['phase01','phase02','phase03','sales-analysis','hubspot','outreach','tool-stack','project-file','account-doc'];
+          if (mainSections.includes(id)) {
+            item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+          }
+        });
+      }
+    });
+  }, observerOpts);
+
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>

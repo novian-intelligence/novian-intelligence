@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassandra — Capture</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f3ede0;
+  --border: #e4dac4;
+  --border2: #d4c8ac;
+  --gold: #9a7820;
+  --gold2: #b89230;
+  --gold-dim: #c8a45a;
+  --gold-bg: rgba(154,120,32,0.08);
+  --text: #1a1610;
+  --text2: #3a3328;
+  --muted: #6b6356;
+  --muted2: #948977;
+  --green: #5a7d3a;
+  --red: #a83838;
+  --blue: #3868a8;
+  --purple: #6858a0;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+  color: var(--text);
+}
+.icon { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+.header-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: .05em;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.header-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.screen-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.snav-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.snav-btn.active {
+  border-color: var(--gold-dim);
+  background: var(--gold-bg);
+  color: var(--gold);
+}
+
+.phone {
+  width: 300px;
+  background: var(--bg);
+  border-radius: 38px;
+  border: 1px solid var(--border2);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(80,60,20,0.12), 0 0 0 1px var(--border);
+}
+
+.phone-notch {
+  height: 34px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+}
+.notch-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+.notch-pill { width: 54px; height: 9px; background: var(--surface2); border-radius: 5px; }
+.notch-icons { font-size: 10px; color: var(--muted2); }
+
+.screen { display: none; padding: 20px 18px 24px; min-height: 520px; flex-direction: column; }
+.screen.active { display: flex; }
+
+.top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.screen-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.1;
+}
+.screen-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.mode-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.mode-btn {
+  flex: 1;
+  padding: 10px 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .05em;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  transition: all .2s;
+}
+.mode-btn .icon { font-size: 16px; }
+.mode-btn.active {
+  border-color: var(--gold-dim);
+  background: var(--gold-bg);
+  color: var(--gold);
+}
+
+.capture-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  min-height: 90px;
+  margin-bottom: 14px;
+  cursor: text;
+  flex-grow: 1;
+  max-height: 120px;
+}
+.capture-placeholder {
+  font-size: 13px;
+  color: var(--muted2);
+  line-height: 1.55;
+  font-style: italic;
+}
+.capture-typed {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.cursor {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: var(--gold);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.tag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 16px; }
+.tag-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tag-chip.sel-music { border-color: var(--purple); background: rgba(104,88,160,.08); color: var(--purple); }
+.tag-chip.sel-biz { border-color: var(--green); background: rgba(90,125,58,.08); color: var(--green); }
+.tag-chip.sel-idea { border-color: var(--amber); background: rgba(176,112,48,.08); color: #8a5618; }
+.tag-chip.sel-life { border-color: #964060; background: rgba(150,64,96,.08); color: #964060; }
+.tag-chip.sel-collab { border-color: var(--blue); background: rgba(56,104,168,.08); color: var(--blue); }
+
+.submit-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .2s;
+  letter-spacing: .02em;
+  margin-top: auto;
+}
+.submit-btn:disabled { opacity: .35; cursor: default; }
+.submit-btn:not(:disabled):hover { opacity: .88; }
+
+.voice-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0 16px;
+}
+.voice-ring {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  border: 1.5px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all .3s;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+.voice-ring .icon { font-size: 26px; }
+.voice-ring.recording {
+  background: rgba(168,56,56,.08);
+  border-color: var(--red);
+  color: var(--red);
+  animation: voicePulse 1.2s ease-in-out infinite;
+}
+@keyframes voicePulse {
+  0%,100%{ box-shadow: 0 0 0 0 rgba(168,56,56,.25); }
+  50%{ box-shadow: 0 0 0 16px rgba(168,56,56,0); }
+}
+.voice-hint {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.transcript-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px;
+  min-height: 70px;
+  margin-bottom: 14px;
+  flex: 1;
+}
+.transcript-text { font-size: 12px; color: var(--muted2); line-height: 1.55; font-style: italic; }
+.transcript-live { font-size: 12px; color: var(--text); line-height: 1.55; }
+
+.success-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 0 16px;
+  flex: 1;
+}
+.success-ring {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(90,125,58,.1);
+  border: 1px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+.success-ring .icon { font-size: 24px; stroke-width: 2; }
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.success-sub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+  max-width: 230px;
+}
+.ai-card {
+  background: var(--surface);
+  border: 1px solid rgba(104,88,160,.25);
+  border-radius: 10px;
+  padding: 14px 16px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 18px;
+}
+.ai-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ai-card-label .icon { font-size: 12px; }
+.ai-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: var(--text2);
+}
+.ai-row:last-of-type { margin-bottom: 0; }
+.ai-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  min-width: 56px;
+}
+.ai-val { color: var(--text); font-size: 11.5px; font-weight: 500; }
+.ai-note {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--purple);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.inbox-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: var(--gold);
+}
+.inbox-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.inbox-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.inbox-item-title {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+  flex: 1;
+  margin-right: 8px;
+}
+.inbox-item-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.inbox-item-sub {
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-bottom: 9px;
+  line-height: 1.4;
+}
+.action-row { display: flex; gap: 5px; }
+.action-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .05em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.action-btn.route { border-color: rgba(104,88,160,.3); background: rgba(104,88,160,.06); color: var(--purple); }
+
+.bottom-nav {
+  display: flex;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 10px 0 8px;
+  margin-top: auto;
+  margin-left: -18px;
+  margin-right: -18px;
+  margin-bottom: -24px;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.nav-icon { font-size: 17px; }
+.nav-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .05em;
+}
+.nav-item.active { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M14 4L20 10M14 4L4 14V20H10L20 10M14 4L17 7"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11V12C5 15.87 8.13 19 12 19C15.87 19 19 15.87 19 12V11"/><path d="M12 19V22"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8C3 6.89 3.89 6 5 6H8L10 4H14L16 6H19C20.11 6 21 6.89 21 8V18C21 19.11 20.11 20 19 20H5C3.89 20 3 19.11 3 18V8Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13C11.66 13 13 11.66 13 10C13 8.34 14.34 7 16 7H18C19.66 7 21 8.34 21 10V14C21 15.66 19.66 17 18 17H16"/><path d="M14 11C12.34 11 11 12.34 11 14C11 15.66 9.66 17 8 17H6C4.34 17 3 15.66 3 14V10C3 8.34 4.34 7 6 7H8"/></symbol>
+    <symbol id="i-mic-solid" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="0" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke-width="0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12L10 17L20 7"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3V8M12 16V21M3 12H8M16 12H21M5.6 5.6L9 9M15 15L18.4 18.4M5.6 18.4L9 15M15 9L18.4 5.6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12L12 4L21 12V20H14V14H10V20H3V12Z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13H8L10 16H14L16 13H20M4 13L6 5H18L20 13M4 13V19H20V13"/></symbol>
+  </defs>
+</svg>
+
+<div class="header-brand">Sounds by Cassandra</div>
+<div class="header-sub">Capture · Mobile Prototype</div>
+
+<div class="screen-nav">
+  <button class="snav-btn active" onclick="showScreen('capture')">Capture</button>
+  <button class="snav-btn" onclick="showScreen('voice')">Voice Mode</button>
+  <button class="snav-btn" onclick="showScreen('success')">After Submit</button>
+  <button class="snav-btn" onclick="showScreen('inbox')">Inbox</button>
+</div>
+
+<div class="phone">
+  <div class="phone-notch">
+    <span class="notch-time">9:41</span>
+    <div class="notch-pill"></div>
+    <span class="notch-icons">▲▲▲</span>
+  </div>
+
+  <!-- CAPTURE -->
+  <div class="screen active" id="screen-capture">
+    <div class="top-row">
+      <div>
+        <div class="screen-title">Capture</div>
+        <div class="screen-sub">capture.soundsbycassandra.com</div>
+      </div>
+      <div class="avatar">CS</div>
+    </div>
+    <div class="mode-row">
+      <button class="mode-btn active"><svg class="icon"><use href="#i-pencil"/></svg>Type</button>
+      <button class="mode-btn" onclick="showScreen('voice')"><svg class="icon"><use href="#i-mic"/></svg>Voice</button>
+      <button class="mode-btn"><svg class="icon"><use href="#i-camera"/></svg>Photo</button>
+      <button class="mode-btn"><svg class="icon"><use href="#i-link"/></svg>Link</button>
+    </div>
+    <div class="capture-box" onclick="startTyping()">
+      <div class="capture-placeholder" id="cap-placeholder">What's on your mind, Cassie?</div>
+      <div class="capture-typed" id="cap-typed" style="display:none;"></div>
+    </div>
+    <div class="tag-label">Tag it — or skip, AI will guess</div>
+    <div class="tag-row">
+      <span class="tag-chip" onclick="toggleTag(this,'sel-music')">Music</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-biz')">Business</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-idea')">Idea</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-life')">Life</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-collab')">Collab</span>
+    </div>
+    <button class="submit-btn" id="submit-btn" disabled onclick="showScreen('success')">Send to inbox</button>
+  </div>
+
+  <!-- VOICE -->
+  <div class="screen" id="screen-voice">
+    <div class="top-row">
+      <div>
+        <div class="screen-title">Voice</div>
+        <div class="screen-sub">Tap to record · auto-transcribes</div>
+      </div>
+      <div class="avatar">CS</div>
+    </div>
+    <div class="voice-center">
+      <div class="voice-ring" id="voice-ring" onclick="toggleRecord()">
+        <svg class="icon" id="voice-icon"><use href="#i-mic"/></svg>
+      </div>
+      <div class="voice-hint" id="voice-hint">Tap to start</div>
+    </div>
+    <div class="transcript-box">
+      <div class="transcript-text" id="transcript-text">Transcript will appear here in real time...</div>
+      <div class="transcript-live" id="transcript-live" style="display:none;"></div>
+    </div>
+    <div class="tag-row" style="margin-bottom:14px;">
+      <span class="tag-chip sel-music">Music</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-biz')">Business</span>
+      <span class="tag-chip" onclick="toggleTag(this,'sel-idea')">Idea</span>
+    </div>
+    <button class="submit-btn" onclick="showScreen('success')">Send to inbox</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="screen" id="screen-success">
+    <div class="success-center">
+      <div class="success-ring"><svg class="icon"><use href="#i-check"/></svg></div>
+      <div class="success-title">Captured.</div>
+      <div class="success-sub">Landed in your inbox. AI is routing it now — you'll see it prioritized next time you open the OS.</div>
+      <div class="ai-card">
+        <div class="ai-card-label"><svg class="icon"><use href="#i-spark"/></svg>AI Triage Preview</div>
+        <div class="ai-row"><span class="ai-key">Hub</span><span class="ai-val">Active Projects → Album</span></div>
+        <div class="ai-row"><span class="ai-key">Priority</span><span class="ai-val">High</span></div>
+        <div class="ai-row"><span class="ai-key">Tags</span><span class="ai-val">Music · Idea</span></div>
+        <div class="ai-note">"Sounds like an album title or concept note — likely track naming for debut."</div>
+      </div>
+      <button class="submit-btn" onclick="showScreen('capture')">Capture another</button>
+    </div>
+  </div>
+
+  <!-- INBOX -->
+  <div class="screen" id="screen-inbox">
+    <div class="top-row">
+      <div>
+        <div class="screen-title">Inbox</div>
+        <div class="inbox-count">3 new · AI triaged</div>
+      </div>
+      <div class="avatar">CS</div>
+    </div>
+    <div class="inbox-item">
+      <div class="inbox-item-top">
+        <div class="inbox-item-title">Album title — "Manzanar"</div>
+        <div class="inbox-item-time">2m</div>
+      </div>
+      <div class="inbox-item-sub">Voice · 14s · AI: Album Project · High</div>
+      <div class="action-row">
+        <button class="action-btn route">Route</button>
+        <button class="action-btn">Snooze</button>
+        <button class="action-btn">Kill</button>
+      </div>
+    </div>
+    <div class="inbox-item">
+      <div class="inbox-item-top">
+        <div class="inbox-item-title">Podcast guest — Dr. Kim</div>
+        <div class="inbox-item-time">1h</div>
+      </div>
+      <div class="inbox-item-sub">Typed · AI: Podcast Project · Medium</div>
+      <div class="action-row">
+        <button class="action-btn route">Route</button>
+        <button class="action-btn">Snooze</button>
+        <button class="action-btn">Kill</button>
+      </div>
+    </div>
+    <div class="inbox-item">
+      <div class="inbox-item-top">
+        <div class="inbox-item-title">Website inspo — Maggie Rogers</div>
+        <div class="inbox-item-time">3h</div>
+      </div>
+      <div class="inbox-item-sub">Link saved · AI: Website Rebuild · Medium</div>
+      <div class="action-row">
+        <button class="action-btn route">Route</button>
+        <button class="action-btn">Snooze</button>
+        <button class="action-btn">Kill</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let typing = false;
+let typeInterval = null;
+const sample = "album track — the name Manzanar just hit me, eastern sierras, that solo hike, perfect for track 4";
+let isRecording = false;
+let recInterval = null;
+const recText = "that place in the eastern Sierras — Manzanar — I keep thinking it should be a song title, track four maybe, the solo hike feeling, so alone but so free";
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach((b,i) => {
+    const names = ['capture','voice','success','inbox'];
+    b.classList.toggle('active', names[i] === name);
+  });
+  if(name !== 'voice') { isRecording = false; clearInterval(recInterval); resetVoice(); }
+}
+
+function startTyping() {
+  if(typing) return;
+  typing = true;
+  document.getElementById('cap-placeholder').style.display = 'none';
+  const el = document.getElementById('cap-typed');
+  el.style.display = 'block';
+  el.innerHTML = '<span class="cursor"></span>';
+  let i = 0;
+  typeInterval = setInterval(() => {
+    if(i <= sample.length) {
+      el.innerHTML = sample.slice(0,i) + '<span class="cursor"></span>';
+      i++;
+      if(i > 3) document.getElementById('submit-btn').disabled = false;
+    } else clearInterval(typeInterval);
+  }, 42);
+}
+
+function toggleTag(el, cls) {
+  const was = el.classList.contains(cls);
+  el.className = 'tag-chip';
+  if(!was) el.classList.add(cls);
+}
+
+function toggleRecord() {
+  isRecording = !isRecording;
+  const ring = document.getElementById('voice-ring');
+  const icon = document.getElementById('voice-icon');
+  const hint = document.getElementById('voice-hint');
+  const tt = document.getElementById('transcript-text');
+  const tl = document.getElementById('transcript-live');
+  if(isRecording) {
+    ring.classList.add('recording');
+    icon.innerHTML = '<use href="#i-stop"/>';
+    hint.textContent = 'Recording... tap to stop';
+    tt.style.display = 'none';
+    tl.style.display = 'block';
+    tl.textContent = '';
+    let i = 0;
+    recInterval = setInterval(() => {
+      if(i <= recText.length) { tl.textContent = recText.slice(0,i); i += 2; }
+      else clearInterval(recInterval);
+    }, 28);
+  } else {
+    ring.classList.remove('recording');
+    icon.innerHTML = '<use href="#i-mic"/>';
+    hint.textContent = 'Tap to record again';
+    clearInterval(recInterval);
+  }
+}
+function resetVoice() {
+  const ring = document.getElementById('voice-ring');
+  if(ring) ring.classList.remove('recording');
+  const icon = document.getElementById('voice-icon');
+  if(icon) icon.innerHTML = '<use href="#i-mic"/>';
+  const hint = document.getElementById('voice-hint');
+  if(hint) hint.textContent = 'Tap to start';
+  const tl = document.getElementById('transcript-live');
+  if(tl) { tl.style.display = 'none'; tl.textContent = ''; }
+  const tt = document.getElementById('transcript-text');
+  if(tt) tt.style.display = 'block';
+}
+</script>
+</body>
+</html>

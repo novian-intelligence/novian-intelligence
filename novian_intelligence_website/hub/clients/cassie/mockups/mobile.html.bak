@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassandra OS · Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f3ede0;
+  --border: #e4dac4;
+  --border2: #d4c8ac;
+  --gold: #9a7820;
+  --gold2: #b89230;
+  --gold-dim: #c8a45a;
+  --gold-bg: rgba(154,120,32,0.08);
+  --text: #1a1610;
+  --text2: #3a3328;
+  --muted: #6b6356;
+  --muted2: #948977;
+  --green: #5a7d3a;
+  --red: #a83838;
+  --amber: #b07030;
+  --blue: #3868a8;
+  --purple: #6858a0;
+  --rose: #964060;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+  color: var(--text);
+}
+.icon { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+.header-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: .05em;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.header-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+.screen-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.snav-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.snav-btn.active { border-color: var(--gold-dim); background: var(--gold-bg); color: var(--gold); }
+
+.phone {
+  width: 300px;
+  background: var(--bg);
+  border-radius: 38px;
+  border: 1px solid var(--border2);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(80,60,20,0.12), 0 0 0 1px var(--border);
+}
+.phone-notch {
+  height: 34px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+}
+.notch-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+.notch-pill { width: 54px; height: 9px; background: var(--surface2); border-radius: 5px; }
+.notch-icons { font-size: 10px; color: var(--muted2); }
+
+.screen { display: none; flex-direction: column; }
+.screen.active { display: flex; }
+
+.home-body, .inbox-body, .hb-body { padding: 18px 18px 0; }
+.home-top, .inbox-top, .hb-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.greeting, .inbox-title, .hb-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+}
+.greeting-sub { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 3px; }
+.inbox-badge { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); margin-top: 3px; }
+.hb-open { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--blue); cursor: pointer; }
+.hb-sub { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 14px; }
+.avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--gold-bg); border: 1px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); }
+
+.quick-capture {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-dim);
+  border-radius: 10px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  color: var(--gold);
+}
+.qc-icon { font-size: 14px; }
+.qc-text { font-size: 12px; color: var(--text2); flex: 1; }
+.qc-voice {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--bg);
+}
+.qc-voice .icon { font-size: 13px; }
+
+.section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+
+.pulse-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+.pulse-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px; }
+.pc-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .12em; color: var(--muted); margin-bottom: 5px; }
+.pc-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1; }
+.pc-num.warn { color: var(--red); }
+.pc-num.ok { color: var(--green); }
+.pc-sub { font-size: 9.5px; color: var(--muted); }
+
+.hub-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; }
+.hub-scroll::-webkit-scrollbar { display: none; }
+.hub-chip {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 92px;
+  cursor: pointer;
+}
+.hub-dot { width: 7px; height: 7px; border-radius: 50%; margin-bottom: 7px; }
+.hub-name { font-size: 11.5px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.hub-meta { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); }
+
+.inbox-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.ii-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.ii-title { font-size: 12.5px; font-weight: 500; color: var(--text); flex: 1; margin-right: 8px; line-height: 1.3; }
+.ii-time { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); flex-shrink: 0; }
+.ii-sub { font-size: 10.5px; color: var(--muted); margin-bottom: 9px; }
+.action-row { display: flex; gap: 5px; }
+.action-btn { font-family: 'DM Mono', monospace; font-size: 9px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; }
+.action-btn.route { border-color: rgba(104,88,160,.3); background: rgba(104,88,160,.06); color: var(--purple); }
+
+.hb-item { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.hb-item:last-child { border-bottom: none; }
+.hb-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.hb-info { flex: 1; min-width: 0; }
+.hb-name { font-size: 11.5px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 1px; }
+.hb-meta { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+.hb-action { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--blue); flex-shrink: 0; cursor: pointer; }
+
+.bottom-nav {
+  display: flex;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 10px 0 8px;
+  margin-top: 16px;
+}
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; color: var(--muted); }
+.nav-item .icon { font-size: 16px; }
+.nav-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .03em; }
+.nav-item.active { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12L12 4L21 12V20H14V14H10V20H3V12Z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13H8L10 16H14L16 13H20M4 13L6 5H18L20 13M4 13V19H20V13"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></symbol>
+    <symbol id="i-honeycomb" viewBox="0 0 24 24"><path d="M12 3L19 7V15L12 19L5 15V7L12 3Z"/><path d="M9 11L12 9L15 11V14L12 16L9 14Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3L14.5 9.5L21 10.5L16 15.5L17.5 22L12 18.5L6.5 22L8 15.5L3 10.5L9.5 9.5L12 3Z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11V12C5 15.87 8.13 19 12 19C15.87 19 19 15.87 19 12V11"/><path d="M12 19V22"/></symbol>
+  </defs>
+</svg>
+
+<div class="header-brand">Cassandra OS</div>
+<div class="header-sub">Mobile · Prototype</div>
+
+<div class="screen-nav">
+  <button class="snav-btn active" onclick="show('home')">Home</button>
+  <button class="snav-btn" onclick="show('inbox')">Inbox</button>
+  <button class="snav-btn" onclick="show('hb')">HoneyBook</button>
+</div>
+
+<div class="phone">
+  <div class="phone-notch">
+    <span class="notch-time">9:41</span>
+    <div class="notch-pill"></div>
+    <span class="notch-icons">▲▲▲</span>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="home-body">
+      <div class="home-top">
+        <div>
+          <div class="greeting">Good morning, Cassie.</div>
+          <div class="greeting-sub">3 inbox · next gig in 12 days</div>
+        </div>
+        <div class="avatar">CS</div>
+      </div>
+
+      <div class="quick-capture">
+        <svg class="icon qc-icon"><use href="#i-plus"/></svg>
+        <span class="qc-text">What's on your mind?</span>
+        <div class="qc-voice"><svg class="icon"><use href="#i-mic"/></svg></div>
+      </div>
+
+      <div class="section-label">Pulse</div>
+      <div class="pulse-grid">
+        <div class="pulse-card">
+          <div class="pc-label">Leads waiting</div>
+          <div class="pc-num warn">4</div>
+          <div class="pc-sub">Longest 3 days</div>
+        </div>
+        <div class="pulse-card">
+          <div class="pc-label">Overdue invoices</div>
+          <div class="pc-num warn">$4.2K</div>
+          <div class="pc-sub">2 clients</div>
+        </div>
+        <div class="pulse-card">
+          <div class="pc-label">Month revenue</div>
+          <div class="pc-num ok">$18.4K</div>
+          <div class="pc-sub">vs $22K target</div>
+        </div>
+        <div class="pulse-card">
+          <div class="pc-label">Inbox new</div>
+          <div class="pc-num">3</div>
+          <div class="pc-sub">AI triaged</div>
+        </div>
+      </div>
+
+      <div class="section-label">Hubs</div>
+      <div class="hub-scroll">
+        <div class="hub-chip"><div class="hub-dot" style="background:var(--purple);"></div><div class="hub-name">Projects</div><div class="hub-meta">7 active</div></div>
+        <div class="hub-chip"><div class="hub-dot" style="background:var(--amber);"></div><div class="hub-name">PR & Media</div><div class="hub-meta">Bio current</div></div>
+        <div class="hub-chip"><div class="hub-dot" style="background:var(--green);"></div><div class="hub-name">Finance</div><div class="hub-meta">QBO synced</div></div>
+        <div class="hub-chip"><div class="hub-dot" style="background:var(--blue);"></div><div class="hub-name">Team</div><div class="hub-meta">14 of 20</div></div>
+        <div class="hub-chip"><div class="hub-dot" style="background:var(--rose);"></div><div class="hub-name">Life</div><div class="hub-meta">Trip in 18d</div></div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active"><svg class="icon"><use href="#i-home"/></svg><div class="nav-label">Home</div></div>
+      <div class="nav-item" onclick="show('inbox')"><svg class="icon"><use href="#i-inbox"/></svg><div class="nav-label">Inbox</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-plus"/></svg><div class="nav-label">Capture</div></div>
+      <div class="nav-item" onclick="show('hb')"><svg class="icon"><use href="#i-honeycomb"/></svg><div class="nav-label">HoneyBook</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-star"/></svg><div class="nav-label">Goals</div></div>
+    </div>
+  </div>
+
+  <!-- INBOX -->
+  <div class="screen" id="screen-inbox">
+    <div class="inbox-body">
+      <div class="inbox-top">
+        <div>
+          <div class="inbox-title">Inbox</div>
+          <div class="inbox-badge">3 new · AI triaged</div>
+        </div>
+        <div class="avatar">CS</div>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-top"><div class="ii-title">Album title — "Manzanar"</div><div class="ii-time">2m</div></div>
+        <div class="ii-sub">Voice · AI: Album Project · High priority</div>
+        <div class="action-row">
+          <button class="action-btn route">Route</button>
+          <button class="action-btn">Snooze</button>
+          <button class="action-btn">Kill</button>
+        </div>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-top"><div class="ii-title">Podcast guest — Dr. Kim</div><div class="ii-time">1h</div></div>
+        <div class="ii-sub">Typed · AI: Podcast Project · Medium</div>
+        <div class="action-row">
+          <button class="action-btn route">Route</button>
+          <button class="action-btn">Snooze</button>
+          <button class="action-btn">Kill</button>
+        </div>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-top"><div class="ii-title">Website inspo — Maggie Rogers</div><div class="ii-time">3h</div></div>
+        <div class="ii-sub">Link · AI: Website Rebuild · Medium</div>
+        <div class="action-row">
+          <button class="action-btn route">Route</button>
+          <button class="action-btn">Snooze</button>
+          <button class="action-btn">Kill</button>
+        </div>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:10px 0;">12 reviewed this week · 4 killed · 2 snoozed</div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="show('home')"><svg class="icon"><use href="#i-home"/></svg><div class="nav-label">Home</div></div>
+      <div class="nav-item active"><svg class="icon"><use href="#i-inbox"/></svg><div class="nav-label">Inbox</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-plus"/></svg><div class="nav-label">Capture</div></div>
+      <div class="nav-item" onclick="show('hb')"><svg class="icon"><use href="#i-honeycomb"/></svg><div class="nav-label">HoneyBook</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-star"/></svg><div class="nav-label">Goals</div></div>
+    </div>
+  </div>
+
+  <!-- HONEYBOOK -->
+  <div class="screen" id="screen-hb">
+    <div class="hb-body">
+      <div class="hb-top">
+        <div class="hb-title">HoneyBook</div>
+        <div class="hb-open">Open app ↗</div>
+      </div>
+      <div class="hb-sub">Live pulse · tap any to open</div>
+
+      <div class="section-label">Leads waiting</div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--red);"></div>
+        <div class="hb-info"><div class="hb-name">F1 Austin — Corporate</div><div class="hb-meta">No response · 3 days</div></div>
+        <div class="hb-action">Reply ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--amber);"></div>
+        <div class="hb-info"><div class="hb-name">Rivera Wedding · May 10</div><div class="hb-meta">Waiting · 1 day</div></div>
+        <div class="hb-action">Reply ↗</div>
+      </div>
+
+      <div class="section-label" style="margin-top:14px;">Contracts out</div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--red);"></div>
+        <div class="hb-info"><div class="hb-name">Sarah & James Wedding</div><div class="hb-meta">Unsigned · sent 5d ago</div></div>
+        <div class="hb-action">Nudge ↗</div>
+      </div>
+
+      <div class="section-label" style="margin-top:14px;">Invoices overdue</div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--red);"></div>
+        <div class="hb-info"><div class="hb-name">Dell Technologies</div><div class="hb-meta">$2,100 · 8 days late</div></div>
+        <div class="hb-action">Chase ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--amber);"></div>
+        <div class="hb-info"><div class="hb-name">NASCAR — COTA</div><div class="hb-meta">$2,100 · 3 days late</div></div>
+        <div class="hb-action">Chase ↗</div>
+      </div>
+
+      <div class="section-label" style="margin-top:14px;">Upcoming</div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--green);"></div>
+        <div class="hb-info"><div class="hb-name">W Austin Residency</div><div class="hb-meta">Apr 18 · 12 days</div></div>
+        <div class="hb-action">View ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--green);"></div>
+        <div class="hb-info"><div class="hb-name">Kendra Scott · Brand Event</div><div class="hb-meta">Apr 24 · 18 days</div></div>
+        <div class="hb-action">View ↗</div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="show('home')"><svg class="icon"><use href="#i-home"/></svg><div class="nav-label">Home</div></div>
+      <div class="nav-item" onclick="show('inbox')"><svg class="icon"><use href="#i-inbox"/></svg><div class="nav-label">Inbox</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-plus"/></svg><div class="nav-label">Capture</div></div>
+      <div class="nav-item active"><svg class="icon"><use href="#i-honeycomb"/></svg><div class="nav-label">HoneyBook</div></div>
+      <div class="nav-item"><svg class="icon"><use href="#i-star"/></svg><div class="nav-label">Goals</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['home','inbox','hb'][i] === name);
+  });
+}
+</script>
+</body>
+</html>

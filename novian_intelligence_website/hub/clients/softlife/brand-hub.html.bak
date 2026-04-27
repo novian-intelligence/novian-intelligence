@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Life Supply Co.™ — Brand Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1714;
+  --ink-mid: #3d3730;
+  --ink-soft: #7a6f65;
+  --cream: #faf7f2;
+  --cream-warm: #f5f0e8;
+  --sage: #7a9e7e;
+  --sage-light: #b8d4ba;
+  --sage-pale: #eaf2eb;
+  --blush: #c4877e;
+  --blush-light: #e8c4bf;
+  --blush-pale: #faf2f0;
+  --warm: #c4904a;
+  --warm-pale: #fdf4e8;
+  --mist: #8a9fb5;
+  --mist-pale: #eef2f6;
+  --border: rgba(26,23,20,0.10);
+  --border-soft: rgba(26,23,20,0.06);
+  --white: #ffffff;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(250,247,242,0.93);
+  backdrop-filter: blur(16px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 2.5rem;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; letter-spacing: 0.04em; color: var(--ink); white-space: nowrap; }
+.nav-brand em { color: var(--sage); font-style: italic; }
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a { font-size: 11px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-badge { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 13px; border-radius: 20px; background: var(--ink); color: var(--cream); white-space: nowrap; }
+/* HERO */
+.hero {
+  min-height: 92vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 5rem 2.5rem 4rem; position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse, rgba(122,158,126,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: -10%; right: -10%; width: 50%; height: 70%; background: radial-gradient(ellipse, rgba(196,135,126,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s 0.1s ease forwards; }
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 36px; height: 0.5px; background: var(--border); }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards; }
+.hero-title em { font-style: italic; color: var(--blush); }
+.hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.2vw, 1.35rem); font-weight: 300; font-style: italic; color: var(--ink-soft); max-width: 600px; margin: 1.25rem auto 2rem; line-height: 1.7; opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards; }
+.hero-truth { display: inline-block; padding: 1rem 2rem; border: 0.5px solid var(--border); border-radius: 4px; background: rgba(255,255,255,0.5); font-size: 13.5px; font-style: italic; color: var(--ink-mid); max-width: 540px; line-height: 1.75; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards; }
+.hero-stats { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards; }
+.stat { background: var(--white); border: 0.5px solid var(--border); border-radius: 40px; padding: 8px 18px; text-align: center; }
+.stat-n { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--ink); line-height: 1; }
+.stat-l { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); opacity: 0; animation: fadeUp 0.8s 1.2s ease forwards; }
+.scroll-line { width: 0.5px; height: 40px; background: linear-gradient(to bottom, var(--ink-soft), transparent); animation: scrollPulse 2s infinite; }
+/* SECTIONS */
+.section { max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem; }
+.section + .section { border-top: 0.5px solid var(--border-soft); }
+.section-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+.section-eyebrow::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+.section-body { font-size: 15px; color: var(--ink-mid); max-width: 700px; line-height: 1.85; margin-bottom: 2.5rem; }
+/* WHO SHE IS */
+.who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 2rem; }
+@media (max-width: 680px) { .who-grid { grid-template-columns: 1fr; } }
+.who-item { background: var(--white); border: 0.5px solid var(--border); padding: 1.25rem 1.5rem 1.25rem 2rem; font-size: 14px; color: var(--ink-mid); line-height: 1.7; position: relative; }
+.who-item::before { content: '—'; position: absolute; left: 0.75rem; color: var(--sage); }
+.who-item:first-child { border-radius: 12px 0 0 0; }
+.who-item:nth-child(2) { border-radius: 0 12px 0 0; }
+.who-item:nth-last-child(2) { border-radius: 0 0 0 12px; }
+.who-item:last-child { border-radius: 0 0 12px 0; }
+/* BRAND TRUTH */
+.brand-truth { background: var(--ink); color: var(--cream); border-radius: 20px; padding: 3rem 3.5rem; margin: 3rem 0; position: relative; overflow: hidden; }
+.brand-truth::before { content: '"'; position: absolute; top: -2rem; left: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 14rem; color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none; }
+.brand-truth-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.75rem); font-weight: 300; font-style: italic; line-height: 1.65; max-width: 760px; position: relative; }
+.brand-truth-sub { font-size: 12px; letter-spacing: 0.08em; color: rgba(250,247,242,0.4); margin-top: 1.25rem; position: relative; text-transform: uppercase; }
+/* NOT LIST */
+.not-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+.not-item { font-size: 12px; padding: 5px 14px; border-radius: 20px; background: var(--white); border: 0.5px solid var(--border); color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--blush); text-decoration-thickness: 1.5px; }
+/* TABS */
+.tabs-wrapper { position: sticky; top: 58px; z-index: 90; background: rgba(250,247,242,0.96); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); padding: 0 2.5rem; }
+.tabs { max-width: 1100px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn { padding: 1rem 1.25rem; font-size: 11px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-soft); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--ink); border-bottom-color: var(--sage); }
+.tab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+/* PANELS */
+.product-panels { max-width: 1100px; margin: 0 auto; }
+.panel { display: none; padding: 3.5rem 2.5rem; }
+.panel.active { display: block; }
+.panel-header { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; margin-bottom: 2.5rem; }
+@media (max-width: 680px) { .panel-header { grid-template-columns: 1fr; } }
+.panel-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 300; line-height: 1.1; color: var(--ink); }
+.panel-tagline { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: var(--ink-soft); margin-top: 0.5rem; }
+.status-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; padding: 6px 14px; border-radius: 20px; white-space: nowrap; }
+.status-now { background: #e4f2e6; color: #2d7a35; border: 0.5px solid #a8d4ac; }
+.status-p2 { background: var(--warm-pale); color: var(--warm); border: 0.5px solid #e8c080; }
+.status-sub { background: var(--blush-pale); color: var(--blush); border: 0.5px solid var(--blush-light); }
+.panel-body { font-size: 15px; color: var(--ink-mid); line-height: 1.85; max-width: 720px; margin-bottom: 2rem; }
+/* TWO COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+@media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+.col-block { background: var(--white); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+.col-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid var(--border); }
+.copy-list { display: flex; flex-direction: column; gap: 8px; }
+.copy-item { font-size: 13.5px; color: var(--ink-mid); line-height: 1.6; padding-left: 16px; position: relative; }
+.copy-item::before { content: '→'; position: absolute; left: 0; color: var(--sage); font-size: 11px; top: 2px; }
+.copy-item strong { color: var(--ink); font-weight: 500; }
+/* COPY HIGHLIGHT */
+.copy-highlight { background: var(--cream-warm); border: 0.5px solid var(--border); border-left: 3px solid var(--sage); border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 0 0 1.5rem; }
+.copy-highlight-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.75rem; }
+.copy-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.copy-chip { font-size: 13px; font-style: italic; color: var(--ink-mid); background: var(--white); border: 0.5px solid var(--border); border-radius: 20px; padding: 5px 14px; line-height: 1.4; }
+/* PRICE ROW */
+.price-row { display: flex; align-items: center; gap: 12px; margin-top: 1.5rem; flex-wrap: wrap; }
+.price-tag { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--ink); }
+.platform-tag { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; background: var(--sage-pale); color: var(--sage); border: 0.5px solid var(--sage-light); }
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 3px; margin-top: 2rem; }
+.timeline-row { display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; align-items: start; background: var(--white); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem 1.75rem; transition: box-shadow 0.2s; }
+.timeline-row:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+@media (max-width: 680px) { .timeline-row { grid-template-columns: 1fr; } }
+.tl-phase { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+.tl-time { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--ink); margin-top: 4px; }
+.tl-items { display: flex; flex-direction: column; gap: 7px; }
+.tl-item { font-size: 13.5px; color: var(--ink-mid); padding-left: 16px; position: relative; line-height: 1.5; }
+.tl-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--sage-light); }
+.tl-item strong { color: var(--ink); font-weight: 500; }
+.tl-status { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.sp { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.sp-now { background: #e4f2e6; color: #2d7a35; border: 0.5px solid #a8d4ac; }
+.sp-active { background: var(--sage-pale); color: var(--sage); border: 0.5px solid var(--sage-light); }
+.sp-soon { background: var(--warm-pale); color: var(--warm); border: 0.5px solid #e8c080; }
+.sp-future { background: #f0ede8; color: var(--ink-soft); border: 0.5px solid var(--border); }
+/* AI GRID */
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 2rem; }
+@media (max-width: 780px) { .ai-grid { grid-template-columns: 1fr; } }
+.ai-card { background: var(--white); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: box-shadow 0.2s, transform 0.2s; }
+.ai-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.06); transform: translateY(-2px); }
+.ai-card.featured { background: var(--ink); border-color: transparent; grid-column: 1 / -1; }
+.ai-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media (max-width: 680px) { .ai-inner { grid-template-columns: 1fr; } }
+.ai-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.875rem; gap: 1rem; }
+.ai-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; color: var(--ink); }
+.ai-card.featured .ai-card-name { color: var(--cream); }
+.ai-badge { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.ab-live { background: #e4f2e6; color: #2d7a35; border: 0.5px solid #a8d4ac; }
+.ab-new { background: #fce8dd; color: #b04a1a; border: 0.5px solid #f0b99a; }
+.ab-soon { background: var(--mist-pale); color: var(--mist); border: 0.5px solid #b8cede; }
+.ai-desc { font-size: 13.5px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1rem; }
+.ai-card.featured .ai-desc { color: rgba(250,247,242,0.6); }
+.ai-uses { display: flex; flex-direction: column; gap: 5px; }
+.ai-use { font-size: 12.5px; color: var(--ink-mid); padding-left: 16px; position: relative; line-height: 1.5; }
+.ai-use::before { content: '→'; position: absolute; left: 0; color: var(--sage); font-size: 11px; }
+.ai-card.featured .ai-use { color: rgba(250,247,242,0.55); }
+.ai-card.featured .ai-use::before { color: var(--sage-light); }
+/* TABLES */
+.data-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 13.5px; }
+.data-table th { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); padding: 0.5rem 1rem 0.75rem; text-align: left; border-bottom: 0.5px solid var(--border); }
+.data-table td { padding: 0.875rem 1rem; border-bottom: 0.5px solid var(--border-soft); color: var(--ink-mid); vertical-align: top; line-height: 1.6; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--cream-warm); }
+.data-table td:first-child { color: var(--ink); font-style: italic; }
+.data-table td.margin { color: var(--sage); font-weight: 500; font-style: normal; }
+/* DELIVERABLES */
+.deliv-table { margin-top: 2rem; display: flex; flex-direction: column; gap: 3px; }
+.deliv-head { display: grid; grid-template-columns: 1fr 140px 120px; gap: 12px; padding: 0 1.25rem 0.5rem; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+@media (max-width: 680px) { .deliv-head { grid-template-columns: 1fr 90px; } .deliv-owner { display: none !important; } }
+.deliv-row { display: grid; grid-template-columns: 1fr 140px 120px; gap: 12px; align-items: center; background: var(--white); border: 0.5px solid var(--border); border-radius: 10px; padding: 0.875rem 1.25rem; font-size: 13.5px; transition: background 0.15s; }
+.deliv-row:hover { background: var(--cream-warm); }
+@media (max-width: 680px) { .deliv-row { grid-template-columns: 1fr 90px; } }
+.deliv-name { color: var(--ink); }
+.deliv-owner { color: var(--ink-soft); font-size: 12.5px; }
+.deliv-status { display: flex; justify-content: flex-end; }
+.ds { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.ds-done { background: #e4f2e6; color: #2d7a35; border: 0.5px solid #a8d4ac; }
+.ds-wip { background: var(--sage-pale); color: var(--sage); border: 0.5px solid var(--sage-light); }
+.ds-next { background: var(--warm-pale); color: var(--warm); border: 0.5px solid #e8c080; }
+.ds-later { background: #f0ede8; color: var(--ink-soft); border: 0.5px solid var(--border); }
+/* NORTH STAR */
+.north-star { background: var(--blush-pale); border: 0.5px solid var(--blush-light); border-radius: 20px; padding: 4rem 3.5rem; text-align: center; margin: 0 2.5rem 4rem; }
+.north-star-q { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.65; max-width: 740px; margin: 0 auto 1.5rem; }
+.north-star p { font-size: 14px; color: var(--ink-mid); max-width: 560px; margin: 0 auto; line-height: 1.85; }
+/* FOOTER */
+.footer { border-top: 0.5px solid var(--border); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 12px; color: var(--ink-soft); }
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; }
+/* DIVIDER */
+.divider { width: 40px; height: 1px; background: var(--sage-light); margin: 2rem 0; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Soft Life <em>Supply Co.</em>™</div>
+  <ul class="nav-links">
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#launch">Launch Plan</a></li>
+    <li><a href="#ai-ops">AI Ops</a></li>
+    <li><a href="#deliverables">Deliverables</a></li>
+  </ul>
+  <div class="nav-badge">Internal · Confidential</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">A Soft Life Ventures™ Brand · Brand Hub v1</div>
+  <h1 class="hero-title">Soft Life<br><em>Supply Co.</em></h1>
+  <p class="hero-subtitle">"Healing with style. Reclaiming peace. Indulging in beauty without apology. Living gently, even when life has been hard."</p>
+  <div class="hero-truth">
+    This is not the soft life you perform for Instagram.<br>
+    This is the soft life you choose on a Tuesday when everything is still hard — and you choose it anyway.
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">$0</div><div class="stat-l">Launch Cost</div></div>
+    <div class="stat"><div class="stat-n">1–2 wks</div><div class="stat-l">Time to Live</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Product Lines</div></div>
+    <div class="stat"><div class="stat-n">~95%</div><div class="stat-l">Digital Margin</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Lines Ready Now</div></div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="section" id="vision">
+  <div class="section-eyebrow">Brand Vision</div>
+  <h2 class="section-title">Who she is.<br>Why this exists.</h2>
+  <p class="section-body">Soft Life Supply Co. is not a wellness brand. It is not a spa day. It is not crystals and mantras and gentle affirmations for women who have already arrived somewhere peaceful. It is for the woman still in it — the one choosing softness not because life got easy, but as an act of defiance while it hasn't.</p>
+
+  <div class="brand-truth">
+    <div class="brand-truth-text">"She is not post-healing. She is healing — messily, imperfectly, sometimes ragefully — and she is doing it with style. She is the woman the founder was when she needed what she's now building."</div>
+    <div class="brand-truth-sub">Brand Founding Truth · Soft Life Supply Co.™</div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:3rem;">The Woman We Serve</div>
+  <div class="who-grid">
+    <div class="who-item">She is in the middle of leaving something that broke her</div>
+    <div class="who-item">She believes in growth — but also in blocking people without warning</div>
+    <div class="who-item">She owns the crystals but they're under the bed next to unmatched socks</div>
+    <div class="who-item">She's read the self-help books but is still doom-scrolling at midnight</div>
+    <div class="who-item">She is choosing softness while still being under attack</div>
+    <div class="who-item">She is soft in the streets and rage in the group chat</div>
+    <div class="who-item">She is not toxic — but she is flammable</div>
+    <div class="who-item">She is not healed. She is healing. And she has a sense of humor about it.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-eyebrow">What Makes It Different</div>
+  <p class="section-body">Most soft life brands show the destination. The calm, the crystals, the arrival. This brand documents the whole road — the rage, the burning bridges, the standing in the ash, the choosing softness anyway. The woman buying here isn't being sold a fantasy. <strong>She's being seen.</strong></p>
+
+  <div class="not-list">
+    <span class="not-item">Not a hustle brand</span>
+    <span class="not-item">Not toxic positivity</span>
+    <span class="not-item">Not wellness theater</span>
+    <span class="not-item">Not for the woman who has already arrived</span>
+    <span class="not-item">Not aspirational content that makes her feel behind</span>
+    <span class="not-item">Not someone else's version of healing</span>
+  </div>
+</section>
+
+<!-- PRODUCT TABS -->
+<div class="tabs-wrapper" id="products">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('reset',this)"><span class="tab-dot" style="background:var(--sage)"></span>The Soft Life Reset</button>
+    <button class="tab-btn" onclick="showTab('baggage',this)"><span class="tab-dot" style="background:var(--blush)"></span>Emotional Baggage™</button>
+    <button class="tab-btn" onclick="showTab('wallpaper',this)"><span class="tab-dot" style="background:var(--mist)"></span>Wallpaper Packs</button>
+    <button class="tab-btn" onclick="showTab('poolside',this)"><span class="tab-dot" style="background:var(--warm)"></span>Poolside Princess™</button>
+    <button class="tab-btn" onclick="showTab('apparel',this)"><span class="tab-dot" style="background:var(--ink-soft)"></span>Loungewear + Apparel</button>
+    <button class="tab-btn" onclick="showTab('healing',this)"><span class="tab-dot" style="background:var(--blush)"></span>Healing Adjacent™</button>
+  </div>
+</div>
+
+<div class="product-panels">
+  <!-- RESET -->
+  <div class="panel active" id="panel-reset">
+    <div class="panel-header">
+      <div><div class="panel-title">The Soft Life Reset</div><div class="panel-tagline">"Not a gratitude diary. A survival tool with beautiful packaging."</div></div>
+      <span class="status-badge status-now">✦ Launch Now</span>
+    </div>
+    <p class="panel-body">A 30-day guided journal for women coming home to themselves. Not toxic positivity. A real framework for the woman who needs somewhere to put all of it. Structure: <strong>Exhale → Remember → Vision → Ground.</strong> Includes daily prompts, mood tracker, affirmations, and vision board prompts.</p>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">What's Inside</div>
+        <div class="copy-list">
+          <div class="copy-item">30 daily prompts — framework-driven, emotionally honest</div>
+          <div class="copy-item">Weekly mood tracker — not performative</div>
+          <div class="copy-item">Affirmations that don't feel like lies</div>
+          <div class="copy-item">Vision board prompt pages</div>
+          <div class="copy-item">Exhale → Remember → Vision → Ground structure</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">Revenue Model</div>
+        <div class="copy-list">
+          <div class="copy-item"><strong>Platform:</strong> Payhip (primary) + Etsy</div>
+          <div class="copy-item"><strong>Price:</strong> $22–$27</div>
+          <div class="copy-item"><strong>Cost to create:</strong> $0 — Claude + Canva</div>
+          <div class="copy-item"><strong>Margin:</strong> ~95% on every sale</div>
+          <div class="copy-item"><strong>Payhip fee:</strong> 5% per sale on free plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-block">
+      <div class="col-label">AI Build Plan</div>
+      <div class="copy-list">
+        <div class="copy-item"><strong>Claude:</strong> Write all 30 days of prompts, affirmations, mood tracker copy, intro + section text in one session</div>
+        <div class="copy-item"><strong>Canva:</strong> Design the PDF layout — typography, colors, brand aesthetic</div>
+        <div class="copy-item"><strong>Cowork (Claude Desktop):</strong> Assign Claude to format the document autonomously while you do something else</div>
+        <div class="copy-item"><strong>Payhip + Etsy:</strong> Upload PDF, Claude writes the listing copy, go live</div>
+        <div class="copy-item"><strong>Zapier + MailerLite:</strong> Every buyer auto-added to email list — zero manual work</div>
+      </div>
+    </div>
+    <div class="price-row">
+      <div class="price-tag">$22 — $27</div>
+      <span class="platform-tag">Payhip</span><span class="platform-tag">Etsy</span><span class="platform-tag">Digital · Zero Inventory</span>
+    </div>
+  </div>
+
+  <!-- BAGGAGE -->
+  <div class="panel" id="panel-baggage">
+    <div class="panel-header">
+      <div><div class="panel-title">Emotional Baggage™</div><div class="panel-tagline">"Anyone can make a tote bag. Not everyone can make one that makes a woman laugh and cry at the same time."</div></div>
+      <span class="status-badge status-now">✦ Launch Now</span>
+    </div>
+    <p class="panel-body">The viral product line. Cheeky, healing, deeply shareable. Totes, pouches, crossbodies, and keychains with copy that comes from a real place — which is exactly why it works. Print-on-demand via Printify means zero inventory, zero upfront cost, ships automatically when someone orders.</p>
+    <div class="copy-highlight">
+      <div class="copy-highlight-label">✦ Ready Copy — Launch These Now</div>
+      <div class="copy-chips">
+        <div class="copy-chip">"Still carrying less than my ex."</div>
+        <div class="copy-chip">"Doing my best. Which today means not replying."</div>
+        <div class="copy-chip">"Not your emotional support human."</div>
+        <div class="copy-chip">"Heavy but designer."</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">Products + Pricing</div>
+        <div class="copy-list">
+          <div class="copy-item">Canvas totes — $28–$38</div>
+          <div class="copy-item">Zip pouches — $16–$22</div>
+          <div class="copy-item">Crossbody bags — $32–$45</div>
+          <div class="copy-item">Keychains — $12–$16</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">Revenue Model</div>
+        <div class="copy-list">
+          <div class="copy-item"><strong>Platform:</strong> Etsy via Printify</div>
+          <div class="copy-item"><strong>Cost per tote:</strong> $8–$15 (Printify)</div>
+          <div class="copy-item"><strong>Sell price:</strong> $28–$45</div>
+          <div class="copy-item"><strong>Margin:</strong> 40–60% per sale</div>
+          <div class="copy-item"><strong>Inventory:</strong> Zero — ships direct from Printify</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-block">
+      <div class="col-label">AI Build Plan</div>
+      <div class="copy-list">
+        <div class="copy-item"><strong>Claude:</strong> Write all copy variations — 10–20 phrases per product type, Etsy listing descriptions, SEO titles</div>
+        <div class="copy-item"><strong>Canva:</strong> Design print files — typography layouts for each phrase</div>
+        <div class="copy-item"><strong>Cowork + Computer Use:</strong> Claude navigates Printify, uploads designs, fills product setup forms autonomously</div>
+        <div class="copy-item"><strong>Zapier + Outfy:</strong> Auto-posts new listings to Instagram and Pinterest the moment they go live</div>
+      </div>
+    </div>
+    <div class="price-row"><div class="price-tag">$12 — $38</div><span class="platform-tag">Etsy</span><span class="platform-tag">Printify POD</span></div>
+  </div>
+
+  <!-- WALLPAPER -->
+  <div class="panel" id="panel-wallpaper">
+    <div class="panel-header">
+      <div><div class="panel-title">Digital Wallpaper Packs</div><div class="panel-tagline">"Made in Canva in an afternoon. $0 cost. Sold forever."</div></div>
+      <span class="status-badge status-now">✦ Launch Now</span>
+    </div>
+    <p class="panel-body">Phone and desktop backgrounds with soft life affirmations. The lowest-friction product in the lineup — create once in Canva, bundle into a ZIP, upload to Payhip. Every sale is pure margin. Perfect $4–$12 impulse buy that introduces new customers to the brand.</p>
+    <div class="copy-highlight">
+      <div class="copy-highlight-label">✦ Approved Lines — Ready to Design</div>
+      <div class="copy-chips">
+        <div class="copy-chip">"Quiet luxury, loud healing."</div>
+        <div class="copy-chip">"I do not chase, I lounge."</div>
+        <div class="copy-chip">"Luxury is a mindset."</div>
+        <div class="copy-chip">"Soft is power."</div>
+        <div class="copy-chip">"Peace is the flex."</div>
+        <div class="copy-chip">"The softer I became, the louder I roared."</div>
+        <div class="copy-chip">"Unapologetically unrushed."</div>
+        <div class="copy-chip">"Healing looks good on me."</div>
+        <div class="copy-chip">"This peace is expensive."</div>
+        <div class="copy-chip">"Basking is a form of becoming."</div>
+        <div class="copy-chip">"Grace over grind."</div>
+        <div class="copy-chip">"I no longer perform for peace."</div>
+        <div class="copy-chip">"Currently curating my most radiant life."</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">Pack Structure</div>
+        <div class="copy-list">
+          <div class="copy-item">6 designs per pack — phone + desktop sizes</div>
+          <div class="copy-item">Starter pack: 6 designs @ $4–$6</div>
+          <div class="copy-item">Full bundle: 12–15 designs @ $10–$12</div>
+          <div class="copy-item">Seasonal drops: new designs per quarter</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">Revenue Model</div>
+        <div class="copy-list">
+          <div class="copy-item"><strong>Platform:</strong> Payhip + Etsy</div>
+          <div class="copy-item"><strong>Cost to create:</strong> $0</div>
+          <div class="copy-item"><strong>Price:</strong> $4–$12 per bundle</div>
+          <div class="copy-item"><strong>Margin:</strong> ~95%</div>
+          <div class="copy-item">Gateway product — low price, high delight, repeatable</div>
+        </div>
+      </div>
+    </div>
+    <div class="price-row"><div class="price-tag">$4 — $12</div><span class="platform-tag">Payhip</span><span class="platform-tag">Etsy</span><span class="platform-tag">100% Digital</span></div>
+  </div>
+
+  <!-- POOLSIDE -->
+  <div class="panel" id="panel-poolside">
+    <div class="panel-header">
+      <div><div class="panel-title">Poolside Princess™</div><div class="panel-tagline">"For the woman reclaiming her peace — one float at a time."</div></div>
+      <span class="status-badge status-p2">Phase 2 · Summer Drop</span>
+    </div>
+    <p class="panel-body">The seasonal collection that started the whole brand — now a focused, elevated product line. Mesh beach totes, satin headwraps, embroidered towels, accessories. Photogenic, giftable, premium feel. The poolside isn't aspirational here. It's her reclamation zone. Every float, every soak, every peaceful second is a win earned.</p>
+    <div class="copy-highlight">
+      <div class="copy-highlight-label">✦ Product Concepts + Ready Copy</div>
+      <div class="copy-chips">
+        <div class="copy-chip">Towel: "I do not chase, I lounge."</div>
+        <div class="copy-chip">Eye mask: "Do Not Disturb (I'm Floating)"</div>
+        <div class="copy-chip">Tumbler: "99% chill, 1% chlorine."</div>
+        <div class="copy-chip">Mesh tote: "Emotionally buoyant."</div>
+        <div class="copy-chip">Headwrap: Poolside Princess + crown detail</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">Why Phase 2, Not Now</div>
+        <div class="copy-list">
+          <div class="copy-item">Physical goods worth doing right — build audience first through digital</div>
+          <div class="copy-item">Summer timing creates natural urgency + demand</div>
+          <div class="copy-item">Drop to a warm audience who already knows and loves the brand</div>
+          <div class="copy-item">Printify handles fulfillment — still zero inventory</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">Revenue Model</div>
+        <div class="copy-list">
+          <div class="copy-item"><strong>Platform:</strong> Etsy + Shopify (Phase 3)</div>
+          <div class="copy-item"><strong>Price range:</strong> $28–$65</div>
+          <div class="copy-item"><strong>Cost:</strong> $10–$25 via Printify</div>
+          <div class="copy-item"><strong>Margin:</strong> 45–65%</div>
+          <div class="copy-item">Giftable — drives organic sharing and word of mouth</div>
+        </div>
+      </div>
+    </div>
+    <div class="price-row"><div class="price-tag">$28 — $65</div><span class="platform-tag">Etsy</span><span class="platform-tag">Shopify (Phase 3)</span><span class="platform-tag">Printify POD</span></div>
+  </div>
+
+  <!-- APPAREL -->
+  <div class="panel" id="panel-apparel">
+    <div class="panel-header">
+      <div><div class="panel-title">Loungewear + Apparel</div><div class="panel-tagline">"Launch after the audience exists and the copy is proven."</div></div>
+      <span class="status-badge status-p2">Phase 2 · After Audience</span>
+    </div>
+    <p class="panel-body">Cropped sweatshirts, oversized tees, hoodie dresses, bucket hats with hair slits. Brand-voice prints on wearables. The sequencing is deliberate — copy gets proven through digital products and accessories first, then the audience that's already bought in sees it on clothing they actually want to wear.</p>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">Product + Copy Concepts</div>
+        <div class="copy-list">
+          <div class="copy-item">Cropped sweatshirt: "Still healing. Still petty."</div>
+          <div class="copy-item">Oversized tee: "Regulating my nervous system (by not replying)."</div>
+          <div class="copy-item">Hoodie dress: "The softer I became, the louder I roared."</div>
+          <div class="copy-item">Bucket hat with hair slit: "I do not chase, I lounge."</div>
+          <div class="copy-item">Robe: "Hot Tub Royalty" — back embroidery</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">Revenue Model</div>
+        <div class="copy-list">
+          <div class="copy-item"><strong>Platform:</strong> Etsy + Shopify via Printify</div>
+          <div class="copy-item"><strong>Price:</strong> $32–$68</div>
+          <div class="copy-item"><strong>Cost:</strong> $15–$25 (Printify)</div>
+          <div class="copy-item"><strong>Margin:</strong> 40–55%</div>
+          <div class="copy-item">Zero inventory — print-on-demand throughout</div>
+        </div>
+      </div>
+    </div>
+    <div class="price-row"><div class="price-tag">$32 — $68</div><span class="platform-tag">Etsy</span><span class="platform-tag">Shopify</span><span class="platform-tag">Printify POD</span></div>
+  </div>
+
+  <!-- HEALING ADJACENT -->
+  <div class="panel" id="panel-healing">
+    <div class="panel-header">
+      <div><div class="panel-title">Healing Adjacent™</div><div class="panel-tagline">"Less rose quartz, more rage quartz."</div></div>
+      <span class="status-badge status-sub">Sub-Line · Phase 1–2</span>
+    </div>
+    <p class="panel-body">For the girlies still in the trenches. Not quite radiating peace. Not quite burning it all down. Somewhere in between. Still standing. Still scribbling. Still scrolling. Still healing — even if it's adjacent. This is what makes the whole brand honest. If everything is serene and aspirational, it stops feeling real.</p>
+    <div class="copy-highlight">
+      <div class="copy-highlight-label">✦ Launch-Ready Copy by Product</div>
+      <div class="copy-chips">
+        <div class="copy-chip">"You're lucky I'm in therapy."</div>
+        <div class="copy-chip">"Soft life in the streets, rage life in the group chat."</div>
+        <div class="copy-chip">"Slightly triggered but surprisingly self-aware."</div>
+        <div class="copy-chip">"My therapist says I'm trying." (and she sounded… surprised)</div>
+        <div class="copy-chip">"Don't make me trauma dump. I will."</div>
+        <div class="copy-chip">"Regulating my nervous system (by not replying)."</div>
+        <div class="copy-chip">"Still healing. Still petty."</div>
+        <div class="copy-chip">"Emotionally fluent. Slightly vengeful."</div>
+        <div class="copy-chip">"Healing is real. So is avoidance."</div>
+        <div class="copy-chip">"Today's Gratitude: Coffee. Door Locks. My audacity."</div>
+        <div class="copy-chip">"Guided prompts I'll probably ignore."</div>
+        <div class="copy-chip">"This is my trauma tea."</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-block">
+        <div class="col-label">Product Types</div>
+        <div class="copy-list">
+          <div class="copy-item">Sticker sheets — $8–$14 (Printify → Etsy)</div>
+          <div class="copy-item">Mugs — $18–$26 (Printify → Etsy)</div>
+          <div class="copy-item">Shirts + sweats — $32–$55</div>
+          <div class="copy-item">Totes — $22–$35</div>
+          <div class="copy-item">Journals — $16–$24 (Payhip + Etsy)</div>
+        </div>
+      </div>
+      <div class="col-block">
+        <div class="col-label">"My Therapist Says…" Drop Concept</div>
+        <div class="copy-list">
+          <div class="copy-item">Coffee mug: "She said I'm making progress."</div>
+          <div class="copy-item">Embroidered hoodie sleeve: same phrase</div>
+          <div class="copy-item">Journal: half-written affirmations, crumbs, pen tears through the page</div>
+          <div class="copy-item">Limited drop — themed, collectible, shareable</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-block" style="margin-top:1rem">
+      <div class="col-label">Voice Rule — Critical</div>
+      <div class="copy-list">
+        <div class="copy-item">Humor rooted in <strong>self-awareness</strong>, not bitterness</div>
+        <div class="copy-item">Relatable dark humor — <strong>not an angry brand</strong></div>
+        <div class="copy-item">Every piece should make her laugh <em>and</em> feel seen — not just laugh</div>
+        <div class="copy-item">The line between "I see myself here" and "this brand is unwell" is thin — stay on the right side always</div>
+      </div>
+    </div>
+    <div class="price-row"><div class="price-tag">$8 — $55</div><span class="platform-tag">Etsy</span><span class="platform-tag">Payhip</span><span class="platform-tag">Printify POD</span></div>
+  </div>
+</div>
+
+<!-- MASTER COPY REFERENCE -->
+<section class="section" id="copy">
+  <div class="section-eyebrow">Master Copy Reference</div>
+  <h2 class="section-title">The taglines that built this brand.</h2>
+  <p class="section-body">Every line here has been pressure-tested against the brand voice. Use across products, social, packaging, and email. The test: does it make her laugh, cry, or feel seen? If yes — it's on brand.</p>
+  <table class="data-table">
+    <thead><tr><th>Line</th><th>Where It Lives</th></tr></thead>
+    <tbody>
+      <tr><td>"Quiet luxury, loud healing."</td><td>Brand tagline · wallpaper · packaging</td></tr>
+      <tr><td>"I do not chase, I lounge."</td><td>Poolside Princess · wallpaper · towel embroidery</td></tr>
+      <tr><td>"Still carrying less than my ex."</td><td>Emotional Baggage tote · hero product</td></tr>
+      <tr><td>"Healing with style. Reclaiming peace. Indulging in beauty without apology."</td><td>Brand description · about section · bios</td></tr>
+      <tr><td>"You're lucky I'm in therapy."</td><td>Healing Adjacent sticker</td></tr>
+      <tr><td>"Soft life in the streets, rage life in the group chat."</td><td>Healing Adjacent sticker · shirt</td></tr>
+      <tr><td>"For the ones still in the fire, choosing soft anyway."</td><td>Brand story · about section · packaging</td></tr>
+      <tr><td>"The softer I became, the louder I roared."</td><td>Wallpaper · apparel · social</td></tr>
+      <tr><td>"Reclaiming peace, one beautiful moment at a time."</td><td>Packaging insert · thank-you cards</td></tr>
+      <tr><td>"Don't make me trauma dump. I will."</td><td>Healing Adjacent mug</td></tr>
+      <tr><td>"Regulating my nervous system (by not replying)."</td><td>Healing Adjacent shirt</td></tr>
+      <tr><td>"This peace is expensive."</td><td>Wallpaper · apparel · social</td></tr>
+      <tr><td>"Grace over grind."</td><td>Wallpaper · journal · social</td></tr>
+      <tr><td>"Today's Gratitude: Coffee. Door Locks. My audacity."</td><td>Healing Adjacent journal — inside cover</td></tr>
+      <tr><td>"Basking is a form of becoming."</td><td>Wallpaper · social · journal prompt</td></tr>
+      <tr><td>"You don't need to chase the life you deserve. Just float toward it."</td><td>Brand story closing · email footer</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- LAUNCH PLAN -->
+<section class="section" id="launch">
+  <div class="section-eyebrow">Launch Roadmap</div>
+  <h2 class="section-title">The plan, in order.</h2>
+  <p class="section-body">Phased so you're never overwhelmed, never spending before you've validated, always building on what's already working. Each phase funds the next. Zero inventory required through Phase 2.</p>
+  <div class="timeline">
+    <div class="timeline-row">
+      <div><div class="tl-phase">Phase 0</div><div class="tl-time">This Week</div></div>
+      <div class="tl-items">
+        <div class="tl-item"><strong>Business Gmail</strong> — softlifesupplyco@gmail.com, separate from personal</div>
+        <div class="tl-item"><strong>Separate bank account</strong> — Chime or SoFi, free, all business income here</div>
+        <div class="tl-item"><strong>Claim social handles</strong> — @softlifesupplyco on Instagram + TikTok now</div>
+        <div class="tl-item"><strong>Etsy seller account</strong> — business Gmail, shop name secured</div>
+        <div class="tl-item"><strong>Printify, Payhip, Canva, MailerLite</strong> — all free accounts, all connected</div>
+      </div>
+      <div class="tl-status"><span class="sp sp-now">Do First</span></div>
+    </div>
+    <div class="timeline-row">
+      <div><div class="tl-phase">Phase 1</div><div class="tl-time">Weeks 1–3</div></div>
+      <div class="tl-items">
+        <div class="tl-item"><strong>Soft Life Reset Workbook</strong> — written with Claude, designed in Canva, live on Payhip + Etsy</div>
+        <div class="tl-item"><strong>Emotional Baggage tote + keychain</strong> — designed in Printify, listed on Etsy</div>
+        <div class="tl-item"><strong>Wallpaper pack</strong> — 6 designs in Canva, bundled on Payhip</div>
+        <div class="tl-item"><strong>Healing Adjacent sticker sheet</strong> — Printify → Etsy</div>
+        <div class="tl-item"><strong>30 days of social content</strong> — written by Claude, scheduled in Later</div>
+        <div class="tl-item"><strong>5-email welcome sequence</strong> — written by Claude, loaded into MailerLite</div>
+      </div>
+      <div class="tl-status"><span class="sp sp-active">In Progress</span></div>
+    </div>
+    <div class="timeline-row">
+      <div><div class="tl-phase">Phase 2</div><div class="tl-time">Months 2–4</div></div>
+      <div class="tl-items">
+        <div class="tl-item"><strong>Expand Etsy catalog</strong> — mugs, tumblers, pouches, apparel</div>
+        <div class="tl-item"><strong>Poolside Princess summer drop</strong> — timed for season, limited run</div>
+        <div class="tl-item"><strong>Pinterest strategy</strong> — connected to Etsy, evergreen organic traffic</div>
+        <div class="tl-item"><strong>Zapier automations live</strong> — buyers auto-added to email, auto-posting to social</div>
+        <div class="tl-item"><strong>Expand Healing Adjacent</strong> — mugs, shirts, full journal line</div>
+      </div>
+      <div class="tl-status"><span class="sp sp-soon">Up Next</span></div>
+    </div>
+    <div class="timeline-row">
+      <div><div class="tl-phase">Phase 3</div><div class="tl-time">Months 6–12</div></div>
+      <div class="tl-items">
+        <div class="tl-item"><strong>Shopify storefront</strong> — own domain, full brand home, once Etsy is proven</div>
+        <div class="tl-item"><strong>Loungewear + apparel line</strong> — after audience is built and copy is proven</div>
+        <div class="tl-item"><strong>Subscription box exploration</strong> — Soft Life quarterly, funded by existing revenue</div>
+        <div class="tl-item"><strong>Brand partnerships + wholesale</strong> — boutiques, wellness brands</div>
+      </div>
+      <div class="tl-status"><span class="sp sp-future">Future</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI OPS -->
+<section class="section" id="ai-ops">
+  <div class="section-eyebrow">AI Operations</div>
+  <h2 class="section-title">How AI runs this business.</h2>
+  <p class="section-body">Built AI-first from day one. The full Claude suite — this conversation, Cowork, Computer Use, Dispatch, Claude Code — covers everything from content creation to autonomous desktop tasks. These tools are live and available now at $20/mo on Claude Pro.</p>
+  <div class="ai-grid">
+    <div class="ai-card featured">
+      <div class="ai-inner">
+        <div>
+          <div class="ai-card-top"><div class="ai-card-name">Claude — This Conversation</div><span class="ai-badge ab-live">Live Now</span></div>
+          <div class="ai-desc">Your primary AI business partner. Writes everything, builds everything, strategizes everything. Already producing real deliverables across all product lines — copy, digital products, social content, email sequences, brand strategy, and this document.</div>
+        </div>
+        <div class="ai-uses">
+          <div class="ai-use">All product copy, Etsy listings, email sequences</div>
+          <div class="ai-use">Full digital products — journals, workbooks, affirmation decks</div>
+          <div class="ai-use">30-day social content calendars in one session</div>
+          <div class="ai-use">Brand strategy, launch sequencing, business decisions</div>
+          <div class="ai-use">Every tagline, every product name, every piece of copy in this brand</div>
+        </div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-card-name">Claude Cowork + Computer Use</div><span class="ai-badge ab-new">Research Preview · Mac + Windows · March 2026</span></div>
+      <div class="ai-desc">Claude can open apps on your computer, click, scroll, type, and complete multi-step desktop tasks autonomously — while you do something else. Available through Claude Desktop on Pro and Max plans ($20/mo+). Claude Desktop must remain open while tasks run.</div>
+      <div class="ai-uses">
+        <div class="ai-use">Open Canva and execute design tasks without you present</div>
+        <div class="ai-use">Navigate Printify and complete product setup forms autonomously</div>
+        <div class="ai-use">Update Etsy listings, fill spreadsheets, manage multi-step workflows</div>
+        <div class="ai-use">Schedule recurring tasks — weekly shop audits, content creation on cadence</div>
+        <div class="ai-use">Sub-agent coordination for complex parallel workstreams</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-card-name">Dispatch — Phone to Desktop</div><span class="ai-badge ab-new">Live · Pro + Max · March 2026</span></div>
+      <div class="ai-desc">Text Claude a task from your phone. Come back to find it done on your computer. Dispatch creates one continuous conversation across your phone and desktop — seamless handoff, no new session. The phone-dings-while-you're-floating workflow, made real. Requires Claude Desktop + Claude mobile app.</div>
+      <div class="ai-uses">
+        <div class="ai-use">Text a task poolside → finished work when you return to your desk</div>
+        <div class="ai-use">Trigger Cowork agents remotely from anywhere</div>
+        <div class="ai-use">Run content, listings, and email workflows away from your desk</div>
+        <div class="ai-use">Context, history, and task carry across devices seamlessly</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-card-name">Zapier + Claude Integration</div><span class="ai-badge ab-live">Live · Free Tier Available</span></div>
+      <div class="ai-desc">Claude is natively built into Zapier's AI workflows. Describe an automation in plain English — Zapier builds it. Claude acts as the reasoning brain inside automations, handling anything that requires judgment or writing.</div>
+      <div class="ai-uses">
+        <div class="ai-use">Auto-add every Etsy buyer to MailerLite email list</div>
+        <div class="ai-use">Auto-post new Etsy products to Pinterest + Instagram</div>
+        <div class="ai-use">Auto-reply to customer messages with context</div>
+        <div class="ai-use">Instant sales notifications to your phone</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-card-name">Later + Outfy — Social Autopilot</div><span class="ai-badge ab-live">Live · Free Tiers Available</span></div>
+      <div class="ai-desc">Claude writes all captions and content strategy in one session. Later or Outfy posts automatically at optimal times. Outfy auto-generates product posts directly from your Etsy catalog — zero additional work after setup.</div>
+      <div class="ai-uses">
+        <div class="ai-use">Write 30 days of captions with Claude in one session</div>
+        <div class="ai-use">Auto-schedule across Instagram, TikTok, and Pinterest</div>
+        <div class="ai-use">Outfy auto-creates product posts from Etsy catalog</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-card-name">Claude Code — Phase 3 Build</div><span class="ai-badge ab-soon">Phase 3</span></div>
+      <div class="ai-desc">When it's time to build Tendly (Phase 3 of Soft Life Ventures), Claude Code handles the full app architecture, codebase, testing, and iteration. Background agents and remote control now live as of Q1 2026 — no full dev team required to reach a working prototype.</div>
+      <div class="ai-uses">
+        <div class="ai-use">Write the Tendly app from the spec document</div>
+        <div class="ai-use">Background agents handle testing + iteration autonomously</div>
+        <div class="ai-use">Remote control and scheduled agents — runs while you sleep</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE -->
+<section class="section" id="revenue">
+  <div class="section-eyebrow">Revenue Model</div>
+  <h2 class="section-title">The numbers, clearly.</h2>
+  <table class="data-table">
+    <thead><tr><th>Product</th><th>Platform</th><th>Cost</th><th>Price</th><th>Margin</th></tr></thead>
+    <tbody>
+      <tr><td>Digital journal / workbook</td><td>Payhip + Etsy</td><td>$0 after creation</td><td>$22–$27</td><td class="margin">~95%</td></tr>
+      <tr><td>Wallpaper packs</td><td>Payhip + Etsy</td><td>$0 after creation</td><td>$4–$12</td><td class="margin">~95%</td></tr>
+      <tr><td>Print-on-demand totes</td><td>Printify → Etsy</td><td>$8–$15</td><td>$28–$45</td><td class="margin">40–60%</td></tr>
+      <tr><td>Apparel</td><td>Printify → Etsy</td><td>$15–$25</td><td>$38–$68</td><td class="margin">40–55%</td></tr>
+      <tr><td>Stickers / keychains</td><td>Printify → Etsy</td><td>$3–$6</td><td>$8–$18</td><td class="margin">45–60%</td></tr>
+      <tr><td>Poolside accessories</td><td>Printify → Etsy</td><td>$10–$25</td><td>$28–$65</td><td class="margin">45–65%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--ink-soft);margin-top:1rem;line-height:1.7;">Platform fees: Etsy $0.20/listing + 6.5% per sale · Payhip free plan + 5% per sale · MailerLite free up to 1,000 subscribers · Canva free · Printify free plan</p>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section" id="deliverables">
+  <div class="section-eyebrow">Deliverables Tracker</div>
+  <h2 class="section-title">What's built. What's next.</h2>
+  <p class="section-body">Everything created across all sessions — ownership and status. The single source of truth for where we are and where we're going next.</p>
+  <div class="deliv-table">
+    <div class="deliv-head"><div>Deliverable</div><div class="deliv-owner">Owner</div><div>Status</div></div>
+    <div class="deliv-row"><div class="deliv-name">Brand vision, voice, aesthetic brief, who she is</div><div class="deliv-owner">Claude + You</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Brand story — full version + packaging short version</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Master tagline + copy reference (all lines)</div><div class="deliv-owner">Claude + You</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Full product line strategy — all 6 lines with copy + pricing</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Soft Life Reset — 30-day framework + 4-week structure</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Healing Adjacent — full copy bank + sub-line voice rules</div><div class="deliv-owner">Claude + You</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Soul Collection + Fireborn Trilogy — creative vault document</div><div class="deliv-owner">You (born) · Claude (held)</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Brand Hub HTML page (this document)</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-done">Done</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Business setup — Gmail, banking, Etsy, Printify, Payhip, Canva</div><div class="deliv-owner">You (action needed)</div><div class="deliv-status"><span class="ds ds-wip">In Progress</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Emotional Baggage — Etsy product listings (tote, pouch, keychain)</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-next">Up Next</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Soft Life Reset — full Week 1 prompts (Days 1–7)</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-next">Up Next</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Wallpaper pack — 6-design brief for Canva + Payhip listing</div><div class="deliv-owner">Claude + You</div><div class="deliv-status"><span class="ds ds-next">Up Next</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Healing Adjacent sticker sheet — print-ready + Etsy listing</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-next">Up Next</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">5-email welcome sequence for MailerLite</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-later">Queued</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">30-day Instagram + TikTok content calendar</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-later">Queued</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Zapier automation plan + setup guide</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-later">Queued</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Poolside Princess — product line launch brief + Printify setup</div><div class="deliv-owner">Claude</div><div class="deliv-status"><span class="ds ds-later">Phase 2</span></div></div>
+    <div class="deliv-row"><div class="deliv-name">Shopify storefront setup guide</div><div class="deliv-owner">Claude + You</div><div class="deliv-status"><span class="ds ds-later">Phase 3</span></div></div>
+  </div>
+</section>
+
+<!-- NORTH STAR -->
+<div class="north-star">
+  <div class="north-star-q">"She is not post-healing. She is healing — messily, imperfectly, sometimes ragefully — and she is doing it with style. Every product here is for the woman still in it. The one choosing softness not because life got easy, but as an act of defiance while it hasn't."</div>
+  <p>That's the north star. Every listing, every prompt, every wallpaper, every cheeky tote — it all asks the same question and answers it the same way: <em>I see you. You are not alone. And you can do this in style.</em></p>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">Soft Life Supply Co.™</div>
+  <div>A Soft Life Ventures™ brand · Internal document · Built with Claude · April 2026</div>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

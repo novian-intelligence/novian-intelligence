@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassandra OS · Desktop</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6ee;
+  --surface: #ffffff;
+  --surface2: #f3ede0;
+  --surface3: #ede5d3;
+  --border: #e4dac4;
+  --border2: #d4c8ac;
+  --gold: #9a7820;
+  --gold2: #b89230;
+  --gold-dim: #c8a45a;
+  --gold-bg: rgba(154,120,32,0.07);
+  --text: #1a1610;
+  --text2: #3a3328;
+  --muted: #6b6356;
+  --muted2: #948977;
+  --green: #5a7d3a;
+  --red: #a83838;
+  --amber: #b07030;
+  --blue: #3868a8;
+  --purple: #6858a0;
+  --rose: #964060;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+.icon { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* TOPBAR */
+.topbar {
+  height: 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.tb-logo { display: flex; align-items: center; gap: 8px; }
+.tb-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+.tb-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; letter-spacing: .04em; color: var(--gold); }
+.tb-badge { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; padding: 2px 8px; border: 1px solid var(--border); border-radius: 3px; color: var(--muted2); }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.tb-inbox-badge { background: rgba(168,56,56,.08); border: 1px solid rgba(168,56,56,.25); border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .1em; padding: 3px 8px; color: var(--red); }
+.tb-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); }
+.tb-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gold-bg); border: 1px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); }
+
+/* LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 232px;
+  height: calc(100vh - 48px);
+  margin-top: 48px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  overflow-y: auto;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.sb-section { padding: 0 12px; margin-bottom: 24px; }
+.sb-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted2); padding: 0 6px; margin-bottom: 6px; }
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s;
+  font-size: 12.5px;
+  color: var(--text2);
+}
+.sb-item:hover { background: var(--surface2); }
+.sb-item.active { background: var(--gold-bg); color: var(--gold); }
+.sb-item .icon { font-size: 15px; color: var(--muted); }
+.sb-item.active .icon { color: var(--gold); }
+.sb-count { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 9px; padding: 1px 6px; background: var(--surface3); border-radius: 4px; color: var(--muted); }
+.sb-count.hot { background: rgba(168,56,56,.12); color: var(--red); }
+
+/* MAIN */
+.main { padding: 26px 28px; overflow-y: auto; }
+.main::-webkit-scrollbar { width: 4px; }
+.main::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.main-greeting { margin-bottom: 22px; }
+.greeting-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--text); }
+.greeting-context { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .04em; color: var(--muted); margin-top: 4px; }
+
+.pulse-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 24px; }
+.pulse-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .2s, transform .2s;
+}
+.pulse-card:hover { border-color: var(--border2); }
+.pulse-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.pulse-num { font-size: 26px; font-weight: 500; line-height: 1; margin-bottom: 5px; color: var(--text); font-family: 'Cormorant Garamond', serif; }
+.pulse-num.warn { color: var(--red); }
+.pulse-num.ok { color: var(--green); }
+.pulse-sub { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.section-head-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.section-head-link { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); cursor: pointer; }
+.section-head-link:hover { color: var(--text); }
+
+.inbox-list { margin-bottom: 24px; display: flex; flex-direction: column; gap: 7px; }
+.inbox-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.inbox-item:hover { border-color: var(--border2); }
+.ii-icon-wrap { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ii-icon-wrap .icon { font-size: 15px; }
+.ii-body { flex: 1; min-width: 0; }
+.ii-title { font-size: 12.5px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.ii-meta { font-size: 10.5px; color: var(--muted); }
+.ii-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.ii-btn { font-family: 'DM Mono', monospace; font-size: 9px; padding: 4px 10px; border-radius: 5px; border: 1px solid var(--border2); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
+.ii-btn:hover { color: var(--text); border-color: var(--muted2); }
+.ii-btn.route { border-color: rgba(104,88,160,.3); background: rgba(104,88,160,.06); color: var(--purple); }
+
+.hub-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.hub-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.hub-card:hover { border-color: var(--border2); }
+.hub-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.hub-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.hub-dot { width: 8px; height: 8px; border-radius: 50%; }
+.hub-preview { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+.hub-meta { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted2); }
+
+/* RIGHT RAIL */
+.rail {
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  padding: 22px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.rail::-webkit-scrollbar { width: 4px; }
+.rail::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.quick-capture {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-dim);
+  border-radius: 8px;
+  padding: 11px 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: opacity .15s;
+}
+.quick-capture:hover { opacity: .8; }
+.quick-capture .icon { font-size: 14px; color: var(--gold); }
+.qc-text { font-size: 12px; color: var(--text2); flex: 1; }
+.qc-shortcut { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); padding: 2px 6px; background: var(--surface); border: 1px solid var(--gold-dim); border-radius: 4px; }
+
+.rail-block { }
+.rail-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rail-link { font-size: 9px; color: var(--blue); cursor: pointer; text-transform: none; letter-spacing: 0; }
+
+.hb-item { display: flex; align-items: flex-start; gap: 9px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.hb-item:last-child { border-bottom: none; }
+.hb-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.hb-body { flex: 1; min-width: 0; }
+.hb-name { font-size: 11.5px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+.hb-meta { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+.hb-action { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--blue); flex-shrink: 0; cursor: pointer; }
+
+.today-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 11.5px; color: var(--text2); }
+.today-item:last-child { border-bottom: none; }
+.today-time { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); min-width: 38px; }
+
+.next-gig { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 13px; }
+.ng-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.ng-meta { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.ng-link { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--blue); cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- ICON LIBRARY (defs only, never rendered) -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12L12 4L21 12V20H14V14H10V20H3V12Z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13H8L10 16H14L16 13H20M4 13L6 5H18L20 13M4 13V19H20V13"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3L14.5 9.5L21 10.5L16 15.5L17.5 22L12 18.5L6.5 22L8 15.5L3 10.5L9.5 9.5L12 3Z"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5L21 3V16M9 18C9 19.66 7.66 21 6 21C4.34 21 3 19.66 3 18C3 16.34 4.34 15 6 15C7.66 15 9 16.34 9 18ZM21 16C21 17.66 19.66 19 18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16Z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3V8M12 16V21M3 12H8M16 12H21M5.6 5.6L9 9M15 15L18.4 18.4M5.6 18.4L9 15M15 9L18.4 5.6"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><path d="M3 7L5 4H19L21 7M3 7V19H21V7M3 7H21M9 12H15"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20V18C3 15.79 4.79 14 7 14H11C13.21 14 15 15.79 15 18V20"/><path d="M16 4C17.66 4 19 5.34 19 7C19 8.66 17.66 10 16 10"/><path d="M21 20V18C21 16.27 19.91 14.79 18.36 14.21"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21H21M5 21V13M10 21V8M15 21V11M20 21V5"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 9 12 4 20 4C20 12 16 19 5 19Z"/><path d="M5 19L13 11"/></symbol>
+    <symbol id="i-honeycomb" viewBox="0 0 24 24"><path d="M12 3L19 7V15L12 19L5 15V7L12 3Z"/><path d="M9 11L12 9L15 11V14L12 16L9 14Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4H10C11.66 4 13 5.34 13 7V21C13 19.34 11.66 18 10 18H4V4Z"/><path d="M20 4H14C12.34 4 11 5.34 11 7V21C11 19.34 12.34 18 14 18H20V4Z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11V12C5 15.87 8.13 19 12 19C15.87 19 19 15.87 19 12V11"/><path d="M12 19V22"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13C11.66 13 13 11.66 13 10C13 8.34 14.34 7 16 7H18C19.66 7 21 8.34 21 10V14C21 15.66 19.66 17 18 17H16"/><path d="M14 11C12.34 11 11 12.34 11 14C11 15.66 9.66 17 8 17H6C4.34 17 3 15.66 3 14V10C3 8.34 4.34 7 6 7H8"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12H19M13 6L19 12L13 18"/></symbol>
+  </defs>
+</svg>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="tb-logo">
+      <div class="tb-dot"></div>
+      <div class="tb-name">Cassandra OS</div>
+    </div>
+    <div class="tb-badge">os.soundsbycassandra.com</div>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-inbox-badge">3 new in inbox</span>
+    <span class="tb-time">Sunday · 9:14 AM</span>
+    <div class="tb-avatar">CS</div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <div class="sb-item active"><svg class="icon"><use href="#i-home"/></svg>Home</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-inbox"/></svg>Inbox<span class="sb-count hot">3</span></div>
+      <div class="sb-item"><svg class="icon"><use href="#i-star"/></svg>North Star</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Hubs</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-music"/></svg>Active Projects<span class="sb-count">7</span></div>
+      <div class="sb-item"><svg class="icon"><use href="#i-spark"/></svg>Idea Capture<span class="sb-count hot">3</span></div>
+      <div class="sb-item"><svg class="icon"><use href="#i-archive"/></svg>PR & Media</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-people"/></svg>Team</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-chart"/></svg>Finance</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-leaf"/></svg>Life & Wellness</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Connected</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-honeycomb"/></svg>HoneyBook ↗</div>
+      <div class="sb-item"><svg class="icon"><use href="#i-book"/></svg>QuickBooks ↗</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="main-greeting">
+      <div class="greeting-name">Good morning, Cassie.</div>
+      <div class="greeting-context">3 inbox items waiting · 1 contract unsigned · next gig in 12 days</div>
+    </div>
+
+    <div class="pulse-row">
+      <div class="pulse-card">
+        <div class="pulse-label">Leads waiting</div>
+        <div class="pulse-num warn">4</div>
+        <div class="pulse-sub">Longest: 3 days · Open in HoneyBook ↗</div>
+      </div>
+      <div class="pulse-card">
+        <div class="pulse-label">Contracts out</div>
+        <div class="pulse-num warn">1</div>
+        <div class="pulse-sub">Unsigned · Follow up ↗</div>
+      </div>
+      <div class="pulse-card">
+        <div class="pulse-label">Invoices overdue</div>
+        <div class="pulse-num warn">2</div>
+        <div class="pulse-sub">$4,200 outstanding ↗</div>
+      </div>
+      <div class="pulse-card">
+        <div class="pulse-label">Month revenue</div>
+        <div class="pulse-num ok">$18.4K</div>
+        <div class="pulse-sub">vs $22K target · QBO ↗</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span class="section-head-label">Inbox — New Captures</span>
+      <span class="section-head-link">See all ↗</span>
+    </div>
+    <div class="inbox-list">
+      <div class="inbox-item">
+        <div class="ii-icon-wrap" style="background:rgba(154,120,32,.1);color:var(--gold);">
+          <svg class="icon"><use href="#i-music"/></svg>
+        </div>
+        <div class="ii-body">
+          <div class="ii-title">Album title idea — "Manzanar"</div>
+          <div class="ii-meta">Voice · 2m ago · AI: Album project · High priority</div>
+        </div>
+        <div class="ii-actions">
+          <button class="ii-btn route">Route</button>
+          <button class="ii-btn">Snooze</button>
+          <button class="ii-btn">Kill</button>
+        </div>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-icon-wrap" style="background:rgba(104,88,160,.1);color:var(--purple);">
+          <svg class="icon"><use href="#i-mic"/></svg>
+        </div>
+        <div class="ii-body">
+          <div class="ii-title">Podcast guest — Dr. Kim (biomedical)</div>
+          <div class="ii-meta">Typed · 1h ago · AI: Podcast project · Medium</div>
+        </div>
+        <div class="ii-actions">
+          <button class="ii-btn route">Route</button>
+          <button class="ii-btn">Snooze</button>
+          <button class="ii-btn">Kill</button>
+        </div>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-icon-wrap" style="background:rgba(56,104,168,.1);color:var(--blue);">
+          <svg class="icon"><use href="#i-link"/></svg>
+        </div>
+        <div class="ii-body">
+          <div class="ii-title">Website inspo — Maggie Rogers dot com</div>
+          <div class="ii-meta">Link saved · 3h ago · AI: Website rebuild · Medium</div>
+        </div>
+        <div class="ii-actions">
+          <button class="ii-btn route">Route</button>
+          <button class="ii-btn">Snooze</button>
+          <button class="ii-btn">Kill</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span class="section-head-label">Hubs at a Glance</span>
+    </div>
+    <div class="hub-grid">
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">Active Projects</div><div class="hub-dot" style="background:var(--purple);"></div></div>
+        <div class="hub-preview">Album: mixing · Podcast: concept · Camp: planning</div>
+        <div class="hub-meta">7 projects · 2 need attention</div>
+      </div>
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">PR & Media</div><div class="hub-dot" style="background:var(--amber);"></div></div>
+        <div class="hub-preview">AMA win archived · 3 unposted ACL photos · Bio current</div>
+        <div class="hub-meta">Last updated 2 days ago</div>
+      </div>
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">Finance</div><div class="hub-dot" style="background:var(--green);"></div></div>
+        <div class="hub-preview">$18.4K this month · $4.2K overdue · QBO synced</div>
+        <div class="hub-meta">Monday dashboard · reviewed 5d ago</div>
+      </div>
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">Team</div><div class="hub-dot" style="background:var(--blue);"></div></div>
+        <div class="hub-preview">14 of 20 roster slots filled · 2 pending 1099s</div>
+        <div class="hub-meta">3 contractors added this month</div>
+      </div>
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">Idea Capture</div><div class="hub-dot" style="background:#3a7858;"></div></div>
+        <div class="hub-preview">3 new this week · 12 unreviewed · 0 stale tabs</div>
+        <div class="hub-meta">Last capture: 2 minutes ago</div>
+      </div>
+      <div class="hub-card">
+        <div class="hub-top"><div class="hub-name">Life & Wellness</div><div class="hub-dot" style="background:var(--rose);"></div></div>
+        <div class="hub-preview">Next trip: Santa Fe in 18 days · Morning ritual: active</div>
+        <div class="hub-meta">Naya walk: logged today ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail">
+    <div class="quick-capture">
+      <svg class="icon"><use href="#i-plus"/></svg>
+      <span class="qc-text">Quick capture...</span>
+      <span class="qc-shortcut">⌘K</span>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-label">HoneyBook Pulse <span class="rail-link">Open HB ↗</span></div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--red);"></div>
+        <div class="hb-body">
+          <div class="hb-name">F1 Austin — Corporate</div>
+          <div class="hb-meta">No response · 3 days</div>
+        </div>
+        <div class="hb-action">Reply ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--red);"></div>
+        <div class="hb-body">
+          <div class="hb-name">Sarah & James Wedding</div>
+          <div class="hb-meta">Contract unsigned · 5d</div>
+        </div>
+        <div class="hb-action">Nudge ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--amber);"></div>
+        <div class="hb-body">
+          <div class="hb-name">Dell Technologies</div>
+          <div class="hb-meta">Invoice $2,100 · 8d late</div>
+        </div>
+        <div class="hb-action">Chase ↗</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-dot" style="background:var(--green);"></div>
+        <div class="hb-body">
+          <div class="hb-name">W Austin Residency</div>
+          <div class="hb-meta">Active · next set Apr 18</div>
+        </div>
+        <div class="hb-action">View ↗</div>
+      </div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-label">Today</div>
+      <div class="today-item"><span class="today-time">9 AM</span>Creative block — album edits</div>
+      <div class="today-item"><span class="today-time">12 PM</span>Naya walk + lunch</div>
+      <div class="today-item"><span class="today-time">2 PM</span>Business admin block</div>
+      <div class="today-item"><span class="today-time">4 PM</span>HoneyBook follow-ups</div>
+      <div class="today-item"><span class="today-time" style="color:var(--muted2);">Free</span><span style="color:var(--muted2);">No evening gig tonight</span></div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-label">Next Gig</div>
+      <div class="next-gig">
+        <div class="ng-name">W Austin — Saturday night</div>
+        <div class="ng-meta">Apr 18 · 12 days away · Confirmed</div>
+        <div class="ng-link">View in HoneyBook ↗</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

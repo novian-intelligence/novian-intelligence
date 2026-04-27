@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hivelocity Intelligence Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2330;
+    --accent: #f97316;
+    --accent2: #3b82f6;
+    --accent3: #22c55e;
+    --neg: #ef4444;
+    --pos: #22c55e;
+    --neu: #94a3b8;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .logo-text {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-item:hover { color: var(--text); background: var(--surface2); }
+  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(249,115,22,0.07); }
+  .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+
+  .nav-section {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    padding: 16px 20px 6px;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .pulse-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pos);
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  .status-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--pos);
+    letter-spacing: 0.08em;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .topbar-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .topbar-title span { color: var(--accent); }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .filter-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-chip.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(249,115,22,0.08);
+  }
+
+  .last-sync {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* CONTENT GRID */
+  .content {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    overflow-y: auto;
+  }
+
+  /* STAT CARDS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .stat-card.orange::after { background: var(--accent); }
+  .stat-card.blue::after { background: var(--accent2); }
+  .stat-card.red::after { background: var(--neg); }
+  .stat-card.green::after { background: var(--pos); }
+  .stat-card.gray::after { background: var(--muted); }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .stat-delta {
+    font-family: var(--mono);
+    font-size: 10px;
+    margin-top: 5px;
+    color: var(--muted);
+  }
+
+  .stat-delta.up { color: var(--pos); }
+  .stat-delta.down { color: var(--neg); }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
+  /* THREE COLUMN */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 22px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .card-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .card-body { padding: 16px 18px; }
+
+  /* MENTION FEED */
+  .mention {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mention:last-child { border-bottom: none; padding-bottom: 0; }
+  .mention:first-child { padding-top: 0; }
+
+  .mention-sentiment {
+    width: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+
+  .mention-sentiment.neg { background: var(--neg); }
+  .mention-sentiment.pos { background: var(--pos); }
+  .mention-sentiment.neu { background: var(--muted); }
+
+  .mention-content { flex: 1; min-width: 0; }
+
+  .mention-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .mention-source {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .source-reddit { background: rgba(255,69,0,0.15); color: #ff6b35; }
+  .source-wht { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .source-trustpilot { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .source-g2 { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+  .mention-author {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .mention-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  .mention-text {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  .mention-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* PAIN POINT BAR CHART */
+  .pain-points { display: flex; flex-direction: column; gap: 10px; }
+
+  .pain-row { display: flex; flex-direction: column; gap: 4px; }
+
+  .pain-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .pain-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .pain-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .pain-bar-bg {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .pain-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  .pain-bar-fill.b { background: var(--accent2); }
+  .pain-bar-fill.c { background: var(--neg); }
+  .pain-bar-fill.d { background: #a855f7; }
+  .pain-bar-fill.e { background: var(--neu); }
+
+  /* AI DIGEST */
+  .digest-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .digest-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .digest-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  /* VIDEO IDEAS */
+  .video-idea {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .video-idea:last-child { border-bottom: none; padding-bottom: 0; }
+  .video-idea:first-child { padding-top: 0; }
+
+  .video-thumb {
+    width: 52px;
+    height: 36px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .video-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .video-meta {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .video-type {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  .type-trust { background: rgba(249,115,22,0.15); color: var(--accent); }
+  .type-tech { background: rgba(59,130,246,0.15); color: var(--accent2); }
+  .type-product { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+  .video-priority {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+  }
+
+  /* SENTIMENT DONUT (CSS only) */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 8px 0;
+  }
+
+  .donut {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--neg) 0% 38%,
+      var(--pos) 38% 72%,
+      var(--muted) 72% 100%
+    );
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .donut::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--surface);
+  }
+
+  .donut-legend { display: flex; flex-direction: column; gap: 7px; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    margin-left: auto;
+    color: var(--muted);
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* TREND SPARKLINE */
+  .sparkline-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 36px;
+  }
+
+  .spark-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .spark-bar.hi { opacity: 1; }
+  .spark-bar.neg { background: var(--neg); opacity: 0.7; }
+  .spark-bar.neg.hi { opacity: 1; }
+
+  /* SCRIPT STATUS */
+  .script-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .script-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .script-row:first-child { padding-top: 0; }
+
+  .script-status {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-done { background: var(--pos); }
+  .status-wip { background: var(--accent); animation: pulse 2s infinite; }
+  .status-queued { background: var(--muted); }
+
+  .script-title {
+    font-size: 12px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .script-type {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-text">⚡ HV Intel</div>
+      <div class="logo-sub">CUSTOMER INTELLIGENCE v1.0</div>
+    </div>
+
+    <div class="nav-section">Monitor</div>
+    <div class="nav-item active"><span class="nav-icon">◉</span> Live Feed</div>
+    <div class="nav-item"><span class="nav-icon">◈</span> Mentions</div>
+    <div class="nav-item"><span class="nav-icon">◇</span> Trends</div>
+
+    <div class="nav-section">Insights</div>
+    <div class="nav-item"><span class="nav-icon">▲</span> Pain Points</div>
+    <div class="nav-item"><span class="nav-icon">◆</span> AI Digest</div>
+    <div class="nav-item"><span class="nav-icon">⊕</span> Sentiment</div>
+
+    <div class="nav-section">Pipeline</div>
+    <div class="nav-item"><span class="nav-icon">▶</span> Video Ideas</div>
+    <div class="nav-item"><span class="nav-icon">≡</span> Scripts</div>
+    <div class="nav-item"><span class="nav-icon">↗</span> Publish</div>
+
+    <div class="sidebar-footer">
+      <div><span class="pulse-dot"></span><span class="status-text">SCRAPER ACTIVE</span></div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:4px;letter-spacing:0.05em;">Next run: 11:00 PM</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title">Live <span>Intelligence</span> Feed</div>
+      <div class="topbar-right">
+        <div class="filter-chip active">All Sources</div>
+        <div class="filter-chip">Reddit</div>
+        <div class="filter-chip">WHT</div>
+        <div class="filter-chip">Reviews</div>
+        <div class="filter-chip">🔴 Negative</div>
+        <div class="last-sync">↻ synced 4 min ago</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-card orange">
+          <div class="stat-label">Total Mentions</div>
+          <div class="stat-value">847</div>
+          <div class="stat-delta up">↑ +23 this week</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-label">Negative</div>
+          <div class="stat-value" style="color:var(--neg)">318</div>
+          <div class="stat-delta down">38% of total</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-label">Positive</div>
+          <div class="stat-value" style="color:var(--pos)">289</div>
+          <div class="stat-delta up">34% of total</div>
+        </div>
+        <div class="stat-card gray">
+          <div class="stat-label">Neutral</div>
+          <div class="stat-value" style="color:var(--muted)">240</div>
+          <div class="stat-delta">28% of total</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Avg Sentiment</div>
+          <div class="stat-value" style="color:var(--accent2)">–0.2</div>
+          <div class="stat-delta up">↑ improving</div>
+        </div>
+      </div>
+
+      <!-- ROW 2: FEED + PAIN POINTS + SENTIMENT -->
+      <div class="three-col">
+
+        <!-- MENTION FEED -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Mentions</div>
+            <div class="card-badge">Live</div>
+          </div>
+          <div class="card-body" style="padding:0 18px;">
+
+            <div class="mention">
+              <div class="mention-sentiment neg"></div>
+              <div class="mention-content">
+                <div class="mention-meta">
+                  <span class="mention-source source-reddit">reddit</span>
+                  <span class="mention-author">u/netops_pete</span>
+                  <span class="mention-time">2h ago</span>
+                </div>
+                <div class="mention-text">"Hivelocity support took 4 days to respond to a critical ticket. Completely unacceptable for production infra."</div>
+                <span class="mention-tag">Support Response Time</span>
+              </div>
+            </div>
+
+            <div class="mention">
+              <div class="mention-sentiment pos"></div>
+              <div class="mention-content">
+                <div class="mention-meta">
+                  <span class="mention-source source-trustpilot">trustpilot</span>
+                  <span class="mention-author">reviewed</span>
+                  <span class="mention-time">5h ago</span>
+                </div>
+                <div class="mention-text">"Best price-to-performance for bare metal I've found. Network has been rock solid for 2 years."</div>
+                <span class="mention-tag">Price / Performance</span>
+              </div>
+            </div>
+
+            <div class="mention">
+              <div class="mention-sentiment neg"></div>
+              <div class="mention-content">
+                <div class="mention-meta">
+                  <span class="mention-source source-wht">WHT</span>
+                  <span class="mention-author">sysadmin_forum</span>
+                  <span class="mention-time">8h ago</span>
+                </div>
+                <div class="mention-text">"Their control panel is so outdated. Managing IPs and rDNS is painful compared to competitors."</div>
+                <span class="mention-tag">Control Panel / UX</span>
+              </div>
+            </div>
+
+            <div class="mention">
+              <div class="mention-sentiment neg"></div>
+              <div class="mention-content">
+                <div class="mention-meta">
+                  <span class="mention-source source-reddit">reddit</span>
+                  <span class="mention-author">u/cloudmigrant99</span>
+                  <span class="mention-time">12h ago</span>
+                </div>
+                <div class="mention-text">"Wish Hivelocity had better documentation on their network topology. Hard to plan around it."</div>
+                <span class="mention-tag">Documentation</span>
+              </div>
+            </div>
+
+            <div class="mention">
+              <div class="mention-sentiment pos"></div>
+              <div class="mention-content">
+                <div class="mention-meta">
+                  <span class="mention-source source-g2">G2</span>
+                  <span class="mention-author">verified user</span>
+                  <span class="mention-time">1d ago</span>
+                </div>
+                <div class="mention-text">"Provisioning is fast. Had our server racked and online in under 2 hours. That's impressive."</div>
+                <span class="mention-tag">Provisioning Speed</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PAIN POINTS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top Pain Points</div>
+            <div class="card-badge">Last 30d</div>
+          </div>
+          <div class="card-body">
+            <div class="pain-points">
+              <div class="pain-row">
+                <div class="pain-label-row">
+                  <span class="pain-label">Support Response Time</span>
+                  <span class="pain-count">142 mentions</span>
+                </div>
+                <div class="pain-bar-bg"><div class="pain-bar-fill" style="width:92%"></div></div>
+              </div>
+              <div class="pain-row">
+                <div class="pain-label-row">
+                  <span class="pain-label">Control Panel / UX</span>
+                  <span class="pain-count">98 mentions</span>
+                </div>
+                <div class="pain-bar-bg"><div class="pain-bar-fill b" style="width:63%"></div></div>
+              </div>
+              <div class="pain-row">
+                <div class="pain-label-row">
+                  <span class="pain-label">Network Instability</span>
+                  <span class="pain-count">76 mentions</span>
+                </div>
+                <div class="pain-bar-bg"><div class="pain-bar-fill c" style="width:49%"></div></div>
+              </div>
+              <div class="pain-row">
+                <div class="pain-label-row">
+                  <span class="pain-label">Documentation Gaps</span>
+                  <span class="pain-count">61 mentions</span>
+                </div>
+                <div class="pain-bar-bg"><div class="pain-bar-fill d" style="width:39%"></div></div>
+              </div>
+              <div class="pain-row">
+                <div class="pain-label-row">
+                  <span class="pain-label">Billing / IP Pricing</span>
+                  <span class="pain-count">44 mentions</span>
+                </div>
+                <div class="pain-bar-bg"><div class="pain-bar-fill e" style="width:28%"></div></div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+              <div class="card-title" style="margin-bottom:12px;font-size:11px;">Weekly Mention Volume</div>
+              <div class="sparkline-row">
+                <div class="spark-bar" style="height:40%"></div>
+                <div class="spark-bar" style="height:55%"></div>
+                <div class="spark-bar" style="height:35%"></div>
+                <div class="spark-bar" style="height:70%"></div>
+                <div class="spark-bar" style="height:50%"></div>
+                <div class="spark-bar" style="height:65%"></div>
+                <div class="spark-bar hi" style="height:90%"></div>
+                <div class="spark-bar neg" style="height:60%"></div>
+                <div class="spark-bar neg" style="height:75%"></div>
+                <div class="spark-bar neg hi" style="height:85%"></div>
+                <div class="spark-bar" style="height:45%"></div>
+                <div class="spark-bar" style="height:55%"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:4px;font-family:var(--mono);font-size:9px;color:var(--muted);">
+                <span>Mar 1</span><span>Mar 15</span><span>Apr 1</span><span>Today</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SENTIMENT + AI DIGEST -->
+        <div style="display:flex;flex-direction:column;gap:22px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Sentiment Split</div>
+              <div class="card-badge">All Sources</div>
+            </div>
+            <div class="card-body">
+              <div class="donut-wrap">
+                <div class="donut"></div>
+                <div class="donut-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--neg)"></div>
+                    <span style="font-size:12px">Negative</span>
+                    <span class="legend-pct">38%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--pos)"></div>
+                    <span style="font-size:12px">Positive</span>
+                    <span class="legend-pct">34%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--muted)"></div>
+                    <span style="font-size:12px">Neutral</span>
+                    <span class="legend-pct">28%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="flex:1">
+            <div class="card-header">
+              <div class="card-title">AI Weekly Digest</div>
+              <div class="card-badge" style="color:var(--accent);border-color:var(--accent)">GPT Summary</div>
+            </div>
+            <div class="card-body" style="padding-top:14px;">
+              <div class="digest-block">
+                <div class="digest-label">🔴 Top Issue</div>
+                <div class="digest-text">Support response time dominates negative mentions (142). Users expect sub-4hr replies for infra issues. This is a trust-killer for enterprise prospects.</div>
+              </div>
+              <div class="digest-block" style="border-left-color:var(--pos)">
+                <div class="digest-label" style="color:var(--pos)">🟢 Bright Spot</div>
+                <div class="digest-text">Hardware quality and provisioning speed earn consistent praise. Strong differentiator vs. cloud — worth amplifying in content.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ROW 3: VIDEO IDEAS + SCRIPT PIPELINE -->
+      <div class="two-col">
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Video Ideas — AI Generated</div>
+            <div class="card-badge">Based on Pain Points</div>
+          </div>
+          <div class="card-body" style="padding:0 18px;">
+
+            <div class="video-idea">
+              <div class="video-thumb">🎬</div>
+              <div>
+                <div class="video-title">"How Hivelocity Handles Critical Support Escalations — Our Real SLA"</div>
+                <div class="video-meta">
+                  <span class="video-type type-trust">Trust / Transparency</span>
+                  <span class="video-priority">⬆ HIGH PRIORITY</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-idea">
+              <div class="video-thumb">🎬</div>
+              <div>
+                <div class="video-title">"Bare Metal vs. Cloud: Why Price-Per-Core Matters for Your Workload"</div>
+                <div class="video-meta">
+                  <span class="video-type type-tech">Technical</span>
+                  <span class="video-priority">⬆ HIGH PRIORITY</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-idea">
+              <div class="video-thumb">🎬</div>
+              <div>
+                <div class="video-title">"Inside Our Network: BGP, Anycast, and How We Route Your Traffic"</div>
+                <div class="video-meta">
+                  <span class="video-type type-tech">Technical</span>
+                  <span class="video-priority">↔ MEDIUM</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-idea">
+              <div class="video-thumb">🎬</div>
+              <div>
+                <div class="video-title">"Hivelocity Control Panel Walkthrough — Tips & Tricks You Didn't Know"</div>
+                <div class="video-meta">
+                  <span class="video-type type-product">Product</span>
+                  <span class="video-priority">↔ MEDIUM</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Script Pipeline</div>
+            <div class="card-badge">4 tracked</div>
+          </div>
+          <div class="card-body" style="padding:0 18px;">
+
+            <div class="script-row">
+              <div class="script-status status-done"></div>
+              <div class="script-title">Support Escalation SLA Explainer</div>
+              <div class="script-type">READY</div>
+            </div>
+
+            <div class="script-row">
+              <div class="script-status status-wip"></div>
+              <div class="script-title">Bare Metal vs. Cloud Cost Breakdown</div>
+              <div class="script-type">DRAFTING</div>
+            </div>
+
+            <div class="script-row">
+              <div class="script-status status-queued"></div>
+              <div class="script-title">BGP & Network Architecture Deep Dive</div>
+              <div class="script-type">QUEUED</div>
+            </div>
+
+            <div class="script-row">
+              <div class="script-status status-queued"></div>
+              <div class="script-title">Control Panel Tips & Tricks</div>
+              <div class="script-type">QUEUED</div>
+            </div>
+
+          </div>
+
+          <div style="padding:16px 18px;border-top:1px solid var(--border);display:flex;gap:10px;">
+            <div style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;margin-bottom:4px;">SCRIPTS READY</div>
+              <div style="font-size:22px;font-weight:800;color:var(--pos)">1</div>
+            </div>
+            <div style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;margin-bottom:4px;">IN PROGRESS</div>
+              <div style="font-size:22px;font-weight:800;color:var(--accent)">1</div>
+            </div>
+            <div style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;margin-bottom:4px;">QUEUED</div>
+              <div style="font-size:22px;font-weight:800;color:var(--muted)">2</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+</body>
+</html>

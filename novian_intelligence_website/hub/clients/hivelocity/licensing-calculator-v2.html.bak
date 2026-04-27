@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hivelocity — Windows & SQL Licensing Calculator</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23e31f3d'/><text x='50' y='72' font-size='60' font-weight='900' text-anchor='middle' fill='white' font-family='sans-serif'>H</text></svg>" />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #161A29; font-family: 'Nunito Sans', 'Segoe UI', sans-serif; }
+  button { font-family: inherit; }
+  select { font-family: 'JetBrains Mono', monospace; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #161A29; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+  button:hover { filter: brightness(1.15); }
+  button:active { transform: scale(0.97); }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #2eb85c; color: #fff; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; opacity: 0; transition: all 0.3s ease; z-index: 999; pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="toast" class="toast">📋 Summary copied to clipboard!</div>
+
+<script type="text/babel">
+const { useState, useMemo, useCallback } = React;
+
+const PRICING = {
+  winStandard: 3.0,
+  winDatacenter: 20.0,
+  rdsCal: 8.0,
+  sqlWeb: 7.5,
+  sqlStandard: 90.0,
+  sqlEnterprise: 330.0,
+  sqlMinCores: 4,
+  winMinCores: 8,
+  vpsBase: 24.0,
+  vpsAdditionalPerCore: 3.0,
+  vpsBaseCores: 8,
+};
+
+const SQL_EDITIONS = [
+  { key: "none", label: "None", rate: 0 },
+  { key: "web", label: "SQL Web", rate: PRICING.sqlWeb },
+  { key: "standard", label: "SQL Standard", rate: PRICING.sqlStandard },
+  { key: "enterprise", label: "SQL Enterprise", rate: PRICING.sqlEnterprise },
+];
+
+const CORE_OPTIONS = [8, 10, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 72, 80, 96, 128];
+
+function fmt(val) {
+  return val.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+function fmtExact(val) {
+  return val.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function showToast() {
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ─── Reusable Components ─── */
+
+function Stepper({ label, sublabel, value, onChange, min = 0, max = 999, step = 1 }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ flex: 1, minWidth: 0, marginRight: 12 }}>
+        <div style={{ fontSize: 14, color: "#e7e9f0", fontWeight: 600 }}>{label}</div>
+        {sublabel && <div style={{ fontSize: 12, color: "rgba(231,233,240,0.5)", marginTop: 2 }}>{sublabel}</div>}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+        <button onClick={() => onChange(Math.max(min, value - step))} disabled={value <= min} style={{
+          width: 34, height: 34, borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(255,255,255,0.05)", color: "#e7e9f0", fontSize: 18, fontWeight: 700,
+          cursor: value <= min ? "default" : "pointer", opacity: value <= min ? 0.3 : 1,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>−</button>
+        <span style={{ fontSize: 18, fontWeight: 700, color: "#fff", minWidth: 40, textAlign: "center", fontFamily: "'JetBrains Mono', monospace" }}>{value}</span>
+        <button onClick={() => onChange(Math.min(max, value + step))} disabled={value >= max} style={{
+          width: 34, height: 34, borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(255,255,255,0.05)", color: "#e7e9f0", fontSize: 18, fontWeight: 700,
+          cursor: value >= max ? "default" : "pointer", opacity: value >= max ? 0.3 : 1,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>+</button>
+      </div>
+    </div>
+  );
+}
+
+function Toggle({ label, sublabel, value, onChange }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div>
+        <div style={{ fontSize: 14, color: "#e7e9f0", fontWeight: 600 }}>{label}</div>
+        {sublabel && <div style={{ fontSize: 12, color: "rgba(231,233,240,0.5)", marginTop: 2 }}>{sublabel}</div>}
+      </div>
+      <div onClick={() => onChange(!value)} style={{
+        width: 48, height: 26, borderRadius: 13, cursor: "pointer", position: "relative",
+        background: value ? "#e31f3d" : "rgba(255,255,255,0.15)", transition: "background 0.2s ease",
+      }}>
+        <div style={{
+          width: 20, height: 20, borderRadius: 10, background: "#fff", position: "absolute",
+          top: 3, left: value ? 25 : 3, transition: "left 0.2s ease", boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+        }} />
+      </div>
+    </div>
+  );
+}
+
+function Selector({ label, options, value, onChange }) {
+  return (
+    <div style={{ padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      {label && <div style={{ fontSize: 14, color: "#e7e9f0", fontWeight: 600, marginBottom: 8 }}>{label}</div>}
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        {options.map((opt) => {
+          const isActive = opt.key === value;
+          return (
+            <button key={opt.key} onClick={() => onChange(opt.key)} style={{
+              padding: "7px 16px", borderRadius: 8,
+              border: isActive ? "1px solid #e31f3d" : "1px solid rgba(255,255,255,0.12)",
+              background: isActive ? "rgba(227,31,61,0.15)" : "rgba(255,255,255,0.04)",
+              color: isActive ? "#e31f3d" : "rgba(231,233,240,0.7)",
+              fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s ease",
+            }}>{opt.label}</button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SelectDropdown({ label, options, value, onChange }) {
+  return (
+    <div style={{ padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      {label && <div style={{ fontSize: 14, color: "#e7e9f0", fontWeight: 600, marginBottom: 8 }}>{label}</div>}
+      <select value={value} onChange={(e) => onChange(Number(e.target.value))} style={{
+        width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)",
+        background: "rgba(255,255,255,0.06)", color: "#e7e9f0", fontSize: 14, cursor: "pointer",
+      }}>
+        {options.map((v) => <option key={v} value={v}>{v} Cores</option>)}
+      </select>
+    </div>
+  );
+}
+
+function Card({ title, icon, children }) {
+  return (
+    <div style={{
+      background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16, padding: "20px 24px", marginBottom: 16,
+    }}>
+      {title && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+          {icon && <span style={{ fontSize: 18 }}>{icon}</span>}
+          <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#e7e9f0", letterSpacing: "0.02em", textTransform: "uppercase" }}>{title}</h3>
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}
+
+function InfoBanner({ children, type = "info" }) {
+  const colors = {
+    info: { bg: "rgba(47,99,175,0.1)", border: "rgba(47,99,175,0.3)", icon: "💡", color: "#6ba3e8" },
+    warn: { bg: "rgba(227,170,31,0.08)", border: "rgba(227,170,31,0.25)", icon: "⚠️", color: "#e3aa1f" },
+    tip: { bg: "rgba(46,184,92,0.08)", border: "rgba(46,184,92,0.25)", icon: "✓", color: "#2eb85c" },
+  };
+  const c = colors[type] || colors.info;
+  return (
+    <div style={{
+      padding: "10px 14px", borderRadius: 10, background: c.bg, border: `1px solid ${c.border}`,
+      fontSize: 12, color: c.color, lineHeight: 1.5, marginTop: 10, display: "flex", gap: 8, alignItems: "flex-start",
+    }}>
+      <span style={{ flexShrink: 0 }}>{c.icon}</span>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+function ComparisonCard({ title, cost, perCore, isWinner, savings, tag }) {
+  return (
+    <div style={{
+      flex: 1, minWidth: 220, background: isWinner ? "rgba(227,31,61,0.08)" : "rgba(255,255,255,0.03)",
+      border: isWinner ? "2px solid #e31f3d" : "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16, padding: "20px 20px 16px", position: "relative",
+      boxShadow: isWinner ? "0 0 30px rgba(227,31,61,0.12)" : "none", transition: "all 0.3s ease",
+    }}>
+      {isWinner && (
+        <div style={{
+          position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)",
+          background: "#e31f3d", color: "#fff", padding: "3px 14px", borderRadius: 20,
+          fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap",
+        }}>★ Best Value</div>
+      )}
+      {tag && !isWinner && (
+        <div style={{
+          position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)",
+          background: "rgba(255,255,255,0.1)", color: "rgba(231,233,240,0.6)", padding: "3px 14px", borderRadius: 20,
+          fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", whiteSpace: "nowrap",
+        }}>{tag}</div>
+      )}
+      <div style={{ fontSize: 13, color: "rgba(231,233,240,0.6)", fontWeight: 600, marginBottom: 4, marginTop: (isWinner || tag) ? 4 : 0 }}>{title}</div>
+      <div style={{ fontSize: 32, fontWeight: 800, color: isWinner ? "#e31f3d" : "#e7e9f0", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "-0.02em" }}>
+        {fmt(cost)}<span style={{ fontSize: 14, fontWeight: 500, color: "rgba(231,233,240,0.4)" }}>/mo</span>
+      </div>
+      <div style={{ fontSize: 12, color: "rgba(231,233,240,0.4)", marginTop: 2, fontFamily: "'JetBrains Mono', monospace" }}>
+        {fmtExact(perCore)}/core
+      </div>
+      {savings > 0 && isWinner && (
+        <div style={{
+          marginTop: 10, padding: "6px 10px", borderRadius: 8, background: "rgba(227,31,61,0.12)",
+          fontSize: 12, fontWeight: 700, color: "#e31f3d", display: "inline-block",
+        }}>Saves {fmt(savings)}/mo ({fmt(savings * 12)}/yr)</div>
+      )}
+    </div>
+  );
+}
+
+function LineItem({ label, value, detail }) {
+  return (
+    <div style={{
+      display: "flex", justifyContent: "space-between", alignItems: "center",
+      padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", flexWrap: "wrap", gap: 4,
+    }}>
+      <div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#e7e9f0" }}>{label}</div>
+        {detail && <div style={{ fontSize: 11, color: "rgba(231,233,240,0.4)", marginTop: 1 }}>{detail}</div>}
+      </div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: "#e7e9f0", fontFamily: "'JetBrains Mono', monospace" }}>
+        {fmt(value)}<span style={{ fontSize: 11, color: "rgba(231,233,240,0.35)", fontWeight: 500 }}>/mo</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main App ─── */
+function App() {
+  const [mode, setMode] = useState("dedicated");
+  const [numHosts, setNumHosts] = useState(1);
+  const [coresPerHost, setCoresPerHost] = useState(16);
+  const [hostOS, setHostOS] = useState("linux");
+  const [numVMs, setNumVMs] = useState(4);
+  const [numVPS, setNumVPS] = useState(1);
+  const [vpsVCPUs, setVpsVCPUs] = useState(8);
+  const [needRDS, setNeedRDS] = useState(false);
+  const [rdsUsers, setRdsUsers] = useState(10);
+  const [sqlEdition, setSqlEdition] = useState("none");
+  const [sqlCoresPerInstance, setSqlCoresPerInstance] = useState(4);
+  const [sqlInstances, setSqlInstances] = useState(1);
+  const [showLearn, setShowLearn] = useState(false);
+
+  const calc = useMemo(() => {
+    if (mode === "vps") {
+      const vpsCostPer = vpsVCPUs <= PRICING.vpsBaseCores
+        ? PRICING.vpsBase
+        : PRICING.vpsBase + (vpsVCPUs - PRICING.vpsBaseCores) * PRICING.vpsAdditionalPerCore;
+      const vpsTotal = vpsCostPer * numVPS;
+      const rdsCost = needRDS ? rdsUsers * PRICING.rdsCal : 0;
+      const sqlRate = SQL_EDITIONS.find((e) => e.key === sqlEdition)?.rate || 0;
+      const effectiveSqlCores = Math.max(sqlCoresPerInstance, PRICING.sqlMinCores);
+      const sqlCostPerInstance = sqlRate * effectiveSqlCores;
+      const sqlTotal = sqlEdition !== "none" ? sqlCostPerInstance * sqlInstances : 0;
+      return { mode: "vps", vpsCostPer, vpsTotal, numVPS, rdsCost, sqlTotal, sqlCostPerInstance, effectiveSqlCores, total: vpsTotal + rdsCost + sqlTotal };
+    }
+
+    const effectiveCores = Math.max(coresPerHost, PRICING.winMinCores);
+    const totalOSEs = hostOS === "windows" ? numVMs + 1 : numVMs;
+    const standardSets = Math.ceil(totalOSEs / 2);
+    const standardCostPerHost = standardSets * effectiveCores * PRICING.winStandard;
+    const standardEffectivePerCore = standardSets * PRICING.winStandard;
+    const datacenterCostPerHost = effectiveCores * PRICING.winDatacenter;
+    const datacenterEffectivePerCore = PRICING.winDatacenter;
+    const standardTotal = standardCostPerHost * numHosts;
+    const datacenterTotal = datacenterCostPerHost * numHosts;
+    const winRecommendation = standardTotal <= datacenterTotal ? "standard" : "datacenter";
+    const winSavings = Math.abs(standardTotal - datacenterTotal);
+
+    const oseOffset = hostOS === "windows" ? 1 : 0;
+    let breakevenVMs = 0;
+    for (let v = 1; v <= 200; v++) {
+      const sets = Math.ceil((v + oseOffset) / 2);
+      if (sets * PRICING.winStandard >= PRICING.winDatacenter) { breakevenVMs = v; break; }
+    }
+
+    const rdsCost = needRDS ? rdsUsers * PRICING.rdsCal * numHosts : 0;
+    const sqlRate = SQL_EDITIONS.find((e) => e.key === sqlEdition)?.rate || 0;
+    const effectiveSqlCores = Math.max(sqlCoresPerInstance, PRICING.sqlMinCores);
+    const sqlCostPerInstance = sqlRate * effectiveSqlCores;
+    const sqlTotal = sqlEdition !== "none" ? sqlCostPerInstance * sqlInstances : 0;
+    const totalStandard = standardTotal + rdsCost + sqlTotal;
+    const totalDatacenter = datacenterTotal + rdsCost + sqlTotal;
+
+    return {
+      mode: "dedicated", effectiveCores, totalOSEs, standardSets,
+      standardCostPerHost, datacenterCostPerHost, standardEffectivePerCore, datacenterEffectivePerCore,
+      standardTotal, datacenterTotal, winRecommendation, winSavings,
+      breakevenVMs, rdsCost, sqlTotal, sqlCostPerInstance, effectiveSqlCores,
+      totalStandard, totalDatacenter, bestTotal: Math.min(totalStandard, totalDatacenter),
+    };
+  }, [mode, numHosts, coresPerHost, hostOS, numVMs, numVPS, vpsVCPUs, needRDS, rdsUsers, sqlEdition, sqlCoresPerInstance, sqlInstances]);
+
+  const copySummary = useCallback(() => {
+    let txt = "=== Hivelocity Windows Licensing Estimate ===\n\n";
+    if (calc.mode === "vps") {
+      txt += `Deployment: ${calc.numVPS}x Windows VPS (${vpsVCPUs} vCPUs each)\nVPS Cost: ${fmt(calc.vpsTotal)}/mo\n`;
+    } else {
+      txt += `Deployment: ${numHosts}x Dedicated Host${numHosts > 1 ? "s" : ""} (${coresPerHost} cores, ${hostOS === "linux" ? "Linux" : "Windows"} host)\n`;
+      txt += `Windows VMs: ${numVMs} per host\n\n`;
+      txt += `Windows Standard: ${fmt(calc.standardTotal)}/mo (${calc.standardSets}x stack${calc.standardSets > 1 ? "s" : ""}/host)\n`;
+      txt += `Windows Datacenter: ${fmt(calc.datacenterTotal)}/mo\n`;
+      txt += `Recommended: ${calc.winRecommendation === "standard" ? "Standard" : "Datacenter"} (saves ${fmt(calc.winSavings)}/mo)\n`;
+      txt += `Datacenter breakeven: ${calc.breakevenVMs} VMs\n`;
+    }
+    if (needRDS) txt += `\nRDS CALs: ${rdsUsers} users x $${PRICING.rdsCal}/mo = ${fmt(calc.rdsCost)}/mo\n`;
+    if (sqlEdition !== "none") {
+      const ed = SQL_EDITIONS.find((e) => e.key === sqlEdition);
+      txt += `\nSQL Server (${ed.label}): ${sqlInstances}x instance, ${calc.effectiveSqlCores} cores each = ${fmt(calc.sqlTotal)}/mo\n`;
+    }
+    txt += `\n${"─".repeat(35)}\n`;
+    if (calc.mode === "dedicated") {
+      const best = calc.winRecommendation === "standard" ? calc.totalStandard : calc.totalDatacenter;
+      txt += `Total (${calc.winRecommendation === "standard" ? "Standard" : "Datacenter"}): ${fmt(best)}/mo\nAnnual: ${fmt(best * 12)}/yr\n`;
+    } else {
+      txt += `Total: ${fmt(calc.total)}/mo\nAnnual: ${fmt(calc.total * 12)}/yr\n`;
+    }
+    txt += `\nPricing: Hivelocity SPLA rates as of April 2026\n`;
+    navigator.clipboard.writeText(txt).then(() => showToast());
+  }, [calc, numHosts, coresPerHost, hostOS, numVMs, vpsVCPUs, needRDS, rdsUsers, sqlEdition, sqlInstances]);
+
+  const sqlEd = SQL_EDITIONS.find(e => e.key === sqlEdition);
+
+  return (
+    <div style={{ color: "#e7e9f0", minHeight: "100vh" }}>
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #161A29 0%, #1e2338 50%, #161A29 100%)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "24px 24px 20px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: 10, background: "#e31f3d",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 18, fontWeight: 900, color: "#fff", flexShrink: 0,
+            }}>H</div>
+            <div>
+              <h1 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: "#e7e9f0", letterSpacing: "-0.01em" }}>Windows & SQL Licensing Calculator</h1>
+              <div style={{ fontSize: 12, color: "rgba(231,233,240,0.45)", fontWeight: 600, marginTop: 1 }}>Hivelocity SPLA Pricing • April 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: "20px 24px 40px" }}>
+
+        <Card title="Deployment Type" icon="🖥️">
+          <Selector options={[{ key: "dedicated", label: "Dedicated Server" }, { key: "vps", label: "VPS Instance" }]} value={mode} onChange={setMode} />
+          <InfoBanner>
+            {mode === "dedicated"
+              ? <><strong>Dedicated:</strong> You manage the hypervisor on bare metal. Windows licensing covers physical host cores — Standard allows 2 VMs per license set, Datacenter allows unlimited.</>
+              : <><strong>VPS:</strong> Hivelocity-managed Windows VMs. Flat $24/mo per instance (up to 8 vCPU), +$3/mo per additional vCPU.</>}
+          </InfoBanner>
+        </Card>
+
+        {mode === "dedicated" ? (
+          <Card title="Infrastructure" icon="⚙️">
+            <Stepper label="Physical Hosts" sublabel="Number of bare-metal servers" value={numHosts} onChange={setNumHosts} min={1} max={50} />
+            <SelectDropdown label="Physical Cores per Host" options={CORE_OPTIONS} value={coresPerHost} onChange={setCoresPerHost} />
+            <Selector label="Host Operating System" options={[{ key: "linux", label: "Linux (KVM / VMware)" }, { key: "windows", label: "Windows (Hyper-V)" }]} value={hostOS} onChange={setHostOS} />
+            <Stepper label="Windows VMs per Host" sublabel={hostOS === "windows" ? "Host OS uses 1 OSE — affects Standard stacking" : "Each uses 1 Operating System Environment (OSE)"} value={numVMs} onChange={setNumVMs} min={1} max={100} />
+            {hostOS === "windows" && <InfoBanner type="warn">With a Windows host, the host itself consumes 1 of the 2 OSEs per Standard license set. You need more stacks, and Datacenter breaks even sooner.</InfoBanner>}
+          </Card>
+        ) : (
+          <Card title="VPS Configuration" icon="⚙️">
+            <Stepper label="Number of VPS Instances" value={numVPS} onChange={setNumVPS} min={1} max={50} />
+            <Stepper label="vCPUs per Instance" sublabel="Base price covers up to 8 vCPUs" value={vpsVCPUs} onChange={setVpsVCPUs} min={1} max={64} />
+          </Card>
+        )}
+
+        <Card title="Remote Desktop Services" icon="🖥️">
+          <Toggle label="Need RDS CALs?" sublabel="Required for Remote Desktop / terminal services access" value={needRDS} onChange={setNeedRDS} />
+          {needRDS && <Stepper label="Number of RDS Users" sublabel={`$${PRICING.rdsCal}/user/mo${mode === "dedicated" && numHosts > 1 ? " × " + numHosts + " hosts" : ""}`} value={rdsUsers} onChange={setRdsUsers} min={1} max={500} />}
+          <InfoBanner>RDS CALs are separate from Windows Server licensing. Required when users RDP into servers for interactive sessions. Not needed for headless VMs or service-only workloads.</InfoBanner>
+        </Card>
+
+        <Card title="SQL Server" icon="🗄️">
+          <Selector label="SQL Server Edition" options={SQL_EDITIONS} value={sqlEdition} onChange={setSqlEdition} />
+          {sqlEdition !== "none" && (
+            <>
+              <Stepper label="SQL Instances (VMs running SQL)" value={sqlInstances} onChange={setSqlInstances} min={1} max={20} />
+              <Stepper label="Cores per SQL Instance" sublabel={`Min 4 cores • ${fmtExact(sqlEd?.rate || 0)}/core/mo`} value={sqlCoresPerInstance} onChange={setSqlCoresPerInstance} min={4} max={64} step={2} />
+              <InfoBanner>SQL is licensed per virtual core assigned to the VM. {fmt(calc.sqlCostPerInstance)}/mo per instance uses {calc.effectiveSqlCores} cores at {fmtExact(sqlEd?.rate)}/core.</InfoBanner>
+            </>
+          )}
+        </Card>
+
+        {/* ─── RESULTS ─── */}
+        <div style={{
+          background: "linear-gradient(135deg, rgba(227,31,61,0.04) 0%, rgba(47,99,175,0.04) 100%)",
+          border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "24px 24px 20px", marginTop: 8,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 8 }}>
+            <h2 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: "#e7e9f0", letterSpacing: "0.02em", textTransform: "uppercase" }}>💰 Cost Analysis</h2>
+            <button onClick={copySummary} style={{
+              padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)",
+              background: "rgba(255,255,255,0.06)", color: "#e7e9f0", fontSize: 12, fontWeight: 600, cursor: "pointer",
+            }}>📋 Copy Summary</button>
+          </div>
+
+          {mode === "dedicated" ? (
+            <>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(231,233,240,0.5)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                Windows Server — {numVMs} VM{numVMs !== 1 ? "s" : ""} × {numHosts} Host{numHosts !== 1 ? "s" : ""}
+              </div>
+              <div style={{ display: "flex", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+                <ComparisonCard
+                  title={`Standard (${calc.standardSets}× stack${calc.standardSets > 1 ? "s" : ""}/host)`}
+                  cost={calc.standardTotal} perCore={calc.standardEffectivePerCore}
+                  isWinner={calc.winRecommendation === "standard"}
+                  savings={calc.winRecommendation === "standard" ? calc.winSavings : 0}
+                  tag="2 VMs per stack"
+                />
+                <ComparisonCard
+                  title="Datacenter (Unlimited VMs)"
+                  cost={calc.datacenterTotal} perCore={calc.datacenterEffectivePerCore}
+                  isWinner={calc.winRecommendation === "datacenter"}
+                  savings={calc.winRecommendation === "datacenter" ? calc.winSavings : 0}
+                  tag="Unlimited VMs"
+                />
+              </div>
+
+              <InfoBanner type="tip">
+                <strong>Breakeven:</strong> Datacenter becomes cheaper at <strong>{calc.breakevenVMs}+ VMs</strong> per host{hostOS === "windows" ? " (lower due to Windows host using 1 OSE)" : ""}. You're at {numVMs}.
+                {numVMs < calc.breakevenVMs && <span> Standard saves <strong>{fmt(calc.winSavings)}/mo</strong> — but if scaling beyond {calc.breakevenVMs - 1} VMs is planned, consider Datacenter now.</span>}
+              </InfoBanner>
+
+              <div style={{ marginTop: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(231,233,240,0.5)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Monthly Breakdown ({calc.winRecommendation === "standard" ? "Standard" : "Datacenter"})
+                </div>
+                <LineItem
+                  label={`Windows ${calc.winRecommendation === "standard" ? "Standard" : "Datacenter"}`}
+                  value={calc.winRecommendation === "standard" ? calc.standardTotal : calc.datacenterTotal}
+                  detail={calc.winRecommendation === "standard"
+                    ? `${calc.standardSets} set${calc.standardSets > 1 ? "s" : ""} × ${calc.effectiveCores} cores × $${PRICING.winStandard}/core × ${numHosts} host${numHosts > 1 ? "s" : ""}`
+                    : `${calc.effectiveCores} cores × $${PRICING.winDatacenter}/core × ${numHosts} host${numHosts > 1 ? "s" : ""}`}
+                />
+                {needRDS && <LineItem label="RDS CALs" value={calc.rdsCost} detail={`${rdsUsers} users × $${PRICING.rdsCal}/mo${numHosts > 1 ? ` × ${numHosts} hosts` : ""}`} />}
+                {sqlEdition !== "none" && <LineItem label={sqlEd?.label} value={calc.sqlTotal} detail={`${sqlInstances} instance${sqlInstances > 1 ? "s" : ""} × ${calc.effectiveSqlCores} cores × ${fmtExact(sqlEd?.rate)}/core`} />}
+              </div>
+
+              <div style={{
+                marginTop: 16, padding: "16px 20px", borderRadius: 12,
+                background: "rgba(227,31,61,0.1)", border: "1px solid rgba(227,31,61,0.3)",
+                display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8,
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(231,233,240,0.6)" }}>
+                  TOTAL MONTHLY ({calc.winRecommendation === "standard" ? "STANDARD" : "DATACENTER"})
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: "#e31f3d", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "-0.02em" }}>
+                    {fmt(calc.winRecommendation === "standard" ? calc.totalStandard : calc.totalDatacenter)}
+                    <span style={{ fontSize: 14, color: "rgba(231,233,240,0.4)", fontWeight: 500 }}>/mo</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: "rgba(231,233,240,0.4)", fontFamily: "'JetBrains Mono', monospace" }}>
+                    {fmt((calc.winRecommendation === "standard" ? calc.totalStandard : calc.totalDatacenter) * 12)}/yr
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <LineItem label={`Windows VPS (${numVPS}× @ ${vpsVCPUs} vCPU)`} value={calc.vpsTotal} detail={`${fmt(calc.vpsCostPer)}/instance${vpsVCPUs > 8 ? ` ($24 base + ${vpsVCPUs - 8} extra × $3)` : ""}`} />
+              {needRDS && <LineItem label="RDS CALs" value={calc.rdsCost} detail={`${rdsUsers} users × $${PRICING.rdsCal}/mo`} />}
+              {sqlEdition !== "none" && <LineItem label={sqlEd?.label} value={calc.sqlTotal} detail={`${sqlInstances}× ${calc.effectiveSqlCores} cores × ${fmtExact(sqlEd?.rate)}/core`} />}
+              <div style={{
+                marginTop: 16, padding: "16px 20px", borderRadius: 12,
+                background: "rgba(227,31,61,0.1)", border: "1px solid rgba(227,31,61,0.3)",
+                display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8,
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(231,233,240,0.6)" }}>TOTAL MONTHLY</div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: "#e31f3d", fontFamily: "'JetBrains Mono', monospace" }}>
+                    {fmt(calc.total)}<span style={{ fontSize: 14, color: "rgba(231,233,240,0.4)", fontWeight: 500 }}>/mo</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: "rgba(231,233,240,0.4)", fontFamily: "'JetBrains Mono', monospace" }}>{fmt(calc.total * 12)}/yr</div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Learning */}
+        <div style={{ marginTop: 16 }}>
+          <button onClick={() => setShowLearn(!showLearn)} style={{
+            width: "100%", padding: "14px 20px", borderRadius: 12,
+            border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)",
+            color: "#e7e9f0", fontSize: 14, fontWeight: 700, cursor: "pointer",
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+          }}>
+            <span>📘 How Windows Licensing Works (SPLA)</span>
+            <span style={{ transform: showLearn ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", fontSize: 12 }}>▼</span>
+          </button>
+          {showLearn && (
+            <div style={{
+              padding: "20px 24px", borderRadius: "0 0 12px 12px", marginTop: -1,
+              background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "none", fontSize: 13, lineHeight: 1.7, color: "rgba(231,233,240,0.7)",
+            }}>
+              <p style={{ margin: "0 0 12px" }}><strong style={{ color: "#e7e9f0" }}>SPLA (Services Provider License Agreement)</strong> is the monthly licensing model hosters like Hivelocity use. No upfront license purchase — you pay per-core, per-month.</p>
+              <p style={{ margin: "0 0 12px" }}><strong style={{ color: "#e31f3d" }}>Windows Standard ($3/core/mo):</strong> Covers 2 VMs (Operating System Environments) per license set. A "set" = licensing all physical cores once. Need 6 VMs? Buy 3 sets = 3× the per-core rate. If the host runs Windows, the host OS uses 1 of the 2 OSEs.</p>
+              <p style={{ margin: "0 0 12px" }}><strong style={{ color: "#e31f3d" }}>Windows Datacenter ($20/core/mo):</strong> Unlimited VMs on that host. One license set covers everything. Becomes cheaper than stacking Standard once you exceed ~13-14 VMs per host.</p>
+              <p style={{ margin: "0 0 12px" }}><strong style={{ color: "#2f63af" }}>RDS CALs ($8/user/mo):</strong> Separate from the OS license. Only required when users connect via RDP for interactive sessions. Not needed for headless VMs running services.</p>
+              <p style={{ margin: "0 0 12px" }}><strong style={{ color: "#2f63af" }}>SQL Server:</strong> Licensed per virtual core assigned to the SQL VM (minimum 4 cores). Three editions: Web ($7.50/core — hoster-only, public-facing), Standard ($90/core — full features, limited scale), Enterprise ($330/core — unlimited scale, AlwaysOn AG, TDE).</p>
+              <p style={{ margin: 0 }}><strong style={{ color: "#e7e9f0" }}>SPLA note on CALs:</strong> Under SPLA, per-core Windows pricing covers the right to run the OS. Traditional Windows User/Device CALs are not separately required — the core license is the access right. RDS CALs remain separate.</p>
+            </div>
+          )}
+        </div>
+
+        <div style={{ marginTop: 24, textAlign: "center", fontSize: 11, color: "rgba(231,233,240,0.25)", lineHeight: 1.6 }}>
+          Built by the Hivelocity SE Team • Pricing reflects current SPLA rates — always confirm with billing for formal quotes<br />
+          Windows Server, SQL Server, and Remote Desktop Services are trademarks of Microsoft Corporation
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

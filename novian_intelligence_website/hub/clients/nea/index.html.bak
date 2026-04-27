@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Nea North | Novian Intelligence Client Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07080f; --bg2: #0d0f1a; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.07); --border-h: rgba(64,217,200,0.3);
+      --c: #40d9c8; --c-dim: rgba(64,217,200,0.08); --c-bdr: rgba(64,217,200,0.22);
+      --v: #9b7fd4; --v-dim: rgba(155,127,212,0.10); --v-bdr: rgba(155,127,212,0.25);
+      --text: #e2e0f4; --text-muted: #7a7892; --text-dim: #4e4c6a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    #gate { display: flex; position: fixed; inset: 0; z-index: 9999; background: radial-gradient(ellipse at 50% 40%, rgba(64,217,200,0.06) 0%, #07080f 65%); align-items: center; justify-content: center; }
+    .gate-card { width: 100%; max-width: 400px; padding: 0 24px; text-align: center; }
+    .gate-logo { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--c), var(--v)); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: #fff; margin: 0 auto 28px; box-shadow: 0 8px 32px rgba(64,217,200,0.2); }
+    .gate-eyebrow { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c); margin-bottom: 10px; }
+    .gate-title { font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .gate-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 36px; line-height: 1.6; }
+    .gate-input { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text); font-size: 0.95rem; font-family: inherit; outline: none; margin-bottom: 10px; text-align: center; letter-spacing: 0.08em; transition: border-color 0.2s; }
+    .gate-input:focus { border-color: var(--c-bdr); box-shadow: 0 0 0 3px rgba(64,217,200,0.10); }
+    #gateError { font-size: 0.78rem; color: #e07090; margin-bottom: 10px; min-height: 18px; }
+    .gate-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--c), var(--v)); border: none; border-radius: 12px; color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 4px 20px rgba(64,217,200,0.2); transition: opacity 0.2s, transform 0.15s; }
+    .gate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .gate-footer { font-size: 0.62rem; color: var(--text-dim); margin-top: 24px; opacity: 0.6; }
+
+    .site { display: none; }
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: rgba(64,217,200,0.04); }
+    .orb-2 { width: 500px; height: 500px; bottom: 10%; left: -150px; background: rgba(155,127,212,0.04); }
+
+    header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); background: rgba(7,8,15,0.85); backdrop-filter: blur(20px); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--c), var(--v)); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; color: #fff; }
+    .logo-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .logo-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .logo-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+    .header-right { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .strip { height: 3px; background: linear-gradient(to right, var(--c) 0%, var(--v) 50%, var(--c) 100%); opacity: 0.65; }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; position: relative; z-index: 1; }
+
+    .hero { padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--c); opacity: 0.35; }
+    .hero-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+    .hero-title .accent { background: linear-gradient(135deg, var(--c), var(--v)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 0.95rem; line-height: 1.75; color: var(--text-muted); max-width: 560px; margin-bottom: 32px; }
+    .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); }
+    .meta-item { display: flex; flex-direction: column; gap: 5px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-dim); }
+    .meta-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+
+    .mira-note { margin: 48px 0 0; padding: 24px 28px; background: var(--c-dim); border: 1px solid var(--c-bdr); border-left: 3px solid var(--c); border-radius: 0 12px 12px 0; font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); font-style: italic; }
+    .mira-note strong { color: var(--text); font-style: normal; }
+    .mira-note::before { content: "✦  A note from Mira · "; color: var(--c); font-weight: 600; font-size: 0.78rem; font-style: normal; }
+
+    .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin: 52px 0 24px; display: flex; align-items: center; gap: 12px; }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .deliverables { display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; }
+    .card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+    .card.featured { border-left: 3px solid var(--c); }
+    .card-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 32px 36px; }
+    .card-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--c-bdr); display: inline-block; margin-bottom: 14px; color: var(--c); background: var(--c-dim); }
+    .card-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.25; letter-spacing: -0.02em; }
+    .card-desc { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); max-width: 520px; }
+    .card-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; flex-shrink: 0; }
+    .card-num { font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 700; line-height: 1; color: rgba(64,217,200,0.15); letter-spacing: -0.04em; }
+    .open-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); border: 1px solid var(--c-bdr); background: var(--c-dim); padding: 8px 16px; border-radius: 8px; transition: all 0.18s; white-space: nowrap; }
+    .card:hover .open-btn { opacity: 0.85; }
+    .card-preview { border-top: 1px solid var(--border); padding: 16px 36px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .preview-pill { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-dim); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 32px; margin-top: 80px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-text { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .main { padding: 0 16px 60px; } .header-inner { padding: 0 16px; }
+      .card-inner { grid-template-columns: 1fr; } .card-aside { flex-direction: row; align-items: center; } .card-num { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">NI</div>
+    <div class="gate-eyebrow">Novian Intelligence · Client Portal</div>
+    <div class="gate-title">Dr. Nea North</div>
+    <div class="gate-sub">Enter your access code to view your research workspace.</div>
+    <input id="gateInput" class="gate-input" type="password" placeholder="Access code" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+    <div id="gateError"></div>
+    <button class="gate-btn" onclick="checkGate()">Continue →</button>
+    <div class="gate-footer">Confidential · Novian Intelligence · 2026</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ni_nea_auth')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  }
+});
+async function checkGate(){
+  const val = document.getElementById('gateInput').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hex==='9c8dff3ca11e3f0fc5cde463a618370a1b307053d9ddd2475d4d8bd4d03fc916'){
+    sessionStorage.setItem('ni_nea_auth','1');
+    document.getElementById('gate').style.display='none';
+    document.querySelector('.site').style.display='block';
+  } else {
+    document.getElementById('gateError').textContent='Incorrect access code. Please try again.';
+    document.getElementById('gateInput').value='';
+    document.getElementById('gateInput').focus();
+  }
+}
+</script>
+
+<div class="site">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">NI</div>
+        <div class="logo-wordmark">
+          <span class="logo-name">Novian Intelligence</span>
+          <span class="logo-badge">Client Portal</span>
+        </div>
+      </a>
+      <div class="header-right">
+        <div class="live-dot"></div>
+        <span>Active Engagement</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip"></div>
+
+  <div class="main">
+    <div class="hero">
+      <div class="hero-eyebrow">Applied Intelligence · Academic Research · 2026</div>
+      <h1 class="hero-title">Dr. <span class="accent">Nea North</span></h1>
+      <p class="hero-sub">Your research workspace — a publication-ready experimental protocol exploring emergent gender architectures in generative multi-agent AI teams.</p>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">Dr. Nea North</span></div>
+        <div class="meta-item"><span class="meta-label">Prepared by</span><span class="meta-value">Andrei Matei · Novian Intelligence</span></div>
+        <div class="meta-item"><span class="meta-label">Engagement type</span><span class="meta-value">Research Brief · Academic</span></div>
+        <div class="meta-item"><span class="meta-label">Target venues</span><span class="meta-value">JCR · JCP · FAccT</span></div>
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--c);">● Publication-ready · 2026</span></div>
+      </div>
+      <div class="mira-note">
+        Nea — this brief came out of a real conversation with a real hypothesis. <strong>H5 is the one to watch</strong> — whether female leadership framing shifts downstream role assignments toward equity is exactly the kind of finding that changes the field. It's ready to submit. 🔭
+      </div>
+    </div>
+
+    <div class="section-eyebrow">Your deliverables</div>
+    <div class="deliverables">
+
+      <a href="Emergent_Gender_Architectures_Research_Brief.html" class="card featured" target="_blank">
+        <div class="card-inner">
+          <div class="card-body">
+            <span class="card-tag">Research Brief · Publication-ready</span>
+            <div class="card-title">Emergent Gender Architectures in Generative Multi-Agent Teams</div>
+            <div class="card-desc">A full experimental protocol measuring how LLMs gender their spontaneously generated organizational structures. Five hypotheses, methodology, measurement framework, and publication targets. Built from a real research conversation — JCR, JCP, and FAccT ready.</div>
+          </div>
+          <div class="card-aside">
+            <span class="card-num">01</span>
+            <span class="open-btn">Open brief →</span>
+          </div>
+        </div>
+        <div class="card-preview">
+          <span class="preview-pill">5 Hypotheses</span>
+          <span class="preview-pill">Experimental Protocol</span>
+          <span class="preview-pill">H5: Female Leadership Framing</span>
+          <span class="preview-pill">Equity Measurement</span>
+          <span class="preview-pill">JCR · JCP · FAccT</span>
+          <span class="preview-pill">Publication-ready</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">Confidential · Dr. Nea North · Client Portal</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="logo-mark" style="width:22px;height:22px;font-size:0.5rem;">NI</div>
+        <div class="footer-text">Novian Intelligence · 2026</div>
+      </div>
+      <div class="footer-text">Updated: April 2026</div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
