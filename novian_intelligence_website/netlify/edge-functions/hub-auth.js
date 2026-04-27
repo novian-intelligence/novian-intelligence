@@ -94,3 +94,5 @@ function timingSafeEqual(a, b) {
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
 }
+
+export const config = { path: "/hub/*" };
