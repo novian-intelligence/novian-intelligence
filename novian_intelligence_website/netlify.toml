@@ -1,6 +1,7 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  edge_functions = "netlify/edge-functions"
 
 # ── Hub auth — edge function protects /hub/* at network level ──────────────────
 [[edge_functions]]
