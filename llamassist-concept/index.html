@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LlamAssist — Governed AI Workforce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Fira+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #FF7300;
+      --orange-dark: #D14C00;
+      --orange-light: #FF9533;
+      --orange-glow: rgba(255, 115, 0, 0.4);
+      --orange-glow-soft: rgba(255, 115, 0, 0.12);
+      --bg: #000000;
+      --bg-1: #0a0a0a;
+      --bg-2: #111111;
+      --bg-3: #181818;
+      --text: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #444444;
+      --border: rgba(255,115,0,0.15);
+      --border-dim: rgba(255,255,255,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fira Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ─── */
+    #cursor {
+      width: 12px; height: 12px;
+      background: var(--orange);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, opacity 0.2s;
+      mix-blend-mode: normal;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(255,115,0,0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease-out, width 0.3s, height 0.3s;
+    }
+    body:hover #cursor { opacity: 1; }
+
+    /* ─── CANVAS BACKGROUND ─── */
+    #network-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+      backdrop-filter: blur(0px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: white;
+    }
+
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 0 20px var(--orange-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: white; }
+
+    .nav-cta {
+      background: var(--orange);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      color: black !important;
+      transition: box-shadow 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 24px var(--orange-glow) !important;
+      transform: translateY(-1px);
+      color: black !important;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,115,0,0.08);
+      border: 1px solid rgba(255,115,0,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
+      font-size: clamp(52px, 8vw, 100px);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s 0.1s ease both;
+    }
+
+    .hero-title .line-2 {
+      display: block;
+      background: linear-gradient(135deg, var(--orange) 0%, #FFB347 50%, var(--orange-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(255,115,0,0.4));
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 400;
+      animation: fadeInUp 0.8s 0.2s ease both;
+    }
+
+    .hero-subtitle strong { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      animation: fadeInUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #000;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 16px 36px;
+      border-radius: 10px;
+      border: none;
+      cursor: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      box-shadow: 0 0 0 rgba(255,115,0,0);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(255,115,0,0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 16px 28px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: none;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,115,0,0.4);
+      color: var(--orange);
+    }
+
+    /* ─── PACT5 LIVE ROOM VISUALIZATION ─── */
+    #room-vis {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      height: 320px;
+      margin: 64px auto 0;
+      animation: fadeInUp 0.8s 0.4s ease both;
+    }
+
+    #room-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,115,0,0.2);
+      background: rgba(255,115,0,0.02);
+    }
+
+    .room-label {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      border: 1px solid rgba(255,115,0,0.3);
+      color: var(--orange);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 4px 14px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      animation: fadeInUp 1s 1s ease both;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1.5px solid var(--text-dim);
+      border-bottom: 1.5px solid var(--text-dim);
+      transform: rotate(45deg);
+      animation: scrollBounce 2s infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+      50% { transform: rotate(45deg) translateY(4px); opacity: 0.9; }
+    }
+
+    /* ─── STATS STRIP ─── */
+    #stats {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+      background: rgba(255,115,0,0.02);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 40px;
+      letter-spacing: -0.03em;
+      color: var(--orange);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .section-title .accent {
+      color: var(--orange);
+    }
+
+    .section-body {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 540px;
+    }
+
+    /* ─── STACK SECTION ─── */
+    #stack {
+      padding: 120px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stack-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .stack-header .section-body {
+      margin: 0 auto;
+    }
+
+    /* ─── LAYER CARDS ─── */
+    .layers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border-dim);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-dim);
+    }
+
+    .layer-card {
+      background: var(--bg-1);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .layer-card:hover {
+      background: var(--bg-2);
+    }
+
+    .layer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--orange), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .layer-card:hover::before { opacity: 1; }
+
+    .layer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .layer-num::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-dim);
+    }
+
+    .layer-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .layer-icon.orange { background: rgba(255,115,0,0.12); box-shadow: 0 0 30px rgba(255,115,0,0.1); }
+    .layer-icon.amber { background: rgba(255,160,0,0.12); }
+    .layer-icon.red { background: rgba(255,80,0,0.12); }
+    .layer-icon.deep { background: rgba(200,60,0,0.12); }
+
+    .layer-product {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--orange);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .layer-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .layer-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .layer-tag {
+      display: inline-block;
+      margin-top: 20px;
+      background: rgba(255,115,0,0.08);
+      border: 1px solid rgba(255,115,0,0.2);
+      color: var(--orange);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+
+    /* ─── PACT5 SECTION ─── */
+    #pact5 {
+      padding: 120px 48px;
+      background: linear-gradient(180deg, transparent, rgba(255,115,0,0.03) 50%, transparent);
+    }
+
+    .pact5-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .pact5-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-dim);
+      position: relative;
+    }
+
+    .flow-step:last-child { border-bottom: none; }
+
+    .flow-step-num {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(255,115,0,0.1);
+      border: 1px solid rgba(255,115,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--orange);
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .flow-step:hover .flow-step-num {
+      background: var(--orange);
+      color: black;
+      box-shadow: 0 0 20px var(--orange-glow);
+    }
+
+    .flow-step-content h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .flow-step-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .human-gate {
+      background: linear-gradient(135deg, rgba(255,115,0,0.1), rgba(255,115,0,0.05));
+      border: 1px solid rgba(255,115,0,0.3);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .human-gate-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .human-gate-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .human-gate-text strong {
+      color: var(--orange);
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    /* ─── TERMINAL DEMO ─── */
+    #terminal-section {
+      padding: 120px 48px;
+    }
+
+    .terminal-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .terminal {
+      background: var(--bg-1);
+      border: 1px solid var(--border-dim);
+      border-radius: 16px;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    .terminal-bar {
+      background: var(--bg-2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .terminal-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+
+    .td-red { background: #ff5f57; }
+    .td-yellow { background: #febc2e; }
+    .td-green { background: #28c840; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .terminal-body {
+      padding: 24px;
+      line-height: 2;
+    }
+
+    .t-prompt { color: var(--orange); }
+    .t-cmd { color: white; }
+    .t-comment { color: #555; }
+    .t-success { color: #4ade80; }
+    .t-warn { color: #facc15; }
+    .t-info { color: #60a5fa; }
+    .t-dim { color: #444; }
+
+    .t-cursor {
+      display: inline-block;
+      width: 7px; height: 14px;
+      background: var(--orange);
+      vertical-align: middle;
+      animation: blink 1.2s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ─── SOCIAL PROOF ─── */
+    #proof {
+      padding: 80px 48px;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .proof-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .proof-quote {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    .proof-quote .hl { color: var(--orange); }
+
+    .proof-source {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .proof-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: black;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .proof-who {
+      text-align: left;
+    }
+
+    .proof-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .proof-title-small {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ─── CTA ─── */
+    #cta {
+      padding: 160px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,115,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #cta .section-title {
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    #cta .section-body {
+      margin: 0 auto 48px;
+      font-size: 18px;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border-dim);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .footer-logo span { color: var(--orange); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .footer-pact {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-pact-dot {
+      width: 6px; height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── NOISE OVERLAY ─── */
+    .noise {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      #stats { gap: 40px; }
+      #stack { padding: 80px 24px; }
+      .layers-grid { grid-template-columns: 1fr; }
+      #pact5 { padding: 80px 24px; }
+      .pact5-inner { grid-template-columns: 1fr; gap: 48px; }
+      #terminal-section { padding: 80px 24px; }
+      .terminal-inner { grid-template-columns: 1fr; gap: 48px; }
+      #cta { padding: 100px 24px; }
+      footer { padding: 24px; flex-direction: column; text-align: center; }
+      .hero-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Background network canvas -->
+  <canvas id="network-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🦙</div>
+      LlamAssist
+    </a>
+    <ul class="nav-links">
+      <li><a href="#stack">Products</a></li>
+      <li><a href="#pact5">PACT5</a></li>
+      <li><a href="#terminal-section">How It Works</a></li>
+      <li><a href="#cta" class="nav-cta">Get Access</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      PACT5 Protocol Active — 100+ Production Deployments
+    </div>
+
+    <h1 class="hero-title">
+      Your AI Workforce.<br>
+      <span class="line-2">Governed.</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      LlamAssist is a four-layer ecosystem built for one purpose: 
+      <strong>AI agents that are powerful, coordinated, and always answer to you.</strong>
+      Not someday. Right now.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">
+        Request Access →
+      </a>
+      <a href="#stack" class="btn-secondary">See the Stack</a>
+    </div>
+
+    <!-- Live PACT5 Room Visualization -->
+    <div id="room-vis">
+      <div class="room-label">⬤ Live PACT5 Room</div>
+      <canvas id="room-canvas"></canvas>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="stat-item reveal">
+      <span class="stat-num" data-count="100">0</span>
+      <span class="stat-label">Production Deployments</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <span class="stat-num" data-count="45">0</span>
+      <span class="stat-label">Days to $800K Committed</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <span class="stat-num" data-count="4">0</span>
+      <span class="stat-label">Layers. One Ecosystem.</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <span class="stat-num" data-count="0">∞</span>
+      <span class="stat-label">Rogue Agent Incidents</span>
+    </div>
+  </div>
+
+  <!-- STACK SECTION -->
+  <section id="stack">
+    <div class="stack-header reveal">
+      <div class="section-eyebrow">// The Four-Layer Stack</div>
+      <h2 class="section-title">Each layer is a product.<br>Together, they're <span class="accent">unstoppable.</span></h2>
+      <p class="section-body">Modular by design. Every layer stands alone as a commercial product — or snap them together and unlock a fully governed AI workforce from day one.</p>
+    </div>
+
+    <div class="layers-grid">
+      <!-- Layer 1: LlamAssist -->
+      <div class="layer-card reveal">
+        <div class="layer-num">LAYER 01 — Product</div>
+        <div class="layer-icon orange">🎯</div>
+        <div class="layer-product">LlamAssist</div>
+        <div class="layer-name">The Conductor</div>
+        <p class="layer-desc">Describe what you need in plain English. LlamAssist translates your intent into a coordinated plan and directs the entire agent workforce beneath it. No prompting. No wrangling. Just results.</p>
+        <span class="layer-tag">Entry Point</span>
+      </div>
+
+      <!-- Layer 2: PACT5Hub -->
+      <div class="layer-card reveal reveal-delay-1">
+        <div class="layer-num">LAYER 02 — Coordination</div>
+        <div class="layer-icon amber">🏛️</div>
+        <div class="layer-product">PACT5Hub</div>
+        <div class="layer-name">The Governed Room</div>
+        <p class="layer-desc">The digital meeting room where agents collaborate — but nothing executes without human approval. Every interaction is structured, governed, and fully auditable. Built for EU AI Act compliance from the ground up.</p>
+        <span class="layer-tag">Compliance Ready</span>
+      </div>
+
+      <!-- Layer 3: Forge -->
+      <div class="layer-card reveal reveal-delay-2">
+        <div class="layer-num">LAYER 03 — Execution</div>
+        <div class="layer-icon red">⚡</div>
+        <div class="layer-product">Forge</div>
+        <div class="layer-name">The Workshop</div>
+        <p class="layer-desc">When agents need to write code, run tests, or build something real — they hand it to Forge. A dedicated, secure execution engine. No agent carries its own toolset. Forge handles everything, on demand.</p>
+        <span class="layer-tag">Secure Execution</span>
+      </div>
+
+      <!-- Layer 4: Everstate -->
+      <div class="layer-card reveal reveal-delay-3">
+        <div class="layer-num">LAYER 04 — Memory</div>
+        <div class="layer-icon deep">🧠</div>
+        <div class="layer-product">Everstate</div>
+        <div class="layer-name">Institutional Memory</div>
+        <p class="layer-desc">Agent amnesia ends here. Everstate gives your AI workforce persistent memory across every session — creating institutional knowledge that compounds over time. Your agents get smarter every day.</p>
+        <span class="layer-tag">100+ Deployments</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACT5 SECTION -->
+  <section id="pact5">
+    <div class="pact5-inner">
+      <div>
+        <div class="section-eyebrow reveal">// The Open Protocol</div>
+        <h2 class="section-title reveal">PACT5 doesn't ask for trust. <span class="accent">It enforces it.</span></h2>
+        <p class="section-body reveal">An open governance protocol — not a feature. Every agent, regardless of who built it, operates inside the same framework. Human authority isn't bolted on. It's structural.</p>
+
+        <div class="human-gate reveal" style="margin-top: 32px;">
+          <div class="human-gate-icon">🔐</div>
+          <div class="human-gate-text">
+            <strong>The Core Principle</strong>
+            Agents can collaborate, debate, and reach consensus — but that consensus is only ever a recommendation. The final decision always rests with a human. Always.
+          </div>
+        </div>
+      </div>
+
+      <div class="pact5-flow reveal reveal-delay-2">
+        <div class="flow-step">
+          <div class="flow-step-num">01</div>
+          <div class="flow-step-content">
+            <h4>Agents Convene</h4>
+            <p>Specialists are called into a PACT5 room — database, API, frontend, security. Each has a cryptographic identity tied to human-granted permissions.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">02</div>
+          <div class="flow-step-content">
+            <h4>Debate & Propose</h4>
+            <p>Agents discuss requirements, surface tradeoffs, and submit formal proposals for a vote. Every message logged, every decision traceable.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">03</div>
+          <div class="flow-step-content">
+            <h4>Human Approves</h4>
+            <p>You review the proposal. One click. Only then does execution begin. No rogue actions. The system literally cannot proceed without you.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">04</div>
+          <div class="flow-step-content">
+            <h4>Forge Executes. Everstate Remembers.</h4>
+            <p>Tasks run in the secure Forge environment while Everstate creates an immutable audit trail — from first prompt to final deploy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINAL DEMO -->
+  <section id="terminal-section">
+    <div class="terminal-inner">
+      <div>
+        <div class="section-eyebrow reveal">// See It In Action</div>
+        <h2 class="section-title reveal">From plain English<br>to <span class="accent">deployed app.</span></h2>
+        <p class="section-body reveal">Tell LlamAssist what you need. Watch the ecosystem coordinate. Approve when ready. Ship.</p>
+        <p class="section-body reveal reveal-delay-1" style="margin-top: 16px; font-size: 14px;">No configuration. No prompting gymnastics. No babysitting agents. The whole stack runs itself — and reports back to you at every decision point.</p>
+      </div>
+
+      <div class="terminal reveal reveal-delay-2">
+        <div class="terminal-bar">
+          <div class="terminal-dot td-red"></div>
+          <div class="terminal-dot td-yellow"></div>
+          <div class="terminal-dot td-green"></div>
+          <div class="terminal-title">llamassist — pact5 session</div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div><span class="t-dim">— PACT5Hub Room Created ——————————————</span></div>
+          <div><span class="t-info">◆ agents</span> <span class="t-dim">joining room...</span></div>
+          <div><span class="t-success">✓</span> <span class="t-cmd">db-agent</span> <span class="t-dim">connected</span></div>
+          <div><span class="t-success">✓</span> <span class="t-cmd">api-agent</span> <span class="t-dim">connected</span></div>
+          <div><span class="t-success">✓</span> <span class="t-cmd">frontend-agent</span> <span class="t-dim">connected</span></div>
+          <div><span class="t-dim">——————————————————————————————————————</span></div>
+          <div><span class="t-prompt">user@llamassist</span> <span class="t-dim">$</span> <span class="t-cmd">build me a CRM</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-info">◆</span> <span class="t-dim">analyzing requirements...</span></div>
+          <div><span class="t-warn">⚑ proposal ready</span> <span class="t-dim">— 3 agents, 12 tasks</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-dim">— AWAITING HUMAN APPROVAL ————————————</span></div>
+          <div><span class="t-prompt">approve?</span> <span class="t-dim">[y/n]</span> <span class="t-cmd">y</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-success">✓</span> <span class="t-dim">approved. routing to Forge...</span></div>
+          <div><span class="t-success">✓</span> <span class="t-dim">Everstate logging session...</span></div>
+          <div><span class="t-success">✓</span> <span class="t-dim">CRM deployed at :3000</span></div>
+          <div><span class="t-success">✓</span> <span class="t-dim">audit trail: complete</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-prompt">user@llamassist</span> <span class="t-dim">$</span> <span class="t-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section id="proof">
+    <div class="proof-inner reveal">
+      <p class="proof-quote">
+        "The only serious answer to the question of 
+        <span class="hl">how do you actually govern AI at scale.</span>
+        Not theoretically — in production, right now."
+      </p>
+      <div class="proof-source">
+        <div class="proof-avatar">ET</div>
+        <div class="proof-who">
+          <div class="proof-name">Eric Thiel</div>
+          <div class="proof-title-small">Co-Founder, LlamAssist</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="section-eyebrow reveal">// Ready When You Are</div>
+    <h2 class="section-title reveal">Stop managing chaos.<br><span class="accent">Build a real AI workforce.</span></h2>
+    <p class="section-body reveal">Join the companies already running governed AI at scale. Everstate alone has 100+ production deployments. The ecosystem is live, proven, and ready.</p>
+    <div class="cta-actions reveal reveal-delay-1">
+      <a href="#" class="btn-primary">Request Early Access →</a>
+      <a href="#stack" class="btn-secondary">Explore the Stack</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Llam<span>Assist</span></div>
+    <div class="footer-copy">© 2026 LlamAssist. Built on PACT5.</div>
+    <div class="footer-pact">
+      <div class="footer-pact-dot"></div>
+      PACT5 Protocol Active
+    </div>
+  </footer>
+
+  <script>
+    // ─── CURSOR ───
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '12px';
+        cursor.style.height = '12px';
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+      });
+    });
+
+    // ─── BACKGROUND NETWORK CANVAS ───
+    const netCanvas = document.getElementById('network-canvas');
+    const netCtx = netCanvas.getContext('2d');
+    let nodes = [];
+    const NODE_COUNT = 60;
+
+    function resizeNetCanvas() {
+      netCanvas.width = window.innerWidth;
+      netCanvas.height = window.innerHeight;
+    }
+    resizeNetCanvas();
+    window.addEventListener('resize', resizeNetCanvas);
+
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2 + 1,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.02 + Math.random() * 0.02
+      });
+    }
+
+    function drawNetwork() {
+      netCtx.clearRect(0, 0, netCanvas.width, netCanvas.height);
+
+      // Draw connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 140) {
+            const alpha = (1 - dist / 140) * 0.4;
+            netCtx.strokeStyle = `rgba(255, 115, 0, ${alpha})`;
+            netCtx.lineWidth = 0.5;
+            netCtx.beginPath();
+            netCtx.moveTo(nodes[i].x, nodes[i].y);
+            netCtx.lineTo(nodes[j].x, nodes[j].y);
+            netCtx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      nodes.forEach(n => {
+        n.pulse += n.pulseSpeed;
+        const glowR = n.r + Math.sin(n.pulse) * 1.5;
+        const alpha = 0.5 + Math.sin(n.pulse) * 0.3;
+
+        netCtx.beginPath();
+        netCtx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
+        netCtx.fillStyle = `rgba(255, 115, 0, ${alpha})`;
+        netCtx.fill();
+
+        // Move
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > netCanvas.width) n.vx *= -1;
+        if (n.y < 0 || n.y > netCanvas.height) n.vy *= -1;
+      });
+
+      requestAnimationFrame(drawNetwork);
+    }
+    drawNetwork();
+
+    // ─── PACT5 ROOM CANVAS ───
+    const roomCanvas = document.getElementById('room-canvas');
+    const roomCtx = roomCanvas.getContext('2d');
+
+    function resizeRoom() {
+      roomCanvas.width = roomCanvas.offsetWidth;
+      roomCanvas.height = roomCanvas.offsetHeight;
+    }
+    resizeRoom();
+
+    const AGENTS = [
+      { label: 'LlamAssist', role: 'Conductor', color: '#FF7300', angle: Math.PI * 1.5, active: true },
+      { label: 'PACT5Hub', role: 'Coordinator', color: '#FF9533', angle: Math.PI * 1.5 + (Math.PI * 2 / 5), active: false },
+      { label: 'Forge', role: 'Executor', color: '#FFB347', angle: Math.PI * 1.5 + (Math.PI * 4 / 5), active: false },
+      { label: 'Everstate', role: 'Memory', color: '#D14C00', angle: Math.PI * 1.5 + (Math.PI * 6 / 5), active: false },
+      { label: 'Human', role: 'Authority', color: '#ffffff', angle: Math.PI * 1.5 + (Math.PI * 8 / 5), active: true },
+    ];
+
+    let tick = 0;
+    let activeEdge = 0;
+    let edgeTimer = 0;
+    const edges = [[0,1],[1,2],[2,3],[0,4],[1,4],[3,4],[0,3]];
+    let packets = [];
+
+    function spawnPacket() {
+      const edge = edges[activeEdge % edges.length];
+      packets.push({ from: edge[0], to: edge[1], t: 0, speed: 0.012 + Math.random() * 0.01 });
+      activeEdge++;
+    }
+
+    function drawRoom() {
+      const w = roomCanvas.width;
+      const h = roomCanvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const radius = Math.min(w, h) * 0.35;
+
+      roomCtx.clearRect(0, 0, w, h);
+
+      tick++;
+      edgeTimer++;
+      if (edgeTimer > 45) { spawnPacket(); edgeTimer = 0; }
+
+      // Draw ring
+      roomCtx.beginPath();
+      roomCtx.arc(cx, cy, radius, 0, Math.PI * 2);
+      roomCtx.strokeStyle = 'rgba(255,115,0,0.08)';
+      roomCtx.lineWidth = 1;
+      roomCtx.stroke();
+
+      // Compute positions
+      const positions = AGENTS.map((a, i) => ({
+        x: cx + Math.cos(a.angle + tick * 0.003) * radius,
+        y: cy + Math.sin(a.angle + tick * 0.003) * radius,
+      }));
+
+      // Draw edges
+      edges.forEach(([a, b]) => {
+        roomCtx.beginPath();
+        roomCtx.moveTo(positions[a].x, positions[a].y);
+        roomCtx.lineTo(positions[b].x, positions[b].y);
+        roomCtx.strokeStyle = 'rgba(255,115,0,0.1)';
+        roomCtx.lineWidth = 1;
+        roomCtx.stroke();
+      });
+
+      // Draw packets
+      packets = packets.filter(p => p.t <= 1);
+      packets.forEach(p => {
+        p.t += p.speed;
+        const from = positions[p.from];
+        const to = positions[p.to];
+        const px = from.x + (to.x - from.x) * p.t;
+        const py = from.y + (to.y - from.y) * p.t;
+
+        // Trail
+        const trailLen = 0.08;
+        const trailT = Math.max(0, p.t - trailLen);
+        const tx = from.x + (to.x - from.x) * trailT;
+        const ty = from.y + (to.y - from.y) * trailT;
+        const grad = roomCtx.createLinearGradient(tx, ty, px, py);
+        grad.addColorStop(0, 'rgba(255,115,0,0)');
+        grad.addColorStop(1, 'rgba(255,115,0,0.8)');
+        roomCtx.beginPath();
+        roomCtx.moveTo(tx, ty);
+        roomCtx.lineTo(px, py);
+        roomCtx.strokeStyle = grad;
+        roomCtx.lineWidth = 2;
+        roomCtx.stroke();
+
+        roomCtx.beginPath();
+        roomCtx.arc(px, py, 3, 0, Math.PI * 2);
+        roomCtx.fillStyle = '#FF9533';
+        roomCtx.fill();
+      });
+
+      // Draw nodes
+      AGENTS.forEach((a, i) => {
+        const pos = positions[i];
+        const isHuman = a.label === 'Human';
+        const glow = (Math.sin(tick * 0.04 + i) + 1) * 0.5;
+
+        // Glow halo
+        const halo = roomCtx.createRadialGradient(pos.x, pos.y, 2, pos.x, pos.y, 24);
+        halo.addColorStop(0, `rgba(255,115,0,${0.3 * glow})`);
+        halo.addColorStop(1, 'rgba(255,115,0,0)');
+        roomCtx.beginPath();
+        roomCtx.arc(pos.x, pos.y, 24, 0, Math.PI * 2);
+        roomCtx.fillStyle = halo;
+        roomCtx.fill();
+
+        // Node body
+        const nodeR = isHuman ? 14 : 10;
+        roomCtx.beginPath();
+        roomCtx.arc(pos.x, pos.y, nodeR, 0, Math.PI * 2);
+        roomCtx.fillStyle = isHuman ? 'rgba(255,255,255,0.15)' : 'rgba(255,115,0,0.15)';
+        roomCtx.fill();
+        roomCtx.strokeStyle = a.color;
+        roomCtx.lineWidth = isHuman ? 2.5 : 1.5;
+        roomCtx.stroke();
+
+        // Label
+        roomCtx.fillStyle = isHuman ? 'rgba(255,255,255,0.9)' : 'rgba(255,115,0,0.9)';
+        roomCtx.font = isHuman ? '700 10px Poppins, sans-serif' : '500 9px Fira Sans, sans-serif';
+        roomCtx.textAlign = 'center';
+        roomCtx.fillText(a.label, pos.x, pos.y + nodeR + 14);
+
+        roomCtx.fillStyle = 'rgba(255,255,255,0.3)';
+        roomCtx.font = '9px Fira Sans, sans-serif';
+        roomCtx.fillText(a.role, pos.x, pos.y + nodeR + 25);
+      });
+
+      // Center label
+      roomCtx.fillStyle = 'rgba(255,115,0,0.5)';
+      roomCtx.font = '600 11px JetBrains Mono, monospace';
+      roomCtx.textAlign = 'center';
+      roomCtx.fillText('PACT5 PROTOCOL', cx, cy - 6);
+      roomCtx.fillStyle = 'rgba(255,255,255,0.2)';
+      roomCtx.font = '9px JetBrains Mono, monospace';
+      roomCtx.fillText('session active', cx, cy + 10);
+
+      requestAnimationFrame(drawRoom);
+    }
+    drawRoom();
+
+    window.addEventListener('resize', () => {
+      resizeRoom();
+      resizeNetCanvas();
+    });
+
+    // ─── SCROLL REVEAL ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ─── COUNTER ANIMATION ───
+    function animateCounter(el, target, suffix = '') {
+      if (typeof target !== 'number') { el.textContent = target; return; }
+      let start = 0;
+      const duration = 1600;
+      const step = timestamp => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(ease * target) + suffix + (target === 100 ? '+' : '');
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const count = e.target.dataset.count;
+          if (count !== '0') animateCounter(e.target, parseInt(count));
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-num[data-count]').forEach(el => {
+      counterObserver.observe(el);
+    });
+
+  </script>
+</body>
+</html>
