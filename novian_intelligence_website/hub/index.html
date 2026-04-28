@@ -155,8 +155,8 @@
     }
 
     /* ── Main OS ── */
-    #ni-os { display: none; }
-    #ni-os.unlocked { display: block; }
+    #lock-screen { display: none !important; }
+    #ni-os { display: block; }
 
     /* ── Top bar ── */
     .os-topbar {
@@ -1013,39 +1013,7 @@
 </div>
 
 <script>
-  // Password check via SHA-256 hash (plaintext never stored in source)
-  // Hash of hub passphrase — edge function is the real auth gate
-  const PASSWORD_HASH = '9d38f6a24ab94e2887c08526780d19aadc705279c3d0d9ccced3aca98d0c960a';
-
-  async function tryUnlock() {
-    const val = document.getElementById('lock-input').value;
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
-    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-    if (hex === PASSWORD_HASH) {
-      document.getElementById('lock-screen').style.display = 'none';
-      document.getElementById('ni-os').classList.add('unlocked');
-      sessionStorage.setItem('nios-auth', '1');
-      updateGreeting();
-    } else {
-      const input = document.getElementById('lock-input');
-      input.classList.add('error');
-      input.value = '';
-      input.placeholder = 'Incorrect — try again';
-      setTimeout(() => { input.classList.remove('error'); input.placeholder = 'Enter passphrase'; }, 1500);
-    }
-  }
-
-  document.getElementById('lock-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') tryUnlock();
-  });
-
-  function lock() {
-    sessionStorage.removeItem('nios-auth');
-    document.getElementById('lock-screen').style.display = 'flex';
-    document.getElementById('ni-os').classList.remove('unlocked');
-    document.getElementById('lock-input').value = '';
-  }
-
+  // Auth handled by Cloudflare Access at the edge — no JS gate needed
   function showPortfolioModal() {
     document.getElementById('portfolio-modal').style.display = 'flex';
   }
@@ -1056,12 +1024,7 @@
     document.getElementById('greeting-time').textContent = greet + ', Andrei';
   }
 
-  // Auto-unlock if session is still valid
-  if (sessionStorage.getItem('nios-auth') === '1') {
-    document.getElementById('lock-screen').style.display = 'none';
-    document.getElementById('ni-os').classList.add('unlocked');
-    updateGreeting();
-  }
+  updateGreeting();
 </script>
 
 </body>
