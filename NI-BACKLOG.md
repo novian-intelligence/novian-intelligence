@@ -239,6 +239,8 @@ Andrei can always challenge rankings — that's the point.
 ## 💡 Ideas Parking Lot
 *(Captured, not yet scoped)*
 
+- **NI Data Security Standard** — formal doc covering how NI handles client + third-party customer data in portals. Needed before any engagement that involves clients' own customer data. Kael to draft once infrastructure is beefed up. (Post-incident follow-up from 2026-04-27)
+
 - NI wiki
 - Pre-call prep tool ("I have a call with X in 30 min, prep me")
 - Competitive analysis tool (two companies, side-by-side)
