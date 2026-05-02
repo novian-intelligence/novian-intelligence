@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hivelocity Pulse — Kelly Eller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #090B11;
+  --surface:   #111622;
+  --surface2:  #161D2E;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --text:      #E8ECFF;
+  --text2:     #8B93B0;
+  --text3:     #555E7A;
+  --red:       #E31F3D;
+  --red-glow:  rgba(227,31,61,0.18);
+  --green:     #0ED9A0;
+  --green-glow:rgba(14,217,160,0.15);
+  --amber:     #F0A429;
+  --amber-glow:rgba(240,164,41,0.15);
+  --purple:    #8A7FF0;
+  --purple-glow:rgba(138,127,240,0.18);
+  --blue:      #4FACFE;
+  --blue-glow: rgba(79,172,254,0.15);
+  --navy:      #161A29;
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* DOT GRID BACKGROUND */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(79,172,254,0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(138,127,240,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 30% at 85% 80%, rgba(14,217,160,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(9,11,17,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.brand-ecg-icon {
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.brand-ecg-path {
+  stroke: var(--red);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: ecg-draw-icon 1.4s cubic-bezier(.4,0,.2,1) 0.3s forwards;
+}
+@keyframes ecg-draw-icon {
+  to { stroke-dashoffset: 0; }
+}
+.brand-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+.brand-name span { color: var(--red); }
+.topbar-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border2);
+  margin: 0 20px;
+}
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green); }
+  50% { opacity: 0.5; box-shadow: 0 0 12px var(--green); }
+}
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 24px;
+  flex: 1;
+}
+.topbar-nav a {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+.topbar-nav a:hover { color: var(--text2); background: rgba(255,255,255,0.04); }
+.topbar-nav a.active { color: var(--text); background: rgba(255,255,255,0.06); }
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.clock {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+.kelly-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 4px 12px 4px 6px;
+  cursor: pointer;
+}
+.kelly-avatar {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+.kelly-name { font-size: 12px; font-weight: 500; color: var(--text2); }
+
+/* ═══════════════════════════════════════════
+   MAIN WRAPPER
+═══════════════════════════════════════════ */
+.main { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 32px 80px; }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 40px 0 20px;
+  gap: 40px;
+  animation: fade-up 0.5s ease 0.1s both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-greeting {
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.hero-greeting strong { font-weight: 700; }
+.hero-sub {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text3);
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+}
+.hero-sub span { color: var(--amber); }
+
+/* HEALTH DONUT */
+.health-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.donut-svg { width: 80px; height: 80px; }
+.donut-track { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 7; }
+.donut-ring {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  stroke-dasharray: 213.6;
+  stroke-dashoffset: 213.6;
+  animation: donut-fill 1.4s cubic-bezier(.4,0,.2,1) 0.6s forwards;
+}
+/* circumference of r=34 = 213.6; score=63 → offset = 213.6*(1-0.63) = 79 */
+@keyframes donut-fill {
+  to { stroke-dashoffset: 79; }
+}
+.donut-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.donut-container { position: relative; width: 80px; height: 80px; }
+.donut-score { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--amber); line-height: 1; }
+.donut-lbl { font-size: 8px; font-weight: 500; letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase; margin-top: 2px; }
+.donut-meta { display: flex; flex-direction: column; gap: 4px; }
+.donut-meta-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text2); }
+.donut-meta-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════
+   ECG HERO SECTION
+═══════════════════════════════════════════ */
+.ecg-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px 20px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  position: relative;
+  animation: fade-up 0.5s ease 0.2s both;
+}
+.ecg-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red-glow), var(--red), var(--red-glow), transparent);
+  opacity: 0.6;
+}
+.ecg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.ecg-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ecg-title-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.ecg-legend {
+  display: flex;
+  gap: 16px;
+}
+.ecg-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+.legend-pip {
+  width: 10px; height: 3px; border-radius: 2px;
+}
+.ecg-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+.ecg-svg {
+  width: 100%;
+  height: 130px;
+}
+/* zone dividers */
+.ecg-zone-line { stroke: var(--border2); stroke-width: 1; stroke-dasharray: 4,4; }
+.ecg-zone-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  fill: rgba(139,147,176,0.4);
+  letter-spacing: 0.06em;
+}
+/* main ECG path */
+.ecg-main-path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px var(--red));
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  animation: ecg-draw 3.8s cubic-bezier(.4,0,.2,1) 0.4s forwards;
+}
+@keyframes ecg-draw { to { stroke-dashoffset: 0; } }
+.ecg-glow-path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.08;
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  animation: ecg-draw 3.8s cubic-bezier(.4,0,.2,1) 0.4s forwards;
+}
+/* account label groups */
+.acct-label-group { opacity: 0; animation: label-appear 0.4s ease forwards; }
+.acct-label-bg { rx: 4; ry: 4; }
+.acct-label-name { font-family: 'DM Sans', sans-serif; font-size: 9.5px; font-weight: 600; }
+.acct-label-score { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; }
+.acct-tick { stroke-width: 1; stroke-dasharray: 3,3; opacity: 0.4; }
+@keyframes label-appear { to { opacity: 1; } }
+
+/* ═══════════════════════════════════════════
+   KPI BAND
+═══════════════════════════════════════════ */
+.kpi-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.3s both;
+}
+.kpi-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.kpi-cell:hover { transform: translateY(-2px); border-color: var(--border2); }
+.kpi-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+.kpi-cell.red::before  { background: var(--red); box-shadow: 0 0 8px var(--red-glow); }
+.kpi-cell.amber::before { background: var(--amber); }
+.kpi-cell.green::before { background: var(--green); }
+.kpi-cell.blue::before  { background: var(--blue); }
+.kpi-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: var(--sans);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.kpi-cell.red   .kpi-value { color: var(--red); }
+.kpi-cell.amber .kpi-value { color: var(--amber); }
+.kpi-cell.green .kpi-value { color: var(--green); }
+.kpi-cell.blue  .kpi-value { color: var(--blue); }
+.kpi-sub {
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: var(--text3);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADERS
+═══════════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.section-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2px 8px;
+  color: var(--text3);
+}
+.section-action {
+  font-size: 11.5px;
+  color: var(--text3);
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+.section-action:hover { color: var(--blue); }
+
+/* ═══════════════════════════════════════════
+   TODAY SPLIT
+═══════════════════════════════════════════ */
+.today-split {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 16px;
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.4s both;
+}
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* PRIORITY QUEUE */
+.pq-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pq-item:last-child { border-bottom: none; padding-bottom: 0; }
+.pq-item:first-child { padding-top: 0; }
+.pq-sev {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+.sev-p1 { background: rgba(227,31,61,0.2); color: var(--red); border: 1px solid rgba(227,31,61,0.3); }
+.sev-p2 { background: rgba(240,164,41,0.2); color: var(--amber); border: 1px solid rgba(240,164,41,0.3); }
+.sev-p3 { background: rgba(79,172,254,0.2); color: var(--blue); border: 1px solid rgba(79,172,254,0.3); }
+.pq-content { flex: 1; min-width: 0; }
+.pq-account {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.pq-account span {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text3);
+  margin-left: 6px;
+}
+.pq-desc { font-size: 12px; color: var(--text2); line-height: 1.4; }
+.pq-tags {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+.pq-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.tag-red    { background: rgba(227,31,61,0.12); color: var(--red); }
+.tag-amber  { background: rgba(240,164,41,0.12); color: var(--amber); }
+.tag-blue   { background: rgba(79,172,254,0.12); color: var(--blue); }
+.tag-green  { background: rgba(14,217,160,0.12); color: var(--green); }
+.tag-purple { background: rgba(138,127,240,0.12); color: var(--purple); }
+.pq-time {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* AI INSIGHT PANEL */
+.ai-panel { position: relative; overflow: hidden; }
+.ai-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(138,127,240,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.ai-orb {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(138,127,240,0.6) 0%, rgba(138,127,240,0.1) 70%);
+  border: 1px solid rgba(138,127,240,0.4);
+  box-shadow: 0 0 16px rgba(138,127,240,0.3);
+  animation: orb-pulse 3s ease-in-out infinite;
+  position: relative;
+  flex-shrink: 0;
+}
+.ai-orb::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--purple);
+  opacity: 0.5;
+  animation: orb-inner 3s ease-in-out infinite;
+}
+@keyframes orb-pulse {
+  0%,100% { box-shadow: 0 0 16px rgba(138,127,240,0.3), 0 0 32px rgba(138,127,240,0.1); }
+  50%      { box-shadow: 0 0 24px rgba(138,127,240,0.5), 0 0 48px rgba(138,127,240,0.2); }
+}
+@keyframes orb-inner {
+  0%,100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(0.85); }
+}
+.ai-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.ai-badge-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: 0.02em;
+}
+.ai-badge-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+.ai-insight-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.65;
+  min-height: 80px;
+}
+.ai-insight-text .ai-highlight { color: var(--text); font-weight: 500; }
+.ai-insight-text .ai-risk { color: var(--red); font-weight: 600; }
+.ai-insight-text .ai-pos { color: var(--green); font-weight: 600; }
+#typing-cursor {
+  display: inline-block;
+  width: 2px; height: 13px;
+  background: var(--purple);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursor-blink 1s step-end infinite;
+}
+@keyframes cursor-blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+.ai-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.ai-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  background: rgba(138,127,240,0.08);
+  border: 1px solid rgba(138,127,240,0.2);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ai-action-btn:hover { background: rgba(138,127,240,0.14); color: var(--text); border-color: rgba(138,127,240,0.35); }
+.ai-action-btn .btn-icon { font-size: 13px; }
+
+/* ═══════════════════════════════════════════
+   SIGNAL INTELLIGENCE
+═══════════════════════════════════════════ */
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.5s both;
+}
+.signal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.signal-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+.signal-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+}
+.signal-card.sig-red::after    { background: linear-gradient(90deg, transparent, var(--red), transparent); }
+.signal-card.sig-amber::after  { background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+.signal-card.sig-blue::after   { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+.signal-card.sig-green::after  { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+.signal-type {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
+}
+.sig-icon { font-size: 12px; }
+.signal-account { font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.signal-desc { font-size: 11px; color: var(--text2); line-height: 1.45; margin-bottom: 8px; }
+.signal-timestamp {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+.signal-value {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.sig-red   .signal-type { color: var(--red); }
+.sig-amber .signal-type { color: var(--amber); }
+.sig-blue  .signal-type { color: var(--blue); }
+.sig-green .signal-type { color: var(--green); }
+
+/* ═══════════════════════════════════════════
+   ACCOUNT PORTFOLIO TABLE
+═══════════════════════════════════════════ */
+.table-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.6s both;
+}
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.table-search {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px 7px 32px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--text2);
+  outline: none;
+  position: relative;
+}
+.search-wrap { position: relative; flex: 1; }
+.search-icon {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 13px;
+  pointer-events: none;
+}
+.table-filter {
+  display: flex;
+  gap: 6px;
+}
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 5px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-btn.active { background: rgba(79,172,254,0.1); border-color: rgba(79,172,254,0.3); color: var(--blue); }
+.filter-btn:hover { color: var(--text2); border-color: var(--border2); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+thead th {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: left;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+thead th:first-child { padding-left: 20px; }
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  font-size: 12.5px;
+}
+td:first-child { padding-left: 20px; }
+
+.td-account { display: flex; align-items: center; gap: 10px; }
+.health-ring-svg { width: 32px; height: 32px; flex-shrink: 0; }
+.hr-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 3.5; }
+.hr-fill { fill: none; stroke-width: 3.5; stroke-linecap: round; transform-origin: center; transform: rotate(-90deg); transition: stroke-dashoffset 1s; }
+.account-name { font-weight: 600; color: var(--text); font-size: 12.5px; }
+.account-seg {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 1px;
+}
+.mrr-val { font-family: var(--mono); font-weight: 600; color: var(--text); font-size: 12px; }
+.mrr-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+/* SPARKBAR */
+.sparkbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+}
+.sparkbar-bar {
+  width: 5px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s;
+}
+
+.touch-badge {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.touch-recent { background: rgba(14,217,160,0.1); color: var(--green); }
+.touch-mid    { background: rgba(240,164,41,0.1); color: var(--amber); }
+.touch-stale  { background: rgba(227,31,61,0.1);  color: var(--red); }
+.status-pill {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+  border: 1px solid;
+}
+.status-healthy  { background: rgba(14,217,160,0.08); color: var(--green); border-color: rgba(14,217,160,0.2); }
+.status-monitor  { background: rgba(240,164,41,0.08); color: var(--amber); border-color: rgba(240,164,41,0.2); }
+.status-at-risk  { background: rgba(227,31,61,0.08); color: var(--red); border-color: rgba(227,31,61,0.2); }
+.td-actions { display: flex; gap: 5px; }
+.tbl-btn {
+  font-size: 10.5px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tbl-btn:hover { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
+.tbl-btn.primary { background: rgba(79,172,254,0.1); color: var(--blue); border-color: rgba(79,172,254,0.25); }
+.tbl-btn.primary:hover { background: rgba(79,172,254,0.18); }
+
+/* ═══════════════════════════════════════════
+   CALL STUDIO
+═══════════════════════════════════════════ */
+.call-studio {
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.7s both;
+}
+.call-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.call-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.call-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+}
+.call-meta { display: flex; flex-direction: column; gap: 2px; }
+.call-account { font-size: 13px; font-weight: 700; color: var(--text); }
+.call-date { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+.call-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: 10px;
+}
+.badge-escalation { background: rgba(227,31,61,0.15); color: var(--red); border: 1px solid rgba(227,31,61,0.25); }
+.badge-pricing    { background: rgba(240,164,41,0.15); color: var(--amber); border: 1px solid rgba(240,164,41,0.25); }
+.call-body { padding: 16px 18px; }
+.call-waveform { margin-bottom: 12px; }
+.waveform-svg { width: 100%; height: 32px; }
+.ai-summary-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 5px;
+}
+.ai-summary-text { font-size: 12px; color: var(--text2); line-height: 1.55; margin-bottom: 10px; }
+.action-items { display: flex; flex-direction: column; gap: 5px; }
+.action-item {
+  display: flex; align-items: flex-start; gap: 7px;
+  font-size: 11.5px; color: var(--text2); line-height: 1.4;
+}
+.ai-check {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ═══════════════════════════════════════════
+   MODULES GRID
+═══════════════════════════════════════════ */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  animation: fade-up 0.5s ease 0.8s both;
+}
+.module-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.module-card:hover { transform: translateY(-3px); border-color: var(--border2); }
+.module-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.module-card:hover::before { opacity: 1; }
+.mod-today::before   { background: radial-gradient(circle at 50% 0%, rgba(79,172,254,0.06), transparent 70%); }
+.mod-acct::before    { background: radial-gradient(circle at 50% 0%, rgba(14,217,160,0.06), transparent 70%); }
+.mod-call::before    { background: radial-gradient(circle at 50% 0%, rgba(138,127,240,0.06), transparent 70%); }
+.mod-qbr::before     { background: radial-gradient(circle at 50% 0%, rgba(240,164,41,0.06), transparent 70%); }
+.mod-health::before  { background: radial-gradient(circle at 50% 0%, rgba(227,31,61,0.06), transparent 70%); }
+.mod-know::before    { background: radial-gradient(circle at 50% 0%, rgba(79,172,254,0.06), transparent 70%); }
+.module-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.module-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.mod-badge {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  border-radius: 8px;
+}
+.badge-live  { background: rgba(14,217,160,0.15); color: var(--green); border: 1px solid rgba(14,217,160,0.25); }
+.badge-beta  { background: rgba(138,127,240,0.15); color: var(--purple); border: 1px solid rgba(138,127,240,0.25); }
+.badge-soon  { background: rgba(255,255,255,0.06); color: var(--text3); border: 1px solid var(--border); }
+.module-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.module-desc { font-size: 11.5px; color: var(--text3); line-height: 1.5; }
+.module-stat {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: fade-up 0.5s ease 0.9s both;
+}
+.footer-brand { display: flex; align-items: center; gap: 8px; }
+.footer-brand-text { font-size: 12px; color: var(--text3); }
+.footer-brand-text strong { color: var(--red); font-weight: 600; }
+.footer-meta { font-family: var(--mono); font-size: 10px; color: var(--text3); text-align: right; }
+.footer-meta span { color: var(--text2); }
+.footer-team { font-size: 10px; color: var(--text3); }
+
+  /* SVG icon system */
+  .nav-icon svg, .module-icon svg, .sig-icon svg, .mod-icon svg,
+  .sig-ico svg, .panel-title svg, .ai-action svg, .sh-title svg,
+  .section-label svg, .topbar-title svg { flex-shrink: 0; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- TOPBAR                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<nav class="topbar">
+  <div class="topbar-brand">
+    <svg class="brand-ecg-icon" viewBox="0 0 36 20" fill="none">
+      <path class="brand-ecg-path" d="M2,10 L8,10 L10,4 L13,16 L16,2 L19,18 L22,10 L34,10"/>
+    </svg>
+    <span class="brand-name">Hive<span>locity</span> Pulse</span>
+  </div>
+  <div class="topbar-divider"></div>
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    LIVE
+  </div>
+  <nav class="topbar-nav">
+    <a href="#" class="active">Today</a>
+    <a href="#">Accounts</a>
+    <a href="#">Calls</a>
+    <a href="#">QBR Builder</a>
+    <a href="#">Health</a>
+    <a href="#">Knowledge</a>
+  </nav>
+  <div class="topbar-right">
+    <span class="clock" id="live-clock">—</span>
+    <div class="kelly-chip">
+      <div class="kelly-avatar">KE</div>
+      <span class="kelly-name">Kelly Eller</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- MAIN                                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <h1 class="hero-greeting">Good morning, <strong>Kelly.</strong></h1>
+      <p class="hero-sub">Thursday, April 30 · <span>3 accounts need attention today</span> · Portfolio snapshot below</p>
+    </div>
+    <div class="health-donut-wrap">
+      <div class="donut-container">
+        <svg class="donut-svg" viewBox="0 0 80 80">
+          <circle class="donut-track" cx="40" cy="40" r="34"/>
+          <circle class="donut-ring" cx="40" cy="40" r="34" stroke="var(--amber)"/>
+        </svg>
+        <div class="donut-label">
+          <span class="donut-score">63</span>
+          <span class="donut-lbl">Health</span>
+        </div>
+      </div>
+      <div class="donut-meta">
+        <div class="donut-meta-item"><div class="donut-meta-dot" style="background:var(--green)"></div>4 Healthy</div>
+        <div class="donut-meta-item"><div class="donut-meta-dot" style="background:var(--amber)"></div>2 Monitor</div>
+        <div class="donut-meta-item"><div class="donut-meta-dot" style="background:var(--red)"></div>2 At Risk</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECG HERO -->
+  <div class="ecg-section">
+    <div class="ecg-header">
+      <div class="ecg-title">
+        <span class="ecg-title-text">Portfolio Heartbeat</span>
+        <span class="section-count">8 Active Accounts</span>
+      </div>
+      <div class="ecg-legend">
+        <div class="ecg-legend-item"><div class="legend-pip" style="background:var(--green)"></div>Healthy (>70)</div>
+        <div class="ecg-legend-item"><div class="legend-pip" style="background:var(--amber)"></div>Monitor (55–70)</div>
+        <div class="ecg-legend-item"><div class="legend-pip" style="background:var(--red)"></div>At Risk (<55)</div>
+      </div>
+    </div>
+    <div class="ecg-wrap">
+      <svg class="ecg-svg" viewBox="0 0 1220 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ecg-fill-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E31F3D" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#E31F3D" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- zone dividers -->
+        <line x1="370" y1="10" x2="370" y2="120" class="ecg-zone-line"/>
+        <line x1="735" y1="10" x2="735" y2="120" class="ecg-zone-line"/>
+        <text x="120" y="118" class="ecg-zone-label">HEALTHY ZONE</text>
+        <text x="480" y="118" class="ecg-zone-label">MONITOR ZONE</text>
+        <text x="845" y="118" class="ecg-zone-label">AT-RISK ZONE</text>
+
+        <!-- baseline grid lines subtle -->
+        <line x1="0" y1="65" x2="1220" y2="65" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+        <!-- ECG GLOW PATH (wider, transparent) -->
+        <path class="ecg-glow-path" d="
+          M 0,65
+          L 60,65
+          C 75,65 75,65 80,62 C 85,59 87,55 90,52 C 93,49 96,48 99,52 C 102,56 104,62 107,65
+          L 160,65
+          C 178,65 178,56 182,50 C 186,44 188,43 191,50 C 194,57 196,63 200,65
+          L 263,65
+          C 278,65 278,58 282,52 C 286,46 288,45 291,52 C 294,59 296,63 300,65
+          L 370,65
+          L 380,65
+          C 398,65 398,54 402,46 C 406,38 408,36 411,46 C 414,56 416,63 420,65
+          L 480,65
+          C 498,65 498,52 502,43 C 506,34 508,32 511,43 C 514,54 516,63 520,65
+          L 580,65
+          C 598,65 598,56 602,49 C 606,42 608,41 611,49 C 614,57 616,63 620,65
+          L 693,65
+          L 700,65
+          C 720,65 720,48 724,35 C 728,22 730,20 733,35 C 736,50 738,63 742,65
+          L 800,65
+          C 820,65 820,40 824,22 C 828,4 830,2 833,22 C 836,42 838,63 842,65
+          L 900,65
+          C 920,65 920,44 924,28 C 928,12 930,10 933,28 C 936,46 938,63 942,65
+          L 1000,65
+          C 1018,65 1018,50 1022,40 C 1026,30 1028,29 1031,40 C 1034,51 1036,63 1040,65
+          L 1110,65
+          L 1220,65
+        "/>
+
+        <!-- ECG MAIN PATH -->
+        <path class="ecg-main-path" d="
+          M 0,65
+          L 60,65
+          C 75,65 75,65 80,62 C 85,59 87,55 90,52 C 93,49 96,48 99,52 C 102,56 104,62 107,65
+          L 160,65
+          C 178,65 178,56 182,50 C 186,44 188,43 191,50 C 194,57 196,63 200,65
+          L 263,65
+          C 278,65 278,58 282,52 C 286,46 288,45 291,52 C 294,59 296,63 300,65
+          L 370,65
+          L 380,65
+          C 398,65 398,54 402,46 C 406,38 408,36 411,46 C 414,56 416,63 420,65
+          L 480,65
+          C 498,65 498,52 502,43 C 506,34 508,32 511,43 C 514,54 516,63 520,65
+          L 580,65
+          C 598,65 598,56 602,49 C 606,42 608,41 611,49 C 614,57 616,63 620,65
+          L 693,65
+          L 700,65
+          C 720,65 720,48 724,35 C 728,22 730,20 733,35 C 736,50 738,63 742,65
+          L 800,65
+          C 820,65 820,40 824,22 C 828,4 830,2 833,22 C 836,42 838,63 842,65
+          L 900,65
+          C 920,65 920,44 924,28 C 928,12 930,10 933,28 C 936,46 938,63 942,65
+          L 1000,65
+          C 1018,65 1018,50 1022,40 C 1026,30 1028,29 1031,40 C 1034,51 1036,63 1040,65
+          L 1110,65
+          L 1220,65
+        "/>
+
+        <!-- ACCOUNT LABELS — healthy zone -->
+        <!-- Mercury Labs: x~107 peak y~48 -->
+        <g class="acct-label-group" style="animation-delay:2.2s">
+          <line x1="99" y1="48" x2="99" y2="25" class="acct-tick" stroke="var(--green)"/>
+          <rect x="78" y="10" width="42" height="22" rx="4" ry="4" fill="rgba(14,217,160,0.12)" stroke="rgba(14,217,160,0.3)" stroke-width="0.8"/>
+          <text x="99" y="20" class="acct-label-name" fill="var(--green)" text-anchor="middle">Mercury</text>
+          <text x="99" y="29" class="acct-label-score" fill="var(--green)" text-anchor="middle">78</text>
+        </g>
+        <!-- Aero Networks: x~191 peak y~50 -->
+        <g class="acct-label-group" style="animation-delay:2.5s">
+          <line x1="191" y1="43" x2="191" y2="22" class="acct-tick" stroke="var(--green)"/>
+          <rect x="172" y="7" width="38" height="22" rx="4" ry="4" fill="rgba(14,217,160,0.12)" stroke="rgba(14,217,160,0.3)" stroke-width="0.8"/>
+          <text x="191" y="17" class="acct-label-name" fill="var(--green)" text-anchor="middle">Aero</text>
+          <text x="191" y="26" class="acct-label-score" fill="var(--green)" text-anchor="middle">84</text>
+        </g>
+        <!-- Polaris: x~291 peak y~52 (monitor) -->
+        <g class="acct-label-group" style="animation-delay:2.8s">
+          <line x1="291" y1="46" x2="291" y2="22" class="acct-tick" stroke="var(--amber)"/>
+          <rect x="271" y="7" width="40" height="22" rx="4" ry="4" fill="rgba(240,164,41,0.12)" stroke="rgba(240,164,41,0.3)" stroke-width="0.8"/>
+          <text x="291" y="17" class="acct-label-name" fill="var(--amber)" text-anchor="middle">Polaris</text>
+          <text x="291" y="26" class="acct-label-score" fill="var(--amber)" text-anchor="middle">67</text>
+        </g>
+        <!-- CashMonkey: x~411 peak y~46 (monitor) -->
+        <g class="acct-label-group" style="animation-delay:3.1s">
+          <line x1="411" y1="38" x2="411" y2="15" class="acct-tick" stroke="var(--amber)"/>
+          <rect x="384" y="2" width="54" height="22" rx="4" ry="4" fill="rgba(240,164,41,0.12)" stroke="rgba(240,164,41,0.3)" stroke-width="0.8"/>
+          <text x="411" y="12" class="acct-label-name" fill="var(--amber)" text-anchor="middle">CashMonkey</text>
+          <text x="411" y="21" class="acct-label-score" fill="var(--amber)" text-anchor="middle">62</text>
+        </g>
+        <!-- Atlas Technologies: x~611 peak y~49 -->
+        <g class="acct-label-group" style="animation-delay:3.4s">
+          <line x1="611" y1="41" x2="611" y2="18" class="acct-tick" stroke="var(--amber)"/>
+          <rect x="591" y="4" width="40" height="22" rx="4" ry="4" fill="rgba(240,164,41,0.12)" stroke="rgba(240,164,41,0.3)" stroke-width="0.8"/>
+          <text x="611" y="14" class="acct-label-name" fill="var(--amber)" text-anchor="middle">Atlas</text>
+          <text x="611" y="23" class="acct-label-score" fill="var(--amber)" text-anchor="middle">58</text>
+        </g>
+        <!-- El Paso 911: x~733 peak y~20 (at risk, sharp QRS) -->
+        <g class="acct-label-group" style="animation-delay:3.6s">
+          <line x1="730" y1="20" x2="730" y2="2" class="acct-tick" stroke="var(--red)"/>
+          <rect x="699" y="-10" width="62" height="22" rx="4" ry="4" fill="rgba(227,31,61,0.14)" stroke="rgba(227,31,61,0.35)" stroke-width="0.8"/>
+          <text x="730" y="0" class="acct-label-name" fill="var(--red)" text-anchor="middle">El Paso 911</text>
+          <text x="730" y="9" class="acct-label-score" fill="var(--red)" text-anchor="middle">54 ▲ ESCALATION</text>
+        </g>
+        <!-- Zenith: x~833 peak y~2 (most dramatic) -->
+        <g class="acct-label-group" style="animation-delay:3.8s">
+          <line x1="830" y1="22" x2="990" y2="22" class="acct-tick" stroke="rgba(227,31,61,0.5)"/>
+          <rect x="955" y="10" width="46" height="22" rx="4" ry="4" fill="rgba(227,31,61,0.18)" stroke="rgba(227,31,61,0.45)" stroke-width="1"/>
+          <text x="978" y="20" class="acct-label-name" fill="var(--red)" text-anchor="middle">Zenith</text>
+          <text x="978" y="29" class="acct-label-score" fill="var(--red)" text-anchor="middle">38 ⚠ CRITICAL</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- KPI BAND -->
+  <div class="kpi-band">
+    <div class="kpi-cell red">
+      <div class="kpi-label">Critical Accounts</div>
+      <div class="kpi-value">3</div>
+      <div class="kpi-sub">Zenith, El Paso 911, Atlas</div>
+    </div>
+    <div class="kpi-cell amber">
+      <div class="kpi-label">Days Since Last Touch</div>
+      <div class="kpi-value">47d</div>
+      <div class="kpi-sub">Zenith Mfg — overdue</div>
+    </div>
+    <div class="kpi-cell green">
+      <div class="kpi-label">Total MRR Managed</div>
+      <div class="kpi-value">$127.4K</div>
+      <div class="kpi-sub">Across 8 key accounts</div>
+    </div>
+    <div class="kpi-cell blue">
+      <div class="kpi-label">Open Action Items</div>
+      <div class="kpi-value">31</div>
+      <div class="kpi-sub">12 AI-generated this week</div>
+    </div>
+  </div>
+
+  <!-- TODAY SPLIT -->
+  <div class="today-split">
+    <!-- Priority Queue -->
+    <div class="panel">
+      <div class="section-header" style="margin-bottom:16px;">
+        <div class="section-title">
+          <span class="section-label">Today's Priority Queue</span>
+          <span class="section-count">5 Items</span>
+        </div>
+        <a class="section-action" href="#">View All →</a>
+      </div>
+
+      <div class="pq-item">
+        <div class="pq-sev sev-p1">P1</div>
+        <div class="pq-content">
+          <div class="pq-account">Zenith Manufacturing <span>$8.2K MRR</span></div>
+          <div class="pq-desc">Contract renewal overdue 47 days. No outreach logged. Churn probability elevated by AI model.</div>
+          <div class="pq-tags">
+            <span class="pq-tag tag-red">CHURN RISK</span>
+            <span class="pq-tag tag-amber">RENEWAL DUE</span>
+          </div>
+        </div>
+        <div class="pq-time">Now</div>
+      </div>
+
+      <div class="pq-item">
+        <div class="pq-sev sev-p1">P1</div>
+        <div class="pq-content">
+          <div class="pq-account">El Paso Teller County 911 <span>$11.2K MRR</span></div>
+          <div class="pq-desc">Escalation call from last Thursday still unresolved. 3 open Zendesk tickets, 2 flagged urgent.</div>
+          <div class="pq-tags">
+            <span class="pq-tag tag-red">ESCALATION</span>
+            <span class="pq-tag tag-red">3 OPEN TICKETS</span>
+          </div>
+        </div>
+        <div class="pq-time">2h ago</div>
+      </div>
+
+      <div class="pq-item">
+        <div class="pq-sev sev-p2">P2</div>
+        <div class="pq-content">
+          <div class="pq-account">CashMonkey Solutions <span>$4.4K MRR</span></div>
+          <div class="pq-desc">Price sensitivity flagged on last call. Follow-up on dedicated server upgrade path needed before EOD.</div>
+          <div class="pq-tags">
+            <span class="pq-tag tag-amber">PRICING TALK</span>
+            <span class="pq-tag tag-purple">AI FLAGGED</span>
+          </div>
+        </div>
+        <div class="pq-time">Today</div>
+      </div>
+
+      <div class="pq-item">
+        <div class="pq-sev sev-p2">P2</div>
+        <div class="pq-content">
+          <div class="pq-account">Atlas Technologies <span>$6.8K MRR</span></div>
+          <div class="pq-desc">Ticket volume spiked 3× vs. 30-day avg this week. No recent CSM outreach on record.</div>
+          <div class="pq-tags">
+            <span class="pq-tag tag-amber">TICKET SPIKE</span>
+          </div>
+        </div>
+        <div class="pq-time">Yesterday</div>
+      </div>
+
+      <div class="pq-item">
+        <div class="pq-sev sev-p3">P3</div>
+        <div class="pq-content">
+          <div class="pq-account">Aero Networks <span>$5.1K MRR</span></div>
+          <div class="pq-desc">Renewal in 90 days. Healthy score — schedule proactive QBR now to lock in expansion.</div>
+          <div class="pq-tags">
+            <span class="pq-tag tag-green">HEALTHY</span>
+            <span class="pq-tag tag-blue">QBR READY</span>
+          </div>
+        </div>
+        <div class="pq-time">This week</div>
+      </div>
+    </div>
+
+    <!-- AI Insight Panel -->
+    <div class="panel ai-panel">
+      <div class="ai-panel-header">
+        <div class="ai-orb"></div>
+        <div class="ai-badge">
+          <span class="ai-badge-title">Pulse Intelligence</span>
+          <span class="ai-badge-sub">DAILY BRIEF · APR 30</span>
+        </div>
+      </div>
+      <div class="ai-insight-text" id="ai-text-target"></div>
+      <div class="ai-actions">
+        <div class="ai-action-btn"><span class="btn-icon">✦</span> Draft Zenith outreach email</div>
+        <div class="ai-action-btn"><span class="btn-icon">✦</span> Generate El Paso escalation brief</div>
+        <div class="ai-action-btn"><span class="btn-icon">✦</span> Build CashMonkey upgrade proposal</div>
+        <div class="ai-action-btn"><span class="btn-icon">✦</span> Prep Aero Networks QBR outline</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNAL INTELLIGENCE -->
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-label">Signal Intelligence</span>
+      <span class="section-count">5 Active</span>
+    </div>
+    <a class="section-action" href="#">Configure Signals →</a>
+  </div>
+  <div class="signals-grid">
+    <div class="signal-card sig-red">
+      <div class="signal-type"><span class="sig-icon"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="2,4.5 6,9.5 9.5,6.5 14,12"/><polyline points="10.5,12 14,12 14,8.5"/></svg></span> Going Quiet</div>
+      <div class="signal-value" style="color:var(--red)">47d</div>
+      <div class="signal-account">Zenith Manufacturing</div>
+      <div class="signal-desc">No logins, no tickets, no outreach. Radio silence = churn signal.</div>
+      <div class="signal-timestamp">Last contact: Mar 14</div>
+    </div>
+    <div class="signal-card sig-amber">
+      <div class="signal-type"><span class="sig-icon"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M2 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1.2a2 2 0 0 0 0 3.6v1.2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5.5z"/><line x1="9.5" y1="4.5" x2="9.5" y2="11.5" stroke-dasharray="1.5,1.5"/></svg></span> Ticket Spike</div>
+      <div class="signal-value" style="color:var(--amber)">+3×</div>
+      <div class="signal-account">Atlas Technologies</div>
+      <div class="signal-desc">Volume 3× 30-day baseline. No CSM touch this cycle.</div>
+      <div class="signal-timestamp">Spike began: Apr 27</div>
+    </div>
+    <div class="signal-card sig-green">
+      <div class="signal-type"><span class="sig-icon"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="2" y="3" width="12" height="12" rx="2"/><line x1="2" y1="7" x2="14" y2="7"/><line x1="5" y1="1" x2="5" y2="5"/><line x1="11" y1="1" x2="11" y2="5"/><circle cx="5.5" cy="10" r="0.75" fill="currentColor" stroke="none"/><circle cx="8" cy="10" r="0.75" fill="currentColor" stroke="none"/><circle cx="10.5" cy="10" r="0.75" fill="currentColor" stroke="none"/></svg></span> Renewal Window</div>
+      <div class="signal-value" style="color:var(--green)">90d</div>
+      <div class="signal-account">Aero Networks</div>
+      <div class="signal-desc">Healthy score, good engagement. Ideal expansion candidate.</div>
+      <div class="signal-timestamp">Renewal: Jul 30, 2025</div>
+    </div>
+    <div class="signal-card sig-amber">
+      <div class="signal-type"><span class="sig-icon"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 1.5H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5l2.5 2.5V11.5H14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1z"/><line x1="4" y1="6" x2="12" y2="6"/><line x1="4" y1="8.5" x2="8" y2="8.5"/></svg></span> Price Sensitivity</div>
+      <div class="signal-value" style="color:var(--amber)">2×</div>
+      <div class="signal-account">CashMonkey Solutions</div>
+      <div class="signal-desc">Pricing mentioned twice in last call. AI flagged reluctance on bandwidth tier.</div>
+      <div class="signal-timestamp">Flagged: Apr 28 call</div>
+    </div>
+    <div class="signal-card sig-red">
+      <div class="signal-type"><span class="sig-icon"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M9.5 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5.5L9.5 1z"/><polyline points="9.5,1 9.5,5.5 13,5.5"/><line x1="5" y1="9" x2="11" y2="9"/><line x1="5" y1="12" x2="8" y2="12"/></svg></span> Missing Contract</div>
+      <div class="signal-value" style="color:var(--red)">!</div>
+      <div class="signal-account">El Paso Teller 911</div>
+      <div class="signal-desc">Contract not found in ContractWorks or SharePoint. 7-year account.</div>
+      <div class="signal-timestamp">Unresolved since: Mar 2</div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT PORTFOLIO TABLE -->
+  <div class="table-section" style="animation: fade-up 0.5s ease 0.6s both;">
+    <div class="section-header" style="padding:16px 20px 0; margin-bottom:0;">
+      <div class="section-title">
+        <span class="section-label">Account Portfolio</span>
+        <span class="section-count">8 Accounts</span>
+      </div>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input class="table-search" type="text" placeholder="Search accounts, contacts, tags…">
+      </div>
+      <div class="table-filter">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">At Risk</button>
+        <button class="filter-btn">Renewal</button>
+        <button class="filter-btn">No Touch</button>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Health</th>
+          <th>MRR</th>
+          <th>Engagement</th>
+          <th>Last Touch</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--red)" stroke-dasharray="81.7" stroke-dashoffset="50.6"/>
+            </svg>
+            <div><div class="account-name">Zenith Manufacturing</div><div class="account-seg">Enterprise · East</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)">38</span></td>
+          <td><div class="mrr-val">$8,200</div><div class="mrr-sub">3 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:16px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:12px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:8px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:4px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:2px;background:rgba(227,31,61,0.6)"></div>
+            <div class="sparkbar-bar" style="height:2px;background:rgba(227,31,61,0.6)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-stale">47 days ago</span></td>
+          <td><span class="status-pill status-at-risk">AT RISK</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Reach Out</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--red)" stroke-dasharray="81.7" stroke-dashoffset="37.6"/>
+            </svg>
+            <div><div class="account-name">El Paso Teller 911</div><div class="account-seg">Government · Southwest</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)">54</span></td>
+          <td><div class="mrr-val">$11,200</div><div class="mrr-sub">7+ years</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:10px;background:rgba(227,31,61,0.5)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(227,31,61,0.5)"></div>
+            <div class="sparkbar-bar" style="height:18px;background:rgba(227,31,61,0.7)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(227,31,61,0.7)"></div>
+            <div class="sparkbar-bar" style="height:20px;background:rgba(227,31,61,0.9)"></div>
+            <div class="sparkbar-bar" style="height:18px;background:rgba(227,31,61,0.9)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-mid">8 days ago</span></td>
+          <td><span class="status-pill status-at-risk">ESCALATION</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Escalate</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--amber)" stroke-dasharray="81.7" stroke-dashoffset="31.0"/>
+            </svg>
+            <div><div class="account-name">CashMonkey Solutions</div><div class="account-seg">SMB · Finance</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)">62</span></td>
+          <td><div class="mrr-val">$4,400</div><div class="mrr-sub">2 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:12px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(240,164,41,0.6)"></div>
+            <div class="sparkbar-bar" style="height:12px;background:rgba(240,164,41,0.6)"></div>
+            <div class="sparkbar-bar" style="height:10px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:8px;background:rgba(240,164,41,0.4)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-recent">2 days ago</span></td>
+          <td><span class="status-pill status-monitor">MONITOR</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Proposal</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--amber)" stroke-dasharray="81.7" stroke-dashoffset="47.4"/>
+            </svg>
+            <div><div class="account-name">Atlas Technologies</div><div class="account-seg">Mid-Market · Tech</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)">42</span></td>
+          <td><div class="mrr-val">$6,800</div><div class="mrr-sub">5 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:8px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:8px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(227,31,61,0.6)"></div>
+            <div class="sparkbar-bar" style="height:18px;background:rgba(227,31,61,0.7)"></div>
+            <div class="sparkbar-bar" style="height:20px;background:rgba(227,31,61,0.9)"></div>
+            <div class="sparkbar-bar" style="height:20px;background:rgba(227,31,61,0.9)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-stale">14 days ago</span></td>
+          <td><span class="status-pill status-at-risk">AT RISK</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Review</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--green)" stroke-dasharray="81.7" stroke-dashoffset="13.1"/>
+            </svg>
+            <div><div class="account-name">Aero Networks</div><div class="account-seg">Mid-Market · ISP</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green)">84</span></td>
+          <td><div class="mrr-val">$5,100</div><div class="mrr-sub">4 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:14px;background:rgba(14,217,160,0.5)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(14,217,160,0.6)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(14,217,160,0.6)"></div>
+            <div class="sparkbar-bar" style="height:18px;background:rgba(14,217,160,0.7)"></div>
+            <div class="sparkbar-bar" style="height:18px;background:rgba(14,217,160,0.7)"></div>
+            <div class="sparkbar-bar" style="height:20px;background:rgba(14,217,160,0.9)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-recent">3 days ago</span></td>
+          <td><span class="status-pill status-healthy">HEALTHY</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">QBR</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--amber)" stroke-dasharray="81.7" stroke-dashoffset="27.0"/>
+            </svg>
+            <div><div class="account-name">Polaris Systems</div><div class="account-seg">Enterprise · Logistics</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)">67</span></td>
+          <td><div class="mrr-val">$9,300</div><div class="mrr-sub">8 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:14px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:12px;background:rgba(240,164,41,0.4)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(240,164,41,0.5)"></div>
+            <div class="sparkbar-bar" style="height:12px;background:rgba(240,164,41,0.4)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-mid">12 days ago</span></td>
+          <td><span class="status-pill status-monitor">MONITOR</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Check In</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+        <tr>
+          <td><div class="td-account">
+            <svg class="health-ring-svg" viewBox="0 0 32 32">
+              <circle class="hr-bg" cx="16" cy="16" r="13"/>
+              <circle class="hr-fill" cx="16" cy="16" r="13" stroke="var(--green)" stroke-dasharray="81.7" stroke-dashoffset="18.0"/>
+            </svg>
+            <div><div class="account-name">Mercury Labs</div><div class="account-seg">SMB · Biotech</div></div>
+          </div></td>
+          <td><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green)">78</span></td>
+          <td><div class="mrr-val">$3,200</div><div class="mrr-sub">2 servers</div></td>
+          <td><div class="sparkbar">
+            <div class="sparkbar-bar" style="height:12px;background:rgba(14,217,160,0.5)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(14,217,160,0.5)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(14,217,160,0.6)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(14,217,160,0.6)"></div>
+            <div class="sparkbar-bar" style="height:14px;background:rgba(14,217,160,0.5)"></div>
+            <div class="sparkbar-bar" style="height:16px;background:rgba(14,217,160,0.6)"></div>
+          </div></td>
+          <td><span class="touch-badge touch-recent">5 days ago</span></td>
+          <td><span class="status-pill status-healthy">HEALTHY</span></td>
+          <td><div class="td-actions">
+            <button class="tbl-btn primary">Expand</button>
+            <button class="tbl-btn">View</button>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CALL STUDIO -->
+  <div class="call-studio">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-label">Call Studio</span>
+        <span class="section-count">2 Recent</span>
+      </div>
+      <a class="section-action" href="#">All Recordings →</a>
+    </div>
+    <div class="call-grid">
+      <!-- Call 1 -->
+      <div class="call-card">
+        <div class="call-header">
+          <div class="call-meta">
+            <span class="call-account">El Paso Teller County 911</span>
+            <span class="call-date">Apr 24, 2025 · 42 min · Kelly + Marcus Webb</span>
+          </div>
+          <span class="call-badge badge-escalation">ESCALATION</span>
+        </div>
+        <div class="call-body">
+          <div class="call-waveform">
+            <svg class="waveform-svg" viewBox="0 0 400 32" preserveAspectRatio="none">
+              <g opacity="0.6">
+                <rect x="0"   y="12" width="2" height="8"  fill="var(--red)" rx="1"/>
+                <rect x="4"   y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="8"   y="6"  width="2" height="20" fill="var(--red)" rx="1"/>
+                <rect x="12"  y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+                <rect x="16"  y="4"  width="2" height="24" fill="var(--red)" rx="1"/>
+                <rect x="20"  y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="24"  y="12" width="2" height="8"  fill="var(--red)" rx="1"/>
+                <rect x="28"  y="6"  width="2" height="20" fill="var(--red)" rx="1"/>
+                <rect x="32"  y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+                <rect x="36"  y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="40"  y="4"  width="2" height="24" fill="var(--red)" rx="1"/>
+                <rect x="44"  y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+                <rect x="48"  y="14" width="2" height="4"  fill="var(--red)" rx="1"/>
+                <rect x="52"  y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="56"  y="6"  width="2" height="20" fill="var(--red)" rx="1"/>
+                <rect x="60"  y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+                <rect x="64"  y="4"  width="2" height="24" fill="var(--red)" rx="1"/>
+                <rect x="68"  y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="72"  y="12" width="2" height="8"  fill="var(--red)" rx="1"/>
+                <rect x="76"  y="6"  width="2" height="20" fill="var(--red)" rx="1"/>
+                <rect x="80"  y="9"  width="2" height="14" fill="var(--red)" rx="1"/>
+                <rect x="84"  y="5"  width="2" height="22" fill="var(--red)" rx="1"/>
+                <rect x="88"  y="11" width="2" height="10" fill="var(--red)" rx="1"/>
+                <rect x="92"  y="7"  width="2" height="18" fill="var(--red)" rx="1"/>
+                <rect x="96"  y="4"  width="2" height="24" fill="var(--red)" rx="1"/>
+                <rect x="100" y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="104" y="12" width="2" height="8"  fill="var(--red)" rx="1"/>
+                <rect x="108" y="6"  width="2" height="20" fill="var(--red)" rx="1"/>
+                <rect x="112" y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+                <rect x="116" y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="120" y="14" width="2" height="4"  fill="var(--red)" rx="1"/>
+                <rect x="124" y="8"  width="2" height="16" fill="var(--red)" rx="1"/>
+                <rect x="128" y="5"  width="2" height="22" fill="var(--red)" rx="1"/>
+                <rect x="132" y="10" width="2" height="12" fill="var(--red)" rx="1"/>
+              </g>
+              <rect x="0" y="14" width="80" height="4" fill="var(--red)" opacity="0.15" rx="2"/>
+            </svg>
+          </div>
+          <div class="ai-summary-label">✦ AI Summary</div>
+          <div class="ai-summary-text">Marcus escalated a recurring network latency issue affecting 911 dispatch routing. Three open tickets remain unresolved since Feb. Customer expressed frustration with response time and asked about SLA compliance.</div>
+          <div class="action-items">
+            <div class="action-item"><div class="ai-check"></div>Pull SLA report from HubSpot + send to Marcus by EOD</div>
+            <div class="action-item"><div class="ai-check"></div>Loop JC in — escalation likely needs senior Sales visibility</div>
+            <div class="action-item"><div class="ai-check"></div>Create unified Zendesk ticket to consolidate 3 open issues</div>
+          </div>
+        </div>
+      </div>
+      <!-- Call 2 -->
+      <div class="call-card">
+        <div class="call-header">
+          <div class="call-meta">
+            <span class="call-account">CashMonkey Solutions</span>
+            <span class="call-date">Apr 28, 2025 · 28 min · Kelly + James Tran</span>
+          </div>
+          <span class="call-badge badge-pricing">PRICING</span>
+        </div>
+        <div class="call-body">
+          <div class="call-waveform">
+            <svg class="waveform-svg" viewBox="0 0 400 32" preserveAspectRatio="none">
+              <g opacity="0.5">
+                <rect x="0"   y="13" width="2" height="6"  fill="var(--amber)" rx="1"/>
+                <rect x="4"   y="10" width="2" height="12" fill="var(--amber)" rx="1"/>
+                <rect x="8"   y="8"  width="2" height="16" fill="var(--amber)" rx="1"/>
+                <rect x="12"  y="12" width="2" height="8"  fill="var(--amber)" rx="1"/>
+                <rect x="16"  y="7"  width="2" height="18" fill="var(--amber)" rx="1"/>
+                <rect x="20"  y="10" width="2" height="12" fill="var(--amber)" rx="1"/>
+                <rect x="24"  y="13" width="2" height="6"  fill="var(--amber)" rx="1"/>
+                <rect x="28"  y="8"  width="2" height="16" fill="var(--amber)" rx="1"/>
+                <rect x="32"  y="11" width="2" height="10" fill="var(--amber)" rx="1"/>
+                <rect x="36"  y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="40"  y="6"  width="2" height="20" fill="var(--amber)" rx="1"/>
+                <rect x="44"  y="11" width="2" height="10" fill="var(--amber)" rx="1"/>
+                <rect x="48"  y="15" width="2" height="2"  fill="var(--amber)" rx="1"/>
+                <rect x="52"  y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="56"  y="7"  width="2" height="18" fill="var(--amber)" rx="1"/>
+                <rect x="60"  y="11" width="2" height="10" fill="var(--amber)" rx="1"/>
+                <rect x="64"  y="5"  width="2" height="22" fill="var(--amber)" rx="1"/>
+                <rect x="68"  y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="72"  y="13" width="2" height="6"  fill="var(--amber)" rx="1"/>
+                <rect x="76"  y="7"  width="2" height="18" fill="var(--amber)" rx="1"/>
+                <rect x="80"  y="10" width="2" height="12" fill="var(--amber)" rx="1"/>
+                <rect x="84"  y="6"  width="2" height="20" fill="var(--amber)" rx="1"/>
+                <rect x="88"  y="12" width="2" height="8"  fill="var(--amber)" rx="1"/>
+                <rect x="92"  y="8"  width="2" height="16" fill="var(--amber)" rx="1"/>
+                <rect x="96"  y="5"  width="2" height="22" fill="var(--amber)" rx="1"/>
+                <rect x="100" y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="104" y="13" width="2" height="6"  fill="var(--amber)" rx="1"/>
+                <rect x="108" y="7"  width="2" height="18" fill="var(--amber)" rx="1"/>
+                <rect x="112" y="11" width="2" height="10" fill="var(--amber)" rx="1"/>
+                <rect x="116" y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="120" y="15" width="2" height="2"  fill="var(--amber)" rx="1"/>
+                <rect x="124" y="9"  width="2" height="14" fill="var(--amber)" rx="1"/>
+                <rect x="128" y="6"  width="2" height="20" fill="var(--amber)" rx="1"/>
+                <rect x="132" y="11" width="2" height="10" fill="var(--amber)" rx="1"/>
+              </g>
+            </svg>
+          </div>
+          <div class="ai-summary-label">✦ AI Summary</div>
+          <div class="ai-summary-text">James asked about upgrading bandwidth tier and raised cost concerns twice. Growth trajectory suggests dedicated server upgrade is imminent. Positive relationship, but pricing hesitancy is a known blocker.</div>
+          <div class="action-items">
+            <div class="action-item"><div class="ai-check"></div>Build dedicated server upgrade comparison doc with ROI framing</div>
+            <div class="action-item"><div class="ai-check"></div>Check if existing contract has upgrade pricing provisions</div>
+            <div class="action-item"><div class="ai-check"></div>Schedule follow-up before end of next week</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES GRID -->
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-label">Modules</span>
+    </div>
+  </div>
+  <div class="modules-grid">
+    <div class="module-card mod-today">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(79,172,254,0.12);color:var(--blue)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="3" y="2" width="10" height="13" rx="1.5"/><path d="M6 2a2 2 0 0 0 4 0"/><line x1="5.5" y1="7.5" x2="10.5" y2="7.5"/><line x1="5.5" y1="10.5" x2="8.5" y2="10.5"/></svg></div>
+        <span class="mod-badge badge-live">LIVE</span>
+      </div>
+      <div class="module-title">Today View</div>
+      <div class="module-desc">Prioritized daily queue built from signals across HubSpot, Zendesk, and your accounts.</div>
+      <div class="module-stat">5 items today · 3 critical</div>
+    </div>
+    <div class="module-card mod-acct">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(14,217,160,0.12);color:var(--green)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M2 14.5V4.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v10"/><line x1="1" y1="14.5" x2="15" y2="14.5"/><rect x="6" y="9.5" width="4" height="5" rx="0.5"/><rect x="4" y="5.5" width="2" height="2" rx="0.5" fill="currentColor" stroke="none" opacity="0.7"/><rect x="10" y="5.5" width="2" height="2" rx="0.5" fill="currentColor" stroke="none" opacity="0.7"/><rect x="4" y="9" width="2" height="2" rx="0.5" fill="currentColor" stroke="none" opacity="0.4"/></svg></div>
+        <span class="mod-badge badge-live">LIVE</span>
+      </div>
+      <div class="module-title">Account Hub</div>
+      <div class="module-desc">Single source of truth. Contract, servers, tickets, contacts, history — one place.</div>
+      <div class="module-stat">500 accounts · 8 key</div>
+    </div>
+    <div class="module-card mod-call">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(138,127,240,0.12);color:var(--purple)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="5.5" y="1" width="5" height="8" rx="2.5"/><path d="M3 8a5 5 0 0 0 10 0"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="5.5" y1="15" x2="10.5" y2="15"/></svg></div>
+        <span class="mod-badge badge-beta">BETA</span>
+      </div>
+      <div class="module-title">Call Studio</div>
+      <div class="module-desc">AI-powered call summaries, action item extraction, and follow-up drafts from Teams recordings.</div>
+      <div class="module-stat">12 calls analyzed · 31 actions</div>
+    </div>
+    <div class="module-card mod-qbr">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(240,164,41,0.12);color:var(--amber)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="2" y1="14" x2="14" y2="14"/><rect x="3" y="9" width="2.5" height="5" rx="0.5" fill="currentColor" stroke="none" opacity="0.6"/><rect x="6.75" y="5.5" width="2.5" height="8.5" rx="0.5" fill="currentColor" stroke="none" opacity="0.8"/><rect x="10.5" y="2.5" width="2.5" height="11.5" rx="0.5" fill="currentColor" stroke="none"/></svg></div>
+        <span class="mod-badge badge-beta">BETA</span>
+      </div>
+      <div class="module-title">QBR Builder</div>
+      <div class="module-desc">Generate QBR decks from live data in minutes, not hours. Cuts your 4-hour prep to under 30.</div>
+      <div class="module-stat">3 QBRs due Q2</div>
+    </div>
+    <div class="module-card mod-health">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(227,31,61,0.12);color:var(--red)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M8 13.5S2 10 2 5.5a3.5 3.5 0 0 1 6-2.4A3.5 3.5 0 0 1 14 5.5C14 10 8 13.5 8 13.5z"/><polyline points="4.5,8.5 6,8.5 7,6.5 9,10.5 10,8 11.5,8" stroke-width="1.2"/></svg></div>
+        <span class="mod-badge badge-live">LIVE</span>
+      </div>
+      <div class="module-title">Health Signals</div>
+      <div class="module-desc">Real-time scoring from tickets, logins, engagement, and billing — no more guessing HubSpot scores.</div>
+      <div class="module-stat">Portfolio avg: 63 · 3 alerts</div>
+    </div>
+    <div class="module-card mod-know">
+      <div class="module-top">
+        <div class="module-icon" style="background:rgba(79,172,254,0.12);color:var(--blue)"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M8 2a4 4 0 0 1 2.8 6.8L10 10H6l-.8-1.2A4 4 0 0 1 8 2z"/><line x1="6" y1="13" x2="10" y2="13"/><line x1="6.5" y1="15" x2="9.5" y2="15"/><line x1="8" y1="10" x2="8" y2="12" stroke-width="1.2"/></svg></div>
+        <span class="mod-badge badge-soon">SOON</span>
+      </div>
+      <div class="module-title">Knowledge Base</div>
+      <div class="module-desc">Replace the spreadsheet and Slack archaeology. AI-surfaced answers from your own account history.</div>
+      <div class="module-stat">Coming Q3 2025</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">
+      <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+        <path d="M1,6 L4,6 L5,2.5 L6.5,9.5 L8,1 L9.5,11 L11,6 L20,6" stroke="#E31F3D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="footer-brand-text"><strong>Hivelocity Pulse</strong> — Internal Preview</span>
+    </div>
+    <div class="footer-team">Built by the <span style="color:var(--text2)">SE Team</span> · Not for external distribution</div>
+    <div class="footer-meta">
+      Last sync: <span>Today 8:42 AM</span> · Sources: <span>HubSpot · Zendesk · Ubersmith</span>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                  -->
+<!-- ═══════════════════════════════════════════ -->
+<script>
+// LIVE CLOCK
+function updateClock() {
+  const now = new Date();
+  document.getElementById('live-clock').textContent =
+    now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// AI TYPING ANIMATION
+const aiText = `<span class="ai-highlight">Zenith Manufacturing</span> is your highest-priority account today — <span class="ai-risk">47 days of radio silence</span> with a renewal window closing fast. Their health score dropped <span class="ai-risk">14 points</span> since last quarter.<br><br><span class="ai-highlight">El Paso Teller 911</span> still has unresolved Zendesk tickets from last Thursday's escalation. <span class="ai-risk">Missing contract on a 7-year account</span> is a legal exposure risk worth flagging to leadership.<br><br><span class="ai-pos">Aero Networks</span> is a quiet win — schedule their QBR now and position the bandwidth upgrade conversation proactively.`;
+
+const target = document.getElementById('ai-text-target');
+
+// Show cursor first, then type
+target.innerHTML = '<span id="typing-cursor"></span>';
+
+let charIndex = 0;
+let fullText = aiText;
+let displayText = '';
+let inTag = false;
+let tagBuffer = '';
+
+// We'll type HTML character by character, skipping tag characters
+function typeStep() {
+  if (charIndex >= fullText.length) {
+    // Remove cursor after done
+    const cursor = document.getElementById('typing-cursor');
+    if (cursor) cursor.remove();
+    return;
+  }
+
+  const ch = fullText[charIndex];
+  if (ch === '<') { inTag = true; tagBuffer = '<'; }
+  else if (ch === '>' && inTag) { inTag = false; tagBuffer += '>'; displayText += tagBuffer; tagBuffer = ''; }
+  else if (inTag) { tagBuffer += ch; }
+  else { displayText += ch; }
+
+  charIndex++;
+
+  const cursor = document.getElementById('typing-cursor');
+  target.innerHTML = displayText + (cursor ? '<span id="typing-cursor"></span>' : '');
+
+  if (!inTag) {
+    setTimeout(typeStep, ch === '.' || ch === ',' ? 60 : 18);
+  } else {
+    typeStep(); // Skip tag chars instantly
+  }
+}
+
+// Start typing after 2.2s (let ECG draw first)
+setTimeout(typeStep, 2200);
+
+// FILTER BUTTONS (cosmetic toggle)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

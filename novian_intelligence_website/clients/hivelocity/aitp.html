@@ -1,0 +1,2778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hivelocity AI Transformation Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== HIVELOCITY BRAND PALETTE ===== */
+  :root {
+    --hv-red: #e31f3d;
+    --hv-red-glow: rgba(227, 31, 61, 0.18);
+    --hv-red-soft: rgba(227, 31, 61, 0.08);
+    --hv-blue: #2f63af;
+    --hv-blue-soft: rgba(47, 99, 175, 0.1);
+    --hv-server: #161A29;
+    --hv-indigo: #485059;
+    --hv-cloud: #e7e9f0;
+
+    --bg: #0B0E18;
+    --bg2: #11151F;
+    --bg3: #161A29;
+    --bg4: #1B2030;
+    --paper: #161A29;
+    --paper2: #1A1F30;
+    --line: #232838;
+    --line2: #2C3243;
+    --line3: #3A4054;
+    --text: #e7e9f0;
+    --text2: #a8aebd;
+    --text3: #6f7689;
+    --accent: var(--hv-red);
+    --accent-soft: var(--hv-red-soft);
+    --accent-glow: var(--hv-red-glow);
+    --secondary: var(--hv-blue);
+    --secondary-soft: var(--hv-blue-soft);
+
+    --dept-csm: #e31f3d;
+    --dept-se: #2f63af;
+    --dept-sdr: #9D7CE0;
+    --dept-am: #E8B547;
+    --dept-ops: #5DC4A8;
+    --dept-support: #E67676;
+    --dept-billing: #C5A0E0;
+    --dept-product: #7EB6E0;
+    --dept-marketing: #E8946E;
+    --dept-dcops: #88C99E;
+    --dept-finance: #B8B8C8;
+    --dept-strategic: #e31f3d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* ===== TOP NAV ===== */
+  .topnav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11, 14, 24, 0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px;
+  }
+  .topnav-brand {
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .topnav-mark {
+    width: 26px; height: 26px;
+    background: var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(227, 31, 61, 0.3);
+  }
+  .topnav-name {
+    font-weight: 700; font-size: 14px; letter-spacing: -0.01em;
+  }
+  .topnav-name .dim { color: var(--text3); font-weight: 400; margin-left: 6px; }
+
+  .topnav-tabs {
+    display: flex; gap: 2px;
+    background: var(--bg3); border: 1px solid var(--line);
+    padding: 3px; border-radius: 6px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .topnav-tab {
+    padding: 6px 12px; font-size: 11.5px; font-weight: 500;
+    color: var(--text2); cursor: pointer;
+    border-radius: 4px; border: none;
+    background: transparent; font-family: inherit;
+    transition: all 0.15s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .topnav-tab.active {
+    background: var(--paper2); color: var(--text);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .topnav-tab:not(.active):hover { color: var(--text); }
+  .topnav-tab .dot {
+    display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+
+  .topnav-status {
+    display: flex; gap: 14px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text3);
+    flex-shrink: 0;
+  }
+  .topnav-status .live {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--accent); font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .topnav-status .live::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    animation: blip 2.4s infinite;
+  }
+  @keyframes blip { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+  .stage { display: none; }
+  .stage.active { display: block; }
+
+  /* ============================================================ */
+  /* ===== HUB OVERVIEW ===== */
+  /* ============================================================ */
+  .hub {
+    max-width: 1280px; margin: 0 auto; padding: 36px 28px 80px;
+  }
+
+  .hub-hero {
+    margin-bottom: 56px;
+  }
+  .hub-hero-row {
+    display: grid; grid-template-columns: 1fr 320px; gap: 48px;
+    align-items: end;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-doc-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 22px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hub-doc-id::before {
+    content: '▌'; color: var(--accent);
+  }
+  .hub-hero h1 {
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    max-width: 880px;
+  }
+  .hub-hero h1 .accent { color: var(--accent); }
+  .hub-hero-deck {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.55;
+    max-width: 700px;
+  }
+  .hub-hero-deck strong { color: var(--text); font-weight: 600; }
+
+  .hub-hero-meta {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 22px 24px;
+    border-radius: 6px;
+  }
+  .hub-hero-meta-row {
+    display: flex; justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--line2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    align-items: center;
+  }
+  .hub-hero-meta-row:last-child { border-bottom: none; }
+  .hub-hero-meta-label { color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+  .hub-hero-meta-value { color: var(--text); font-weight: 600; }
+  .hub-hero-meta-value.accent { color: var(--accent); }
+
+  .hub-section { margin-bottom: 56px; }
+  .hub-section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-section-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .hub-section-title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  .hub-section-title em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .hub-section-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hub-stats {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 56px;
+  }
+  .hub-stat {
+    background: var(--paper);
+    padding: 20px 22px;
+    border-right: 1px solid var(--line);
+  }
+  .hub-stat:last-child { border-right: none; }
+  .hub-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .hub-stat-value {
+    font-size: 32px; font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+  }
+  .hub-stat-value .of { color: var(--text3); font-size: 16px; font-weight: 400; }
+  .hub-stat-value.accent { color: var(--accent); }
+  .hub-stat-meta {
+    font-size: 11.5px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+
+  .hub-groups {
+    display: flex; flex-direction: column; gap: 32px;
+    margin-bottom: 16px;
+  }
+  .hub-group {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .hub-group-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-group-head-left {
+    display: flex; align-items: baseline; gap: 14px;
+    flex-wrap: wrap;
+  }
+  .hub-group-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  .hub-group-tag.b { color: var(--secondary); }
+  .hub-group-tag.c { color: var(--dept-am); }
+  .hub-group-name {
+    font-size: 17px; font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .hub-group-desc {
+    font-size: 12px; color: var(--text2);
+  }
+  .hub-group-stats {
+    display: flex; gap: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text3);
+  }
+  .hub-group-stats span strong { color: var(--text); font-weight: 600; }
+
+  .hub-dept-row {
+    display: grid;
+    grid-template-columns: 36px 1fr 130px 110px 90px 80px 80px 110px 30px;
+    align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: background 0.12s;
+    gap: 14px;
+  }
+  .hub-dept-row:last-child { border-bottom: none; }
+  .hub-dept-row:hover { background: var(--paper2); }
+  .hub-dept-row.header {
+    background: var(--bg2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 11px 24px;
+    cursor: default;
+  }
+  .hub-dept-row.header:hover { background: var(--bg2); }
+
+  .hub-dept-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+  .hub-dept-name {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 600; font-size: 14.5px;
+    letter-spacing: -0.005em;
+  }
+  .hub-dept-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .hub-dept-tool {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text2);
+  }
+  .hub-dept-tool.tbd { color: var(--text3); font-style: italic; }
+  .hub-dept-owner {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--text);
+    font-weight: 500;
+  }
+  .hub-dept-owner.tbd { color: var(--text3); font-style: italic; font-weight: 400; }
+  .hub-dept-owner-avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    color: white; font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .hub-dept-owner-avatar.am { background: linear-gradient(135deg, var(--accent), #a01730); }
+  .hub-dept-owner-avatar.tbd {
+    background: var(--bg3); border: 1px dashed var(--line3);
+    color: var(--text3);
+  }
+  .hub-dept-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--text2);
+    font-variant-numeric: tabular-nums;
+  }
+  .hub-dept-cell.right { text-align: right; }
+  .hub-dept-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    display: inline-block;
+  }
+  .hub-dept-status.live {
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid rgba(227,31,61,0.25);
+  }
+  .hub-dept-status.draft {
+    background: rgba(232,181,71,0.1); color: var(--dept-am);
+    border: 1px solid rgba(232,181,71,0.25);
+  }
+  .hub-dept-status.queue {
+    background: rgba(255,255,255,0.03); color: var(--text3);
+    border: 1px solid var(--line2);
+  }
+  .hub-dept-progress {
+    width: 100%; height: 4px;
+    background: var(--line); border-radius: 2px;
+    overflow: hidden;
+  }
+  .hub-dept-progress-fill {
+    height: 100%; background: var(--accent); border-radius: 2px;
+  }
+  .hub-dept-arrow {
+    color: var(--text3); text-align: right; font-size: 14px;
+    transition: all 0.15s;
+  }
+  .hub-dept-row:hover .hub-dept-arrow { color: var(--accent); transform: translateX(2px); }
+
+  .hub-quad {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 56px;
+  }
+  .hub-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 26px;
+  }
+  .hub-card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-card-title {
+    font-size: 14px; font-weight: 600; letter-spacing: -0.005em;
+  }
+  .hub-card-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hub-deliv-item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+    padding: 10px 0;
+    align-items: center;
+    border-bottom: 1px dashed var(--line);
+  }
+  .hub-deliv-item:last-child { border-bottom: none; }
+  .hub-deliv-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent); font-weight: 700;
+  }
+  .hub-deliv-marker.q { color: var(--text3); }
+  .hub-deliv-text { font-size: 13px; color: var(--text); font-weight: 400; }
+  .hub-deliv-end {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--text3); letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  .hub-decision {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: center;
+  }
+  .hub-decision:last-child { border-bottom: none; }
+  .hub-decision-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text3); font-weight: 600;
+  }
+  .hub-decision-title {
+    font-size: 13.5px; font-weight: 600; letter-spacing: -0.005em;
+    margin-bottom: 3px;
+  }
+  .hub-decision-detail {
+    font-size: 12px; color: var(--text2); line-height: 1.5;
+  }
+  .hub-decision-owner {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border: 1px solid rgba(227,31,61,0.2);
+    border-radius: 3px;
+  }
+
+  .hub-arch-wrap {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 26px 30px;
+  }
+  .hub-arch-intro {
+    font-size: 13.5px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    max-width: 760px;
+  }
+  .hub-arch-intro strong { color: var(--accent); font-weight: 600; }
+  .hub-arch-svg-wrap {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 24px;
+  }
+
+  /* ============================================================ */
+  /* ===== DEPARTMENT DETAIL ===== */
+  /* ============================================================ */
+  .det {
+    max-width: 1280px; margin: 0 auto; padding: 28px 28px 80px;
+  }
+
+  .det-breadcrumb {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text3);
+    margin-bottom: 22px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .det-breadcrumb a { color: var(--text3); cursor: pointer; }
+  .det-breadcrumb a:hover { color: var(--text); }
+  .det-breadcrumb .sep { color: var(--text3); opacity: 0.5; }
+  .det-breadcrumb .current { color: var(--accent); }
+
+  .det-header {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .det-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 280px at top right, rgba(227,31,61,0.08), transparent 70%),
+      radial-gradient(ellipse 400px 200px at bottom left, rgba(47,99,175,0.05), transparent 70%);
+    pointer-events: none;
+  }
+  .det-header.scaffold::before {
+    background:
+      radial-gradient(ellipse 600px 280px at top right, rgba(232,181,71,0.05), transparent 70%);
+  }
+  .det-header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; position: relative;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .det-id {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .det-id-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .det-id-dot.scaffold {
+    background: var(--dept-am);
+    box-shadow: 0 0 0 4px rgba(232,181,71,0.15);
+  }
+  .det-id-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .det-id-text.scaffold { color: var(--dept-am); }
+  .det-header-actions {
+    display: flex; gap: 8px;
+  }
+  .det-btn {
+    padding: 7px 14px;
+    border: 1px solid var(--line2);
+    background: var(--bg3); color: var(--text);
+    border-radius: 6px; font-family: inherit;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+  }
+  .det-btn:hover { border-color: var(--text3); }
+  .det-btn.primary {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+
+  .det-title {
+    font-size: 36px; font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    position: relative;
+    max-width: 720px;
+  }
+  .det-title em { color: var(--accent); font-style: italic; font-weight: 500; }
+  .det-title em.scaffold { color: var(--dept-am); }
+  .det-deck {
+    font-size: 14.5px;
+    color: var(--text2);
+    line-height: 1.55;
+    max-width: 720px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .det-deck strong { color: var(--text); font-weight: 600; }
+
+  .det-tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    position: relative;
+  }
+  .det-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--line2);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .det-tag.live {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: rgba(227,31,61,0.2);
+  }
+  .det-tag.blue {
+    background: var(--secondary-soft);
+    color: var(--secondary);
+    border-color: rgba(47,99,175,0.2);
+  }
+  .det-tag.amber {
+    background: rgba(232,181,71,0.1);
+    color: var(--dept-am);
+    border-color: rgba(232,181,71,0.25);
+  }
+
+  .det-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .det-stat {
+    background: var(--paper);
+    padding: 16px 18px;
+  }
+  .det-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .det-stat-value {
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 4px;
+  }
+  .det-stat-value .of { color: var(--text3); font-size: 14px; font-weight: 400; }
+  .det-stat-meta {
+    font-size: 11px; color: var(--text2);
+    font-weight: 500;
+  }
+  .det-stat-meta.accent { color: var(--accent); }
+  .det-stat-value.accent { color: var(--accent); }
+  .det-stat-value.amber { color: var(--dept-am); }
+
+  .det-body {
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .det-panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .det-panel-head {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg2);
+  }
+  .det-panel-head-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .det-panel-head-title::before {
+    content: '▌'; color: var(--accent);
+  }
+  .det-panel-head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--text3);
+  }
+
+  .det-deliv {
+    display: grid; grid-template-columns: 36px 1fr auto; gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .det-deliv:last-child { border-bottom: none; }
+  .det-deliv:hover { background: var(--paper2); }
+  .det-deliv-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text3); font-weight: 500;
+  }
+  .det-deliv-body { min-width: 0; }
+  .det-deliv-name {
+    font-size: 13.5px; font-weight: 500; margin-bottom: 3px;
+    display: flex; align-items: center; gap: 8px;
+    letter-spacing: -0.005em;
+  }
+  .det-deliv-name .arrow {
+    color: var(--text3); font-size: 12px;
+    transition: all 0.15s;
+  }
+  .det-deliv:hover .det-deliv-name .arrow { color: var(--accent); }
+  .det-deliv-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--text3);
+    font-weight: 400;
+  }
+  .det-deliv-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; padding: 4px 9px; border-radius: 3px;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid;
+  }
+  .det-deliv-status.ready {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: rgba(227,31,61,0.25);
+  }
+  .det-deliv-status.draft {
+    background: rgba(232,181,71,0.1);
+    color: var(--dept-am);
+    border-color: rgba(232,181,71,0.25);
+  }
+  .det-deliv-status.queue {
+    background: var(--bg3);
+    color: var(--text3);
+    border-color: var(--line2);
+  }
+
+  .det-side {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .det-side-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .det-side-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .det-side-label-l {
+    display: flex; align-items: center; gap: 7px;
+  }
+  .det-side-label-l::before {
+    content: '▌'; color: var(--accent);
+  }
+  .det-side-label-pill {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 7px;
+    border-radius: 100px;
+    font-weight: 700;
+  }
+
+  .det-people {
+    display: flex; flex-direction: column; gap: 9px;
+  }
+  .det-person {
+    display: flex; gap: 11px; align-items: center;
+    font-size: 13px;
+  }
+  .det-person-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    color: white; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .det-person-avatar.a1 { background: linear-gradient(135deg, #e31f3d, #a01730); }
+  .det-person-avatar.a2 { background: linear-gradient(135deg, #2f63af, #1e3f73); }
+  .det-person-avatar.a3 { background: linear-gradient(135deg, #9D7CE0, #6d52a8); }
+  .det-person-avatar.a4 { background: linear-gradient(135deg, #5DC4A8, #3f8b75); }
+  .det-person-avatar.tbd {
+    background: var(--bg3); border: 1px dashed var(--line3);
+    color: var(--text3);
+  }
+  .det-person-name {
+    font-weight: 600; letter-spacing: -0.005em;
+  }
+  .det-person-role {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text3); font-size: 10.5px; margin-left: auto;
+    font-weight: 500;
+  }
+
+  .det-decision-line {
+    display: grid; grid-template-columns: auto 1fr; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px; color: var(--text2);
+    line-height: 1.45;
+  }
+  .det-decision-line:last-child { border-bottom: none; }
+  .det-decision-line-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .det-dep {
+    font-size: 12.5px; color: var(--text2);
+    line-height: 1.7;
+  }
+  .det-dep strong { color: var(--text); font-weight: 600; }
+  .det-dep .arrow { color: var(--accent); margin-right: 4px; }
+
+  .det-log {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .det-log-line {
+    display: grid; grid-template-columns: 80px 90px 1fr;
+    padding: 11px 22px;
+    border-bottom: 1px solid var(--line);
+    gap: 14px; align-items: baseline;
+    font-size: 12.5px;
+  }
+  .det-log-line:last-child { border-bottom: none; }
+  .det-log-time {
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+  }
+  .det-log-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .det-log-tag.deploy { color: var(--dept-ops); }
+  .det-log-tag.review { color: var(--dept-am); }
+  .det-log-tag.input { color: var(--secondary); }
+  .det-log-tag.system { color: var(--text3); }
+  .det-log-msg { color: var(--text); }
+  .det-log-msg .ref { color: var(--accent); font-weight: 600; }
+
+  /* ===== SCAFFOLD-SPECIFIC ===== */
+  .scaffold-notice {
+    background: rgba(232,181,71,0.05);
+    border: 1px solid rgba(232,181,71,0.2);
+    border-left: 3px solid var(--dept-am);
+    padding: 18px 22px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+  }
+  .scaffold-notice-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--dept-am);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .scaffold-notice-label::before {
+    content: '▲';
+  }
+  .scaffold-notice-body {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.55;
+  }
+  .scaffold-notice-body strong { color: var(--text); font-weight: 600; }
+
+  .scaffold-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+  }
+  .scaffold-section-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .scaffold-section-head::before {
+    content: '▌';
+  }
+  .scaffold-section h2 {
+    font-size: 20px; font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+  }
+  .scaffold-section p {
+    font-size: 13.5px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .scaffold-section p strong { color: var(--text); font-weight: 600; }
+
+  .hypo-list {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .hypo-item {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: start;
+  }
+  .hypo-item:last-child { border-bottom: none; }
+  .hypo-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+  .hypo-title {
+    font-size: 13.5px; font-weight: 600;
+    margin-bottom: 3px;
+    letter-spacing: -0.005em;
+  }
+  .hypo-detail {
+    font-size: 12.5px; color: var(--text2);
+    line-height: 1.55;
+  }
+
+  .method-step {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .method-step:last-child { border-bottom: none; }
+  .method-step-num {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    width: 36px;
+  }
+  .method-step-title {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .method-step-detail {
+    font-size: 12.5px; color: var(--text2);
+    line-height: 1.55;
+  }
+
+  /* ===== STRATEGIC PAGE SPECIFIC ===== */
+  .strat-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 18px;
+  }
+  .strat-section h2 {
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .strat-section h2 em { color: var(--accent); font-style: italic; }
+  .strat-section p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 14px;
+    max-width: 760px;
+  }
+  .strat-section p strong { color: var(--text); font-weight: 600; }
+  .strat-section h3 {
+    font-size: 14px; font-weight: 700;
+    margin-top: 24px; margin-bottom: 10px;
+    letter-spacing: -0.005em;
+  }
+
+  .phase-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .phase-card {
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 24px;
+    position: relative;
+  }
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    border-radius: 8px 8px 0 0;
+    opacity: 0.4;
+  }
+  .phase-card.p2::before { opacity: 0.7; }
+  .phase-card.p3::before { opacity: 1; }
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .phase-title {
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.015em;
+  }
+  .phase-window {
+    font-size: 11px; color: var(--text3);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .phase-body {
+    font-size: 12.5px; color: var(--text2);
+    line-height: 1.6;
+  }
+  .phase-body strong { color: var(--text); font-weight: 600; }
+
+  .strat-principle {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .strat-principle:last-child { border-bottom: none; }
+  .strat-principle-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    padding-top: 2px;
+    width: 36px;
+  }
+  .strat-principle-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    letter-spacing: -0.005em;
+  }
+  .strat-principle-detail {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.55;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 960px) {
+    .hub-hero-row { grid-template-columns: 1fr; gap: 28px; }
+    .hub-hero h1 { font-size: 38px; }
+    .hub-stats { grid-template-columns: 1fr 1fr; }
+    .hub-stat:nth-child(odd) { border-right: 1px solid var(--line); }
+    .hub-quad { grid-template-columns: 1fr; }
+    .hub-dept-row { grid-template-columns: 28px 1fr 90px 70px; }
+    .hub-dept-row > *:nth-child(n+5) { display: none; }
+    .det-stats { grid-template-columns: 1fr 1fr; }
+    .det-body { grid-template-columns: 1fr; }
+    .det-title { font-size: 28px; }
+    .topnav { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+    .topnav-status { display: none; }
+    .phase-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOPNAV ===== -->
+<nav class="topnav">
+  <div class="topnav-brand" onclick="showStage('hub')">
+    <div class="topnav-mark">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7h2.5L5.5 4 7 11l1.5-5 .5 1h2.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="topnav-name">Hivelocity AITP <span class="dim">/ Console</span></div>
+  </div>
+
+  <div class="topnav-tabs">
+    <button class="topnav-tab active" data-stage="hub" onclick="showStage('hub')">Overview</button>
+    <button class="topnav-tab" data-stage="csm" onclick="showStage('csm')"><span class="dot" style="background: var(--dept-csm);"></span>CSM</button>
+    <button class="topnav-tab" data-stage="se" onclick="showStage('se')"><span class="dot" style="background: var(--dept-se);"></span>SE</button>
+    <button class="topnav-tab" data-stage="sdr" onclick="showStage('sdr')"><span class="dot" style="background: var(--dept-sdr);"></span>SDR</button>
+    <button class="topnav-tab" data-stage="am" onclick="showStage('am')"><span class="dot" style="background: var(--dept-am);"></span>AM</button>
+    <button class="topnav-tab" data-stage="ops" onclick="showStage('ops')"><span class="dot" style="background: var(--dept-ops);"></span>Sales Ops</button>
+    <button class="topnav-tab" data-stage="strategic" onclick="showStage('strategic')"><span class="dot" style="background: var(--accent);"></span>Strategic / HIP</button>
+  </div>
+
+  <div class="topnav-status">
+    <span class="live">PHASE 0 · ACTIVE</span>
+    <span>v1.0 · 04.30.26</span>
+  </div>
+</nav>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: HUB OVERVIEW ===== -->
+<!-- ============================================================ -->
+<div class="stage active" id="stage-hub">
+<div class="hub">
+
+  <div class="hub-hero">
+    <div class="hub-hero-row">
+      <div>
+        <div class="hub-doc-id">Document HVCT-AITP-001 · Phase 0 Dossier · v1.0</div>
+        <h1>Hivelocity AI <span class="accent">Transformation Plan</span></h1>
+        <p class="hub-hero-deck">A four-week scoped engagement producing an integration-partner-ready transformation roadmap. The revenue cluster is detailed at full depth as a reference implementation. The remaining departments are mapped at the strategic-framing level, with a uniform discovery methodology that any qualified partner can apply identically.</p>
+      </div>
+
+      <div class="hub-hero-meta">
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Operator</span><span class="hub-hero-meta-value">A. Matei</span></div>
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Sponsor</span><span class="hub-hero-meta-value">M. Schatz · CRO</span></div>
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Phase</span><span class="hub-hero-meta-value accent">00 · Discovery</span></div>
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Window</span><span class="hub-hero-meta-value">04 weeks</span></div>
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Departments</span><span class="hub-hero-meta-value">12 total / 5 deep</span></div>
+        <div class="hub-hero-meta-row"><span class="hub-hero-meta-label">Status</span><span class="hub-hero-meta-value accent">▲ Active</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hub-stats">
+    <div class="hub-stat">
+      <div class="hub-stat-label">Deliverables</div>
+      <div class="hub-stat-value tnum">5<span class="of"> / 14</span></div>
+      <div class="hub-stat-meta">on track · 4-wk runway</div>
+    </div>
+    <div class="hub-stat">
+      <div class="hub-stat-label">Interviews</div>
+      <div class="hub-stat-value tnum">1<span class="of"> / 8</span></div>
+      <div class="hub-stat-meta">3 confirmed pending</div>
+    </div>
+    <div class="hub-stat">
+      <div class="hub-stat-label">Deep tracks</div>
+      <div class="hub-stat-value tnum">5</div>
+      <div class="hub-stat-meta">CSM · SE · SDR · AM · Ops</div>
+    </div>
+    <div class="hub-stat">
+      <div class="hub-stat-label">Scaffolded</div>
+      <div class="hub-stat-value tnum">7</div>
+      <div class="hub-stat-meta">Discovery method ready</div>
+    </div>
+    <div class="hub-stat">
+      <div class="hub-stat-label">Phase 1 budget</div>
+      <div class="hub-stat-value accent tnum">$0</div>
+      <div class="hub-stat-meta">Existing tools · no IT dep</div>
+    </div>
+  </div>
+
+  <div class="hub-section">
+    <div class="hub-section-head">
+      <div>
+        <div class="hub-section-id">§ 02 · Departments</div>
+        <div class="hub-section-title">Departmental <em>tracker</em></div>
+      </div>
+      <div class="hub-section-meta">5 deep / 6 scaffold / 1 umbrella</div>
+    </div>
+
+    <div class="hub-groups">
+
+      <div class="hub-group">
+        <div class="hub-group-head">
+          <div class="hub-group-head-left">
+            <span class="hub-group-tag">▌ Group A · Revenue Cluster</span>
+            <span class="hub-group-name">Detailed at full depth</span>
+            <span class="hub-group-desc">— reference implementation for the methodology</span>
+          </div>
+          <div class="hub-group-stats">
+            <span><strong>5</strong> departments</span>
+            <span><strong>14</strong> deliverables</span>
+            <span><strong>1/8</strong> interviews</span>
+          </div>
+        </div>
+
+        <div class="hub-dept-row header">
+          <div></div><div>Department</div><div>Tool</div><div>Owner</div><div>Status</div>
+          <div class="hub-dept-cell right">Items</div><div class="hub-dept-cell right">Interviews</div>
+          <div>Progress</div><div></div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('csm')">
+          <div class="hub-dept-id">01</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-csm)"></span>Customer Success</div>
+          <div class="hub-dept-tool">Customer Pulse</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status live">Active</span></div>
+          <div class="hub-dept-cell right">5/9</div>
+          <div class="hub-dept-cell right">1/4</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 60%"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('se')">
+          <div class="hub-dept-id">02</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-se)"></span>Solutions Engineering</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status draft">Drafting</span></div>
+          <div class="hub-dept-cell right">0/3</div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 18%; background: var(--dept-se);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('sdr')">
+          <div class="hub-dept-id">03</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-sdr)"></span>Sales Development</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status draft">Drafting</span></div>
+          <div class="hub-dept-cell right">0/3</div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 12%; background: var(--dept-sdr);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('am')">
+          <div class="hub-dept-id">04</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-am)"></span>Account Management</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status draft">Drafting</span></div>
+          <div class="hub-dept-cell right">0/3</div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 10%; background: var(--dept-am);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('ops')">
+          <div class="hub-dept-id">05</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-ops)"></span>Sales Operations</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status draft">Drafting</span></div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 8%; background: var(--dept-ops);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="hub-group">
+        <div class="hub-group-head">
+          <div class="hub-group-head-left">
+            <span class="hub-group-tag b">▌ Group B · Operations &amp; Customer</span>
+            <span class="hub-group-name">Strategic-framing scaffold</span>
+            <span class="hub-group-desc">— uniform discovery methodology, partner executes</span>
+          </div>
+          <div class="hub-group-stats">
+            <span><strong>6</strong> departments</span>
+            <span><strong>12</strong> deliverables</span>
+            <span>method ready</span>
+          </div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">06</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-support)"></span>Customer Support</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 30%; background: var(--dept-support);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">07</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-billing)"></span>Billing &amp; Collections</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 30%; background: var(--dept-billing);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">08</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-product)"></span>Product</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 25%; background: var(--dept-product);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">09</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-marketing)"></span>Marketing</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 25%; background: var(--dept-marketing);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">10</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-dcops)"></span>DC &amp; Network Operations</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-cell right">0/1</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 20%; background: var(--dept-dcops);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+
+        <div class="hub-dept-row">
+          <div class="hub-dept-id">11</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-finance)"></span>Finance · IT · HR</div>
+          <div class="hub-dept-tool tbd">— TBD —</div>
+          <div class="hub-dept-owner tbd"><span class="hub-dept-owner-avatar tbd">?</span>TBD</div>
+          <div><span class="hub-dept-status queue">Queued</span></div>
+          <div class="hub-dept-cell right">0/3</div>
+          <div class="hub-dept-cell right">0/2</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 15%; background: var(--dept-finance);"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="hub-group">
+        <div class="hub-group-head">
+          <div class="hub-group-head-left">
+            <span class="hub-group-tag c">▌ Group C · Umbrella</span>
+            <span class="hub-group-name">Cross-cutting strategic vision</span>
+            <span class="hub-group-desc">— governs every department track</span>
+          </div>
+          <div class="hub-group-stats">
+            <span><strong>1</strong> track</span>
+            <span><strong>3</strong> deliverables</span>
+            <span>HIP master plan</span>
+          </div>
+        </div>
+
+        <div class="hub-dept-row" onclick="showStage('strategic')">
+          <div class="hub-dept-id">12</div>
+          <div class="hub-dept-name"><span class="hub-dept-dot" style="background: var(--dept-strategic)"></span>Strategic Vision · HIP</div>
+          <div class="hub-dept-tool">HIP backbone</div>
+          <div class="hub-dept-owner"><span class="hub-dept-owner-avatar am">AM</span>A. Matei</div>
+          <div><span class="hub-dept-status draft">Drafting</span></div>
+          <div class="hub-dept-cell right">1/3</div>
+          <div class="hub-dept-cell right">—</div>
+          <div class="hub-dept-progress"><div class="hub-dept-progress-fill" style="width: 40%"></div></div>
+          <div class="hub-dept-arrow">→</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hub-quad">
+    <div class="hub-card">
+      <div class="hub-card-head">
+        <div class="hub-card-title">Recently shipped</div>
+        <div class="hub-card-meta">§ 03.1 · last 24h</div>
+      </div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker">✓</span><span class="hub-deliv-text">Leadership memo · State of CSM v1.0 final</span><span class="hub-deliv-end">23:48</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker">✓</span><span class="hub-deliv-text">Synopsis card · Findings at a glance</span><span class="hub-deliv-end">20:11</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker">✓</span><span class="hub-deliv-text">Customer Pulse v0.1 dashboard concept</span><span class="hub-deliv-end">19:34</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker">✓</span><span class="hub-deliv-text">Team interview kit · Bob, Diana, Abel</span><span class="hub-deliv-end">20:15</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker">✓</span><span class="hub-deliv-text">Kelly Eller validation · 33 corrections</span><span class="hub-deliv-end">22:14</span></div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-card-head">
+        <div class="hub-card-title">Queued · this week</div>
+        <div class="hub-card-meta">§ 03.2 · next 7d</div>
+      </div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker q">○</span><span class="hub-deliv-text">Bob · interview &amp; findings memo</span><span class="hub-deliv-end">MON</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker q">○</span><span class="hub-deliv-text">Diana · interview &amp; findings memo</span><span class="hub-deliv-end">TUE</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker q">○</span><span class="hub-deliv-text">Abel · interview &amp; findings memo</span><span class="hub-deliv-end">TUE</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker q">○</span><span class="hub-deliv-text">CSM holistic team report</span><span class="hub-deliv-end">WED</span></div>
+      <div class="hub-deliv-item"><span class="hub-deliv-marker q">○</span><span class="hub-deliv-text">CRO review · Matt Schatz</span><span class="hub-deliv-end">WED</span></div>
+    </div>
+  </div>
+
+  <div class="hub-section">
+    <div class="hub-section-head">
+      <div>
+        <div class="hub-section-id">§ 04 · Open decisions</div>
+        <div class="hub-section-title">Five awaiting <em>leadership input</em></div>
+      </div>
+      <div class="hub-section-meta">Block items · partner cannot execute without resolution</div>
+    </div>
+
+    <div class="hub-card" style="padding: 4px 26px;">
+      <div class="hub-decision">
+        <div class="hub-decision-num">D-01</div>
+        <div>
+          <div class="hub-decision-title">QBR builder · UberSmith export workaround</div>
+          <div class="hub-decision-detail">Browser automation (e.g., Claude CoWork) vs. structured paste-template approach. Either path requires IT review.</div>
+        </div>
+        <div class="hub-decision-owner">IT · CRO</div>
+      </div>
+      <div class="hub-decision">
+        <div class="hub-decision-num">D-02</div>
+        <div>
+          <div class="hub-decision-title">CSM segmentation review</div>
+          <div class="hub-decision-detail">Current tier model (Bob/Diana/Kelly/Abel) likely needs holistic redesign. Outside scope of this engagement; partner needs leadership decision before Phase 2.</div>
+        </div>
+        <div class="hub-decision-owner">CRO · Ops</div>
+      </div>
+      <div class="hub-decision">
+        <div class="hub-decision-num">D-03</div>
+        <div>
+          <div class="hub-decision-title">Phase 2 ownership</div>
+          <div class="hub-decision-detail">Internal hire · external integration partner · hybrid. Decision affects all 12 department tracks and HIP backbone build sequence.</div>
+        </div>
+        <div class="hub-decision-owner">CRO · CFO</div>
+      </div>
+      <div class="hub-decision">
+        <div class="hub-decision-num">D-04</div>
+        <div>
+          <div class="hub-decision-title">Live price sheet · Products dependency</div>
+          <div class="hub-decision-detail">Long-standing internal request. Blocking for cross-functional pricing comparison module across CSM/AM/SDR tools.</div>
+        </div>
+        <div class="hub-decision-owner">PRODUCTS</div>
+      </div>
+      <div class="hub-decision">
+        <div class="hub-decision-num">D-05</div>
+        <div>
+          <div class="hub-decision-title">IT relationship strategy</div>
+          <div class="hub-decision-detail">Current posture is detractor-not-partner. Affects 30+ blocked operational improvements across the org and every department's tooling roadmap.</div>
+        </div>
+        <div class="hub-decision-owner">CRO · CTO</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hub-section">
+    <div class="hub-section-head">
+      <div>
+        <div class="hub-section-id">§ 05 · Architecture</div>
+        <div class="hub-section-title">Federated tools · <em>shared backbone</em></div>
+      </div>
+      <div class="hub-section-meta">L3 / L2 / L1 layers</div>
+    </div>
+
+    <div class="hub-arch-wrap">
+      <p class="hub-arch-intro">
+        Each department gets a tool tailored to its workflow at the surface layer. A shared AI and data backbone — the <strong>Hivelocity Intelligence Platform (HIP)</strong> — sits beneath, providing unified customer identity, model services, governance, and cross-team workflows. Existing systems of record continue to operate as sources of truth.
+      </p>
+
+      <div class="hub-arch-svg-wrap">
+        <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+          <defs>
+            <linearGradient id="hub-hip-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#e31f3d" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#2f63af" stop-opacity="0.05"/>
+            </linearGradient>
+          </defs>
+          <text x="20" y="34" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" font-weight="600">L3 · DEPARTMENT TOOLS</text>
+          <g><rect x="20" y="48" width="150" height="58" rx="6" fill="rgba(227,31,61,0.06)" stroke="#e31f3d" stroke-width="1.4"/><text x="35" y="70" fill="#e31f3d" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">▌ CSM</text><text x="35" y="90" fill="#e7e9f0" font-family="Inter, sans-serif" font-size="14" font-weight="600">Customer Pulse</text></g>
+          <g><rect x="184" y="48" width="150" height="58" rx="6" fill="#161A29" stroke="#2C3243" stroke-width="1"/><text x="199" y="70" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">SOLUTIONS ENG</text><text x="199" y="90" fill="#a8aebd" font-family="Inter, sans-serif" font-size="13" font-weight="500">SE Tool · TBD</text></g>
+          <g><rect x="348" y="48" width="150" height="58" rx="6" fill="#161A29" stroke="#2C3243" stroke-width="1"/><text x="363" y="70" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">SDR</text><text x="363" y="90" fill="#a8aebd" font-family="Inter, sans-serif" font-size="13" font-weight="500">SDR Tool · TBD</text></g>
+          <g><rect x="512" y="48" width="150" height="58" rx="6" fill="#161A29" stroke="#2C3243" stroke-width="1"/><text x="527" y="70" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">ACCOUNT MGMT</text><text x="527" y="90" fill="#a8aebd" font-family="Inter, sans-serif" font-size="13" font-weight="500">AM Tool · TBD</text></g>
+          <g><rect x="676" y="48" width="150" height="58" rx="6" fill="#161A29" stroke="#2C3243" stroke-width="1"/><text x="691" y="70" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">SALES OPS</text><text x="691" y="90" fill="#a8aebd" font-family="Inter, sans-serif" font-size="13" font-weight="500">Ops Tool · TBD</text></g>
+          <g><rect x="840" y="48" width="140" height="58" rx="6" fill="#161A29" stroke="#2C3243" stroke-width="1" stroke-dasharray="4 3"/><text x="855" y="70" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">+ 6 OTHERS</text><text x="855" y="90" fill="#6f7689" font-family="Inter, sans-serif" font-size="12" font-weight="500">Discovery</text></g>
+          <g stroke="#2C3243" stroke-width="1" fill="none">
+            <path d="M95 106 L95 145"/><path d="M259 106 L259 145"/><path d="M423 106 L423 145"/>
+            <path d="M587 106 L587 145"/><path d="M751 106 L751 145"/><path d="M910 106 L910 145" stroke-dasharray="3 3"/>
+          </g>
+          <text x="20" y="170" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" font-weight="600">L2 · INTELLIGENCE PLATFORM</text>
+          <g>
+            <rect x="20" y="184" width="960" height="76" rx="8" fill="url(#hub-hip-grad)"/>
+            <rect x="20" y="184" width="960" height="76" rx="8" fill="none" stroke="#e31f3d" stroke-width="1.4"/>
+            <text x="40" y="208" fill="#e31f3d" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2" font-weight="700">▌ HIVELOCITY INTELLIGENCE PLATFORM · HIP</text>
+            <text x="40" y="232" fill="#e7e9f0" font-family="Inter, sans-serif" font-size="15" font-weight="600">Shared data backbone · AI services · governance · cross-team workflows</text>
+            <text x="40" y="251" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="11">unified customer ID · entity resolution · model layer · audit trail · access control</text>
+          </g>
+          <g stroke="#2C3243" stroke-width="1" fill="none">
+            <path d="M150 260 L150 295"/><path d="M340 260 L340 295"/><path d="M530 260 L530 295"/>
+            <path d="M720 260 L720 295"/><path d="M880 260 L880 295"/>
+          </g>
+          <text x="20" y="290" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" font-weight="600">L1 · SYSTEMS OF RECORD</text>
+          <g><rect x="60" y="304" width="180" height="44" rx="6" fill="#11151F" stroke="#232838" stroke-width="1"/><text x="75" y="322" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" font-weight="600">UBERSMITH</text><text x="75" y="338" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10">inventory · billing</text></g>
+          <g><rect x="250" y="304" width="180" height="44" rx="6" fill="#11151F" stroke="#232838" stroke-width="1"/><text x="265" y="322" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" font-weight="600">HUBSPOT</text><text x="265" y="338" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10">crm · deals · contacts</text></g>
+          <g><rect x="440" y="304" width="180" height="44" rx="6" fill="#11151F" stroke="#232838" stroke-width="1"/><text x="455" y="322" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" font-weight="600">ZENDESK</text><text x="455" y="338" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10">tickets · sentiment</text></g>
+          <g><rect x="630" y="304" width="180" height="44" rx="6" fill="#11151F" stroke="#232838" stroke-width="1"/><text x="645" y="322" fill="#a8aebd" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" font-weight="600">CONFLUENCE</text><text x="645" y="338" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10">docs · runbooks</text></g>
+          <g><rect x="820" y="304" width="160" height="44" rx="6" fill="#11151F" stroke="#232838" stroke-width="1" stroke-dasharray="4 3"/><text x="835" y="322" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" font-weight="600">TEAMS · SLACK · …</text><text x="835" y="338" fill="#6f7689" font-family="JetBrains Mono, monospace" font-size="10">+ 8 more</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: CSM (FULLY POPULATED) ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-csm">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group A · Revenue</span>
+    <span class="sep">/</span>
+    <span class="current">Customer Success</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot"></div>
+        <div class="det-id-text">DEPT-01 · CUSTOMER SUCCESS · ACTIVE</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Strategy doc ↗</button>
+        <button class="det-btn primary">Open Customer Pulse →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Customer Success — <em>Customer Pulse</em></h1>
+    <p class="det-deck">The deepest-scoped department in this engagement, and the reference implementation that defines the methodology for every other team. Pilot user: <strong>Kelly Eller</strong> (Senior CSM, mid-market tier). Roll-out: full CSM team — Bob, Diana, Abel — post-discovery.</p>
+
+    <div class="det-tags">
+      <span class="det-tag live">● PHASE 0 · DISCOVERY</span>
+      <span class="det-tag blue">PILOT · K. ELLER</span>
+      <span class="det-tag">450–500 ACCOUNTS</span>
+      <span class="det-tag">$1K–$5K MRR TIER</span>
+      <span class="det-tag">TOOL · CUSTOMER PULSE</span>
+    </div>
+  </div>
+
+  <div class="det-stats">
+    <div class="det-stat">
+      <div class="det-stat-label">Deliverables</div>
+      <div class="det-stat-value tnum">5<span class="of"> / 9</span></div>
+      <div class="det-stat-meta accent">▲ 4 shipped · 4 queued</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Interviews</div>
+      <div class="det-stat-value tnum">1<span class="of"> / 4</span></div>
+      <div class="det-stat-meta">Bob confirmed · 2 pending</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Open decisions</div>
+      <div class="det-stat-value tnum">3</div>
+      <div class="det-stat-meta">2 partner-blocking</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Track progress</div>
+      <div class="det-stat-value accent tnum">60%</div>
+      <div class="det-stat-meta">on schedule</div>
+    </div>
+  </div>
+
+  <div class="det-body">
+    <div class="det-panel">
+      <div class="det-panel-head">
+        <div class="det-panel-head-title">Deliverables</div>
+        <div class="det-panel-head-meta">9 items · ordered for partner read</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">01</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Leadership memo · State of CSM at Hivelocity <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Validated by Kelly · 5 min read · v1.0 final</div>
+        </div>
+        <div class="det-deliv-status ready">Shipped</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">02</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Synopsis card · Findings at a glance <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Single-page · screen-share ready · 1 min scan</div>
+        </div>
+        <div class="det-deliv-status ready">Shipped</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">03</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Customer Pulse · v0.1 dashboard concept <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Interactive · 6 modules · CashMonkey + El Paso 911 demo</div>
+        </div>
+        <div class="det-deliv-status ready">Shipped</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">04</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Team interview kit · Bob, Diana, Abel <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">3 frameworks · 51 questions · synthesis method</div>
+        </div>
+        <div class="det-deliv-status ready">Shipped</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">05</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Bob · interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Scheduled Mon · synthesis within 24h post-interview</div>
+        </div>
+        <div class="det-deliv-status draft">Mon</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">06</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Diana · interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Pending invite · target Tue</div>
+        </div>
+        <div class="det-deliv-status queue">Queued</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">07</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Abel · interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Pending invite · target Tue</div>
+        </div>
+        <div class="det-deliv-status queue">Queued</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">08</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">CSM holistic team report <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Synthesis of 4 interviews · universal + tier-specific</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">09</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">CSM strategy doc &amp; build spec <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Full Customer Pulse Phase 1+2 spec for partner</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 3</div>
+      </div>
+    </div>
+
+    <div class="det-side">
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Stakeholders</span>
+          <span class="det-side-label-pill">4</span>
+        </div>
+        <div class="det-people">
+          <div class="det-person"><div class="det-person-avatar a1">KE</div><div class="det-person-name">Kelly Eller</div><div class="det-person-role">Pilot · Sr CSM</div></div>
+          <div class="det-person"><div class="det-person-avatar a2">BR</div><div class="det-person-name">Bob</div><div class="det-person-role">CSM · $0–$250</div></div>
+          <div class="det-person"><div class="det-person-avatar a3">DA</div><div class="det-person-name">Diana</div><div class="det-person-role">CSM · $250–$1K</div></div>
+          <div class="det-person"><div class="det-person-avatar a4">AB</div><div class="det-person-name">Abel</div><div class="det-person-role">BDR · revenue</div></div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Track decisions</span>
+          <span class="det-side-label-pill">3 OPEN</span>
+        </div>
+        <div class="det-decision-line">
+          <span class="det-decision-line-num">D-01</span>
+          <span>QBR builder UberSmith export workaround · IT review needed</span>
+        </div>
+        <div class="det-decision-line">
+          <span class="det-decision-line-num">D-02</span>
+          <span>CSM segmentation review · CRO + Ops</span>
+        </div>
+        <div class="det-decision-line">
+          <span class="det-decision-line-num">D-03</span>
+          <span>Phase 2 ownership · hire / agency / hybrid</span>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Dependencies</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> <strong>Products</strong> — live price sheet (cross-track)</div>
+          <div><span class="arrow">→</span> <strong>IT</strong> — Teams transcript access, UberSmith export</div>
+          <div><span class="arrow">→</span> <strong>SalesOps</strong> — HubSpot data hygiene</div>
+          <div><span class="arrow">→</span> <strong>HIP</strong> — backbone for Phase 2 integration</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="det-log">
+    <div class="det-panel-head">
+      <div class="det-panel-head-title">Execution log</div>
+      <div class="det-panel-head-meta">last 24h · CSM track only</div>
+    </div>
+    <div class="det-log-line"><div class="det-log-time">23:48</div><div class="det-log-tag deploy">deploy</div><div class="det-log-msg">Leadership memo <span class="ref">v1.0 final</span> shipped post Kelly validation</div></div>
+    <div class="det-log-line"><div class="det-log-time">22:14</div><div class="det-log-tag review">review</div><div class="det-log-msg">Kelly Eller follow-up validation · 33 corrections incorporated</div></div>
+    <div class="det-log-line"><div class="det-log-time">19:50</div><div class="det-log-tag deploy">deploy</div><div class="det-log-msg">Initial leadership memo draft · sent for stakeholder review</div></div>
+    <div class="det-log-line"><div class="det-log-time">19:34</div><div class="det-log-tag deploy">deploy</div><div class="det-log-msg">Customer Pulse v0.1 dashboard concept shipped · 6 modules</div></div>
+    <div class="det-log-line"><div class="det-log-time">15:45</div><div class="det-log-tag review">standup</div><div class="det-log-msg">SC team teaser · <span class="ref">Bob confirmed</span> for interview · Diana &amp; Abel pending</div></div>
+    <div class="det-log-line"><div class="det-log-time">14:20</div><div class="det-log-tag system">init</div><div class="det-log-msg">CSM track initialized · pilot user: <span class="ref">k.eller · sr csm</span></div></div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: SE (DEEP, EARLY DRAFT) ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-se">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group A · Revenue</span>
+    <span class="sep">/</span>
+    <span class="current">Solutions Engineering</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot" style="background: var(--dept-se); box-shadow: 0 0 0 4px rgba(47,99,175,0.15);"></div>
+        <div class="det-id-text" style="color: var(--dept-se);">DEPT-02 · SOLUTIONS ENGINEERING · DRAFTING</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Discovery method ↗</button>
+        <button class="det-btn primary">Schedule interviews →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Solutions Engineering — <em style="color: var(--dept-se);">SE Tool · TBD</em></h1>
+    <p class="det-deck">The bridge between sales discovery and technical configuration. SEs translate customer intent into proposals, validate technical fit, and serve as the trusted technical voice in late-stage deal motion. <strong>Owner: Andrei Matei</strong> — partial direct experience as a current SE in this org enables a credible scope. Co-interviewer recommended for objectivity.</p>
+
+    <div class="det-tags">
+      <span class="det-tag amber">PHASE 0 · DRAFTING</span>
+      <span class="det-tag">DEEP TRACK</span>
+      <span class="det-tag">~3 SEs</span>
+      <span class="det-tag">REPORTING TO CRO</span>
+      <span class="det-tag">TOOL · TBD</span>
+    </div>
+  </div>
+
+  <div class="det-stats">
+    <div class="det-stat">
+      <div class="det-stat-label">Deliverables planned</div>
+      <div class="det-stat-value tnum">3</div>
+      <div class="det-stat-meta">memo · interviews · build spec</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Interviews</div>
+      <div class="det-stat-value tnum">0<span class="of"> / 2</span></div>
+      <div class="det-stat-meta">SE peer · adjacent AE</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Hypotheses</div>
+      <div class="det-stat-value amber tnum">5</div>
+      <div class="det-stat-meta">based on direct experience</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Track progress</div>
+      <div class="det-stat-value tnum">18%</div>
+      <div class="det-stat-meta">scope locked · execution next</div>
+    </div>
+  </div>
+
+  <div class="scaffold-notice">
+    <div class="scaffold-notice-label">Discovery status</div>
+    <div class="scaffold-notice-body">
+      Owner has <strong>direct lived experience</strong> in this role at Hivelocity (~5 months). Hypotheses below are formed from that experience and require validation through peer interviews before being treated as findings. <strong>Two interviews planned</strong>: one peer SE for triangulation, one adjacent AE for cross-functional perspective on handoff quality.
+    </div>
+  </div>
+
+  <div class="det-body">
+    <div class="det-panel">
+      <div class="det-panel-head">
+        <div class="det-panel-head-title">Deliverables</div>
+        <div class="det-panel-head-meta">3 items · target wk 2–4</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">01</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SE peer interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Triangulation interview · validates owner hypotheses</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">02</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Adjacent AE interview &amp; cross-functional findings <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">SE-to-AE handoff quality · pre-sales workflow</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">03</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SE strategy doc &amp; tool build spec <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Hypotheses + interview findings synthesized for partner</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 4</div>
+      </div>
+    </div>
+
+    <div class="det-side">
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Stakeholders</span>
+          <span class="det-side-label-pill">3+</span>
+        </div>
+        <div class="det-people">
+          <div class="det-person"><div class="det-person-avatar a1">AM</div><div class="det-person-name">A. Matei</div><div class="det-person-role">Owner · SE</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">SE Peer</div><div class="det-person-role">Interview tgt</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">Adjacent AE</div><div class="det-person-role">Cross-func</div></div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Likely focus areas</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> Proposal generation automation</div>
+          <div><span class="arrow">→</span> Configuration sanity checking</div>
+          <div><span class="arrow">→</span> Technical research at speed</div>
+          <div><span class="arrow">→</span> Knowledge access during calls</div>
+          <div><span class="arrow">→</span> SE-to-PM handoff continuity</div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Cross-track touch</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> <strong>Sales (AE)</strong> — joint proposal motion</div>
+          <div><span class="arrow">→</span> <strong>Products</strong> — live price sheet shared dep</div>
+          <div><span class="arrow">→</span> <strong>DCOps</strong> — capacity verification</div>
+          <div><span class="arrow">→</span> <strong>HIP</strong> — knowledge layer shared</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scaffold-section">
+    <div class="scaffold-section-head">Hypotheses · pending validation</div>
+    <h2>What we expect to find</h2>
+    <p>Owner-formed hypotheses based on direct experience as an SE at Hivelocity. Each will be validated, refined, or rejected through peer interviews before being treated as findings.</p>
+
+    <ul class="hypo-list">
+      <li class="hypo-item">
+        <div class="hypo-num">H-01</div>
+        <div>
+          <div class="hypo-title">SEs spend more time data-hunting than solutioning</div>
+          <div class="hypo-detail">The same data fragmentation pattern observed in CSM (UberSmith / HubSpot / ContractWorks / Confluence / Slack across 5–7 systems) likely affects SE workflow even more acutely, since SEs need <em>technical</em> data alongside customer data.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-02</div>
+        <div>
+          <div class="hypo-title">Proposals are mostly manual reconstruction from precedent</div>
+          <div class="hypo-detail">Without a live price sheet (Decision D-04 from CSM track) and without a structured SKU library, every proposal is partially rebuilt from prior deals. Estimated 60–80% of proposal work is re-formatting prior content, not net-new technical thinking.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-03</div>
+        <div>
+          <div class="hypo-title">Configuration sanity checking is informal and risk-prone</div>
+          <div class="hypo-detail">No automated check that proposed configurations are physically deployable, contractually compliant, or pricing-coherent. SEs catch errors via experience, not systems. Errors that escape detection become customer-facing incidents post-sale.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-04</div>
+        <div>
+          <div class="hypo-title">Knowledge access during calls is "ask Kelly or Slack"</div>
+          <div class="hypo-detail">During live customer technical conversations, SEs cannot reliably look up DC capacity, networking config, RAID compatibility, etc. without putting the customer on hold or following up later. Same Confluence-is-stale problem CSM has, with higher cost.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-05</div>
+        <div>
+          <div class="hypo-title">SE-to-PM handoff loses critical customer context</div>
+          <div class="hypo-detail">Once a deal closes, SE context (objections, technical preferences, decision criteria, customer's actual reasoning) does not consistently transfer to PMO for deployment. Causes deployment friction and CSM onboarding gaps downstream.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="scaffold-section">
+    <div class="scaffold-section-head">Discovery methodology · uniform across all tracks</div>
+    <h2>How partner will execute discovery</h2>
+    <p>Same methodology that produced the CSM track, applied identically. Documented for execution by any qualified integration partner.</p>
+
+    <div class="method-step">
+      <div class="method-step-num">01</div>
+      <div>
+        <div class="method-step-title">Stakeholder interviews · 25-question structured framework</div>
+        <div class="method-step-detail">90 min per interviewee, recorded + transcribed. Question framework adapted to role from base CSM template. Minimum 2 interviews per track (peer + cross-functional).</div>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">02</div>
+      <div>
+        <div class="method-step-title">Artifact review</div>
+        <div class="method-step-detail">Inspect representative work artifacts (proposals, decks, internal docs, spreadsheets). Pattern detection for hidden data sources and cheat-sheet-style tribal knowledge.</div>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">03</div>
+      <div>
+        <div class="method-step-title">Hypothesis validation</div>
+        <div class="method-step-detail">Cross-reference findings against hypotheses on this page. Mark each as validated, refined, or rejected with evidence.</div>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">04</div>
+      <div>
+        <div class="method-step-title">Findings memo + stakeholder validation pass</div>
+        <div class="method-step-detail">Findings memo in same format as CSM v1.0. Validated by interviewees before partner-handoff to ensure factual accuracy.</div>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">05</div>
+      <div>
+        <div class="method-step-title">Strategy doc + build spec</div>
+        <div class="method-step-detail">Tool concept (analogous to Customer Pulse for CSM), Phase 1 + Phase 2 build sequence, integration points with HIP backbone, success metrics.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: SDR ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-sdr">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group A · Revenue</span>
+    <span class="sep">/</span>
+    <span class="current">Sales Development</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot" style="background: var(--dept-sdr); box-shadow: 0 0 0 4px rgba(157,124,224,0.15);"></div>
+        <div class="det-id-text" style="color: var(--dept-sdr);">DEPT-03 · SALES DEVELOPMENT · DRAFTING</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Discovery method ↗</button>
+        <button class="det-btn primary">Schedule interviews →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Sales Development — <em style="color: var(--dept-sdr);">SDR Tool · TBD</em></h1>
+    <p class="det-deck">Outbound prospecting, inbound qualification, signal-driven outreach. The team that creates pipeline and the most promising candidate in the revenue cluster for end-to-end AI-augmented (or fully AI-driven) workflow. <strong>Owner: Andrei Matei</strong> — adjacent visibility from SE seat. Direct SDR interviews critical for ground truth.</p>
+
+    <div class="det-tags">
+      <span class="det-tag amber">PHASE 0 · DRAFTING</span>
+      <span class="det-tag">DEEP TRACK</span>
+      <span class="det-tag">~2 SDRs</span>
+      <span class="det-tag">HIGH-VOLUME OUTBOUND</span>
+      <span class="det-tag">TOOL · TBD</span>
+    </div>
+  </div>
+
+  <div class="det-stats">
+    <div class="det-stat">
+      <div class="det-stat-label">Deliverables planned</div>
+      <div class="det-stat-value tnum">3</div>
+      <div class="det-stat-meta">memo · interviews · build spec</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Interviews</div>
+      <div class="det-stat-value tnum">0<span class="of"> / 2</span></div>
+      <div class="det-stat-meta">SDR + sales leadership</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Hypotheses</div>
+      <div class="det-stat-value amber tnum">5</div>
+      <div class="det-stat-meta">adjacent observation</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Track progress</div>
+      <div class="det-stat-value tnum">12%</div>
+      <div class="det-stat-meta">scope locked · interviews next</div>
+    </div>
+  </div>
+
+  <div class="scaffold-notice">
+    <div class="scaffold-notice-label">Discovery status</div>
+    <div class="scaffold-notice-body">
+      Owner has <strong>adjacent visibility</strong> only — observed SDR motion from SE seat but has not lived it directly. Hypotheses below are <em>directional</em> and require strong validation through SDR interviews. The SDR motion may be the highest-impact transformation candidate in the org because it is the most templatable and highest-volume.
+    </div>
+  </div>
+
+  <div class="det-body">
+    <div class="det-panel">
+      <div class="det-panel-head">
+        <div class="det-panel-head-title">Deliverables</div>
+        <div class="det-panel-head-meta">3 items · target wk 2–4</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">01</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SDR interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Direct in-seat perspective on outbound + qualification</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">02</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Sales leadership interview &amp; pipeline view <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Top-down lens on pipeline quality, signal sources, attribution</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">03</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SDR strategy doc &amp; tool build spec <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Highest automation candidate · likely AI-first design</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 4</div>
+      </div>
+    </div>
+
+    <div class="det-side">
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Stakeholders</span>
+          <span class="det-side-label-pill">2+</span>
+        </div>
+        <div class="det-people">
+          <div class="det-person"><div class="det-person-avatar a1">AM</div><div class="det-person-name">A. Matei</div><div class="det-person-role">Owner · obs.</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">SDR</div><div class="det-person-role">Interview tgt</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">Sales Leader</div><div class="det-person-role">Top-down</div></div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Likely focus areas</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> Outbound sequence personalization</div>
+          <div><span class="arrow">→</span> Lead qualification automation</div>
+          <div><span class="arrow">→</span> Signal-driven prospecting</div>
+          <div><span class="arrow">→</span> CRM data hygiene at intake</div>
+          <div><span class="arrow">→</span> SDR-to-AE handoff completeness</div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Cross-track touch</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> <strong>Sales (AE)</strong> — handoff continuity</div>
+          <div><span class="arrow">→</span> <strong>Marketing</strong> — inbound lead source</div>
+          <div><span class="arrow">→</span> <strong>SalesOps</strong> — pipeline hygiene</div>
+          <div><span class="arrow">→</span> <strong>HIP</strong> — unified customer ID</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scaffold-section">
+    <div class="scaffold-section-head">Hypotheses · pending validation</div>
+    <h2>What we expect to find</h2>
+    <p>Adjacent-observation hypotheses. Treat as <em>directional only</em> until validated by direct SDR interview.</p>
+
+    <ul class="hypo-list">
+      <li class="hypo-item">
+        <div class="hypo-num">H-01</div>
+        <div>
+          <div class="hypo-title">SDR motion is the most automatable in the org</div>
+          <div class="hypo-detail">High-volume, sequence-driven, signal-responsive work is the canonical AI-first use case. SDR likely shows the largest <em>productivity per AI dollar</em> ratio of any track in this engagement.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-02</div>
+        <div>
+          <div class="hypo-title">Outbound sequences are templated but not personalized at scale</div>
+          <div class="hypo-detail">SDRs likely use 5–10 sequence templates with light per-prospect customization. AI can shift this to per-prospect generation grounded in firmographics, technographics, and intent signals — without adding human time.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-03</div>
+        <div>
+          <div class="hypo-title">Lead intake quality is the upstream bottleneck</div>
+          <div class="hypo-detail">If marketing inbound is dirty (wrong contact, wrong company, wrong industry classification), no amount of SDR effort recovers it. SDR-side AI investment likely under-performs without parallel marketing-side hygiene.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-04</div>
+        <div>
+          <div class="hypo-title">Intent signals are scattered and under-utilized</div>
+          <div class="hypo-detail">Signals like cancellations on competitor platforms, hosting industry M&amp;A, AWS bill spikes, etc. are observable but not centrally surfaced. SDR-facing signal feed likely high-value early build.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-05</div>
+        <div>
+          <div class="hypo-title">SDR-to-AE handoff drops context</div>
+          <div class="hypo-detail">Same pattern as SE-to-PM hypothesis (DEPT-02 / H-05). SDR builds rapport, learns context, and that knowledge does not consistently arrive in AE's inbox structured.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: AM ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-am">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group A · Revenue</span>
+    <span class="sep">/</span>
+    <span class="current">Account Management</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot" style="background: var(--dept-am); box-shadow: 0 0 0 4px rgba(232,181,71,0.15);"></div>
+        <div class="det-id-text" style="color: var(--dept-am);">DEPT-04 · ACCOUNT MANAGEMENT · DRAFTING</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Discovery method ↗</button>
+        <button class="det-btn primary">Schedule interviews →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Account Management — <em style="color: var(--dept-am);">AM Tool · TBD</em></h1>
+    <p class="det-deck">Strategic relationship motion for top-revenue customers. AMs run executive cadence, expansion conversations, and renewal narrative for accounts above the CSM tier. The CSM track surfaced that <strong>AM coverage is structurally inconsistent</strong> across the mid-market band — Kelly is functioning as de facto AM for many accounts that don't formally have one.</p>
+
+    <div class="det-tags">
+      <span class="det-tag amber">PHASE 0 · DRAFTING</span>
+      <span class="det-tag">DEEP TRACK</span>
+      <span class="det-tag">TOP-REVENUE ACCOUNTS</span>
+      <span class="det-tag">EXEC CADENCE</span>
+      <span class="det-tag">TOOL · TBD</span>
+    </div>
+  </div>
+
+  <div class="det-stats">
+    <div class="det-stat">
+      <div class="det-stat-label">Deliverables planned</div>
+      <div class="det-stat-value tnum">3</div>
+      <div class="det-stat-meta">memo · interviews · build spec</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Interviews</div>
+      <div class="det-stat-value tnum">0<span class="of"> / 2</span></div>
+      <div class="det-stat-meta">AM + sales leadership</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Hypotheses</div>
+      <div class="det-stat-value amber tnum">5</div>
+      <div class="det-stat-meta">adjacent + CSM-cross-ref</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Track progress</div>
+      <div class="det-stat-value tnum">10%</div>
+      <div class="det-stat-meta">scope locked · interviews next</div>
+    </div>
+  </div>
+
+  <div class="scaffold-notice">
+    <div class="scaffold-notice-label">Discovery status</div>
+    <div class="scaffold-notice-body">
+      Owner has <strong>indirect visibility</strong> through CSM track work — Kelly's interview surfaced significant AM-shaped responsibilities flowing into CSM by default. The AM/CSM boundary is one of the structural decisions (D-02) leadership needs to make. <strong>This track's findings will likely inform that decision.</strong>
+    </div>
+  </div>
+
+  <div class="det-body">
+    <div class="det-panel">
+      <div class="det-panel-head">
+        <div class="det-panel-head-title">Deliverables</div>
+        <div class="det-panel-head-meta">3 items · target wk 2–4</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">01</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">AM interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Direct AM perspective on portfolio, motion, friction</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">02</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">Sales leadership interview &amp; segmentation lens <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Cross-track input to D-02 (CSM/AM segmentation review)</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">03</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">AM strategy doc &amp; tool build spec <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Likely shares 60%+ with Customer Pulse (relationship motion)</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 4</div>
+      </div>
+    </div>
+
+    <div class="det-side">
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Stakeholders</span>
+          <span class="det-side-label-pill">2+</span>
+        </div>
+        <div class="det-people">
+          <div class="det-person"><div class="det-person-avatar a1">AM</div><div class="det-person-name">A. Matei</div><div class="det-person-role">Owner · obs.</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">AM</div><div class="det-person-role">Interview tgt</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">Sales Leader</div><div class="det-person-role">Segmentation</div></div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Likely focus areas</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> Executive cadence preparation</div>
+          <div><span class="arrow">→</span> Renewal narrative generation</div>
+          <div><span class="arrow">→</span> Expansion intelligence</div>
+          <div><span class="arrow">→</span> Strategic account planning</div>
+          <div><span class="arrow">→</span> Multi-stakeholder relationship mapping</div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Cross-track touch</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> <strong>CSM</strong> — handoff boundary (D-02)</div>
+          <div><span class="arrow">→</span> <strong>SDR</strong> — expansion lead source</div>
+          <div><span class="arrow">→</span> <strong>SE</strong> — technical proposal motion</div>
+          <div><span class="arrow">→</span> <strong>HIP</strong> — relationship intelligence</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scaffold-section">
+    <div class="scaffold-section-head">Hypotheses · pending validation</div>
+    <h2>What we expect to find</h2>
+    <p>Adjacent-observation hypotheses informed by CSM cross-reference. AM interviews will validate, refine, or reject.</p>
+
+    <ul class="hypo-list">
+      <li class="hypo-item">
+        <div class="hypo-num">H-01</div>
+        <div>
+          <div class="hypo-title">AM tool would share substantial surface with Customer Pulse</div>
+          <div class="hypo-detail">Both motions are relationship-driven and account-centric. Likely 60%+ of the data model and module set is shared between Customer Pulse and the AM tool. May be the same product with different default views and weightings.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-02</div>
+        <div>
+          <div class="hypo-title">AM coverage is structurally inconsistent at the mid-market boundary</div>
+          <div class="hypo-detail">Per CSM track findings: Kelly is functioning as de facto AM for accounts in the $1K–$5K MRR band. Either AM coverage extends to that band (requiring more headcount) or it doesn't (requiring CSM tooling and capacity to absorb the work).</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-03</div>
+        <div>
+          <div class="hypo-title">Renewal narrative work is high-effort, high-value, low-systemized</div>
+          <div class="hypo-detail">Each renewal conversation likely requires multi-source assembly of utilization data, ticket history, contract terms, expansion math, and relationship history — manually. AI-assisted generation is a clear early candidate.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-04</div>
+        <div>
+          <div class="hypo-title">Multi-stakeholder relationship mapping is in the AM's head, nowhere else</div>
+          <div class="hypo-detail">Like Kelly's cheat sheet pattern: who-knows-whom, who-decides-what, political dynamics. Lives in the individual AM, not the system. Departure risk = institutional knowledge loss.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-05</div>
+        <div>
+          <div class="hypo-title">Expansion signal detection is reactive, not proactive</div>
+          <div class="hypo-detail">AMs likely respond to customer-initiated expansion conversations rather than proactively surfacing growth opportunities from usage signals. Mirrors the CSM track health-score finding: signals exist, no system catches them.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: SALES OPS ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-ops">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group A · Revenue</span>
+    <span class="sep">/</span>
+    <span class="current">Sales Operations</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot" style="background: var(--dept-ops); box-shadow: 0 0 0 4px rgba(93,196,168,0.15);"></div>
+        <div class="det-id-text" style="color: var(--dept-ops);">DEPT-05 · SALES OPERATIONS · DRAFTING</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Discovery method ↗</button>
+        <button class="det-btn primary">Schedule interview →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Sales Operations — <em style="color: var(--dept-ops);">Ops Tool · TBD</em></h1>
+    <p class="det-deck">The connective tissue of the revenue org: pipeline hygiene, forecasting, automation orchestration, CRM stewardship, attribution, and reporting. SalesOps is the function that owns <strong>data quality</strong> across the cluster — and every other revenue track depends on what it does or doesn't produce.</p>
+
+    <div class="det-tags">
+      <span class="det-tag amber">PHASE 0 · DRAFTING</span>
+      <span class="det-tag">DEEP TRACK</span>
+      <span class="det-tag">CROSS-CUTTING</span>
+      <span class="det-tag">DATA-OWNER ROLE</span>
+      <span class="det-tag">TOOL · TBD</span>
+    </div>
+  </div>
+
+  <div class="det-stats">
+    <div class="det-stat">
+      <div class="det-stat-label">Deliverables planned</div>
+      <div class="det-stat-value tnum">2</div>
+      <div class="det-stat-meta">memo · build spec</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Interviews</div>
+      <div class="det-stat-value tnum">0<span class="of"> / 1</span></div>
+      <div class="det-stat-meta">SalesOps owner</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Hypotheses</div>
+      <div class="det-stat-value amber tnum">4</div>
+      <div class="det-stat-meta">CSM-cross-ref + observation</div>
+    </div>
+    <div class="det-stat">
+      <div class="det-stat-label">Track progress</div>
+      <div class="det-stat-value tnum">8%</div>
+      <div class="det-stat-meta">scope locked · interview next</div>
+    </div>
+  </div>
+
+  <div class="scaffold-notice">
+    <div class="scaffold-notice-label">Discovery status</div>
+    <div class="scaffold-notice-body">
+      Owner has <strong>downstream visibility</strong> only — every CSM finding around HubSpot data quality, missing fields, fabricated websites, and broken health scoring originates upstream of where SalesOps owns the workflow. The SalesOps interview is likely the <em>highest-leverage</em> conversation in the engagement because it determines what every other track can actually trust.
+    </div>
+  </div>
+
+  <div class="det-body">
+    <div class="det-panel">
+      <div class="det-panel-head">
+        <div class="det-panel-head-title">Deliverables</div>
+        <div class="det-panel-head-meta">2 items · target wk 2–4</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">01</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SalesOps interview &amp; findings memo <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Data ownership map · workflow ownership · automation state</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 2</div>
+      </div>
+
+      <div class="det-deliv">
+        <div class="det-deliv-num">02</div>
+        <div class="det-deliv-body">
+          <div class="det-deliv-name">SalesOps strategy doc &amp; tool build spec <span class="arrow">↗</span></div>
+          <div class="det-deliv-meta">Closely coupled to HIP — likely <em>becomes</em> HIP for the revenue cluster</div>
+        </div>
+        <div class="det-deliv-status queue">Wk 4</div>
+      </div>
+    </div>
+
+    <div class="det-side">
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Stakeholders</span>
+          <span class="det-side-label-pill">1+</span>
+        </div>
+        <div class="det-people">
+          <div class="det-person"><div class="det-person-avatar a1">AM</div><div class="det-person-name">A. Matei</div><div class="det-person-role">Owner · obs.</div></div>
+          <div class="det-person"><div class="det-person-avatar tbd">?</div><div class="det-person-name">SalesOps</div><div class="det-person-role">Owner</div></div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Likely focus areas</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> HubSpot data hygiene automation</div>
+          <div><span class="arrow">→</span> Pipeline stage governance</div>
+          <div><span class="arrow">→</span> Forecasting accuracy</div>
+          <div><span class="arrow">→</span> Reporting &amp; attribution</div>
+          <div><span class="arrow">→</span> Cross-system data reconciliation</div>
+        </div>
+      </div>
+
+      <div class="det-side-block">
+        <div class="det-side-label">
+          <span class="det-side-label-l">Cross-track touch</span>
+        </div>
+        <div class="det-dep">
+          <div><span class="arrow">→</span> <strong>All revenue tracks</strong> — data dependency</div>
+          <div><span class="arrow">→</span> <strong>Finance</strong> — revenue recognition</div>
+          <div><span class="arrow">→</span> <strong>HIP</strong> — likely becomes its operator</div>
+          <div><span class="arrow">→</span> <strong>IT</strong> — system integration owner</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scaffold-section">
+    <div class="scaffold-section-head">Hypotheses · pending validation</div>
+    <h2>What we expect to find</h2>
+    <p>Hypotheses formed from downstream observation in CSM track. SalesOps interview likely produces <em>upstream-cause</em> findings for each.</p>
+
+    <ul class="hypo-list">
+      <li class="hypo-item">
+        <div class="hypo-num">H-01</div>
+        <div>
+          <div class="hypo-title">SalesOps inherited a tooling estate, not an architecture</div>
+          <div class="hypo-detail">Multi-acquisition history likely left SalesOps managing a stack of disconnected tools without unified design. Their job is more cleanup-and-reconcile than design-and-improve.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-02</div>
+        <div>
+          <div class="hypo-title">HubSpot data quality issues are known, not owned</div>
+          <div class="hypo-detail">SalesOps almost certainly knows about the bad MRR field, fabricated websites, stale contacts, and broken health score. Likely lacks authority or capacity to enforce upstream changes that would fix root causes.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-03</div>
+        <div>
+          <div class="hypo-title">SalesOps will be the natural HIP operator</div>
+          <div class="hypo-detail">The Hivelocity Intelligence Platform requires an org-wide data steward. SalesOps is the closest existing role to that function and the most logical home for HIP governance.</div>
+        </div>
+      </li>
+      <li class="hypo-item">
+        <div class="hypo-num">H-04</div>
+        <div>
+          <div class="hypo-title">Forecasting accuracy is anecdotal, not measured</div>
+          <div class="hypo-detail">Pipeline hygiene problems compound into forecast unreliability. Leadership likely treats forecasts as directional rather than committable. AI-assisted forecasting requires the data hygiene work to come first.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ===== STAGE: STRATEGIC / HIP ===== -->
+<!-- ============================================================ -->
+<div class="stage" id="stage-strategic">
+<div class="det">
+
+  <div class="det-breadcrumb">
+    <a onclick="showStage('hub')">← AITP Console</a>
+    <span class="sep">/</span>
+    <span>Group C · Umbrella</span>
+    <span class="sep">/</span>
+    <span class="current">Strategic Vision · HIP</span>
+  </div>
+
+  <div class="det-header">
+    <div class="det-header-top">
+      <div class="det-id">
+        <div class="det-id-dot"></div>
+        <div class="det-id-text">DEPT-12 · STRATEGIC VISION · HIP MASTER PLAN</div>
+      </div>
+      <div class="det-header-actions">
+        <button class="det-btn">Architecture diagram ↗</button>
+        <button class="det-btn primary">Read full master plan →</button>
+      </div>
+    </div>
+
+    <h1 class="det-title">Strategic Vision — <em>Hivelocity Intelligence Platform</em></h1>
+    <p class="det-deck">The umbrella that governs every department track. The <strong>Hivelocity Intelligence Platform (HIP)</strong> is a shared AI and data backbone underneath every department's tool. Each department gets a tool tailored to its workflow; HIP gives those tools shared customer identity, model services, governance, and the cross-team workflows that make the federation cohere.</p>
+
+    <div class="det-tags">
+      <span class="det-tag live">● UMBRELLA · ACTIVE</span>
+      <span class="det-tag blue">CROSS-CUTTING</span>
+      <span class="det-tag">3 PHASES · 90 DAYS</span>
+      <span class="det-tag">PHASE 1 BUDGET · $0</span>
+    </div>
+  </div>
+
+  <div class="strat-section">
+    <h2>The <em>thesis</em></h2>
+    <p>Hivelocity does not need to buy a customer success platform, a CRM enrichment tool, an SDR automation suite, an AM intelligence product, and an ops console. It needs <strong>one architecture</strong> with department-specific tool surfaces and a shared backbone — built incrementally, proven on one department, then federated across the company.</p>
+    <p>The reasoning is not novelty; it is reality. A six-month integration of Gainsight or Totango against the current data fragmentation will fail at the data layer before the tool can deliver value. The data has to get clean before any platform works. That cleanup is itself the product. Build it first.</p>
+    <p>This master plan is intentionally <strong>vendor-neutral</strong>. Any qualified integration partner — internal hire, external agency, or hybrid — can pick this up and execute it without re-doing foundational discovery.</p>
+  </div>
+
+  <div class="strat-section">
+    <h2>Three <em>phases</em>, ninety days</h2>
+    <p>The same three phases proposed in the CSM track scale to the company. Each phase has a clear exit criterion before the next begins.</p>
+
+    <div class="phase-grid">
+      <div class="phase-card p1">
+        <div class="phase-num">PHASE 01</div>
+        <div class="phase-title">Stabilize</div>
+        <div class="phase-window">Days 0 – 30</div>
+        <div class="phase-body"><strong>Pilot Customer Pulse with Kelly.</strong> Manual paste-in flows, AI-driven structuring, summarizing, drafting. Built in Notion + Claude API. No IT dependencies, no integration work, no budget request. <strong>Exit criterion:</strong> Kelly reclaims 60%+ of QBR prep time. Other CSM tracks see the demo and want their version next.</div>
+      </div>
+      <div class="phase-card p2">
+        <div class="phase-num">PHASE 02</div>
+        <div class="phase-title">Integrate</div>
+        <div class="phase-window">Days 30 – 90</div>
+        <div class="phase-body"><strong>Build HIP read-layer.</strong> Read-only API integrations into HubSpot, Zendesk, UberSmith. Customer Pulse becomes live data. Roll out to Bob, Diana, Abel. Trustworthy customer health score deployed. <strong>Exit criterion:</strong> CSM team unanimously trusts and uses health score; signal feed catches at least one would-be churn before cancel.</div>
+      </div>
+      <div class="phase-card p3">
+        <div class="phase-num">PHASE 03</div>
+        <div class="phase-title">Scale</div>
+        <div class="phase-window">Days 90+</div>
+        <div class="phase-body"><strong>Federate across departments.</strong> Each track gets its own tool surface on the HIP backbone. SE, SDR, AM, SalesOps next. Operations tracks (Support, Billing, Product, Marketing, etc.) follow with their own discovery cycles. <strong>Exit criterion:</strong> Build vs. buy decision finally made with clean data.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strat-section">
+    <h2>Architectural <em>principles</em></h2>
+    <p>Six principles that govern every implementation decision across the engagement.</p>
+
+    <div class="strat-principle">
+      <div class="strat-principle-num">01</div>
+      <div>
+        <div class="strat-principle-title">Federated tools, shared backbone</div>
+        <div class="strat-principle-detail">Each department owns its tool. The backbone (HIP) is shared. This avoids the trap of forcing one tool to fit every department's workflow.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">02</div>
+      <div>
+        <div class="strat-principle-title">Read before write</div>
+        <div class="strat-principle-detail">Phase 2 integrations are read-only. HIP consumes from systems of record without writing back until trust and governance are established. Reduces blast radius of early failures.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">03</div>
+      <div>
+        <div class="strat-principle-title">Manual paste before API</div>
+        <div class="strat-principle-detail">Phase 1 deliberately uses paste-in workflows. Forces clarity on what data actually matters before integration cost is incurred. Many integrations get scoped that turn out to be unnecessary once the workflow is real.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">04</div>
+      <div>
+        <div class="strat-principle-title">Kelly first, then pattern</div>
+        <div class="strat-principle-detail">One pilot user, one department, one tool. Prove the pattern. Then federate. Avoids the org-wide rollout failure mode of every CRM and CS platform implementation in history.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">05</div>
+      <div>
+        <div class="strat-principle-title">Vendor-neutral by construction</div>
+        <div class="strat-principle-detail">All deliverables are written so any qualified integration partner can pick them up without re-doing discovery. No partner-specific architectural assumptions.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">06</div>
+      <div>
+        <div class="strat-principle-title">Honest scoping</div>
+        <div class="strat-principle-detail">Five departments at deep scope (where credibility exists). Six at strategic-framing scaffold (where it does not). One umbrella. Acknowledging the boundary is the most credible thing the plan can do.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strat-section">
+    <h2>What HIP <em>is</em>, concretely</h2>
+    <p>HIP is not a single product. It is the named architectural layer that contains everything the department tools depend on but should not each implement separately.</p>
+
+    <h3>Core HIP capabilities</h3>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Unified customer identity</div>
+        <div class="strat-principle-detail">One customer record per customer, reconciled across UberSmith, HubSpot, Zendesk, ContractWorks, MyVelocity portal, and Slack mentions. Every department tool reads this identity, never reconstructs it.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Model layer · AI as a service</div>
+        <div class="strat-principle-detail">Shared call-summarization, recap-drafting, signal-detection, and report-generation models. Department tools call shared services rather than each tool integrating its own AI vendor.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Knowledge layer</div>
+        <div class="strat-principle-detail">Kelly's cheat sheet, rebuilt as a governed AI-queryable knowledge base. Every department tool can ask the same knowledge layer the same questions and get the same answers. Owned, refreshed, versioned.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Signal feed</div>
+        <div class="strat-principle-detail">Cross-system event stream — going-quiet, ticket spikes, sentiment shifts, billing flags, intent signals. Each department subscribes to the signals relevant to its tool's purpose.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Governance &amp; audit</div>
+        <div class="strat-principle-detail">Single access control plane, single audit log, single data-handling policy. Required for any AI deployment touching customer data; cheaper to centralize than to per-tool replicate.</div>
+      </div>
+    </div>
+    <div class="strat-principle">
+      <div class="strat-principle-num">·</div>
+      <div>
+        <div class="strat-principle-title">Cross-team workflows</div>
+        <div class="strat-principle-detail">When a customer signal in one department's tool implies action in another (CSM detects expansion intent → SDR or AM acts), HIP routes it. The federation works because HIP carries the connective tissue.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strat-section">
+    <h2>The <em>handoff</em> question</h2>
+    <p>This plan is designed for a partner to execute. Three viable ownership models exist. The right answer depends on Hivelocity-internal factors outside this engagement's scope; the recommendation below is the operator's view.</p>
+
+    <h3>Option A — Internal hire</h3>
+    <p>Hivelocity hires a dedicated AI/automation lead and they execute Phase 1 and 2. <strong>Pro:</strong> institutional knowledge stays in-house. <strong>Con:</strong> 6–9 month time-to-productivity, heavy recruiting risk for a niche skillset.</p>
+
+    <h3>Option B — External integration partner</h3>
+    <p>A specialist agency executes Phase 1 and 2 against this plan. <strong>Pro:</strong> fastest time-to-value, partner owns delivery risk. <strong>Con:</strong> ongoing dependency unless internal capability is built in parallel.</p>
+
+    <h3>Option C — Hybrid</h3>
+    <p>External partner builds Phase 1 and 2 with an internal owner shadowing for ongoing operation. <strong>Pro:</strong> speed of partner + institutional knowledge transfer + reduced ongoing dependency. <strong>Con:</strong> requires a specific internal hire and a partner willing to enable rather than retain.</p>
+
+    <p style="margin-top: 18px;"><strong>Operator's recommendation:</strong> Option C, with Phase 1 led by an integration partner and an internal SalesOps or Revenue-Tech hire shadowing from week one. Phase 2 transitions ownership progressively. Phase 3 is internally owned with partner on retainer for new department onboardings.</p>
+  </div>
+
+  <div class="det-log">
+    <div class="det-panel-head">
+      <div class="det-panel-head-title">Strategic vision changelog</div>
+      <div class="det-panel-head-meta">last 14d</div>
+    </div>
+    <div class="det-log-line"><div class="det-log-time">04.30</div><div class="det-log-tag deploy">deploy</div><div class="det-log-msg">Master plan v1.0 drafted · architectural principles &amp; HIP definition</div></div>
+    <div class="det-log-line"><div class="det-log-time">04.30</div><div class="det-log-tag deploy">deploy</div><div class="det-log-msg">Three-phase framework finalized · CSM proof-of-concept locked</div></div>
+    <div class="det-log-line"><div class="det-log-time">04.29</div><div class="det-log-tag review">review</div><div class="det-log-msg">Federated architecture model validated against CSM track findings</div></div>
+    <div class="det-log-line"><div class="det-log-time">04.28</div><div class="det-log-tag input">intake</div><div class="det-log-msg">Hivelocity Intelligence Platform (HIP) named &amp; scoped</div></div>
+    <div class="det-log-line"><div class="det-log-time">04.27</div><div class="det-log-tag system">init</div><div class="det-log-msg">Strategic vision track initialized · scope: <span class="ref">company-wide AI transformation</span></div></div>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+  function showStage(name) {
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('stage-' + name);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.topnav-tab').forEach(b => b.classList.remove('active'));
+    const activeTab = document.querySelector('.topnav-tab[data-stage="' + name + '"]');
+    if (activeTab) activeTab.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

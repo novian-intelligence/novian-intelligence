@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The State of Customer Success at Hivelocity</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400;1,9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --bg-deep: #F2F1EC;
+    --paper: #FFFFFF;
+    --border: #E8E6E1;
+    --border-light: #F0EEEA;
+    --border-strong: #D6D3CD;
+    --text: #0A0A0A;
+    --text-secondary: #2A2A2A;
+    --text-muted: #5A5A5A;
+    --text-light: #8A8A8A;
+    --text-faint: #C5C3BE;
+    --accent: #D97706;
+    --accent-deep: #B45309;
+    --accent-light: #FFFBEB;
+    --accent-bg: #FEF3C7;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --red-bg: #FECACA;
+    --blue: #1E40AF;
+    --blue-light: #EFF6FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+
+  .serif { font-family: 'Fraunces', Georgia, serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .small-caps { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78em; font-weight: 600; }
+
+  /* ===== PAPER ===== */
+  .doc {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ===== MASTHEAD ===== */
+  .masthead {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .masthead-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .masthead-mark {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .masthead-mark-dot {
+    width: 7px; height: 7px; background: var(--accent); border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+  .masthead-classification {
+    color: var(--accent-deep);
+  }
+  .masthead h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    font-variation-settings: 'opsz' 144;
+  }
+  .masthead .deck {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-bottom: 28px;
+    max-width: 580px;
+  }
+  .masthead-fields {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 20px;
+  }
+  .masthead-field {
+    font-size: 11px;
+  }
+  .masthead-field-label {
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    font-size: 9.5px;
+    margin-bottom: 4px;
+  }
+  .masthead-field-value {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  /* ===== EXEC SUMMARY ===== */
+  .exec {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 56px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .exec-label {
+    color: var(--accent-deep);
+    margin-bottom: 14px;
+  }
+  .exec-body {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .exec-body strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ===== SECTION ===== */
+  section {
+    margin-bottom: 56px;
+  }
+  .section-eyebrow {
+    color: var(--accent-deep);
+    margin-bottom: 14px;
+  }
+  section > h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  section > h2 em {
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+  section p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+  section p strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+  section h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+
+  /* ===== STAT GRID ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 28px 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stat {
+    background: var(--paper);
+    padding: 18px 16px;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-value.alert { color: var(--red); }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ===== PULL QUOTE ===== */
+  .pullquote {
+    margin: 36px 0;
+    padding: 28px 0 28px 32px;
+    border-left: 2px solid var(--accent);
+  }
+  .pullquote-body {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--text);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .pullquote-attr {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 4px;
+  }
+  .callout-amber {
+    background: var(--accent-light);
+    border-color: #FDE68A;
+  }
+  .callout-red {
+    background: var(--red-light);
+    border-color: var(--red-bg);
+  }
+  .callout-label {
+    color: var(--accent-deep);
+    margin-bottom: 8px;
+  }
+  .callout-red .callout-label {
+    color: var(--red);
+  }
+  .callout p {
+    font-size: 14.5px;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ===== JOBS LIST ===== */
+  .jobs {
+    margin: 28px 0 16px;
+  }
+  .job {
+    display: flex;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .job:last-child { border-bottom: none; }
+  .job-num {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--accent);
+    width: 50px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .job-body { flex: 1; }
+  .job-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .job-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .job-detail strong { color: var(--text); font-weight: 700; }
+
+  /* ===== BAR CHART ===== */
+  .bar-chart {
+    margin: 28px 0;
+    padding: 28px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .bar-chart-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .bar-chart-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .bar-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label {
+    width: 160px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    font-size: 12.5px;
+  }
+  .bar-track {
+    flex: 1;
+    height: 22px;
+    background: var(--bg-deep);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex; align-items: center;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .bar-fill.warn { background: var(--accent); }
+  .bar-fill.bad { background: var(--red); }
+  .bar-fill.good { background: var(--green); }
+  .bar-value {
+    width: 60px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+  }
+
+  /* ===== PHASES ===== */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .phase {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 20px 22px;
+    border-radius: 4px;
+    position: relative;
+  }
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--accent-deep);
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .phase-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .phase-window {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  .phase-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .phase-deliverables {
+    list-style: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+  }
+  .phase-deliverables li {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .phase-deliverables li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 11px;
+    width: 6px; height: 1px;
+    background: var(--accent);
+  }
+
+  /* ===== ASK ===== */
+  .ask {
+    background: var(--text);
+    color: white;
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin: 40px 0;
+    position: relative; overflow: hidden;
+  }
+  .ask::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(217, 119, 6, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ask-eyebrow {
+    color: var(--accent);
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .ask-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .ask-list {
+    list-style: none;
+    counter-reset: ask;
+    position: relative;
+  }
+  .ask-list li {
+    counter-increment: ask;
+    padding: 14px 0 14px 38px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+  }
+  .ask-list li:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .ask-list li::before {
+    content: counter(ask, decimal-leading-zero);
+    position: absolute; left: 0; top: 14px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .ask-list li strong {
+    color: white;
+    font-weight: 700;
+  }
+
+  /* ===== APPENDIX ===== */
+  .appendix-divider {
+    margin: 80px 0 48px;
+    text-align: center;
+    position: relative;
+  }
+  .appendix-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .appendix-divider span {
+    background: var(--bg);
+    padding: 0 20px;
+    position: relative;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .appendix h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .appendix h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .appendix p, .appendix li {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .appendix ul {
+    margin-bottom: 16px;
+    padding-left: 18px;
+  }
+  .appendix ul li {
+    margin-bottom: 5px;
+  }
+
+  /* ===== TOOL TABLE ===== */
+  .tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 12.5px;
+  }
+  .tool-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  .tool-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+  }
+  .tool-table tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: var(--bg-deep);
+    color: var(--text-muted);
+  }
+  .pill-red { background: var(--red-bg); color: var(--red); }
+  .pill-amber { background: var(--amber-bg); color: var(--amber); }
+  .pill-green { background: var(--green-light); color: var(--green); }
+
+  /* ===== COLOPHON ===== */
+  .colophon {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  .colophon strong { color: var(--text-muted); font-weight: 600; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .doc { padding: 0 18px 60px; }
+    .masthead h1 { font-size: 32px; }
+    .masthead .deck { font-size: 16px; }
+    .masthead-fields { grid-template-columns: 1fr 1fr; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .phases { grid-template-columns: 1fr; }
+    section > h2 { font-size: 24px; }
+    .exec { padding: 20px 22px; }
+    .exec-body { font-size: 16px; }
+    .ask { padding: 24px 22px; }
+    .ask-title { font-size: 22px; }
+    .bar-label { width: 110px; font-size: 11.5px; }
+    .pullquote { padding-left: 20px; }
+    .pullquote-body { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<article class="doc">
+
+  <!-- ===== MASTHEAD ===== -->
+  <header class="masthead">
+    <div class="masthead-meta">
+      <div class="masthead-mark">
+        <div class="masthead-mark-dot"></div>
+        <span>Strategic Findings</span>
+      </div>
+      <div class="masthead-classification">Internal · Direct</div>
+    </div>
+
+    <h1>The State of Customer Success at Hivelocity</h1>
+    <p class="deck">Findings from the field, and what to do about it before it costs us a quarter we don't get back.</p>
+
+    <div class="masthead-fields">
+      <div class="masthead-field">
+        <div class="masthead-field-label">From</div>
+        <div class="masthead-field-value">Andrei Matei<br>Solutions Engineering</div>
+      </div>
+      <div class="masthead-field">
+        <div class="masthead-field-label">To</div>
+        <div class="masthead-field-value">Matt Schatz<br>Chief Revenue Officer</div>
+      </div>
+      <div class="masthead-field">
+        <div class="masthead-field-label">Date</div>
+        <div class="masthead-field-value">April 30, 2026</div>
+      </div>
+      <div class="masthead-field">
+        <div class="masthead-field-label">Read Time</div>
+        <div class="masthead-field-value">5 minutes<br><span style="color:var(--text-light); font-weight:400;">+ appendix if you want it</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== EXECUTIVE SUMMARY ===== -->
+  <div class="exec">
+    <div class="small-caps exec-label">Executive Summary</div>
+    <p class="exec-body">
+      After a structured interview with Kelly Eller and a forensic look at how she actually works, the operational reality of CSM at Hivelocity is meaningfully worse than leadership likely understands. <strong>One CSM is quietly running multiple roles simultaneously across 450–500 fluctuating accounts, with zero system integration, on a foundation of inaccurate data — and she's still hitting most of her marks.</strong> That's not sustainable, it's heroic. And it's a strategic risk you can't grow your way out of without an intervention. The good news: this is fixable in 90 days, and the path is an AI-augmentation layer on top of what we already own — not a platform purchase.
+    </p>
+  </div>
+
+  <!-- ===== FINDING 1 ===== -->
+  <section>
+    <div class="small-caps section-eyebrow">Finding One</div>
+    <h2>One CSM is quietly doing <em>four jobs</em>.</h2>
+    <p>
+      Kelly's title is "Senior Customer Success Manager." On paper, she owns the $1K–$5K MRR tier — a portfolio that fluctuates between roughly 450 and 500 accounts at any given moment, as customers move in and out of her band based on monthly recurring charges. (A customer who orders three servers totaling $1,000 may cancel them next month and churn out of her tier entirely. There is no formal mechanism for tracking these movements.) In practice, the job description is doing something very different than the title suggests. After tracing a typical week with her, the work decomposes into four distinct functions she is performing concurrently.
+    </p>
+
+    <div class="jobs">
+      <div class="job">
+        <div class="job-num">01</div>
+        <div class="job-body">
+          <div class="job-title">Customer Success Manager</div>
+          <div class="job-detail">QBRs, expansion conversations, renewal management, strategic check-ins, and the issue-resolution work that flows from those engagements. The work the role title implies. <strong>Currently 35–40% of her time</strong> when accounting for the follow-up workload each engagement generates.</div>
+        </div>
+      </div>
+      <div class="job">
+        <div class="job-num">02</div>
+        <div class="job-body">
+          <div class="job-title">Account Manager (de facto)</div>
+          <div class="job-detail">JC and you (Matt) include her on executive outreach for select mid-market accounts — typically based on geography or relationship context — because there is no dedicated AM layer at this tier. She runs that motion herself: research, outreach, meeting prep, follow-up. <strong>Whether this is the right model is a strategic decision for leadership.</strong> The current segmentation may need a holistic review — keeping AM coverage at this tier requires more CSM headcount and better tooling; removing it requires a different approach to the customer relationship altogether.</div>
+        </div>
+      </div>
+      <div class="job">
+        <div class="job-num">03</div>
+        <div class="job-body">
+          <div class="job-title">Tier-2 Customer Support</div>
+          <div class="job-detail">Tickets escalated by customers, plus SLA credits, calculations for adjustments and discounts that originate in CS but route through to Billing. Her workload spans Zendesk, UberSmith, HubSpot, and Outlook fairly evenly — but Zendesk and UberSmith dominate, since both are core customer-support tools in our environment.</div>
+        </div>
+      </div>
+      <div class="job">
+        <div class="job-num">04</div>
+        <div class="job-body">
+          <div class="job-title">Cross-Functional Project Manager</div>
+          <div class="job-detail">Networking issues, DCOps escalations, contract hunts, services investigations across legacy data. She interfaces with the formal PM team only at the end of the order pipeline — once a customer commits to a deployment. <strong>The 95% of work that gets a customer to that commitment, she runs alone.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The structural takeaway: <strong>we have an SMB-tier account ratio (~500:1) being served by a hybrid CSM/AM/Support/PM role.</strong> Bob covers $0–$250 (high volume, low touch — fits the ratio). Diana covers $250–$1K. Kelly covers $1K–$5K and is treated like a mid-market AM. The model only works because Kelly is genuinely senior — 30 years of CS experience — and willing to work 60–70 hour weeks. (Until recently she was logging 70-hour weeks consistently; she's now closer to 50–60 because, in her words, she's tired.) Both of those are rare and neither is replicable.
+    </p>
+
+    <p>
+      She does have a backup if she's out of office, and Abel partners with her on revenue opportunities surfaced during QBRs — taking some of the upgrade and expansion work she identifies. But this isn't a structural partnership in the operational sense. <strong>Nobody is helping her run QBRs or carry the daily relationship workload across 450–500 accounts.</strong> The Abel handoff is purely load-balancing — not by deal type, not by MRR threshold, just "I'm overwhelmed, can you take this." That's an admirable team culture. It's not an operating model.
+    </p>
+
+    <div class="pullquote">
+      <p class="pullquote-body">
+        "I've introduced myself to about 300 of the 450 to 500 accounts. The rest just don't know I exist yet."
+      </p>
+      <div class="pullquote-attr">— Kelly Eller, in interview · April 30, 2026</div>
+    </div>
+
+    <p>
+      Read that twice. <strong>Roughly 200 of our customers paying $1K–$5K per month do not know they have a CSM.</strong> Not because Kelly isn't trying — because there is no operational lever in the world that lets one human introduce herself to 500 strangers, build relationships with them, prep their QBRs, run their support escalations, handle their renewals, and respond to a hundred tickets per week. She's prioritizing the squeaky wheels and triaging the rest. Of course she is.
+    </p>
+  </section>
+
+  <!-- ===== FINDING 2 ===== -->
+  <section>
+    <div class="small-caps section-eyebrow">Finding Two</div>
+    <h2>The tooling is <em>actively hostile</em> to the work.</h2>
+    <p>
+      To get a complete picture of one customer — services, history, contracts, tickets, contacts, billing — Kelly opens between five and seven systems. None of them talk to each other. Several of them disagree about basic facts. The data quality issue isn't an edge case; it's the default condition. A representative example: of the customer contracts Kelly has searched for, <strong>only a handful have been found in HubSpot</strong> where they're supposed to live. The rest she finds in ContractWorks, SharePoint, OneDrive, or by asking Grant or someone in billing whether they have a copy on file.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-value">75<span style="font-size:18px; color:var(--text-muted);">%</span></div>
+        <div class="stat-label">of Kelly's time is reactive (tickets, escalations, fires) vs. proactive CSM motion.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">5–7</div>
+        <div class="stat-label">tools opened to assemble a single complete customer view.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value alert">~50</div>
+        <div class="stat-label">manual clicks to pull one customer's services for a QBR (one click per server).</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">45</div>
+        <div class="stat-label">tabs in Kelly's personal Excel "cheat sheet" — our real internal knowledge base.</div>
+      </div>
+    </div>
+
+    <h3>The QBR example, because it's representative.</h3>
+    <p>
+      A standard quarterly business review takes Kelly between <strong>one hour and several hours</strong> to prepare — and that's the floor, not a typical case. The variability is entirely a function of how badly the underlying data is broken. For a customer with 50 servers, Kelly opens UberSmith and clicks into each server one at a time — copy, paste, copy, paste — because UberSmith offers no way to export a structured services list. For colocation customers, the work compounds: she has to dig for the original signed contract (often not where it's supposed to be), cross-reference its terms against services that were bulk-imported into UberSmith from legacy company acquisitions (frequently incorrect), and open a DCOps ticket to verify what the customer actually has in their cabinet — the cross-connects, the power, the inventory. Then she builds the deck.
+    </p>
+
+    <div class="callout callout-amber">
+      <div class="small-caps callout-label">The cheat sheet finding</div>
+      <p>
+        Kelly maintains a personal Excel file with <strong>45 tabs</strong> covering every Hivelocity data center, every product, every networking config, every storage type, every cross-connect, every compliance certification. It is — without exaggeration — the most accurate internal knowledge base at the company. She has shared it with the team, so it wouldn't disappear if she left, but it remains hers in every other sense: built by her on her own time, not a live document, integrated with nothing. When something changes upstream, the cheat sheet doesn't know. <strong>Even Kelly's own cheat sheet is operating on stale data the moment a network config or a price changes anywhere else.</strong>
+      </p>
+    </div>
+
+    <h3>Where customer notes go to die.</h3>
+    <p>
+      Kelly is the only CSM consistently recording calls, transcribing them, summarizing them, and posting the summary into HubSpot. This is good for Kelly. It is catastrophic for Hivelocity. Microsoft Teams' transcription is locked to the meeting owner — meaning <strong>nobody else on the team can access the recording or transcript of a call they were on if they didn't start it.</strong> If Kelly is hit by a bus tomorrow, her successor inherits 450–500 accounts with effectively no context on any of them. The same is true for every other CSM, AM, and SE who isn't taking notes herself.
+    </p>
+  </section>
+
+  <!-- ===== FINDING 3: COST ===== -->
+  <section>
+    <div class="small-caps section-eyebrow">Finding Three</div>
+    <h2>What this is <em>actually costing</em> us.</h2>
+    <p>
+      The temptation is to file this under "operational hygiene" and address it whenever bandwidth opens up. That framing undersells the cost. Here's what the current state is producing, today:
+    </p>
+
+    <div class="bar-chart">
+      <div class="bar-chart-title">Where the cost shows up</div>
+      <div class="bar-chart-sub">Estimated impact magnitude. Directional, not measured. A measurement plan is in the appendix.</div>
+      <div class="bar-row">
+        <div class="bar-label">Hours lost to manual work</div>
+        <div class="bar-track"><div class="bar-fill bad" style="width: 92%"></div></div>
+        <div class="bar-value">~25 hr/wk</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Accounts un-engaged</div>
+        <div class="bar-track"><div class="bar-fill bad" style="width: 80%"></div></div>
+        <div class="bar-value">~200 / 450–500</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Health visibility</div>
+        <div class="bar-track"><div class="bar-fill warn" style="width: 35%"></div></div>
+        <div class="bar-value">Low</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Talent burnout risk</div>
+        <div class="bar-track"><div class="bar-fill bad" style="width: 88%"></div></div>
+        <div class="bar-value">High</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Knowledge concentration</div>
+        <div class="bar-track"><div class="bar-fill bad" style="width: 95%"></div></div>
+        <div class="bar-value">In one head</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Scalability of CS function</div>
+        <div class="bar-track"><div class="bar-fill bad" style="width: 8%"></div></div>
+        <div class="bar-value">Capped</div>
+      </div>
+    </div>
+
+    <h3>Revenue exposure.</h3>
+    <p>
+      With ~200 accounts un-engaged at any given time, even a conservative 5% annual churn delta on the under-served cohort represents a meaningful seven-figure exposure. We're not measuring it because we can't — there's no health scoring system anyone trusts, and the early-warning signals Kelly tracks (cancellations, going quiet, ticket spikes, sentiment shifts) live in her personal spreadsheet, not in HubSpot. <strong>We are losing customers we don't know we're losing until the cancel hits.</strong>
+    </p>
+
+    <h3>The talent risk is the one that should keep you up.</h3>
+    <p>
+      Kelly is genuinely exceptional. She has been working 60–70 hour weeks for a long stretch to make a structurally broken system function — and she's now openly saying she's tired and cutting back. There are exactly two outcomes from that trajectory: she burns out, or she leaves. Either one removes the load-bearing wall from our mid-market CS motion overnight. The same risk applies, in different magnitudes, to the rest of the team.
+    </p>
+
+    <div class="callout callout-red">
+      <div class="small-caps callout-label">Worth saying directly</div>
+      <p>
+        We are one Kelly-resignation away from a mid-market CS crisis. The remediation cost of replacing her is 6–9 months of recruiting, ramping, and account stabilization. The remediation cost of fixing the underlying system is ~30–60 days of focused work and a small budget. <strong>The math on which one to do first is not subtle.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PATH FORWARD ===== -->
+  <section>
+    <div class="small-caps section-eyebrow">Path Forward</div>
+    <h2>What good <em>actually looks like</em>, in three phases.</h2>
+    <p>
+      We don't fix this by buying a CS platform. Gainsight, Totango, ChurnZero — all great tools, all expensive, all 6+ month implementations against the data fragmentation problem we already have. The data has to get clean before any of them work. Instead, the path is to build a CSM-facing AI layer on top of the systems we already pay for, prove the model with Kelly, then scale to the team. The product has a name internally: <strong>Pulse</strong>. A working concept mockup is being shared separately.
+    </p>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">Phase 01</div>
+        <div class="phase-title">Stabilize</div>
+        <div class="phase-window">Days 0 – 30</div>
+        <div class="phase-body">
+          AI augmentation on today's stack. Kelly stops alt-tabbing. Manual paste-in, AI does the structuring, summarizing, and drafting. Built in Notion + Claude API. No IT dependencies, no integration work, no budget request.
+        </div>
+        <ul class="phase-deliverables">
+          <li>Pulse Notion workspace pilot (Kelly)</li>
+          <li>Transcript → recap + summary + tasks</li>
+          <li>Cheat sheet rebuilt as searchable, editable team knowledge</li>
+          <li>QBR Builder (partial) — full QBR generation pending UberSmith export workaround</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">Phase 02</div>
+        <div class="phase-title">Integrate</div>
+        <div class="phase-window">Days 30 – 90</div>
+        <div class="phase-body">
+          Read-only API integrations into HubSpot, Zendesk, UberSmith. Pulse becomes the live single pane of glass. Health scoring driven by real signals — ticket spikes, going quiet, sentiment, cancellations. Roll out from Kelly to Bob, Diana, Abel.
+        </div>
+        <ul class="phase-deliverables">
+          <li>Live data sync from existing tools</li>
+          <li>Trustworthy customer health score</li>
+          <li>Pricing comparison module (cross-functional)</li>
+          <li>Full QBR generation with browser automation</li>
+          <li>Team-wide rollout (4 users)</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">Phase 03</div>
+        <div class="phase-title">Scale</div>
+        <div class="phase-window">Days 90+</div>
+        <div class="phase-body">
+          Pulse becomes the operating system for the entire revenue org — extends to AEs, SEs, Support. Decision: continue building in-house, or migrate the proven workflows to a commercial platform. The data is clean by now; the choice is finally a real one.
+        </div>
+        <ul class="phase-deliverables">
+          <li>Cross-functional rollout (CS + Sales + Support)</li>
+          <li>Health-driven account routing</li>
+          <li>Build vs. buy decision (informed)</li>
+          <li>Org design review</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The "who builds this" question.</h3>
+    <p>
+      Phase 1 can be built by Andrei in the next 30 days, with Kelly as the design partner. Phase 2 needs a dedicated AI/automation function that doesn't currently exist on the org chart. The options worth considering are: a focused internal hire, an outside specialist agency engagement, or a hybrid where an external partner builds the platform and an internal owner maintains it. <strong>This is a decision worth making deliberately, not by default.</strong> A separate conversation on Phase 2 ownership is warranted once Phase 1 is in flight.
+    </p>
+  </section>
+
+  <!-- ===== THE ASK ===== -->
+  <div class="ask">
+    <div class="small-caps ask-eyebrow">The Ask</div>
+    <h2 class="ask-title">Three things from you, Matt.</h2>
+    <ol class="ask-list">
+      <li><strong>Greenlight Phase 1.</strong> Let me run the 30-day Pulse pilot with Kelly using existing tools and existing budget. No IT involvement required. A working version goes in front of you in 14 days.</li>
+      <li><strong>Sponsor the team interviews.</strong> I want 30 minutes each with Bob, Diana, and Abel next week. Their pain is different from Kelly's; the system has to reflect that. Your endorsement makes it land faster. <em>(Bob has already opted in; Diana and Abel are expected to follow.)</em></li>
+      <li><strong>Open the Phase 2 ownership conversation.</strong> When Phase 1 proves the model, we'll need a real answer to "who runs this long-term." Worth a 30-minute discussion in the next two weeks — internal hire, external partner, or hybrid. I have a strong point of view I'd like to share.</li>
+    </ol>
+  </div>
+
+  <p style="font-size: 14.5px; color: var(--text-muted); font-style: italic; margin-top: 32px;">
+    The longer version of this — operational examples, tool inventory, data quality findings, interview synthesis — is in the appendix below. The 5-minute version above is enough to make the decision.
+  </p>
+
+
+  <!-- ============================================ -->
+  <!-- ===== APPENDIX ===== -->
+  <!-- ============================================ -->
+
+  <div class="appendix-divider"><span>Appendix</span></div>
+
+  <div class="appendix">
+
+    <section>
+      <h2>A. Methodology</h2>
+      <p>
+        Findings are based on a 90-minute structured interview with Kelly Eller (Senior CSM, mid-market tier), conducted April 30, 2026, using a 25-question framework spanning portfolio management, tooling, calls and follow-up, QBRs, customer health, escalations, and ideal-state vision. Kelly's working artifacts were also reviewed: two representative customer dashboards (CashMonkey Solutions LLC, El Paso Teller County 911 Authority), her personal cross-functional knowledge file ("cheat sheet," 45 tabs, 3,300+ rows), and a recent interaction log spanning Q4 2025–Q1 2026. A follow-up review session with Kelly was conducted to validate findings and correct factual claims before this memo was finalized.
+      </p>
+      <p>
+        Quantitative figures in the body are estimates based on Kelly's self-report and a manual reconstruction of her workflow. They are directional, not measured. A measurement plan is included in section F below.
+      </p>
+      <p>
+        Three additional CSM/BDR interviews (Bob, Diana, Abel) are planned for the following week. Bob has already confirmed; Diana and Abel are expected to follow. The findings here will be revised and broadened based on those inputs into a holistic team-level report.
+      </p>
+    </section>
+
+    <section>
+      <h2>B. The Tooling Inventory</h2>
+      <p>
+        Tools currently in daily use across the CSM workflow. None are integrated with each other in any meaningful way. Data flows between them are manual. (A note for the integration column: many of these tools <em>have</em> integration capabilities — APIs, Zapier connectors, native sync — but none are configured. The "None" entries reflect the operational reality, not a technical limit.)
+      </p>
+
+      <table class="tool-table">
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Function</th>
+            <th>Data Quality</th>
+            <th>Integration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>UberSmith</strong></td><td>Inventory + billing system of record. Houses every server, colo cabinet, IP, cross-connect, and customer service. Used as if it were a DCIM and an ERP.</td><td><span class="pill pill-red">Poor</span></td><td>None configured</td></tr>
+          <tr><td><strong>HubSpot</strong></td><td>CRM, deal management, activity logging</td><td><span class="pill pill-amber">Inconsistent</span></td><td>Limited</td></tr>
+          <tr><td><strong>Zendesk</strong></td><td>Ticketing, support workflows, also used for tracked customer outreach</td><td><span class="pill pill-green">Good</span></td><td>None configured</td></tr>
+          <tr><td><strong>ContractWorks</strong></td><td>Contract storage</td><td><span class="pill pill-amber">Partial</span></td><td>None configured</td></tr>
+          <tr><td><strong>SharePoint</strong></td><td>Intranet (largely unused) + secondary contract storage</td><td><span class="pill pill-red">Stale</span></td><td>None configured</td></tr>
+          <tr><td><strong>OneDrive</strong></td><td>Personal file storage</td><td>n/a</td><td>None configured</td></tr>
+          <tr><td><strong>Confluence</strong></td><td>Internal documentation (multiple teams actively trying to remediate)</td><td><span class="pill pill-red">Out of date</span></td><td>None configured</td></tr>
+          <tr><td><strong>Microsoft Teams</strong></td><td>Calls, file sharing</td><td>n/a</td><td>IT-restricted</td></tr>
+          <tr><td><strong>Outlook</strong></td><td>Email</td><td>n/a</td><td>None configured</td></tr>
+          <tr><td><strong>Slack</strong></td><td>Internal communication, ad-hoc knowledge — and ironically the most current source of internal documentation we have</td><td><span class="pill pill-amber">Searchable but unstructured</span></td><td>None configured</td></tr>
+          <tr><td><strong>PandaDoc</strong></td><td>Proposals (manual)</td><td>n/a</td><td>None configured</td></tr>
+          <tr><td><strong>QuickBooks Desktop</strong></td><td>Company financials</td><td>n/a</td><td>None configured</td></tr>
+          <tr><td><strong>MyVelocity Portal</strong></td><td>Customer-facing self-service</td><td>n/a</td><td>None configured</td></tr>
+          <tr><td><strong>Kelly's Cheat Sheet (Excel)</strong></td><td>De facto knowledge base</td><td><span class="pill pill-green">Most accurate source we have</span></td><td>Personal desktop</td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 13px; color: var(--text-muted);">
+        Microsoft Copilot is also deployed but is, per Kelly and others, not delivering meaningful value. AI adoption at the company level is otherwise effectively zero. There is no DCIM. There is no ERP. UberSmith is asked to substitute for both.
+      </p>
+    </section>
+
+    <section>
+      <h2>C. The Data Quality Problem</h2>
+      <p>
+        Specific examples of operational friction caused by data quality, all from the Kelly interview:
+      </p>
+      <ul>
+        <li><strong>Contracts:</strong> Of customer contracts Kelly has searched for, only a handful have been found in HubSpot. The rest must be hunted across ContractWorks, SharePoint, billing's records, or DCOps' files.</li>
+        <li><strong>Service inventory:</strong> Acquisition-era data was migrated into UberSmith without preserving structure. Pricing breakouts must be manually reconstructed for many customers.</li>
+        <li><strong>HubSpot MRR:</strong> Pulls only the most recent month's billing — and often includes one-time charges in that figure. The result is inaccurate for any customer with annual or quarterly billing, and misleadingly inflated for any month with one-time fees. A meaningful share of Kelly's portfolio.</li>
+        <li><strong>HubSpot websites:</strong> Auto-populated for many small customers, often with the wrong URL or a fabricated one (frequently just <span class="mono">companyname.com</span>, regardless of whether that's the actual domain). Per a recent billing exchange, the field is considered "important info" — but its provenance and accuracy are unclear.</li>
+        <li><strong>HubSpot contacts:</strong> Customer-facing contacts in HubSpot are frequently outdated; the accurate contacts live in MyVelocity portal authorizations, which don't sync.</li>
+        <li><strong>Customer health score:</strong> A health score field exists in HubSpot. No one — including Kelly — knows how it's calculated, what signals feed it, who looks at it, or how it's weighted in any leadership reporting. It defaults to "healthy" and stays there. It is not trusted, and as far as anyone can tell, not used.</li>
+        <li><strong>Inventory:</strong> The lack of a DCIM means colo availability, power capacity, cabinet inventory, and bandwidth must be confirmed by manually pinging individuals in DC Ops or Networking — or by opening a ticket and waiting, sometimes far longer than a customer-facing SLA permits.</li>
+        <li><strong>ZoomInfo:</strong> Two known users have licenses for the entire company; there may be more. Access is frequently brokered via someone forwarding a 2FA code on request. Kelly uses LinkedIn as the practical alternative.</li>
+        <li><strong>No published price sheet:</strong> When customers ask for discounts (which is constant), there is no internal source of truth for what a given server, drive, or service <em>should</em> cost. CSMs, AEs, and Sales all manually triangulate against the customer-facing store, an internal API, or each other. This is a Products-team gap that has been raised by multiple people for years.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>D. The Cheat Sheet (worth a section of its own)</h2>
+      <p>
+        Kelly's personal Excel file is the single most valuable internal knowledge artifact this report identified. The 45 tabs include:
+      </p>
+      <ul>
+        <li>Master location data for every Hivelocity DC (DAL, TPA1, TPA2, ATL2, COS1, ORD, ALB1, LAX1, LAX2, PHL, AMS, and more) — addresses, POCs, shipping logistics, remote-hands procedures, racks/RU availability</li>
+        <li>Product reference tables: VPS/VDS, custom, OS/control panels, storage types, RAID configurations, RapidRestore backups, networking (VLAN/PVLAN/95th percentile/unmetered), bandwidth pricing, cross-connect providers, managed services, firewalls, DDoS, VPN</li>
+        <li>Compliance reference: SOC 2 reports, data sell sheets per location</li>
+        <li>Operational: account transfer procedures, migration playbooks, billing FAQs, client FAQs, templates</li>
+        <li>Workflow: 130+ rows on cross-connect providers and SOPs, 100+ rows on combined site info, 100+ rows on bandwidth specifics</li>
+      </ul>
+      <p>
+        The file is a hand-curated mix of what Kelly has pulled from Confluence over time, snippets she's copied out of Slack threads, and information she has gathered directly from internal subject-matter experts. <strong>It is not a live document.</strong> It does not integrate with anything. When a network configuration, a price, a cross-connect provider, or a procedure changes upstream, the cheat sheet has no way of knowing. So when the underlying data drifts (which happens constantly), the cheat sheet quietly drifts out of accuracy as well — until someone discovers a problem and Kelly hand-updates the relevant tab.
+      </p>
+      <p>
+        Migrating this artifact into a properly governed, AI-queryable knowledge module (Pulse Knowledge) is one of the highest-leverage moves in Phase 1 — not because the cheat sheet is bad, but because making it the foundation of a real knowledge system unlocks dozens of downstream workflows for the whole revenue org. Phase 2 turns it from a static document into a live, integrated source of truth.
+      </p>
+    </section>
+
+    <section>
+      <h2>E. What Pulse Will Deliver — Concretely</h2>
+
+      <h3>Phase 1 (Days 0–30)</h3>
+      <ul>
+        <li>Pulse Notion workspace, single-user pilot for Kelly</li>
+        <li><strong>Call Studio:</strong> paste a Teams/Otter transcript → get internal summary, customer recap email, action items, HubSpot-ready note in Kelly's exact format</li>
+        <li><strong>QBR Builder (partial):</strong> generates the Zendesk ticket history, contract context, customer pain narrative, and recommended discussion topics from pasted inputs. <em>The full UberSmith services list — which today requires per-server manual clicking with no available export — is the unsolved piece.</em> Phase 1 will explore creative workarounds (a structured-paste template Kelly maintains once per account; or browser-automation tooling like Claude CoWork pending IT review). The goal is a 60% time reduction on QBR prep in Phase 1, with the remaining gap closed in Phase 2.</li>
+        <li><strong>Knowledge:</strong> the cheat sheet rebuilt as a searchable, AI-queryable, team-editable knowledge base with an explicit owner and quarterly refresh cadence</li>
+        <li><strong>Account Hub:</strong> structured single-page view per account, replacing the manual Excel-per-account approach (CashMonkey and El Paso 911 are the design references)</li>
+        <li><strong>Today view:</strong> manually curated to start, AI-assisted prioritization layered in by week 3</li>
+      </ul>
+
+      <h3>Phase 2 (Days 30–90)</h3>
+      <ul>
+        <li>Read-only API integrations into HubSpot (deals, contacts, MRR), Zendesk (tickets, sentiment), UberSmith (services, billing) — pull-only, no write-back risk</li>
+        <li>Live customer health score, transparently calculated from observable signals (ticket velocity, days since last touch, cancel requests, billing flags, sentiment shifts in transcripts)</li>
+        <li><strong>Live signal feed:</strong> automatic detection of going-quiet, ticket spikes, sentiment drops, cancel signals — the leading indicators Kelly currently tracks manually</li>
+        <li><strong>Pricing comparison module:</strong> cross-functional with the Products team. Surfaces what a customer is paying vs. what current pricing should be, given their service mix. Eliminates the manual triangulation every CS, AE, and Sales rep currently does when discount asks come in. <em>Note: this depends on Products publishing a live, authoritative price sheet — a long-standing internal request that this initiative will formally raise.</em></li>
+        <li>Browser-automation solve for the UberSmith services-list export bottleneck (closes the QBR Builder gap from Phase 1)</li>
+        <li>Rollout from Kelly to the full CSM team (Bob, Diana, Abel), each with a tailored configuration based on their tier and motion</li>
+      </ul>
+
+      <h3>Phase 3 (Days 90+)</h3>
+      <ul>
+        <li>Extension to AEs, SEs, and Support — Pulse becomes the operating system for the customer-facing org</li>
+        <li>Health-driven account routing: at-risk accounts auto-flagged for AM/CSM/exec attention</li>
+        <li>Build vs. buy decision: with clean data and proven workflows, Hivelocity finally has a real choice between continuing to build, migrating to a commercial platform (Gainsight, Totango, etc.), or remaining hybrid</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>F. Measurement Plan</h2>
+      <p>
+        The figures in the body of this memo are directional. To validate them and track Phase 1 impact, the following baseline measurements should be captured during week 1 of the pilot:
+      </p>
+      <ul>
+        <li><strong>Time-per-QBR:</strong> Kelly self-times her next 5 QBR preparations under current state, then again after Phase 1 deployment. Target: 60% reduction (Phase 1), 80%+ (Phase 2 with browser-automation closing the UberSmith gap).</li>
+        <li><strong>Time-per-call follow-up:</strong> Same methodology, before and after Call Studio. Target: 80% reduction.</li>
+        <li><strong>Reactive vs. proactive ratio:</strong> Self-reported weekly. Target: shift from 75/25 to 50/50 by end of Phase 2.</li>
+        <li><strong>Account introduction rate:</strong> Once Phases 1 and 2 reduce Kelly's day-to-day load by 60–80%, she will have reclaimed the capacity to introduce herself to (and properly serve) the ~200 currently un-engaged accounts. <em>Important nuance per Kelly: rapid introduction without that capacity unlocked first would generate net-new inbound work she can't absorb. The introduction sprint is a Phase 2 outcome, not a Phase 1 KPI.</em></li>
+        <li><strong>Customer health score adoption &amp; usage:</strong> Two-part measurement — (a) percentage of CSM team that uses and trusts the health score, and (b) explicit confirmation of who else (sales leadership, account managers, executives) is consuming it, in what reports, and at what weight. Target: 100% CSM trust by end of Phase 2 (vs. effectively 0% today), with a documented cross-functional consumption pattern.</li>
+        <li><strong>Knowledge base resolution rate:</strong> Percentage of "where is X" questions answered by Pulse Knowledge instead of asking a human. Target: 70% within Phase 1.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>G. What This Memo Did Not Cover</h2>
+      <p>
+        Several adjacent topics surfaced during the Kelly interview that warrant their own analysis and are deliberately outside the scope of this document:
+      </p>
+      <ul>
+        <li><strong>The IT relationship.</strong> The Microsoft Teams transcript-access constraint surfaced repeatedly in this interview, but it is one symptom of a much larger pattern: IT is currently functioning as a detractor and roadblock to revenue-org productivity rather than a partner. There are easily 30–50 separate operational improvements blocked by IT posture today. This pattern deserves a leadership-level conversation in its own right; the Teams issue alone is a footnote inside that bigger conversation.</li>
+        <li><strong>The Account Manager / BDR / CSM segmentation.</strong> The current tier model — Bob ($0–$250, ~3,000 accounts), Diana ($250–$1K, ~1,000 accounts), Kelly ($1K–$5K, 450–500 accounts), Abel BDR — was likely designed for a different operational reality and should be revisited holistically. Most of Bob's product mix is small VPS instances that are arguably better served by automation than human CS. Most of Diana's and Kelly's accounts that don't get business reviews are arguably under-served by the current segmentation. <em>This is a sales-org design conversation that deserves a dedicated forum and external benchmarking — outside the scope of this memo.</em></li>
+        <li><strong>The Confluence / internal documentation problem.</strong> Out-of-date documentation isn't a Confluence problem — it's a company-wide condition. <strong>There is currently no internal source we have identified that can be considered trustable and current as a single source of truth.</strong> Pulse Knowledge solves the symptom for the revenue org; the root cause is unowned governance across every team that publishes internal docs.</li>
+      </ul>
+    </section>
+
+    <div class="colophon">
+      <strong>Pulse — Strategic Findings, v1.0 (revised after stakeholder review)</strong><br>
+      Prepared by Andrei Matei, Solutions Engineering, for Matt Schatz, CRO. Findings synthesized from Kelly Eller interview (April 30, 2026), customer artifact review, follow-up validation session with Kelly, and direct workflow observation. Companion concept mockup (Pulse v0.1) shared separately.
+    </div>
+
+  </div>
+
+</article>
+
+</body>
+</html>
